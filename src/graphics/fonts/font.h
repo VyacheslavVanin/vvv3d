@@ -39,6 +39,7 @@ public:
     std::shared_ptr<Glyph> getGlyph(uint32_t c) const { return mapCharToGlyph.at(c); }
     void activate(GLuint texUnit=0);
     LowLevelTexture& getTexture() {return *lltex;}
+    const LowLevelTexture& getTexture() const {return *lltex;}
     long getAscender() const;
     long getDescender() const;
     long getMinLeftGlyphEdge() const;

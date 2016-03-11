@@ -8,8 +8,7 @@ std::shared_ptr<Engine> Engine::activeEngine = std::shared_ptr<Engine>();
 
 
 Engine::Engine(int argc, char** argv, const char* windowName)
-    : scene(new SceneBase()),
-      viewportWidth(DEFAULT_SCREEN_WIDTH),
+    : viewportWidth(DEFAULT_SCREEN_WIDTH),
       viewportHeight(DEFAULT_SCREEN_HEIGHT)
 {
     glewExperimental = GL_TRUE;
@@ -46,30 +45,31 @@ Engine::~Engine()
 
 void Engine::run()
 {
-    scene->start();
     glutMainLoop();
 }
 
 void Engine::display()
 {
-    auto t1 = std::chrono::system_clock::now();
+    const auto t1 = std::chrono::system_clock::now();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    DRAW_TRANSPARENT
-            scene->draw();
-    scene->update();
+
+    onDraw();
+
     glutSwapBuffers();
-    auto t2 = std::chrono::system_clock::now();
-    auto dt = t2 -t1;
-    auto milis = (float)(std::chrono::duration_cast<std::chrono::microseconds>(dt).count())/1000;
+    const auto t2 = std::chrono::system_clock::now();
+    const auto dt = t2 -t1;
+    const auto milis = (float)(std::chrono::duration_cast<std::chrono::microseconds>(dt).count())/1000;
     currentfps = 1000.0f / milis;
 }
 
-void Engine::onResize(int y, int y)
+void Engine::onResize(int x, int y)
 {
-    (void)y, (void)y;
+    (void)x, (void)y;
 }
 
 void Engine::initialSetup() { }
+
+void Engine::onDraw() { }
 
 void Engine::keyboardFunc(unsigned char c, int s, int d)
 {
@@ -79,21 +79,6 @@ void Engine::keyboardFunc(unsigned char c, int s, int d)
 void Engine::keyboardUpFunc(unsigned char c, int s, int d)
 {
     std::cout <<"released "<< c << " " << s << " " << d << std::endl;
-}
-
-void Engine::addLayer(const std::string& layerName, std::shared_ptr<GraphicLayerBase> layer)
-{
-    scene->addGraphicsLayer(layerName, layer);
-}
-
-std::shared_ptr<GraphicLayerBase> Engine::getLayer(const std::string& layerName) const
-{
-    return scene->getLayer(layerName);
-}
-
-void Engine::addObject(std::shared_ptr<SceneObject> object, const std::string& layerName)
-{
-    scene->addObject(object, layerName);
 }
 
 TextureManager&Engine::getTextureManager(){return textureManager;}
@@ -112,7 +97,6 @@ void Engine::resize(int x, int y)
     viewportHeight = y;
     viewportWidth  = x;
     glViewport( 0, 0, viewportWidth, viewportHeight);
-    scene->setScreenSize(x,y);
     onResize(viewportWidth, viewportHeight);
 }
 

@@ -58,7 +58,8 @@ HEADERS += \
     src/vvvmath/vector2.h \
     src/vvvmath/vector3.h \
     src/vvvmath/vector4.h \
-    src/graphics/shaders/shader.h
+    src/graphics/shaders/shader.h \
+    src/graphics/iobject.h
 
 SOURCES += \
     src/core/engine.cpp \
@@ -79,5 +80,6 @@ SOURCES += \
     src/utils/helper.cpp \
     src/utils/myutils.cpp \
     src/main.cpp \
-    src/graphics/shaders/shader.cpp
+    src/graphics/shaders/shader.cpp \
+    src/graphics/iobject.cpp
 

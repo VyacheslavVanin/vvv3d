@@ -3,7 +3,9 @@
 #include <graphics/lowlevel/vertexattribute.h>
 #include <graphics/lowlevel/lowlevelshader.h>
 
-std::shared_ptr<Shader> Shader::fromStrings(const char* vertexSource, const char* fragmentSource)
+std::shared_ptr<Shader> Shader::fromStrings(const std::string& name,
+                                            const char* vertexSource,
+                                            const char* fragmentSource)
 {
     auto ret = std::make_shared<Shader>();
     ret->program.CreateProgram(
@@ -12,11 +14,12 @@ std::shared_ptr<Shader> Shader::fromStrings(const char* vertexSource, const char
          bindAttribLocations);
     ret->fragmentSourceName = fragmentSource;
     ret->vertexSourceName = vertexSource;
-    ret->loadLocations();
+    ret->loadLocations(name);
     return ret;
 }
 
-std::shared_ptr<Shader> Shader::fromFiles(const char* vertexFileName,
+std::shared_ptr<Shader> Shader::fromFiles(const std::string& name,
+                                          const char* vertexFileName,
                                           const char* fragmentFileName)
 {
     auto ret = std::make_shared<Shader>();
@@ -27,8 +30,13 @@ std::shared_ptr<Shader> Shader::fromFiles(const char* vertexFileName,
                                 bindAttribLocations);
     ret->fragmentSourceName = fragmentFileName;
     ret->vertexSourceName = vertexFileName;
-    ret->loadLocations();
+    ret->loadLocations(name);
     return ret;
+}
+
+void Shader::activate()
+{
+    program.activate();
 }
 
 
@@ -227,7 +235,7 @@ void Shader::setTime(float t)
     program.setUniform(loc, t);
 }
 
-void Shader::setAmbientColor(const Colour &colour)
+void Shader::setAmbientLightColor(const Colour &colour)
 {
     const auto loc = LOC_(LOCATIONS::AMBIENT_COLOUR);
     CHECK_LOC()
@@ -257,10 +265,10 @@ GLint Shader::loadLocation(const char *name)
     return ret;
 }
 
-void Shader::loadLocations() {
+void Shader::loadLocations(const std::string& name) {
     const size_t count = static_cast<size_t>(LOCATIONS::COUNT);
     activate();
-    std::cout << "Searching uniforms in \"" << vertexSourceName << "\""
+    std::cout << "Searching uniforms in \"" << name << "\""
               << "and \"" << fragmentSourceName << "\": ..." <<std::endl;
     for(size_t i=0; i < count; ++i)
         locations[i] = loadLocation(locations_names[i]);
@@ -295,3 +303,31 @@ const char* Shader::locations_names[]=
     "ambientColour",
 };
 
+ShaderManager::ShaderManager() : shaders(){}
+
+void ShaderManager::add(const std::string &name,
+                          const std::string &vertexShaderFilename,
+                          const std::string &fragmentShaderFilename)
+{
+    shaders[name] = Shader::fromFiles(vertexShaderFilename.c_str(),
+                                      fragmentShaderFilename.c_str(),
+                                      name.c_str());
+}
+
+void ShaderManager::add(const std::string &name, std::shared_ptr<Shader> shader)
+{
+    shaders[name] = shader;
+}
+
+std::shared_ptr<Shader> ShaderManager::get(const std::string &name) const
+{
+    return shaders.at(name);
+}
+
+std::vector<std::string> ShaderManager::listNames() const
+{
+    std::vector<std::string> ret;
+    for(auto kv: shaders)
+        ret.push_back(kv.first);
+    return ret;
+}

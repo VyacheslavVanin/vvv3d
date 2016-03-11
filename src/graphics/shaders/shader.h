@@ -1,6 +1,9 @@
 #ifndef SHADER_H
 #define SHADER_H
 #include <memory>
+#include <unordered_map>
+#include <vector>
+#include <string>
 #include <vvvmath/linalg.h>
 #include <graphics/colour.h>
 #include <graphics/textures/texture.h>
@@ -9,11 +12,12 @@
 class Shader
 {
 public:
-    Shader();
-    static std::shared_ptr<Shader> fromStrings(const char* vertexSource,
+    static std::shared_ptr<Shader> fromStrings(const std::string &name,
+                                               const char* vertexSource,
                                                const char* fragmentSource);
 
-    static std::shared_ptr<Shader> fromFiles(const char* vertexFileName,
+    static std::shared_ptr<Shader> fromFiles(const std::string &name,
+                                             const char* vertexFileName,
                                              const char* fragmentFileName);
 
     void activate();
@@ -44,14 +48,14 @@ public:
     void setTexture6(Texture& tex);
     void setTexture7(Texture& tex);
     void setTime(float t);
-    void setAmbientColor(const Colour& colour);
+    void setAmbientLightColor(const Colour& colour);
     void setLightPos(int n, const vvv::vector3f& pos);
     void setLightDir(int n, const vvv::vector3f& pos);
     void setLightColour(int n, const Colour& colour);
 
 private:
     GLint loadLocation(const char* name);
-    void loadLocations();
+    void loadLocations(const std::string &name);
 
     LowLevelShaderProgram program;
     std::string vertexSourceName;
@@ -88,5 +92,24 @@ private:
 
     GLint locations[static_cast<size_t>(LOCATIONS::COUNT)];
 };
+
+class ShaderManager
+{
+public:
+    ShaderManager();
+
+    void add(const std::string& name,
+                   const std::string& vertexShaderFilename,
+                   const std::string& fragmentShaderFilename);
+    void add(const std::string& name, std::shared_ptr<Shader> shader);
+
+    std::shared_ptr<Shader> get(const std::string& name) const;
+
+    std::vector<std::string> listNames() const;
+
+private:
+    std::unordered_map<std::string, std::shared_ptr<Shader>> shaders;
+};
+
 
 #endif // SHADER_H
