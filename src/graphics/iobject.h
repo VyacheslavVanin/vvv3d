@@ -28,6 +28,7 @@ public:
     virtual Texture& getTexture6() const;
     virtual Texture& getTexture7() const;
     virtual const vvv::vector4f& getTexturePosition() const;
+    virtual std::shared_ptr<Shader> getShader() const;
 };
 
 #endif // IOBJECT_H

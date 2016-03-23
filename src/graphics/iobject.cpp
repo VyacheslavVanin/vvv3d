@@ -107,3 +107,8 @@ const vector4f& IObject::getTexturePosition() const
 {
     return default_texturePosition;
 }
+
+std::shared_ptr<Shader> IObject::getShader() const
+{
+    throw std::logic_error("Not implemented");
+}
