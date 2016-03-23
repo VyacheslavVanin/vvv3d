@@ -1,4 +1,8 @@
 #include "engine.h"
+#include <iostream>
+#include <chrono>
+#include <graphics/lowlevel/openglprovider.h>
+#include <graphics/camera.h>
 static const int DEFAULT_SCREEN_WIDTH = 640;
 static const int DEFAULT_SCREEN_HEIGHT = 480;
 

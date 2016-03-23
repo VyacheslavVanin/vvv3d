@@ -1,13 +1,9 @@
 #ifndef ENGINE_H
 #define ENGINE_H
-#include <iostream>
 #include <memory>
-#include <chrono>
-#include <graphics/lowlevel/openglprovider.h>
 #include <graphics/fonts/font.h>
 #include <graphics/textures/texture.h>
 #include <graphics/geometry.h>
-#include <graphics/camera.h>
 #include <graphics/shaders/shader.h>
 
 #define DRAW_TRANSPARENT for(auto trenable = [](){glDisable(GL_DEPTH_TEST); glEnable(GL_BLEND); \
