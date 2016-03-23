@@ -112,3 +112,8 @@ std::shared_ptr<Shader> IObject::getShader() const
 {
     throw std::logic_error("Not implemented");
 }
+
+const Geometry &IObject::getGeometry() const
+{
+    throw std::logic_error("Not implemented");
+}
