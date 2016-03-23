@@ -30,7 +30,6 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     glClearColor( 0.05f, 0.1f, 0.2f, 0);
     glEnable( GL_DEPTH_TEST );
     glEnable( GL_MULTISAMPLE);
-    initialSetup();
 
     glutIgnoreKeyRepeat(true);
 
@@ -49,6 +48,7 @@ Engine::~Engine()
 
 void Engine::run()
 {
+    initialSetup();
     glutMainLoop();
 }
 

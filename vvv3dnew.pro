@@ -59,7 +59,9 @@ HEADERS += \
     src/vvvmath/vector3.h \
     src/vvvmath/vector4.h \
     src/graphics/shaders/shader.h \
-    src/graphics/iobject.h
+    src/graphics/iobject.h \
+    src/core/ILayer.h \
+    src/core/layeredengine.h
 
 SOURCES += \
     src/core/engine.cpp \
@@ -81,5 +83,6 @@ SOURCES += \
     src/utils/myutils.cpp \
     src/main.cpp \
     src/graphics/shaders/shader.cpp \
-    src/graphics/iobject.cpp
+    src/graphics/iobject.cpp \
+    src/core/layeredengine.cpp
 
