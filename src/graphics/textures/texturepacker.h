@@ -6,12 +6,17 @@
 #include <memory>
 #include <algorithm>
 
-
-template<typename T, typename S, typename GET, typename SET>
+/**
+ *  T - image type
+ *  SIZE_TYPE - type used to mesure width/height/offset in pixels
+ *  GET - function object of type (std::pair<SIZE_TYPE,SIZE_TYPE> f(const T& t))
+ *  SET - function object of type (void f(T& t, SIZE_TYPE xoffset, SIZE_TYPE yoffset, SIZE_TYPE borderWidth)) */
+template<typename T, typename SIZE_TYPE, typename GET, typename SET>
 class packNode
 {
     public:
-        packNode(S width, S height, S xoff, S yoff, S border) :
+        packNode(SIZE_TYPE width, SIZE_TYPE height,
+                 SIZE_TYPE xoff, SIZE_TYPE yoff, SIZE_TYPE border) :
             width(width), height(height), xoff(xoff), yoff(yoff),
             placed(nullptr), right(nullptr), bottom(nullptr), border(border)
             {}
@@ -36,14 +41,14 @@ class packNode
                     && (tsize.second <= height-border2);
         }
 
-        S width;
-        S height;
-        S xoff;
-        S yoff;
+        SIZE_TYPE width;
+        SIZE_TYPE height;
+        SIZE_TYPE xoff;
+        SIZE_TYPE yoff;
         T*    placed;
         std::unique_ptr<packNode> right;
         std::unique_ptr<packNode> bottom;
-        S border;
+        SIZE_TYPE border;
 
     private:
         bool tryPlaceToRight(T*image, const GET& getSizePred, const SET& setOffsetPred)
@@ -81,17 +86,17 @@ class packNode
 
 
 
-template<typename T, typename S, typename GET, typename SORT, typename SETOFFSET>
+template<typename T, typename SIZE_TYPE, typename GET, typename SORT, typename SETOFFSET>
 /**
  * Return positions of objects from input packed at rectangle.
  * @param input Input sequence of objects.
  * @param sortPred Predicate to sort input sequence in ascending order.
- * @param getSizePred Predicate that return std::pair of width and hright of single object from input sequence.
+ * @param getSizePred Predicate that return std::pair of width and height of single object from input sequence.
  * @param width Widht of rectangle.
  * @param height Height of rectangle.
  * @return Vector of positions in rectangle related to input sequence.  */
 std::vector<std::shared_ptr<T> >
-pack2d(const std::vector<std::shared_ptr<T>>& input, S width, S height,
+pack2d(const std::vector<std::shared_ptr<T>>& input, SIZE_TYPE width, SIZE_TYPE height,
                 const SORT& sortPred, const GET &getSizePred, const SETOFFSET& setOffset,
                 std::vector<std::shared_ptr<T>>& notPlaced, int border=0)
 {
@@ -100,7 +105,7 @@ pack2d(const std::vector<std::shared_ptr<T>>& input, S width, S height,
     vector<shared_ptr<T>> ret;
     auto inputCopy = input;
     sort(inputCopy.begin(), inputCopy.end(), sortPred);
-    auto rootNode = packNode<T,S,GET,SETOFFSET>(width, height, 0, 0, border);
+    auto rootNode = packNode<T,SIZE_TYPE,GET,SETOFFSET>(width, height, 0, 0, border);
     for_each( inputCopy.rbegin(), inputCopy.rend(),
                     [&](shared_ptr<T>& current)
                     {
