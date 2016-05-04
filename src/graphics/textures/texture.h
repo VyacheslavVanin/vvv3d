@@ -12,11 +12,11 @@ class Texture
 public:
     ~Texture()  {}
 
-    const vvv::vector4f& getTexturePosition() const {return texturePosition;}
+    const vvv::vector4f &getTexturePosition() const;
     GLuint getHeight() const {return height;}
     GLuint getWidth() const {return width;}
-    void bind(GLuint unit) { tex->bind(unit); }
-    void bind() {tex->bind(); }
+    void bind(GLuint unit) const { tex->bind(unit); }
+    void bind() const {tex->bind(); }
 
     Texture(const std::shared_ptr<LowLevelTexture>& tex,
             const vvv::vector4f& texturePosition=vvv::vector4f(0,0,1,1))
@@ -39,56 +39,18 @@ private:
 class TextureManager
 {
 public:
-    TextureManager() : texs(), lowLevelTexs() {}
+    TextureManager();
 
-    std::shared_ptr<Texture> get(const std::string& name)
-    {
-        try{
-            return texs.at(name); }
-        catch(...) {
-            add(name);
-            return texs.at(name); }
-    }
+    std::shared_ptr<Texture> get(const std::string& name) const;
 
-    void add(std::shared_ptr<LowLevelTexture> texture, const std::string& name)
-    {
-        if( texs.count(name) > 0 ) return;
-        lowLevelTexs[name] = texture;
-        texs[name].reset(new Texture(texture));
-    }
+    void add(std::shared_ptr<LowLevelTexture> texture, const std::string& name);
+    void add(const std::string& filename, const std::string& name);
+    void add(const std::string& filename);
+    bool contain(const std::string& name);
+    void remove(const std::string& name);
+    void clear( );
 
-    void add(const std::string& filename, const std::string& name)
-    {
-        if( texs.count(name) > 0 ) return;
-        std::shared_ptr<LowLevelTexture>  im(readFromPng(filename.c_str()));
-        lowLevelTexs[filename] = im;
-        texs[name].reset(new Texture(im));
-    }
-
-    void add(const std::string& filename) { add(filename, filename); }
-
-    bool contain(const std::string& name) { return texs.find(name)!=texs.end(); }
-
-    void remove(const std::string& name)
-    {
-        auto i = texs.find(name);
-        if(i!=texs.end())
-            texs.erase(i);
-    }
-
-    void clear( )
-    {
-        texs.clear();
-        lowLevelTexs.clear();
-    }
-
-    std::vector<std::string> listNames()const
-    {
-        std::vector<std::string> ret;
-        for(auto kv: texs)
-            ret.push_back(kv.first);
-        return ret;
-    }
+    std::vector<std::string> listNames()const;
 
 private:
     mutable std::unordered_map<std::string, std::shared_ptr<Texture>>         texs;

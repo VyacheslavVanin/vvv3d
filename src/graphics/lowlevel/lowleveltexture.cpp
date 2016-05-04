@@ -25,12 +25,12 @@ LowLevelTexture::~LowLevelTexture()
     glDeleteTextures( 1, &texture );
 }
 
-void LowLevelTexture::bind()
+void LowLevelTexture::bind() const
 {
     glBindTexture(target, texture);
 }
 
-void LowLevelTexture::bind(GLuint unit)
+void LowLevelTexture::bind(GLuint unit) const
 {
     glActiveTexture(GL_TEXTURE0 + unit);
     glBindTexture(target, texture);

@@ -12,8 +12,8 @@ public:
                     GLenum target=GL_TEXTURE_2D);
     ~LowLevelTexture();
 
-    void bind();
-    void bind(GLuint unit);
+    void bind() const;
+    void bind(GLuint unit) const;
     void setParameter(GLenum paramName, GLint param);
     GLuint getWidth() const {return width;}
     GLuint getHeight() const {return height;}

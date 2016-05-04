@@ -156,7 +156,7 @@ void Shader::setTexturePosition(const vvv::vector4f &pos)
     program.setUniform(loc, pos);
 }
 
-void Shader::setTexture(int n, Texture &tex)
+void Shader::setTexture(int n, const Texture &tex)
 {
     const auto loc = LOC_(static_cast<size_t>(LOCATIONS::TEXTURE0)+n);
     CHECK_LOC()
@@ -164,7 +164,7 @@ void Shader::setTexture(int n, Texture &tex)
     tex.bind(n);
 }
 
-void Shader::setTexture0(Texture &tex)
+void Shader::setTexture0(const Texture &tex)
 {
     const auto loc = LOC_(LOCATIONS::TEXTURE0);
     CHECK_LOC()
@@ -172,7 +172,7 @@ void Shader::setTexture0(Texture &tex)
     tex.bind(0);
 }
 
-void Shader::setTexture1(Texture &tex)
+void Shader::setTexture1(const Texture &tex)
 {
     const auto loc = LOC_(LOCATIONS::TEXTURE1);
     CHECK_LOC()
@@ -180,7 +180,7 @@ void Shader::setTexture1(Texture &tex)
     tex.bind(1);
 }
 
-void Shader::setTexture2(Texture &tex)
+void Shader::setTexture2(const Texture &tex)
 {
     const auto loc = LOC_(LOCATIONS::TEXTURE2);
     CHECK_LOC()
@@ -188,7 +188,7 @@ void Shader::setTexture2(Texture &tex)
     tex.bind(2);
 }
 
-void Shader::setTexture3(Texture &tex)
+void Shader::setTexture3(const Texture &tex)
 {
     const auto loc = LOC_(LOCATIONS::TEXTURE3);
     CHECK_LOC()
@@ -196,7 +196,7 @@ void Shader::setTexture3(Texture &tex)
     tex.bind(3);
 }
 
-void Shader::setTexture4(Texture &tex)
+void Shader::setTexture4(const Texture &tex)
 {
     const auto loc = LOC_(LOCATIONS::TEXTURE4);
     CHECK_LOC()
@@ -204,7 +204,7 @@ void Shader::setTexture4(Texture &tex)
     tex.bind(4);
 }
 
-void Shader::setTexture5(Texture &tex)
+void Shader::setTexture5(const Texture &tex)
 {
     const auto loc = LOC_(LOCATIONS::TEXTURE5);
     CHECK_LOC()
@@ -212,7 +212,7 @@ void Shader::setTexture5(Texture &tex)
     tex.bind(5);
 }
 
-void Shader::setTexture6(Texture &tex)
+void Shader::setTexture6(const Texture &tex)
 {
     const auto loc = LOC_(LOCATIONS::TEXTURE6);
     CHECK_LOC()
@@ -220,7 +220,7 @@ void Shader::setTexture6(Texture &tex)
     tex.bind(6);
 }
 
-void Shader::setTexture7(Texture &tex)
+void Shader::setTexture7(const Texture &tex)
 {
     const auto loc = LOC_(LOCATIONS::TEXTURE7);
     CHECK_LOC()
