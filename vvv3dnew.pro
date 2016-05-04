@@ -61,7 +61,9 @@ HEADERS += \
     src/graphics/shaders/shader.h \
     src/graphics/iobject.h \
     src/core/ILayer.h \
-    src/core/layeredengine.h
+    src/core/layeredengine.h \
+    src/std/spritelayer.h \
+    src/std/sprite.h
 
 SOURCES += \
     src/core/engine.cpp \
@@ -84,5 +86,7 @@ SOURCES += \
     src/main.cpp \
     src/graphics/shaders/shader.cpp \
     src/graphics/iobject.cpp \
-    src/core/layeredengine.cpp
+    src/core/layeredengine.cpp \
+    src/std/spritelayer.cpp \
+    src/std/sprite.cpp
 

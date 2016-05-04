@@ -52,3 +52,9 @@ std::vector<std::string> TextureManager::listNames() const
         ret.push_back(kv.first);
     return ret;
 }
+
+
+const vvv::vector4f &Texture::getTexturePosition() const
+{
+    return texturePosition;
+}
