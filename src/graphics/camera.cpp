@@ -23,6 +23,13 @@ Camera& Camera::setPosition(const vector3f& value)
     return *this;
 }
 
+Camera& Camera::setPosition(float x, float y, float z)
+{
+    viewChanged = true;
+    position.set(x,y,z);
+    return *this;
+}
+
 const vector3f& Camera::getDirection() const
 {
     return forward;
