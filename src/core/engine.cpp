@@ -41,10 +41,7 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     activeEngine = std::shared_ptr<Engine>(this);
 }
 
-Engine::~Engine()
-{
-    std::cout << "Engine basse destruction" << std::endl;
-}
+Engine::~Engine() {}
 
 void Engine::run()
 {
