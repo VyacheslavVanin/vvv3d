@@ -74,6 +74,11 @@ inline const vvv::vector3f& Transform::getPosition() const
     return position;
 }
 
+const vvv::vector3f &Transform::getScale() const
+{
+    return m_scale;
+}
+
 const vvv::matrix44f& Transform::getModelMatrix() const
 {
     if( rotationChanged || scaleChanged || positionChanged)
