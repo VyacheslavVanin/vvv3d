@@ -9,7 +9,7 @@ class LayeredEngine : public Engine
 {
 public:
     LayeredEngine(int argc, char** argv, const char* windowName = "vvv3d");
-
+    ~LayeredEngine() {}
     // Engine interface
 protected:
     void initialSetup();
@@ -17,7 +17,7 @@ protected:
     void onResize(int x, int y);
 
     /**
-     * @brief addLayer Add new laer to the Engine.
+     * @brief addLayer Add new layer to the Engine.
      *  Use this at constructor or somewhere before calling Engine.run() as
      *  initialSetup() called inside Engine.run().
      * @param layer */

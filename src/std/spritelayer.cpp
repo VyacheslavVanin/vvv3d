@@ -11,8 +11,8 @@ void SpriteLayer::initialSetup()
     camera.setOrtho(-100, 100, -100, 100, -100, 100);
     auto engine = Engine::getActiveEngine();
 
-    engine->getShaderManager().add("StdSpriteShader", "shders/sprites.vsh",
-                                   "shaders/sprites.fsh");
+    engine->getShaderManager().add("StdSpriteShader", "data/shaders/sprite.vsh",
+                                   "data/shaders/sprite.fsh");
 
     static const GLfloat spriteVertices[] =
                          { -0.5, -0.5,   0, 0,

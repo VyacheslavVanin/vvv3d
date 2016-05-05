@@ -309,9 +309,9 @@ void ShaderManager::add(const std::string &name,
                           const std::string &vertexShaderFilename,
                           const std::string &fragmentShaderFilename)
 {
-    shaders[name] = Shader::fromFiles(vertexShaderFilename.c_str(),
-                                      fragmentShaderFilename.c_str(),
-                                      name.c_str());
+    shaders[name] = Shader::fromFiles(name.c_str(),
+                                      vertexShaderFilename.c_str(),
+                                      fragmentShaderFilename.c_str());
 }
 
 void ShaderManager::add(const std::string &name, std::shared_ptr<Shader> shader)

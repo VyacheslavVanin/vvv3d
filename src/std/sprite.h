@@ -10,6 +10,13 @@ class Sprite
 public:
     Transform transform;
 
+    Sprite() = default;
+    Sprite(const std::string& name)
+    {
+        setTexture(name);
+        transform.setScale(texture->getWidth(), texture->getHeight(), 1);
+    }
+
     void setTexture(std::shared_ptr<Texture> tex)
     {
         texture = tex;

@@ -23,7 +23,7 @@ DISTFILES += \
     resources/shaders/rectanglewidget.vsh \
     resources/shaders/text.fsh \
     resources/shaders/text.vsh
-shaders.path = bin/
+shaders.path = bin/data/shaders
 shaders.files = $$DISTFILES
 INSTALLS += shaders
 

@@ -10,5 +10,5 @@ out highp vec2  out_texCoord;
 void main(void)
 {
     gl_Position  = viewProjectionMatrix*modelMatrix*vec4( position, 0 ,1 ) ;
-    out_texCoord = texturePosition.xy + out_texCoord*texturePosition.zw;
+    out_texCoord = texturePosition.xy + texCoord*texturePosition.zw;
 }
