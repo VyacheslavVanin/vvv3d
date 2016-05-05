@@ -31,6 +31,9 @@ public:
     GeometryManager&    getGeometryManager();
     static std::shared_ptr<Engine> getActiveEngine();
 
+    int getVieportWidth() const;
+    int getVieportHeight() const;
+
 protected:
     virtual void initialSetup();
     virtual void onDraw();
