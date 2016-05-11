@@ -2,7 +2,7 @@
 #define ENGINE_H
 #include <memory>
 #include <graphics/fonts/font.h>
-#include <graphics/textures/texture.h>
+#include <graphics/textures/texturemanager.h>
 #include <graphics/geometry.h>
 #include <graphics/shaders/shader.h>
 

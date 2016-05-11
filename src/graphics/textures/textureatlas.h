@@ -11,7 +11,7 @@ class TextureAtlas
 public:
     TextureAtlas(size_t width, size_t height,
                  const std::vector<std::string>& filenames,
-                 const std::vector<std::string>& names=filenames);
+                 const std::vector<std::string>& names);
     TextureAtlas(size_t width, size_t height,
                  const std::vector<std::shared_ptr<LowLevelTexture>>& textures,
                  const std::vector<std::string>& names);

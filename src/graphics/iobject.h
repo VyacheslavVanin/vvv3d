@@ -4,6 +4,7 @@
 #include <graphics/colour.h>
 #include <graphics/textures/texture.h>
 #include <graphics/shaders/shader.h>
+#include <graphics/geometry.h>
 
 class IObject
 {
