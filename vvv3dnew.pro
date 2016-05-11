@@ -63,7 +63,8 @@ HEADERS += \
     src/core/ILayer.h \
     src/core/layeredengine.h \
     src/std/spritelayer.h \
-    src/std/sprite.h
+    src/std/sprite.h \
+    src/graphics/textures/textureatlas.h
 
 SOURCES += \
     src/core/engine.cpp \
@@ -88,5 +89,6 @@ SOURCES += \
     src/graphics/iobject.cpp \
     src/core/layeredengine.cpp \
     src/std/spritelayer.cpp \
-    src/std/sprite.cpp
+    src/std/sprite.cpp \
+    src/graphics/textures/textureatlas.cpp
 

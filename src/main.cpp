@@ -9,26 +9,33 @@ class SpriteEngine : public LayeredEngine
 public:
     SpriteEngine(int argc, char** argv, const char* windowName="SpriteEngine")
         : LayeredEngine(argc,argv, windowName),
-          layer(new SpriteLayer())
+          layer(new SpriteLayer()),
+          s()
     {
         addLayer( layer );
+        s = std::make_shared<Sprite>("data/images/aaa.png");
+        layer->add(s);
     }
 
-    std::shared_ptr<SpriteLayer> getLayer() const {return layer;}
+protected:
+    void onDraw()
+    {
+        LayeredEngine::onDraw();
+        s->transform.rotate(0.01, 0, 0, 1);
+    }
 
 private:
     std::shared_ptr<SpriteLayer> layer;
+    std::shared_ptr<Sprite> s;
+
+    // Engine interface
 };
 
 
 int main(int argc, char** argv)
 {
     SpriteEngine* engine = new SpriteEngine(argc,argv);
-    auto s = std::make_shared<Sprite>("data/images/aaa.png");
-    engine->getLayer()->add(s);
-
     engine->run();
-
 
     return 0;
 }
