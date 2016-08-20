@@ -9,7 +9,7 @@ QMAKE_INCDIR += /usr/include/freetype2
 
 
 DEFINES += GLEW_STATIC
-QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra
+QMAKE_CXXFLAGS += -std=c++14 -Wall -Wextra
 LIBS += -lGLEW -lGL -lglut -lpng -lfreetype
 LIBS += -lGLESv2
 #LIBS += -l3ds

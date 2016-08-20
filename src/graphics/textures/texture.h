@@ -40,7 +40,13 @@ public:
      * @return Opengl texture id */
     GLuint getID() const                            { return tex->getID(); }
 
+    /**
+     * @brief getLowLevelTexture LowLevelTexture refferenced by this Texture
+     */
+    LowLevelTexture& getLowLevelTexture() {return *tex;}
+
 private:
+    friend class TextureAtlas;
     std::shared_ptr<LowLevelTexture> tex;// pointer to real texture
     vvv::vector4f texturePosition;       //store position in real texture (x,y)-offset, (z,w)-width,height
     GLuint width;

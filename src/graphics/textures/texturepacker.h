@@ -25,11 +25,13 @@ class packNode
         {
             if(placed) {
                 if(tryPlaceToRight(image, getSizePred, setOffsetPred)) return true;
-                if(tryPlaceToBottom(image, getSizePred, setOffsetPred)) return true; }
+                if(tryPlaceToBottom(image, getSizePred, setOffsetPred)) return true;
+            }
             else if(isFit(*image, getSizePred)){
                 placed = image;
                 setOffsetPred(*placed, xoff, yoff, border);
-                return true;}
+                return true;
+            }
             return false;
         }
 
