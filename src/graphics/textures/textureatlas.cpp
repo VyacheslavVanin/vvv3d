@@ -73,7 +73,7 @@ void TextureAtlas::constructorFunction(size_t width, size_t height,
 
     vector<shared_ptr<Texture>> notPlaced;
     texsToPack = pack2d(texsToPack, width, height, textureCompareHeightFirst,
-                    textureGetSize, setTextureOffset, notPlaced, 1);
+                    textureGetSize, setTextureOffset, notPlaced, 0);
     if(notPlaced.size() > 0)
         throw std::logic_error("Failed to fill texture atlas."
                                " Atlas too small for images.");
@@ -91,6 +91,9 @@ void TextureAtlas::constructorFunction(size_t width, size_t height,
                         texOffsetX, texOffsetY,
                         t->width, t->height,
                         GL_RGBA, GL_UNSIGNED_BYTE, buff.get());
+        t->tex = atlas;
+        t->texturePosition.z = 1.0f / width * t->width;
+        t->texturePosition.w = 1.0f / height * t->height;
     }
 }
 

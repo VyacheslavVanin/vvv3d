@@ -23,15 +23,37 @@ class packNode
 
         bool placeImage( T* image, const GET& getSizePred, const SET& setOffsetPred)
         {
-            if(placed) {
+            if(!placed){
+                if(isFit(*image, getSizePred)){
+                    placed = image;
+                    setOffsetPred(*placed, xoff, yoff, border);
+
+                    const auto placedSize = getSizePred(*placed);
+                    const auto placedWidth = placedSize.first + 2*border;
+                    const auto placedHight = placedSize.second + 2*border;
+                    {
+                        const auto newWidth  = width  - placedWidth;
+                        const auto newHeight = placedHight;
+                        const auto newXOff = xoff + placedWidth;
+                        const auto newYOff = yoff;
+                        right.reset( new packNode(newWidth, newHeight, newXOff, newYOff, border));
+                    }
+                    {
+                        const auto newWidth  = width;
+                        const auto newHeight = height - placedHight;
+                        const auto newXOff = xoff;
+                        const auto newYOff = yoff + placedHight;
+                        bottom.reset( new packNode(newWidth, newHeight, newXOff, newYOff, border));
+                    }
+
+                    return true;
+                }
+            }
+            else {
                 if(tryPlaceToRight(image, getSizePred, setOffsetPred)) return true;
                 if(tryPlaceToBottom(image, getSizePred, setOffsetPred)) return true;
             }
-            else if(isFit(*image, getSizePred)){
-                placed = image;
-                setOffsetPred(*placed, xoff, yoff, border);
-                return true;
-            }
+
             return false;
         }
 
@@ -55,32 +77,11 @@ class packNode
     private:
         bool tryPlaceToRight(T*image, const GET& getSizePred, const SET& setOffsetPred)
         {
-            const std::pair<float,float> placedSize = getSizePred(*placed);
-            if(right==nullptr)
-            {
-                const auto placedWidth = placedSize.first + 2*border;
-                const auto placedHight = placedSize.second + 2*border;
-                const auto newWidth  = width  - placedWidth;
-                const auto newHeight = placedHight;
-                const auto newXOff = xoff + placedWidth;
-                const auto newYOff = yoff;
-                right.reset( new packNode(newWidth, newHeight, newXOff, newYOff, border));
-            }
             return right->placeImage(image, getSizePred, setOffsetPred);
         }
 
         bool tryPlaceToBottom(T* image, const GET& getSizePred, const SET& setOffsetPred)
         {
-            const std::pair<float,float> placedSize = getSizePred(*placed);
-            if(bottom==nullptr)
-            {
-                const auto placedHight = placedSize.second + 2*border;
-                const auto newWidth  = width;
-                const auto newHeight = height - placedHight;
-                const auto newXOff = xoff;
-                const auto newYOff = yoff + placedHight;
-                bottom.reset( new packNode(newWidth, newHeight, newXOff, newYOff, border));
-            }
             return bottom->placeImage(image, getSizePred, setOffsetPred);
         }
 };

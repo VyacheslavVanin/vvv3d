@@ -35,13 +35,13 @@ public:
                             "data/images/image18.png",
                             "data/images/image19.png",
                             "data/images/image20.png",
-                          /*  "data/images/image21.png",
+                            "data/images/image21.png",
                             "data/images/image22.png",
                             "data/images/image23.png",
                             "data/images/image24.png",
                             "data/images/image25.png",
                             "data/images/image26.png",
-                            "data/images/image27.png",
+                           /* "data/images/image27.png",
                             "data/images/image28.png",
                             "data/images/image29.png",
                             "data/images/image30.png",
@@ -122,7 +122,8 @@ public:
         addLayer( layer );
         s = std::make_shared<Sprite>();
         s->setTexture(t);
-        //s->setTexture(ta.get("data/images/aaa.png"));
+        auto tt = ta.get("data/images/image1.png");
+        s->setTexture(tt);
         s->transform.setScale(1024,1024,1);
         layer->add(s);
     }
