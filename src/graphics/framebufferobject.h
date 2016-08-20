@@ -18,6 +18,11 @@ public:
     bool beginDrawToColourTexture(Texture& colourTexture);
     bool beginDrawToDepthTexture(Texture& depth);
 
+    bool beginDrawToTextures( LowLevelTexture& colourTexture,
+                              LowLevelTexture& depthTexture);
+    bool beginDrawToColourTexture(LowLevelTexture& colourTexture);
+    bool beginDrawToDepthTexture(LowLevelTexture& depth);
+
     void endDraw();
 
 private:
