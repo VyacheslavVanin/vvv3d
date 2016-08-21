@@ -115,16 +115,18 @@ public:
                             "data/images/image98.png",
                             "data/images/image99.png",
                             */
-                        });
+                        }, 0);
 
         auto t = std::make_shared<Texture>(ta.getInternal());
 
         addLayer( layer );
         s = std::make_shared<Sprite>();
         s->setTexture(t);
-        auto tt = ta.get("data/images/image1.png");
-        s->setTexture(tt);
-        s->transform.setScale(1024,1024,1);
+        s->transform.setScale(t->getWidth(), t->getHeight(), 1);
+        //auto tt = ta.get("data/images/image10.png");
+        //s->setTexture(tt);
+        //s->transform.setScale(tt->getWidth(),tt->getHeight(), 1);
+        //s->transform.scale(4);
         layer->add(s);
     }
 
