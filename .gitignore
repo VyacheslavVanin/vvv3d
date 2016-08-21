@@ -1,0 +1,15 @@
+*.o
+*.png
+*.xcf
+*.pro.user*
+*.autosave
+test
+vvv3d
+Makefile
+
+data
+data/*
+bin/
+*.pyc
+*.swp
+.qmake.stash
