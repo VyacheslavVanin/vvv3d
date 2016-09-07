@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += console
+CONFIG += console c++14
 CONFIG -= qt
 
 DESTDIR = bin
@@ -9,9 +9,9 @@ QMAKE_INCDIR += /usr/include/freetype2
 
 
 DEFINES += GLEW_STATIC
-QMAKE_CXXFLAGS += -std=c++14 -Wall -Wextra
+QMAKE_CXXFLAGS += -Wall -Wextra
 LIBS += -lGLEW -lGL -lglut -lpng -lfreetype
-LIBS += -lGLESv2
+#LIBS += -lGLESv2
 #LIBS += -l3ds
 
 DISTFILES += \
