@@ -81,8 +81,18 @@ void TextureAtlas::constructorFunction(size_t width, size_t height,
         throw std::logic_error("Failed to fill texture atlas."
                                " Atlas too small for images.");
 
-    const size_t MAX_BYTES = width*height;
+    const size_t MAX_BYTES = width*height*4;
     auto buff = make_unique<GLubyte[]>(MAX_BYTES);
+    for(size_t i = 0; i < MAX_BYTES; ++i)
+        buff.get()[i] = 0;
+
+    // Clear atlass
+    atlas->bind();
+    glTexSubImage2D(GL_TEXTURE_2D, 0,
+                    0,0, width, height,
+                    GL_RGBA, GL_UNSIGNED_BYTE, buff.get() );
+
+    // Draw all images on atlass
     for(auto& t: texsToPack){
         t->bind();
         glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, buff.get());
