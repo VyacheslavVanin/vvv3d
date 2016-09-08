@@ -12,6 +12,10 @@ public:
     LowLevelGeometry( const std::shared_ptr<LowLevelBuffer>& vb,
                       const std::shared_ptr<LowLevelBuffer>& ib,
                       const VertexAttributes& attrib);
+    LowLevelGeometry(const LowLevelGeometry&) = delete;
+    LowLevelGeometry& operator=(const LowLevelGeometry&) = delete;
+    LowLevelGeometry(LowLevelGeometry&& other) noexcept;
+    LowLevelGeometry& operator=(LowLevelGeometry&& other) noexcept;
 
     ~LowLevelGeometry();
 

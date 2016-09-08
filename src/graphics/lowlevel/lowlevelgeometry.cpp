@@ -2,7 +2,10 @@
 
 
 
-LowLevelGeometry::LowLevelGeometry(const std::shared_ptr<LowLevelBuffer> &vb, const std::shared_ptr<LowLevelBuffer> &ib, const VertexAttributes &attrib) : vb(vb), ib(ib), vao(~0u)
+LowLevelGeometry::LowLevelGeometry(const std::shared_ptr<LowLevelBuffer> &vb,
+                                   const std::shared_ptr<LowLevelBuffer> &ib,
+                                   const VertexAttributes &attrib)
+    : vb(vb), ib(ib), vao(~0u)
 {
     glGenVertexArrays(1, &vao);
     bindVAO();
@@ -11,7 +14,26 @@ LowLevelGeometry::LowLevelGeometry(const std::shared_ptr<LowLevelBuffer> &vb, co
     attrib.enable();
 }
 
-LowLevelGeometry::~LowLevelGeometry() {freeResources();}
+LowLevelGeometry::LowLevelGeometry(LowLevelGeometry&& other) noexcept
+    : vb(std::move(other.vb)), ib(std::move(other.ib)), vao(other.vao)
+{
+    other.vao = 0;
+}
+
+LowLevelGeometry& LowLevelGeometry::operator=(LowLevelGeometry&& other) noexcept
+{
+    vb = std::move(other.vb);
+    ib = std::move(other.ib);
+    freeResources();
+    vao = other.vao;
+    other.vao = 0;
+    return *this;
+}
+
+LowLevelGeometry::~LowLevelGeometry()
+{
+    freeResources();
+}
 
 void LowLevelGeometry::Draw(GLenum mode, GLsizei count) const
 {
