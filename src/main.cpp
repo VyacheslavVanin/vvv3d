@@ -13,7 +13,7 @@ public:
           layer(new SpriteLayer()),
           s()
     {
-        TextureAtlas ta(1024, 1024, {
+        TextureAtlas ta(512, 512, {
                             "data/images/aaa.png",
                             "data/images/image1.png",
                             "data/images/image2.png",
@@ -30,7 +30,7 @@ public:
                             "data/images/image13.png",
                             "data/images/image14.png",
                             "data/images/image15.png",
-                            "data/images/image16.png",
+                           /* "data/images/image16.png",
                             "data/images/image17.png",
                             "data/images/image18.png",
                             "data/images/image19.png",
@@ -41,7 +41,7 @@ public:
                             "data/images/image24.png",
                             "data/images/image25.png",
                             "data/images/image26.png",
-                           /* "data/images/image27.png",
+                            "data/images/image27.png",
                             "data/images/image28.png",
                             "data/images/image29.png",
                             "data/images/image30.png",
@@ -117,17 +117,18 @@ public:
                             */
                         }, 0);
 
-        auto t = std::make_shared<Texture>(ta.getInternal());
+        getTextureManager().addAtlas(ta);
 
         addLayer( layer );
         s = std::make_shared<Sprite>();
-        s->setTexture(t);
-        s->transform.setScale(t->getWidth(), t->getHeight(), 1);
+        s->setTexture( getTextureManager().get("data/images/aaa.png"));
+        s->transform.setScale(s->getTexture().getWidth(), s->getTexture().getHeight(), 1);
         //auto tt = ta.get("data/images/image10.png");
         //s->setTexture(tt);
         //s->transform.setScale(tt->getWidth(),tt->getHeight(), 1);
         //s->transform.scale(4);
         layer->add(s);
+        getTextureManager();
     }
 
 protected:

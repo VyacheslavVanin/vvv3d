@@ -30,6 +30,12 @@ void TextureManager::add(const std::string &filename, const std::string &name)
 
 void TextureManager::add(const std::string &filename) { add(filename, filename); }
 
+void TextureManager::addAtlas(const TextureAtlas &atlas)
+{
+    const auto& atlasTexs = atlas.textures;
+    texs.insert(atlasTexs.begin(), atlasTexs.end());
+}
+
 bool TextureManager::contain(const std::string &name) { return texs.find(name)!=texs.end(); }
 
 void TextureManager::remove(const std::string &name)

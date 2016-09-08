@@ -28,6 +28,7 @@ public:
     auto getInternal() {return atlas;}
 
 private:
+    friend class TextureManager;
     std::shared_ptr<LowLevelTexture> atlas;
     std::unordered_map<std::string, std::shared_ptr<Texture>> textures;
     size_t width;
