@@ -128,7 +128,6 @@ public:
         //s->transform.setScale(tt->getWidth(),tt->getHeight(), 1);
         //s->transform.scale(4);
         layer->add(s);
-        getTextureManager();
     }
 
 protected:

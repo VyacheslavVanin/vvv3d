@@ -27,7 +27,6 @@ public:
 
 private:
     mutable std::unordered_map<std::string, std::shared_ptr<Texture>>         texs;
-    mutable std::unordered_map<std::string, std::shared_ptr<LowLevelTexture>> lowLevelTexs;
 };
 
 #endif // TEXTUREMANAGER_H
