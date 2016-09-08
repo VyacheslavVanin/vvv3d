@@ -30,6 +30,22 @@ LowLevelShaderProgram::LowLevelShaderProgram(GLuint vshader, GLuint fshader,
     CreateProgram(vshader,fshader, f );
 }
 
+LowLevelShaderProgram::LowLevelShaderProgram(
+                                        LowLevelShaderProgram&& other) noexcept
+    : program(other.program)
+{
+    other.program = 0;
+}
+
+LowLevelShaderProgram&
+LowLevelShaderProgram::operator=(LowLevelShaderProgram&& other) noexcept
+{
+    glDeleteProgram(program);
+    program = other.program;
+    other.program = 0;
+    return *this;
+}
+
 void LowLevelShaderProgram::activate() const
 {
     static GLuint currentProgram = ~0u;

@@ -10,6 +10,10 @@ public:
     LowLevelShaderProgram();
     LowLevelShaderProgram(GLuint vshader, GLuint fshader,
                           const std::function<void(GLuint)>& f=[](GLuint){} );
+    LowLevelShaderProgram(const LowLevelShaderProgram&) = delete;
+    LowLevelShaderProgram& operator=(const LowLevelShaderProgram&) = delete;
+    LowLevelShaderProgram(LowLevelShaderProgram&& other) noexcept;
+    LowLevelShaderProgram& operator=(LowLevelShaderProgram&& other) noexcept;
     ~LowLevelShaderProgram();
 
     void activate() const;
