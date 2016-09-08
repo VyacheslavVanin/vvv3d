@@ -14,6 +14,24 @@ LowLevelBuffer::~LowLevelBuffer()
     glDeleteBuffers(1,&buffer);
 }
 
+LowLevelBuffer::LowLevelBuffer(LowLevelBuffer&& other) noexcept
+    : target(other.target), buffer(other.buffer),
+      size(other.size), sizemax(other.sizemax)
+{
+    other.buffer = 0;
+}
+
+LowLevelBuffer &LowLevelBuffer::operator=(LowLevelBuffer&& other) noexcept
+{
+    glDeleteBuffers(1, &buffer);
+    this->target = other.target;
+    this->buffer = other.buffer;
+    this->size   = other.size;
+    this->sizemax= other.sizemax;
+    other.buffer = 0;
+    return *this;
+}
+
 void LowLevelBuffer::bind() const
 {
     if( buffer==(~0u) ) throw std::logic_error("Buffer not initialized");
