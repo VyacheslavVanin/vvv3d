@@ -13,7 +13,8 @@ std::shared_ptr<Texture> TextureManager::get(const std::string &name) const
         return texs.at(name); }
 }
 
-void TextureManager::add(std::shared_ptr<LowLevelTexture> texture, const std::string &name)
+void TextureManager::add(std::shared_ptr<LowLevelTexture> texture,
+                         const std::string &name)
 {
     if( texs.count(name) > 0 ) return;
     texs[name].reset(new Texture(texture));
@@ -26,7 +27,10 @@ void TextureManager::add(const std::string &filename, const std::string &name)
     texs[name].reset(new Texture(im));
 }
 
-void TextureManager::add(const std::string &filename) { add(filename, filename); }
+void TextureManager::add(const std::string &filename)
+{
+    add(filename, filename);
+}
 
 void TextureManager::addAtlas(const TextureAtlas &atlas)
 {
@@ -34,7 +38,10 @@ void TextureManager::addAtlas(const TextureAtlas &atlas)
     texs.insert(atlasTexs.begin(), atlasTexs.end());
 }
 
-bool TextureManager::contain(const std::string &name) { return texs.find(name)!=texs.end(); }
+bool TextureManager::contain(const std::string &name)
+{
+    return texs.find(name)!=texs.end();
+}
 
 void TextureManager::remove(const std::string &name)
 {

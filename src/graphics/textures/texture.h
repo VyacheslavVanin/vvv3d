@@ -48,7 +48,9 @@ public:
 private:
     friend class TextureAtlas;
     std::shared_ptr<LowLevelTexture> tex;// pointer to real texture
-    vvv::vector4f texturePosition;       //store position in real texture (x,y)-offset, (z,w)-width,height
+
+    //store position in real texture (x,y)-offset, (z,w)-width,height
+    vvv::vector4f texturePosition;
     GLuint width;
     GLuint height;
 };

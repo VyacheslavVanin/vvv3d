@@ -50,9 +50,9 @@ static pair<GLuint, GLuint> textureGetSize(const Texture& t)
 }
 
 void TextureAtlas::constructorFunction(size_t width, size_t height,
-                                       const vector<string> &names,
-                                       const vector<shared_ptr<LowLevelTexture>> &texsList,
-                                       unsigned int border)
+                           const vector<string> &names,
+                           const vector<shared_ptr<LowLevelTexture>> &texsList,
+                           unsigned int border)
 {
     vector<shared_ptr<Texture>> texsToPack;
     for(const auto& t: texsList)
@@ -72,7 +72,7 @@ void TextureAtlas::constructorFunction(size_t width, size_t height,
     vector<shared_ptr<Texture>> notPlaced;
     texsToPack = pack2d(texsToPack, static_cast<ssize_t>(width),
                         static_cast<ssize_t>(height), textureCompareHeightFirst,
-                    textureGetSize, setTextureOffset, notPlaced, border);
+                        textureGetSize, setTextureOffset, notPlaced, border);
     if(notPlaced.size() > 0)
         throw std::logic_error("Failed to fill texture atlas."
                                " Atlas too small for images.");

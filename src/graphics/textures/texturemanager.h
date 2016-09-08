@@ -26,7 +26,7 @@ public:
     std::vector<std::string> listNames()const;
 
 private:
-    mutable std::unordered_map<std::string, std::shared_ptr<Texture>>         texs;
+    mutable std::unordered_map<std::string, std::shared_ptr<Texture>>  texs;
 };
 
 #endif // TEXTUREMANAGER_H
