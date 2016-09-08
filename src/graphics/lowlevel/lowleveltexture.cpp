@@ -20,6 +20,27 @@ LowLevelTexture::LowLevelTexture(const void* src,
     setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
+LowLevelTexture::LowLevelTexture(LowLevelTexture&& other) noexcept
+    : texture(other.texture), target(other.target),
+      width(other.width), height(other.height),
+      internalFormat(other.internalFormat)
+{
+    other.texture = 0;
+}
+
+LowLevelTexture& LowLevelTexture::operator=(LowLevelTexture&& other) noexcept
+{
+    glDeleteTextures(1, &texture);
+    texture = other.texture;
+    target  = other.target;
+    width   = other.width;
+    height  = other.height;
+    internalFormat = other.internalFormat;
+
+    other.texture = 0;
+    return *this;
+}
+
 LowLevelTexture::~LowLevelTexture()
 {
     glDeleteTextures( 1, &texture );

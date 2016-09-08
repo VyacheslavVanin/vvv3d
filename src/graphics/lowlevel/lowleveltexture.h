@@ -10,6 +10,10 @@ public:
                     GLuint imageWidth, GLuint  imageHeight,
                     GLint format,      GLint   internalFormat, GLenum type=GL_UNSIGNED_BYTE,
                     GLenum target=GL_TEXTURE_2D);
+    LowLevelTexture(const LowLevelTexture&) = delete;
+    LowLevelTexture& operator=(const LowLevelTexture&) = delete;
+    LowLevelTexture(LowLevelTexture&& other) noexcept;
+    LowLevelTexture& operator=(LowLevelTexture&& other) noexcept;
     ~LowLevelTexture();
 
     void bind() const;
