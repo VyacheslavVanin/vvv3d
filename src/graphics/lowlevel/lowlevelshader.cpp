@@ -49,6 +49,7 @@ LowLevelShader &LowLevelShader::operator=(LowLevelShader &&other) noexcept
     glDeleteShader(shader);
     shader = other.shader;
     other.shader = 0;
+    return *this;
 }
 
 LowLevelShader::~LowLevelShader()
@@ -56,19 +57,19 @@ LowLevelShader::~LowLevelShader()
     glDeleteShader( shader );
 }
 
-LowLevelShader&& LowLevelShader::fromString(const char *source, GLenum shaderType)
+LowLevelShader LowLevelShader::fromString(const char *source, GLenum shaderType)
 {
     LowLevelShader ret;
     ret.shader = ::createFromString(source, shaderType);
-    return std::move(ret);
+    return ret;
 }
 
-LowLevelShader&& LowLevelShader::fragmentFromString(const char* source)
+LowLevelShader LowLevelShader::fragmentFromString(const char* source)
 {
     return fromString(source, GL_FRAGMENT_SHADER);
 }
 
-LowLevelShader&& LowLevelShader::vertexFromString(const char* source)
+LowLevelShader LowLevelShader::vertexFromString(const char* source)
 {
     return fromString(source, GL_VERTEX_SHADER);
 }
