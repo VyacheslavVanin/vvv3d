@@ -1,10 +1,6 @@
 #include "textureatlas.h"
 #include "texturepacker.h"
-#include <graphics/framebufferobject.h>
-#include <graphics/framebufferobject.h>
-#include <std/spritelayer.h>
 #include <utils/helper.h>
-#include <algorithm>
 
 using namespace std;
 
