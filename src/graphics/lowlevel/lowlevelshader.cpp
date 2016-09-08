@@ -38,6 +38,19 @@ LowLevelShader::LowLevelShader(const char *filename, GLenum shaderType) : shader
     shader = ::createFromString(source.c_str(), shaderType);
 }
 
+LowLevelShader::LowLevelShader(LowLevelShader &&other) noexcept
+    : shader(other.shader)
+{
+    other.shader = 0;
+}
+
+LowLevelShader &LowLevelShader::operator=(LowLevelShader &&other) noexcept
+{
+    glDeleteShader(shader);
+    shader = other.shader;
+    other.shader = 0;
+}
+
 LowLevelShader::~LowLevelShader()
 {
     glDeleteShader( shader );

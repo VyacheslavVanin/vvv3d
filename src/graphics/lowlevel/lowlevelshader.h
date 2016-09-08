@@ -6,8 +6,10 @@ class LowLevelShader
 {
 public:
     LowLevelShader(const char* filename, GLenum shaderType);
-    LowLevelShader(const LowLevelShader&) = default;
-    LowLevelShader(LowLevelShader&&) = default;
+    LowLevelShader(const LowLevelShader&) = delete;
+    LowLevelShader& operator=(const LowLevelShader&) = delete;
+    LowLevelShader(LowLevelShader&& other) noexcept;
+    LowLevelShader&& operator=(LowLevelShader&& other) noexcept;
     ~LowLevelShader();
 
     GLuint get() const {return shader;}
