@@ -3,7 +3,6 @@
 #include <memory>
 #include <core/transform.h>
 #include <graphics/textures/texture.h>
-#include <core/engine.h>
 
 class Sprite
 {
@@ -11,31 +10,16 @@ public:
     Transform transform;
 
     Sprite() = default;
-    Sprite(const std::string& name)
-    {
-        setTexture(name);
-        transform.setScale(texture->getWidth(), texture->getHeight(), 1);
-    }
+    Sprite(const std::string& name);
 
-    void setTexture(std::shared_ptr<Texture> tex)
-    {
-        texture = tex;
-    }
+    void setTexture(std::shared_ptr<Texture> tex);
 
     /**
      * @brief setTexture set texture by name in TextureManager
      * @param name name in Texture manager */
-    void setTexture(const std::string& name)
-    {
-        const auto& e = Engine::getActiveEngine();
-        const auto& tm = e->getTextureManager();
-        texture = tm.get(name);
-    }
+    void setTexture(const std::string& name);
 
-    const Texture& getTexture() const
-    {
-        return *texture;
-    }
+    const Texture& getTexture() const;
 
 private:
     std::shared_ptr<Texture> texture;
