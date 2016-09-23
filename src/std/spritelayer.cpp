@@ -1,5 +1,6 @@
 #include <memory>
-#include <core/engine.h> 
+#include <std/draw.h>
+#include <core/engine.h>
 #include "spritelayer.h"
 #include "graphics/geometry.h"
 
@@ -44,17 +45,8 @@ void SpriteLayer::onDraw()
     const auto& shader = shaderMgr.get("StdSpriteShader");
     const auto& geom   = geomMgr.get("StdSpriteGeometry");
 
-    shader->activate();
-    for(auto& s:sprites){
-        shader->setModel(s->transform.getModelMatrix());
-        shader->setTexture0(s->getTexture());
-        shader->setTexturePosition(s->getTexture().getTexturePosition());
-        shader->setViewProjection(camera.getViewProjection());
-
-        geom->draw();
-    }
-
-
+    for(auto& s:sprites)
+        drawTextured(camera, *shader, *geom, s->transform, s->getTexture());
 }
 
 void SpriteLayer::onResize(int x, int y)
