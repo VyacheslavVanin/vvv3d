@@ -2,12 +2,12 @@
 in vec2 position;
 in vec2 texCoord;
 uniform mat4    modelMatrix;
-uniform mat4    viewProjection;
+uniform mat4    viewProjectionMatrix;
 
 out highp vec2  out_texCoord;
 
 void main(void)
 {
-    gl_Position  = viewProjection*modelMatrix*vec4(position, 0 ,1) ;
+    gl_Position  = viewProjectionMatrix*modelMatrix*vec4(position, 0 ,1) ;
     out_texCoord = texCoord;
 }
