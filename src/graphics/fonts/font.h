@@ -6,6 +6,7 @@
 #include <freetype2/ft2build.h>
 #include FT_FREETYPE_H
 #include <graphics/lowlevel/lowleveltexture.h>
+#include <graphics/textures/texture.h>
 
 struct Glyph
 {
@@ -24,10 +25,10 @@ class Font
 {
 private:
     Font(FT_Face f, unsigned int size=16, unsigned int charSize=16,
-         unsigned int  dpi=96, unsigned int textureSize=256);
+         unsigned int  dpi=96, unsigned int textureSize=512);
 
     std::map<uint32_t, std::shared_ptr<Glyph>> mapCharToGlyph;
-    std::shared_ptr<LowLevelTexture> lltex;
+    std::shared_ptr<Texture> lltex;
 
     FT_Face face;
     unsigned int charSize;
@@ -38,8 +39,7 @@ private:
 public:
     std::shared_ptr<Glyph> getGlyph(uint32_t c) const { return mapCharToGlyph.at(c); }
     void activate(GLuint texUnit=0);
-    LowLevelTexture& getTexture() {return *lltex;}
-    const LowLevelTexture& getTexture() const {return *lltex;}
+    std::shared_ptr<Texture> getTexture() const {return lltex;}
     long getAscender() const;
     long getDescender() const;
     long getMinLeftGlyphEdge() const;

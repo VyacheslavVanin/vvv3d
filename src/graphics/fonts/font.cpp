@@ -7,8 +7,8 @@
 
 using namespace std;
 #if 1
-const std::u32string characters = U"abscdefghijklmnopqrstuvwxyz"
-                                   "ABSCDEFGHIJKLMNOPQRSTUVWXYZ"
+const std::u32string characters = U"abcdefghijklmnopqrstuvwxyz"
+                                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                    "0123456789 ~`!@#$%^&*()_+-="
                                    "{}[]|\\/?,.<>;:'\""
                                    "абвгдеёжзиЙклмнопрстуфхцчшщъыьэюя"
@@ -95,7 +95,7 @@ static void glyphSetOffset(Glyph& g, int32_t xoff, int32_t yoff, int32_t border)
     g.textureOffsetY = yoff + border;
 }
 
-static void clearTexture(std::shared_ptr<LowLevelTexture> lltex)
+static void clearTexture(std::shared_ptr<Texture> lltex)
 {
     const size_t numPixels = lltex->getWidth()*lltex->getHeight() * 4;
     void* ptr = calloc(1,numPixels);
@@ -108,7 +108,7 @@ static void clearTexture(std::shared_ptr<LowLevelTexture> lltex)
     free(ptr);
 }
 
-static void drawGlyphesToTexture(std::shared_ptr<LowLevelTexture> lltex,
+static void drawGlyphesToTexture(std::shared_ptr<Texture> lltex,
                                  std::vector<shared_ptr<Glyph>>& glyphes)
 {
     lltex->bind();
@@ -123,7 +123,7 @@ static void drawGlyphesToTexture(std::shared_ptr<LowLevelTexture> lltex,
 
 Font::Font(FT_Face f, unsigned int size, unsigned int charSize,
            unsigned int dpi, unsigned int textureSize)
-    : lltex(new LowLevelTexture(0, textureSize, textureSize, GL_RGBA, GL_RGBA)),
+    : lltex(new Texture(std::make_shared<LowLevelTexture>(nullptr, textureSize, textureSize, GL_RGBA, GL_RGBA))),
       face(f), charSize(charSize), dpi(dpi),
       pixelSize(size), textureSize(textureSize)
 {

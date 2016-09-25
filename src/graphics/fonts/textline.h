@@ -5,6 +5,8 @@
 #include <graphics/geometry.h>
 #include <graphics/fonts/font.h>
 #include <graphics/colour.h>
+#include <core/transform.h>
+#include <std/draw.h>
 
 
 void updateTextGeometry(std::shared_ptr<Geometry> in,
@@ -15,6 +17,7 @@ createTextGeometry(const Font& font, const std::u32string& text);
 
 std::shared_ptr<Geometry>
 createTextGeometry(const Font& f, const std::string& str);
+
 std::shared_ptr<Geometry>
 createTextGeometry(const Font& f, std::u32string&& str);
 
