@@ -4,6 +4,7 @@
 #include <graphics/geometry.h>
 #include <graphics/shaders/shader.h>
 #include <core/transform.h>
+#include <graphics/fonts/textline.h>
 
 
 static inline
@@ -83,4 +84,16 @@ void drawTexturedColoured(const Camera& camera, Shader& shader,
     shader.setTexture0(texture);
     shader.setColour0(colour);
     geometry.draw();
+}
+
+void drawText(const Camera& camera, Shader& shader, const Geometry& geometry,
+              const Transform& transform, const Font& font, const Colour& colour)
+{
+    setup_shader(shader, camera, transform);
+    auto tex = font.getTexture();
+    shader.setTexturePosition(tex->getTexturePosition());
+    shader.setTexture0(*tex);
+    shader.setColour0(colour);
+    DRAW_TRANSPARENT
+            geometry.draw();
 }

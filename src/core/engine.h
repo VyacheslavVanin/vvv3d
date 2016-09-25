@@ -6,11 +6,6 @@
 #include <graphics/geometry.h>
 #include <graphics/shaders/shader.h>
 
-#define DRAW_TRANSPARENT for(auto trenable = [](){glDisable(GL_DEPTH_TEST); glEnable(GL_BLEND); \
-                                                  glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);return true;}(); \
-                             trenable; \
-                             glEnable(GL_DEPTH_TEST),glDisable(GL_BLEND),trenable=false)
-
 class Engine
 {
 public:

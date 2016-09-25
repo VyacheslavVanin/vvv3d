@@ -4,6 +4,8 @@
 #include <core/layeredengine.h>
 #include <std/spritelayer.h>
 #include <graphics/textures/textureatlas.h>
+#include <graphics/fonts/textline.h>
+#include <std/draw.h>
 
 class SpriteEngine : public LayeredEngine
 {
@@ -128,19 +130,36 @@ public:
         //s->transform.setScale(tt->getWidth(),tt->getHeight(), 1);
         //s->transform.scale(4);
         layer->add(s);
+
+
+        auto& fm = getFontManager();
+        fm.addFont("default", "data/fonts/DejaVuSans.ttf", 20);
+        font = fm.getFont("default");
+        textGeometry = createTextGeometry(*font, std::u32string(U"Hello World"));
+
+        getShaderManager().add("text", "data/shaders/text.vsh", "data/shaders/text.fsh");
+
     }
 
 protected:
     void onDraw()
     {
         LayeredEngine::onDraw();
+
+        Transform textTransform;
+        textTransform.move(0, -80, 0);
+
+        drawText(layer->getCamera(), *getShaderManager().get("text"),
+                 *textGeometry, textTransform, *font, Colour::ORANGE);
+
     //    s->transform.rotate(0.01, 0, 0, 1);
     }
 
 private:
     std::shared_ptr<SpriteLayer> layer;
     std::shared_ptr<Sprite> s;
-
+    std::shared_ptr<Font>   font;
+    std::shared_ptr<Geometry> textGeometry;
     // Engine interface
 };
 
