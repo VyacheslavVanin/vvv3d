@@ -7,10 +7,7 @@
 
 static const int DEFAULT_SCREEN_WIDTH = 640;
 static const int DEFAULT_SCREEN_HEIGHT = 480;
-
-
 std::shared_ptr<Engine> Engine::activeEngine = std::shared_ptr<Engine>();
-
 
 Engine::Engine(int argc, char** argv, const char* windowName)
     : viewportWidth(DEFAULT_SCREEN_WIDTH),
@@ -26,14 +23,12 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     glutInitWindowSize( viewportWidth, viewportHeight);
     glutInitWindowPosition( 100, 100 );
     glutCreateWindow( windowName );
-    glewInit();
     glutIgnoreKeyRepeat(true);
+    glewInit();
 
     glClearColor( 0.05f, 0.1f, 0.2f, 0);
     glEnable( GL_DEPTH_TEST );
     glEnable( GL_MULTISAMPLE);
-
-    glutIgnoreKeyRepeat(true);
 
     glutIdleFunc( [](void){glutPostRedisplay();} );
     glutDisplayFunc( [](){activeEngine->display();} );
@@ -49,6 +44,8 @@ void Engine::run()
     glutMainLoop();
 }
 
+ResourceManager& Engine::getResourceManager() {return *resourceManager;}
+
 void Engine::display()
 {
     const auto t1 = std::chrono::system_clock::now();
@@ -63,22 +60,12 @@ void Engine::display()
     currentfps = 1000.0f / milis;
 }
 
-void Engine::onResize(int x, int y)
-{
-    (void)x, (void)y;
-}
+void Engine::initialSetup() {}
+void Engine::onDraw() {}
+void Engine::onResize(int x, int y) {(void)x, (void)y;}
 
-void Engine::initialSetup() { }
-
-void Engine::onDraw() { }
-
-ResourceManager& Engine::getResourceManager()
-{
-    return *resourceManager;
-}
 
 int Engine::getVieportWidth() const {return viewportWidth;}
-
 int Engine::getVieportHeight() const {return viewportHeight;}
 
 void Engine::resize(int x, int y)

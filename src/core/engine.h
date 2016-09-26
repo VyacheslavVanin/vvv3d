@@ -8,15 +8,12 @@ class Engine
 {
 public:
     Engine(int argc, char** argv, const char* windowName = "vvv3d");
-
     virtual ~Engine();
-
-    void run();
-
-    float getCurrentFps() const;
 
     ResourceManager& getResourceManager();
 
+    void run();
+    float getCurrentFps() const;
     int getVieportWidth() const;
     int getVieportHeight() const;
 
