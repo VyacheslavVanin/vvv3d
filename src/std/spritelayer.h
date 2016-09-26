@@ -4,11 +4,12 @@
 #include <core/ILayer.h>
 #include <graphics/camera.h>
 #include <std/sprite.h>
+class Engine;
 
 class SpriteLayer : public ILayer
 {
 public:
-    SpriteLayer();
+    SpriteLayer(Engine* engine);
 
     // ILayer interface
 public:
@@ -24,6 +25,7 @@ public:
 private:
     Camera camera;
     std::vector<std::shared_ptr<Sprite>> sprites;
+    Engine*              engine;
 };
 
 #endif // SPRITELAYER_H

@@ -5,12 +5,11 @@
 #include "graphics/geometry.h"
 
 
-SpriteLayer::SpriteLayer() : camera(){}
+SpriteLayer::SpriteLayer(Engine* engine) : camera(), sprites(), engine(engine){}
 
 void SpriteLayer::initialSetup()
 {
     camera.setOrtho(-100, 100, -100, 100, -100, 100);
-    auto engine = Engine::getActiveEngine();
 
     engine->getShaderManager().add("StdSpriteShader", "data/shaders/sprite.vsh",
                                    "data/shaders/sprite.fsh");
@@ -39,7 +38,6 @@ void SpriteLayer::initialSetup()
 
 void SpriteLayer::onDraw()
 {
-    auto engine = Engine::getActiveEngine();
     auto& shaderMgr = engine->getShaderManager();
     auto& geomMgr = engine->getGeometryManager();
     const auto& shader = shaderMgr.get("StdSpriteShader");

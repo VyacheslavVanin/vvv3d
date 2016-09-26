@@ -90,8 +90,6 @@ FontManager &Engine::getFontManager() {return fontManager;}
 
 ShaderManager &Engine::getShaderManager() {return shaderManger;}
 
-std::shared_ptr<Engine> Engine::getActiveEngine() {return activeEngine;}
-
 int Engine::getVieportWidth() const {return viewportWidth;}
 
 int Engine::getVieportHeight() const {return viewportHeight;}

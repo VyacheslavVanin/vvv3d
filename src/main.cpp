@@ -12,7 +12,7 @@ class SpriteEngine : public LayeredEngine
 public:
     SpriteEngine(int argc, char** argv, const char* windowName="SpriteEngine")
         : LayeredEngine(argc,argv, windowName),
-          layer(new SpriteLayer()),
+          layer(new SpriteLayer(this)),
           s()
     {
         TextureAtlas ta(512, 512, {

@@ -24,7 +24,6 @@ public:
     FontManager&        getFontManager();
     ShaderManager&      getShaderManager();
     GeometryManager&    getGeometryManager();
-    static std::shared_ptr<Engine> getActiveEngine();
 
     int getVieportWidth() const;
     int getVieportHeight() const;
