@@ -3,7 +3,7 @@
 #include <core/engine.h>
 #include "spritelayer.h"
 #include "graphics/geometry.h"
-
+#include <core/resourcemanager.h>
 
 SpriteLayer::SpriteLayer(Engine* engine) : camera(), sprites(), engine(engine){}
 
@@ -11,7 +11,8 @@ void SpriteLayer::initialSetup()
 {
     camera.setOrtho(-100, 100, -100, 100, -100, 100);
 
-    engine->getShaderManager().add("StdSpriteShader", "data/shaders/sprite.vsh",
+    auto& resman = engine->getResourceManager();
+    resman.getShaderManager().add("StdSpriteShader", "data/shaders/sprite.vsh",
                                    "data/shaders/sprite.fsh");
 
     static const GLfloat spriteVertices[] =
@@ -25,7 +26,7 @@ void SpriteLayer::initialSetup()
                                      /sizeof(spriteIndices[0]);
 
     using namespace std;
-    auto& geomMgr = engine->getGeometryManager();
+    auto& geomMgr = resman.getGeometryManager();
     geomMgr.add("StdSpriteGeometry",
                 make_shared<Geometry>(
                     spriteVertices, sizeOfVertices,
@@ -38,8 +39,9 @@ void SpriteLayer::initialSetup()
 
 void SpriteLayer::onDraw()
 {
-    auto& shaderMgr = engine->getShaderManager();
-    auto& geomMgr = engine->getGeometryManager();
+    auto& resman = engine->getResourceManager();
+    auto& shaderMgr = resman.getShaderManager();
+    auto& geomMgr = resman.getGeometryManager();
     const auto& shader = shaderMgr.get("StdSpriteShader");
     const auto& geom   = geomMgr.get("StdSpriteGeometry");
 

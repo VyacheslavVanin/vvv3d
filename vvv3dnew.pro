@@ -66,7 +66,8 @@ HEADERS += \
     src/std/sprite.h \
     src/graphics/textures/textureatlas.h \
     src/graphics/textures/texturemanager.h \
-    src/std/draw.h
+    src/std/draw.h \
+    src/core/resourcemanager.h
 
 SOURCES += \
     src/core/engine.cpp \

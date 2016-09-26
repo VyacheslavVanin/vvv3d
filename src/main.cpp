@@ -6,6 +6,7 @@
 #include <graphics/textures/textureatlas.h>
 #include <graphics/fonts/textline.h>
 #include <std/draw.h>
+#include <core/resourcemanager.h>
 
 class SpriteEngine : public LayeredEngine
 {
@@ -119,12 +120,17 @@ public:
                             */
                         }, 0);
 
-        getTextureManager().addAtlas(ta);
+        auto& resman = getResourceManager();
+        auto& textureMan = resman.getTextureManager();
+        auto& fontMan = resman.getFontManager();
+        auto& shaderMan = resman.getShaderManager();
+        textureMan.addAtlas(ta);
 
         addLayer( layer );
         s = std::make_shared<Sprite>();
-        s->setTexture( getTextureManager().get("data/images/aaa.png"));
-        s->transform.setScale(s->getTexture().getWidth(), s->getTexture().getHeight(), 1);
+        s->setTexture( textureMan.get("data/images/aaa.png"));
+        s->transform.setScale(s->getTexture().getWidth(),
+                              s->getTexture().getHeight(), 1);
         //auto tt = ta.get("data/images/image10.png");
         //s->setTexture(tt);
         //s->transform.setScale(tt->getWidth(),tt->getHeight(), 1);
@@ -132,12 +138,11 @@ public:
         layer->add(s);
 
 
-        auto& fm = getFontManager();
-        fm.addFont("default", "data/fonts/DejaVuSans.ttf", 20);
-        font = fm.getFont("default");
+        fontMan.addFont("default", "data/fonts/DejaVuSans.ttf", 20);
+        font = fontMan.getFont("default");
         textGeometry = createTextGeometry(*font, std::u32string(U"Hello World"));
 
-        getShaderManager().add("text", "data/shaders/text.vsh", "data/shaders/text.fsh");
+        shaderMan.add("text", "data/shaders/text.vsh", "data/shaders/text.fsh");
 
     }
 
@@ -149,7 +154,8 @@ protected:
         Transform textTransform;
         textTransform.move(0, -80, 0);
 
-        drawText(layer->getCamera(), *getShaderManager().get("text"),
+        auto& shaderMan = getResourceManager().getShaderManager();
+        drawText(layer->getCamera(), *shaderMan.get("text"),
                  *textGeometry, textTransform, *font, Colour::ORANGE);
 
     //    s->transform.rotate(0.01, 0, 0, 1);

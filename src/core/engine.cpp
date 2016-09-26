@@ -3,22 +3,10 @@
 #include <chrono>
 #include <graphics/lowlevel/openglprovider.h>
 #include <graphics/camera.h>
+#include <core/resourcemanager.h>
+
 static const int DEFAULT_SCREEN_WIDTH = 640;
 static const int DEFAULT_SCREEN_HEIGHT = 480;
-
-class ResourceManager
-{
-public:
-    TextureManager&  getTextureManager()    {return textureManager;}
-    FontManager&     getFontManager()       {return fontManager;}
-    ShaderManager&   getShaderManager()     {return shaderManger;};
-    GeometryManager& getGeometryManager()   {return geometryManager;};
-private:
-    TextureManager   textureManager;
-    FontManager      fontManager;
-    ShaderManager    shaderManger;
-    GeometryManager  geometryManager;
-};
 
 
 std::shared_ptr<Engine> Engine::activeEngine = std::shared_ptr<Engine>();
@@ -96,24 +84,9 @@ void Engine::keyboardUpFunc(unsigned char c, int s, int d)
     std::cout <<"released "<< c << " " << s << " " << d << std::endl;
 }
 
-TextureManager& Engine::getTextureManager()
+ResourceManager& Engine::getResourceManager()
 {
-    return resourceManager->getTextureManager();
-}
-
-GeometryManager& Engine::getGeometryManager()
-{
-    return resourceManager->getGeometryManager();
-}
-
-FontManager& Engine::getFontManager()
-{
-    return resourceManager->getFontManager();
-}
-
-ShaderManager& Engine::getShaderManager()
-{
-    return resourceManager->getShaderManager();
+    return *resourceManager;
 }
 
 int Engine::getVieportWidth() const {return viewportWidth;}

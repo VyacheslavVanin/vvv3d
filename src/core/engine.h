@@ -1,10 +1,6 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 #include <memory>
-#include <graphics/fonts/font.h>
-#include <graphics/textures/texturemanager.h>
-#include <graphics/geometry.h>
-#include <graphics/shaders/shader.h>
 
 class ResourceManager;
 
@@ -22,10 +18,7 @@ public:
     void keyboardFunc(unsigned char c, int s, int d);
     void keyboardUpFunc(unsigned char c, int s, int d);
 
-    TextureManager&     getTextureManager();
-    FontManager&        getFontManager();
-    ShaderManager&      getShaderManager();
-    GeometryManager&    getGeometryManager();
+    ResourceManager& getResourceManager();
 
     int getVieportWidth() const;
     int getVieportHeight() const;
