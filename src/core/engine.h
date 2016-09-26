@@ -15,9 +15,6 @@ public:
 
     float getCurrentFps() const;
 
-    void keyboardFunc(unsigned char c, int s, int d);
-    void keyboardUpFunc(unsigned char c, int s, int d);
-
     ResourceManager& getResourceManager();
 
     int getVieportWidth() const;

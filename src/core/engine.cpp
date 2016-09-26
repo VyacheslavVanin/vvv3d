@@ -38,8 +38,6 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     glutIdleFunc( [](void){glutPostRedisplay();} );
     glutDisplayFunc( [](){activeEngine->display();} );
     glutReshapeFunc( [](int x,int y){activeEngine->resize(x,y); } );
-    glutKeyboardFunc(   [](unsigned char c, int s, int d){activeEngine->keyboardFunc(c,s,d);}   );
-    glutKeyboardUpFunc( [](unsigned char c, int s, int d){activeEngine->keyboardUpFunc(c,s,d);} );
     activeEngine = std::shared_ptr<Engine>(this);
 }
 
@@ -73,16 +71,6 @@ void Engine::onResize(int x, int y)
 void Engine::initialSetup() { }
 
 void Engine::onDraw() { }
-
-void Engine::keyboardFunc(unsigned char c, int s, int d)
-{
-    std::cout <<"pressed "<< c << " " << s << " " << d << std::endl;
-}
-
-void Engine::keyboardUpFunc(unsigned char c, int s, int d)
-{
-    std::cout <<"released "<< c << " " << s << " " << d << std::endl;
-}
 
 ResourceManager& Engine::getResourceManager()
 {
