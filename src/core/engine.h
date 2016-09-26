@@ -6,6 +6,8 @@
 #include <graphics/geometry.h>
 #include <graphics/shaders/shader.h>
 
+class ResourceManager;
+
 class Engine
 {
 public:
@@ -34,10 +36,6 @@ protected:
     virtual void onResize(int x, int y);
 
     static std::shared_ptr<Engine>  activeEngine;
-    TextureManager                  textureManager;
-    FontManager                     fontManager;
-    ShaderManager                   shaderManger;
-    GeometryManager                 geometryManager;
 
 private:
     void display();
@@ -45,6 +43,7 @@ private:
     float currentfps;
     int viewportWidth;
     int viewportHeight;
+    std::unique_ptr<ResourceManager> resourceManager;
 };
 #endif // ENGINE
 

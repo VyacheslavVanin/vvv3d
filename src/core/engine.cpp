@@ -6,6 +6,19 @@
 static const int DEFAULT_SCREEN_WIDTH = 640;
 static const int DEFAULT_SCREEN_HEIGHT = 480;
 
+class ResourceManager
+{
+public:
+    TextureManager&  getTextureManager()    {return textureManager;}
+    FontManager&     getFontManager()       {return fontManager;}
+    ShaderManager&   getShaderManager()     {return shaderManger;};
+    GeometryManager& getGeometryManager()   {return geometryManager;};
+private:
+    TextureManager   textureManager;
+    FontManager      fontManager;
+    ShaderManager    shaderManger;
+    GeometryManager  geometryManager;
+};
 
 
 std::shared_ptr<Engine> Engine::activeEngine = std::shared_ptr<Engine>();
@@ -13,7 +26,8 @@ std::shared_ptr<Engine> Engine::activeEngine = std::shared_ptr<Engine>();
 
 Engine::Engine(int argc, char** argv, const char* windowName)
     : viewportWidth(DEFAULT_SCREEN_WIDTH),
-      viewportHeight(DEFAULT_SCREEN_HEIGHT)
+      viewportHeight(DEFAULT_SCREEN_HEIGHT),
+      resourceManager(new ResourceManager())
 {
     glewExperimental = GL_TRUE;
     glutInit( &argc, argv);
@@ -82,13 +96,25 @@ void Engine::keyboardUpFunc(unsigned char c, int s, int d)
     std::cout <<"released "<< c << " " << s << " " << d << std::endl;
 }
 
-TextureManager&Engine::getTextureManager(){return textureManager;}
+TextureManager& Engine::getTextureManager()
+{
+    return resourceManager->getTextureManager();
+}
 
-GeometryManager &Engine::getGeometryManager() {return geometryManager;}
+GeometryManager& Engine::getGeometryManager()
+{
+    return resourceManager->getGeometryManager();
+}
 
-FontManager &Engine::getFontManager() {return fontManager;}
+FontManager& Engine::getFontManager()
+{
+    return resourceManager->getFontManager();
+}
 
-ShaderManager &Engine::getShaderManager() {return shaderManger;}
+ShaderManager& Engine::getShaderManager()
+{
+    return resourceManager->getShaderManager();
+}
 
 int Engine::getVieportWidth() const {return viewportWidth;}
 
