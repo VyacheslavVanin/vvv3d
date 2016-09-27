@@ -60,10 +60,6 @@ HEADERS += \
     src/vvvmath/vector4.h \
     src/graphics/shaders/shader.h \
     src/graphics/iobject.h \
-    src/core/ILayer.h \
-    src/core/layeredengine.h \
-    src/std/spritelayer.h \
-    src/std/sprite.h \
     src/graphics/textures/textureatlas.h \
     src/graphics/textures/texturemanager.h \
     src/std/draw.h \
@@ -90,9 +86,6 @@ SOURCES += \
     src/main.cpp \
     src/graphics/shaders/shader.cpp \
     src/graphics/iobject.cpp \
-    src/core/layeredengine.cpp \
-    src/std/spritelayer.cpp \
-    src/std/sprite.cpp \
     src/graphics/textures/textureatlas.cpp \
     src/graphics/textures/texturemanager.cpp \
     src/std/draw.cpp
