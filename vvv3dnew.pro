@@ -17,10 +17,8 @@ LIBS += -lGLEW -lGL -lglut -lpng -lfreetype
 DISTFILES += \
     resources/shaders/basic.fsh \
     resources/shaders/sprite.fsh \
-    resources/shaders/rectanglewidget.fsh \
     resources/shaders/basic.vsh \
     resources/shaders/sprite.vsh \
-    resources/shaders/rectanglewidget.vsh \
     resources/shaders/text.fsh \
     resources/shaders/text.vsh
 shaders.path = bin/data/shaders

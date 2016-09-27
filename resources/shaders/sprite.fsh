@@ -1,10 +1,10 @@
 #version 330 core
 precision mediump float;
-in  vec2 out_position;
-in  vec2 out_texCoord;
 uniform sampler2D texture0;
 uniform float time;
 
+in  vec2 out_position;
+in  vec2 out_texCoord;
 out vec4 color;
 
 
