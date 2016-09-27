@@ -1,5 +1,5 @@
 #include "draw.h"
-#include <core/graphics/camera.h>
+#include <core/camera.h>
 #include <core/graphics/textures/texture.h>
 #include <core/graphics/geometry.h>
 #include <core/graphics/shaders/shader.h>

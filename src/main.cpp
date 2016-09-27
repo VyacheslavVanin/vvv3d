@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <string>
 #include <core/engine.h>
-#include <core/graphics/camera.h>
+#include <core/camera.h>
 #include <core/graphics/textures/textureatlas.h>
 #include <core/graphics/fonts/textline.h>
 #include <std/draw.h>

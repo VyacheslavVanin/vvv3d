@@ -2,7 +2,7 @@
 #include <iostream>
 #include <chrono>
 #include <core/graphics/lowlevel/openglprovider.h>
-#include <core/graphics/camera.h>
+#include <core/camera.h>
 #include <core/resourcemanager.h>
 
 static const int DEFAULT_SCREEN_WIDTH = 640;

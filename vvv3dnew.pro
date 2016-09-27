@@ -28,6 +28,7 @@ INSTALLS += shaders
 HEADERS += \
     src/core/engine.h \
     src/core/transform.h \
+    src/core/camera.h \
     src/core/graphics/fonts/font.h \
     src/core/graphics/fonts/mgrfreetype.h \
     src/core/graphics/fonts/textline.h \
@@ -43,7 +44,6 @@ HEADERS += \
     src/core/graphics/textures/textureatlas.h \
     src/core/graphics/textures/texturemanager.h \
     src/core/graphics/shaders/shader.h \
-    src/core/graphics/camera.h \
     src/core/graphics/colour.h \
     src/core/graphics/framebufferobject.h \
     src/core/graphics/geometry.h \
@@ -64,6 +64,7 @@ HEADERS += \
 
 SOURCES += \
     src/core/engine.cpp \
+    src/core/camera.cpp \
     src/core/graphics/fonts/font.cpp \
     src/core/graphics/fonts/textline.cpp \
     src/core/graphics/lowlevel/lowlevelbuffer.cpp \
@@ -77,7 +78,6 @@ SOURCES += \
     src/core/graphics/textures/textureatlas.cpp \
     src/core/graphics/textures/texturemanager.cpp \
     src/core/graphics/shaders/shader.cpp \
-    src/core/graphics/camera.cpp \
     src/core/graphics/colour.cpp \
     src/core/graphics/framebufferobject.cpp \
     src/core/graphics/geometry.cpp \
