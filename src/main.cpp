@@ -12,13 +12,13 @@
 std::shared_ptr<Geometry> makeSpriteGeometry()
 {
     static const GLfloat spriteVertices[] = { -0.5, -0.5,   0, 0,
-                                              0.5,  0.5,   1, 1,
+                                               0.5,  0.5,   1, 1,
                                               -0.5,  0.5,   0, 1,
-                                              0.5, -0.5,   1, 0 };
-    static const size_t sizeOfVertices = sizeof(spriteVertices);
-    static const GLuint spriteIndices[] = { 0,1,2, 0, 1, 3 };
-    static const size_t numIndices =  sizeof(spriteIndices)
-                                      /sizeof(spriteIndices[0]);
+                                               0.5, -0.5,   1, 0 };
+    static const size_t sizeOfVertices    = sizeof(spriteVertices);
+    static const GLuint spriteIndices[]   = { 0,1,2, 0, 1, 3 };
+    static const size_t numIndices        =  sizeof(spriteIndices)
+                                            /sizeof(spriteIndices[0]);
     return std::make_shared<Geometry>(
                 spriteVertices, sizeOfVertices,
                 spriteIndices,  numIndices,
@@ -32,7 +32,11 @@ class TestEngine : public Engine
 {
 public:
     TestEngine(int argc, char** argv, const char* wname="TextEngine")
-        : Engine(argc, argv, wname), resman(getResourceManager())
+        : Engine(argc, argv, wname),
+          shaderMan(getResourceManager().getShaderManager()),
+          textureMan(getResourceManager().getTextureManager()),
+          geometryMan(getResourceManager().getGeometryManager()),
+          fontMan(getResourceManager().getFontManager())
     {}
     // Engine interface
 protected:
@@ -46,10 +50,6 @@ protected:
     }
 
     void onDraw(){
-        auto& shaderMan = resman.getShaderManager();
-        auto& textureMan = resman.getTextureManager();
-        auto& geometryMan = resman.getGeometryManager();
-
         Transform textTransform;
         textTransform.move(0, -80, 0);
         drawText(camera, *shaderMan.get("text"), *textGeometry, textTransform,
@@ -78,13 +78,16 @@ protected:
 
 private:
     Camera camera;
-    ResourceManager& resman;
+    ShaderManager&      shaderMan;
+    TextureManager&     textureMan;
+    GeometryManager&    geometryMan;
+    FontManager&        fontMan;
+
     std::shared_ptr<Font>   font;
     std::shared_ptr<Geometry> textGeometry;
 
     void initShaders()
     {
-        auto& shaderMan = resman.getShaderManager();
         shaderMan.add("sprite", "data/shaders/sprite.vsh",
                                 "data/shaders/sprite.fsh");
         shaderMan.add("text", "data/shaders/text.vsh",
@@ -93,7 +96,6 @@ private:
 
     void initTextures()
     {
-        auto& textureMan = resman.getTextureManager();
         TextureAtlas ta(512, 512, {
                             "data/images/aaa.png",
                             "data/images/image1.png",
@@ -111,24 +113,21 @@ private:
                             "data/images/image13.png",
                             "data/images/image14.png",
                             "data/images/image15.png",
-                        }, 0);
+                        });
         textureMan.addAtlas(ta);
     }
 
     void initGeometry()
     {
-        auto& geomMgr = resman.getGeometryManager();
-        geomMgr.add("sprite", makeSpriteGeometry());
+        geometryMan.add("sprite", makeSpriteGeometry());
     }
 
     void initFonts()
     {
-        auto& fontMan = resman.getFontManager();
         fontMan.addFont("default", "data/fonts/DejaVuSans.ttf", 20);
         font = fontMan.getFont("default");
         textGeometry = createTextGeometry(*font, std::u32string(U"Hello World"));
     }
-
 };
 
 int main(int argc, char** argv)
