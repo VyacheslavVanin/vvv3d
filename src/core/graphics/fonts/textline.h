@@ -2,9 +2,9 @@
 #define TEXTLINE_H
 #include <string>
 #include <memory>
-#include <graphics/geometry.h>
-#include <graphics/fonts/font.h>
-#include <graphics/colour.h>
+#include <core/graphics/geometry.h>
+#include <core/graphics/fonts/font.h>
+#include <core/graphics/colour.h>
 #include <core/transform.h>
 #include <std/draw.h>
 

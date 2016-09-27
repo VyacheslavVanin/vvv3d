@@ -1,4 +1,4 @@
-#include <graphics/lowlevel/openglprovider.h>
+#include <core/graphics/lowlevel/openglprovider.h>
 #include "lowlevelbuffer.h"
 #include <stdexcept>
 

@@ -1,4 +1,4 @@
-#include <graphics/lowlevel/openglprovider.h>
+#include <core/graphics/lowlevel/openglprovider.h>
 #include <memory>
 #include <iostream>
 #include <string>

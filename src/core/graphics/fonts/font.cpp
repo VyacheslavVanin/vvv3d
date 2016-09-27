@@ -2,7 +2,7 @@
 #include "mgrfreetype.h"
 #include <vector>
 #include <map>
-#include "graphics/textures/texturepacker.h"
+#include "core/graphics/textures/texturepacker.h"
 #include "utils/myutils.h"
 
 using namespace std;

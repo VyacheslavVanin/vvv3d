@@ -1,7 +1,7 @@
 #include "shader.h"
 #include <memory>
-#include <graphics/lowlevel/vertexattribute.h>
-#include <graphics/lowlevel/lowlevelshader.h>
+#include <core/graphics/lowlevel/vertexattribute.h>
+#include <core/graphics/lowlevel/lowlevelshader.h>
 
 std::shared_ptr<Shader> Shader::fromStrings(const std::string& name,
                                             const char* vertexSource,

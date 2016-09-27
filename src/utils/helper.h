@@ -1,7 +1,7 @@
 #ifndef HELPER_H
 #define HELPER_H
-#include "graphics/lowlevel/lowleveltexture.h"
-#include "graphics/geometry.h"
+#include "core/graphics/lowlevel/lowleveltexture.h"
+#include "core/graphics/geometry.h"
 
 LowLevelTexture* readFromPng(const char* filename);
 Geometry* loadGeometryFrom3ds(const char* filename);

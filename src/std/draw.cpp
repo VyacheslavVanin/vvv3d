@@ -1,10 +1,10 @@
 #include "draw.h"
-#include <graphics/camera.h>
-#include <graphics/textures/texture.h>
-#include <graphics/geometry.h>
-#include <graphics/shaders/shader.h>
+#include <core/graphics/camera.h>
+#include <core/graphics/textures/texture.h>
+#include <core/graphics/geometry.h>
+#include <core/graphics/shaders/shader.h>
+#include <core/graphics/fonts/textline.h>
 #include <core/transform.h>
-#include <graphics/fonts/textline.h>
 
 
 static inline

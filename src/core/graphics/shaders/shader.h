@@ -5,9 +5,9 @@
 #include <vector>
 #include <string>
 #include <vvvmath/linalg.h>
-#include <graphics/colour.h>
-#include <graphics/textures/texture.h>
-#include <graphics/lowlevel/lowlevelshaderprogram.h>
+#include <core/graphics/colour.h>
+#include <core/graphics/textures/texture.h>
+#include <core/graphics/lowlevel/lowlevelshaderprogram.h>
 
 class Shader
 {
