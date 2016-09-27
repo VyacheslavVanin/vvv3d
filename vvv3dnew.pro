@@ -60,7 +60,8 @@ HEADERS += \
     src/vvvmath/vector3.h \
     src/vvvmath/vector4.h \
     src/std/draw.h \
-    src/core/resourcemanager.h
+    src/core/resourcemanager.h \
+    src/vvv3d.h
 
 SOURCES += \
     src/core/engine.cpp \

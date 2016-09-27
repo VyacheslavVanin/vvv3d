@@ -1,13 +1,7 @@
 #include <memory>
 #include <iomanip>
 #include <string>
-#include <core/engine.h>
-#include <core/camera.h>
-#include <core/graphics/textures/textureatlas.h>
-#include <core/graphics/fonts/textline.h>
-#include <std/draw.h>
-#include <core/resourcemanager.h>
-
+#include <vvv3d.h>
 
 std::shared_ptr<Geometry> makeSpriteGeometry()
 {
@@ -26,7 +20,6 @@ std::shared_ptr<Geometry> makeSpriteGeometry()
                                    VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT) }),
                 GL_TRIANGLES);
 }
-
 
 class TestEngine : public Engine
 {
