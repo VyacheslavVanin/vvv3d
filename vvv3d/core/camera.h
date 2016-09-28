@@ -1,6 +1,6 @@
 #ifndef CAMERA_H
 #define CAMERA_H
-#include "vvvmath/linalg.h"
+#include <vvv3d/vvvmath/linalg.h>
 
 class Camera
 {

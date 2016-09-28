@@ -1,6 +1,6 @@
 #ifndef COLOR_H
 #define COLOR_H
-#include <vvvmath/vector4.h>
+#include <vvv3d/vvvmath/vector4.h>
 
 class Colour
 {

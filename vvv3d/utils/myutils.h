@@ -2,7 +2,7 @@
 #define MYUTILS_H
 #include <iostream>
 #include <string>
-#include <core/graphics/lowlevel/openglprovider.h>
+#include <vvv3d/core/graphics/lowlevel/openglprovider.h>
 
 #define DebugVar(var) {std::cout << #var << " = " << var << std::endl;}
 #define GLSL(version, src) "#version " #version "\n" #src

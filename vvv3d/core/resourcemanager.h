@@ -1,9 +1,9 @@
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
-#include <core/graphics/fonts/font.h>
-#include <core/graphics/textures/texturemanager.h>
-#include <core/graphics/geometry.h>
-#include <core/graphics/shaders/shader.h>
+#include <vvv3d/core/graphics/fonts/font.h>
+#include <vvv3d/core/graphics/textures/texturemanager.h>
+#include <vvv3d/core/graphics/geometry.h>
+#include <vvv3d/core/graphics/shaders/shader.h>
 
 class ResourceManager
 {

@@ -1,6 +1,6 @@
 #include "textline.h"
-#include <vvvmath/linalg.h>
-#include <core/engine.h>
+#include <vvv3d/vvvmath/linalg.h>
+#include <vvv3d/core/engine.h>
 
 struct textVertex
 {

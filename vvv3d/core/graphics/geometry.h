@@ -1,8 +1,8 @@
 #ifndef SIMPLEGEOMETRY_H
 #define SIMPLEGEOMETRY_H
 #include <unordered_map>
-#include "lowlevel/lowlevelgeometry.h"
 #include <memory>
+#include "lowlevel/lowlevelgeometry.h"
 
 class Geometry
 {

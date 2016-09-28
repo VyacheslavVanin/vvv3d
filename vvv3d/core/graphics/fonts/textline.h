@@ -2,11 +2,11 @@
 #define TEXTLINE_H
 #include <string>
 #include <memory>
-#include <core/graphics/geometry.h>
-#include <core/graphics/fonts/font.h>
-#include <core/graphics/colour.h>
-#include <core/transform.h>
-#include <std/draw.h>
+#include <vvv3d/core/graphics/geometry.h>
+#include <vvv3d/core/graphics/fonts/font.h>
+#include <vvv3d/core/graphics/colour.h>
+#include <vvv3d/core/transform.h>
+#include <vvv3d/std/draw.h>
 
 
 void updateTextGeometry(std::shared_ptr<Geometry> in,

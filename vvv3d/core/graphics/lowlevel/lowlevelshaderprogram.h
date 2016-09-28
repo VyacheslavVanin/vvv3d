@@ -2,7 +2,7 @@
 #define LOWLEVELSHADERPROGRAM_H
 #include "openglprovider.h"
 #include <functional>
-#include <vvvmath/linalg.h>
+#include <vvv3d/vvvmath/linalg.h>
 
 class LowLevelShaderProgram
 {

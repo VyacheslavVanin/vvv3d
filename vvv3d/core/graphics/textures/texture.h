@@ -2,8 +2,8 @@
 #define TEXTURE_H
 #include <memory>
 #include <string>
-#include <core/graphics/lowlevel/lowleveltexture.h>
-#include "vvvmath/linalg.h"
+#include <vvv3d/core/graphics/lowlevel/lowleveltexture.h>
+#include <vvv3d/vvvmath/linalg.h>
 
 class Texture
 {

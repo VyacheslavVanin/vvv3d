@@ -1,6 +1,6 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
-#include "vvvmath/linalg.h"
+#include <vvv3d/vvvmath/linalg.h>
 
 class Transform
 {

@@ -2,20 +2,16 @@
 #include "mgrfreetype.h"
 #include <vector>
 #include <map>
-#include "core/graphics/textures/texturepacker.h"
-#include "utils/myutils.h"
+#include <vvv3d/core/graphics/textures/texturepacker.h>
+#include <vvv3d/utils/myutils.h>
 
 using namespace std;
-#if 1
 const std::u32string characters = U"abcdefghijklmnopqrstuvwxyz"
                                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                    "0123456789 ~`!@#$%^&*()_+-="
                                    "{}[]|\\/?,.<>;:'\""
                                    "абвгдеёжзиЙклмнопрстуфхцчшщъыьэюя"
                                    "АБВГДЕЁЖЗИйКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"  ;
-#else
-const std::u32string characters = U"абвгле";
-#endif
 
 void convert8to32tex(const void* in, size_t width, size_t height, void* out)
 {

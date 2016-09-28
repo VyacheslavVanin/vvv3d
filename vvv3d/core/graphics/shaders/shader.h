@@ -4,10 +4,10 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
-#include <vvvmath/linalg.h>
-#include <core/graphics/colour.h>
-#include <core/graphics/textures/texture.h>
-#include <core/graphics/lowlevel/lowlevelshaderprogram.h>
+#include <vvv3d/vvvmath/linalg.h>
+#include <vvv3d/core/graphics/colour.h>
+#include <vvv3d/core/graphics/textures/texture.h>
+#include <vvv3d/core/graphics/lowlevel/lowlevelshaderprogram.h>
 
 class Shader
 {

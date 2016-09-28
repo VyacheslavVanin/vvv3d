@@ -5,8 +5,8 @@
 #include <memory>
 #include <freetype2/ft2build.h>
 #include FT_FREETYPE_H
-#include <core/graphics/lowlevel/lowleveltexture.h>
-#include <core/graphics/textures/texture.h>
+#include <vvv3d/core/graphics/lowlevel/lowleveltexture.h>
+#include <vvv3d/core/graphics/textures/texture.h>
 
 struct Glyph
 {

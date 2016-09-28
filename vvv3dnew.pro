@@ -73,8 +73,7 @@ SOURCES += \
     vvv3d/core/graphics/geometry.cpp \
     vvv3d/utils/helper.cpp \
     vvv3d/utils/myutils.cpp \
-    vvv3d/std/draw.cpp \
-    main.cpp
+    vvv3d/std/draw.cpp
 
 INSTALL_HEADERS = $$HEADERS
 INSTALL_PREFIX  = $$DESTDIR

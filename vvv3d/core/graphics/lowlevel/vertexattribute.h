@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <initializer_list>
 #include <functional>
-#include "utils/myutils.h"
+#include <vvv3d/utils/myutils.h>
 
 enum class ATTRIB_LOCATION : GLuint
 {
