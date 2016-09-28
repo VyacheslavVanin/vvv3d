@@ -4,8 +4,11 @@
 #include "core/graphics/geometry.h"
 
 LowLevelTexture* readFromPng(const char* filename);
-Geometry* loadGeometryFrom3ds(const char* filename);
 Geometry* loadGeometryFrom_vvv3d(const char* filename);
+
+#if defined ENABLE_3DS
+Geometry* loadGeometryFrom3ds(const char* filename);
+#endif
 
 #endif // HELPER_H
 

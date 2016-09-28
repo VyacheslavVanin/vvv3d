@@ -31,7 +31,8 @@ LowLevelTexture* readFromPng(const char* filename)
         for(size_t i = 0; i < numChannels; ++i)
             data[c++] = p[i];
 
-    return new LowLevelTexture(data.data(),width,height,GL_RGBA, GL_RGBA8, GL_UNSIGNED_BYTE);
+    return new LowLevelTexture(data.data(), width, height,
+                               GL_RGBA, GL_RGBA8, GL_UNSIGNED_BYTE);
 }
 
 struct myvertex
@@ -47,7 +48,8 @@ struct myvertex
     bool operator==(const myvertex& o)
     {
         for(int i = 0; i < 8; ++i)
-            if( arr[i] != o.arr[i]) return false;
+            if(arr[i] != o.arr[i])
+                return false;
         return true;
     }
 };
@@ -88,22 +90,25 @@ Geometry* loadGeometryFrom_vvv3d(const char* filename)
     vector<GLuint>   indices;
     const size_t num_vertices = getFromStream<size_t>(f);
 
-    doNTimes( num_vertices, [&vertices,&f]()
-                            {vertices.push_back( getFromStream<myvertex>(f));});
+    auto readVertex = [&vertices,&f]()
+                      { vertices.push_back(getFromStream<myvertex>(f)); };
+    doNTimes(num_vertices, readVertex);
 
     const size_t num_indices= getFromStream<size_t>(f);
-    doNTimes( num_indices, [&indices,&f]()
-                            {indices.push_back( getFromStream<GLuint>(f) );});
+    auto readIndex = [&indices,&f]()
+                     { indices.push_back(getFromStream<GLuint>(f)); };
+    doNTimes(num_indices, readIndex);
 
-
-    auto ret = new Geometry( vertices.data(), vertices.size()*sizeof(myvertex),
-                                   indices.data(),  indices.size(),
-                               VertexAttributes({
-                                     VertexAttribDesc(ATTRIB_LOCATION::POSITION, 3, GL_FLOAT),
-                                     VertexAttribDesc(ATTRIB_LOCATION::NORMAL,   3, GL_FLOAT),
-                                     VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT),
-                                                }),
-                               GL_TRIANGLES);
+    const auto vertices_size = vertices.size()*sizeof(myvertex);
+    auto ret = new Geometry(
+                   vertices.data(), vertices_size,
+                   indices.data(),  indices.size(),
+                   VertexAttributes({
+                        VertexAttribDesc(ATTRIB_LOCATION::POSITION,3,GL_FLOAT),
+                        VertexAttribDesc(ATTRIB_LOCATION::NORMAL,  3,GL_FLOAT),
+                        VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD,2,GL_FLOAT),
+                                    }),
+                   GL_TRIANGLES);
     return ret;
 }
 
@@ -137,7 +142,8 @@ static void assembleBuffers( Lib3dsMesh* mesh,
             const auto vend     = vertices.end();
             const auto pos = find(vbegin, vend, cvertex);
             if(pos != vend ){ // allready in vertices
-                const GLuint i = distance(vbegin, pos); // index of element in vertices
+                // index of element in vertices
+                const GLuint i = distance(vbegin, pos);
                 indices.push_back(i);}
             else{ // not in vertices yet
                 const GLuint i = vertices.size();
@@ -155,14 +161,15 @@ SimpleGeometry* loadGeometryFrom3ds(const char* filename)
     std::vector<GLuint>   indices;
     assembleBuffers(meshes, vertices, indices );
 
-    auto ret = new SimpleGeometry( vertices.data(), vertices.size()*sizeof(myvertex),
-                                   indices.data(),  indices.size(),
-                               VertexAttributes({
-                                     VertexAttribDesc(ATTRIB_LOCATION::POSITION, 3, GL_FLOAT),
-                                     VertexAttribDesc(ATTRIB_LOCATION::NORMAL,   3, GL_FLOAT),
-                                     VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT),
-                                                }),
-                               GL_TRIANGLES);
+    auto ret = new SimpleGeometry(
+                   vertices.data(), vertices.size()*sizeof(myvertex),
+                   indices.data(),  indices.size(),
+                   VertexAttributes({
+                        VertexAttribDesc(ATTRIB_LOCATION::POSITION,3,GL_FLOAT),
+                        VertexAttribDesc(ATTRIB_LOCATION::NORMAL,  3,GL_FLOAT),
+                        VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD,2,GL_FLOAT),
+                                    }),
+                   GL_TRIANGLES);
     return ret;
 }
 #endif

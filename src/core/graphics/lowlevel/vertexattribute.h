@@ -21,7 +21,7 @@ enum class ATTRIB_LOCATION : GLuint
 const char *getAttribLocationName(ATTRIB_LOCATION attrib);
 
 void bindAttribLocations(GLuint program);
-
+GLsizei     sizeOfComponent(GLenum componentType);
 
 
 class VertexAttribDesc
@@ -29,7 +29,8 @@ class VertexAttribDesc
 public:
     VertexAttribDesc( ATTRIB_LOCATION location, GLint numComponents,
                       GLenum componentType)
-        : location(location), numComponents(numComponents), componentType(componentType)
+        : location(location), numComponents(numComponents),
+          componentType(componentType)
     {}
 
     ATTRIB_LOCATION getLocation()       const {return location;}
@@ -50,9 +51,11 @@ private:
 
     struct VertexAttribute
     {
-        VertexAttribute(GLuint location, GLint numComponents, GLenum componentType, size_t offset, GLsizei stride)
-                    :   location(location), numComponents(numComponents), componentType(componentType),
-                        offset( (const void*)offset ), stride(stride)
+        VertexAttribute(GLuint location, GLint numComponents,
+                        GLenum componentType, size_t offset, GLsizei stride)
+                    :   location(location), numComponents(numComponents),
+                        componentType(componentType),
+                        offset((const void*)offset), stride(stride)
         {}
 
         GLuint      location;
@@ -63,30 +66,8 @@ private:
     };
 
 public:
-    VertexAttributes(const std::initializer_list<VertexAttribDesc>& attribs)
-                    : attributes(),stride(0)
-    {
-        // Calculate vertex size
-        for(const auto& d: attribs)
-            stride += d.size();
-
-        size_t offset = 0;
-        for(const auto& d: attribs){
-            attributes.push_back( VertexAttribute(static_cast<GLuint>(  d.getLocation()),
-                                                                        d.getNumComponents(),
-                                                                        d.getComponentType(),
-                                                                        offset,
-                                                                        stride));
-            offset += d.size();}
-    }
-
-    void enable()const
-    {
-        for(const auto& a: attributes){
-            glVertexAttribPointer(a.location, a.numComponents, a.componentType, GL_FALSE, a.stride, a.offset);
-            glEnableVertexAttribArray( a.location);}
-    }
-
+    VertexAttributes(const std::initializer_list<VertexAttribDesc>& attribs);
+    void enable()const;
     void disable()const;
 
 private:
