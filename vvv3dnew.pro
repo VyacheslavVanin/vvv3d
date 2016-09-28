@@ -84,14 +84,3 @@ for(header, INSTALL_HEADERS) {
   eval(INSTALLS *= headers_$${path})
 }
 
-DISTFILES += \
-    resources/shaders/basic.fsh \
-    resources/shaders/sprite.fsh \
-    resources/shaders/basic.vsh \
-    resources/shaders/sprite.vsh \
-    resources/shaders/text.fsh \
-    resources/shaders/text.vsh
-shaders.path = bin/data/shaders
-shaders.files = $$DISTFILES
-
-INSTALLS += shaders
