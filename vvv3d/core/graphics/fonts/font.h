@@ -37,9 +37,9 @@ private:
     unsigned int textureSize;
 
 public:
-    std::shared_ptr<Glyph> getGlyph(uint32_t c) const { return mapCharToGlyph.at(c); }
+    std::shared_ptr<Glyph> getGlyph(uint32_t c) const;
     void activate(GLuint texUnit=0);
-    std::shared_ptr<Texture> getTexture() const {return lltex;}
+    std::shared_ptr<Texture> getTexture() const;
     long getAscender() const;
     long getDescender() const;
     long getMinLeftGlyphEdge() const;

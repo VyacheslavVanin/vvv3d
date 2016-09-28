@@ -144,6 +144,8 @@ Font::Font(FT_Face f, unsigned int size, unsigned int charSize,
 
 void Font::activate(GLuint texUnit) { lltex->bind(texUnit); }
 
+std::shared_ptr<Texture> Font::getTexture() const {return lltex;}
+
 long Font::getAscender() const
 {
     return face->bbox.yMax;
@@ -173,3 +175,5 @@ std::shared_ptr<Font> FontManager::getFont(const string &name) const
 {
     return fonts.at(name);
 }
+
+std::shared_ptr<Glyph> Font::getGlyph(uint32_t c) const { return mapCharToGlyph.at(c); }
