@@ -3,8 +3,6 @@
 #include <map>
 #include <vector>
 #include <memory>
-#include <freetype2/ft2build.h>
-#include FT_FREETYPE_H
 #include <vvv3d/core/graphics/lowlevel/lowleveltexture.h>
 #include <vvv3d/core/graphics/textures/texture.h>
 
@@ -21,21 +19,10 @@ struct Glyph
     int  textureOffsetY;
 };
 
+class MgrFreetype;
+struct FontImpl;
 class Font
 {
-private:
-    Font(FT_Face f, unsigned int size=16, unsigned int charSize=16,
-         unsigned int  dpi=96, unsigned int textureSize=512);
-
-    std::map<uint32_t, std::shared_ptr<Glyph>> mapCharToGlyph;
-    std::shared_ptr<Texture> lltex;
-
-    FT_Face face;
-    unsigned int charSize;
-    unsigned int dpi;
-    unsigned int pixelSize;
-    unsigned int textureSize;
-
 public:
     std::shared_ptr<Glyph> getGlyph(uint32_t c) const;
     void activate(GLuint texUnit=0);
@@ -44,10 +31,10 @@ public:
     long getDescender() const;
     long getMinLeftGlyphEdge() const;
 
+private:
     friend class FontManager;
+    std::unique_ptr<FontImpl> pImpl;
 };
-
-class MgrFreetype;
 
 class FontManager
 {

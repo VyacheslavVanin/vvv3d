@@ -1,3 +1,5 @@
+#include <freetype2/ft2build.h>
+#include FT_FREETYPE_H
 #include "font.h"
 #include "mgrfreetype.h"
 #include <vector>
@@ -117,9 +119,26 @@ static void drawGlyphesToTexture(std::shared_ptr<Texture> lltex,
                         GL_RGBA, GL_UNSIGNED_BYTE, g->buffer.data());
 }
 
-Font::Font(FT_Face f, unsigned int size, unsigned int charSize,
-           unsigned int dpi, unsigned int textureSize)
-    : lltex(new Texture(std::make_shared<LowLevelTexture>(nullptr, textureSize, textureSize, GL_RGBA, GL_RGBA))),
+struct FontImpl
+{
+    FontImpl(FT_Face f, unsigned int size=16, unsigned int charSize=16,
+         unsigned int  dpi=96, unsigned int textureSize=512);
+
+    std::map<uint32_t, std::shared_ptr<Glyph>> mapCharToGlyph;
+    std::shared_ptr<Texture> lltex;
+
+    FT_Face face;
+    unsigned int charSize;
+    unsigned int dpi;
+    unsigned int pixelSize;
+    unsigned int textureSize;
+};
+
+FontImpl::FontImpl(FT_Face f, unsigned int size, unsigned int charSize,
+                   unsigned int dpi, unsigned int textureSize)
+    : lltex(new Texture(
+                std::make_shared<LowLevelTexture>(
+                    nullptr, textureSize, textureSize, GL_RGBA, GL_RGBA))),
       face(f), charSize(charSize), dpi(dpi),
       pixelSize(size), textureSize(textureSize)
 {
@@ -139,28 +158,34 @@ Font::Font(FT_Face f, unsigned int size, unsigned int charSize,
 
     for(const auto& g: glyphes)
         mapCharToGlyph[g->character] = g;
-
 }
 
-void Font::activate(GLuint texUnit) { lltex->bind(texUnit); }
+void Font::activate(GLuint texUnit) { pImpl->lltex->bind(texUnit); }
 
-std::shared_ptr<Texture> Font::getTexture() const {return lltex;}
+std::shared_ptr<Texture> Font::getTexture() const
+{
+    return pImpl->lltex;
+}
 
 long Font::getAscender() const
 {
-    return face->bbox.yMax;
+    return pImpl->face->bbox.yMax;
 }
 
 long Font::getDescender() const
 {
-    return face->bbox.yMin;
+    return pImpl->face->bbox.yMin;
 }
 
 long Font::getMinLeftGlyphEdge() const
 {
-    return face->bbox.xMin;
+    return pImpl->face->bbox.xMin;
 }
 
+std::shared_ptr<Glyph> Font::getGlyph(uint32_t c) const
+{
+    return pImpl->mapCharToGlyph.at(c);
+}
 
 FontManager::FontManager() : fonts(), freetypeMgr(new MgrFreetype()) {}
 
@@ -168,7 +193,9 @@ void FontManager::addFont(const string &name, const string &filename,
                           unsigned int fontsize)
 {
     FT_Face face = freetypeMgr->addFont(name, filename);
-    fonts[name] = std::shared_ptr<Font>(new Font(face, fontsize, 16, 96, 256));
+    auto f = new Font();
+    f->pImpl.reset(new FontImpl(face, fontsize, 16, 96, 256));
+    fonts[name] = std::shared_ptr<Font>(f);
 }
 
 std::shared_ptr<Font> FontManager::getFont(const string &name) const
@@ -176,4 +203,4 @@ std::shared_ptr<Font> FontManager::getFont(const string &name) const
     return fonts.at(name);
 }
 
-std::shared_ptr<Glyph> Font::getGlyph(uint32_t c) const { return mapCharToGlyph.at(c); }
+
