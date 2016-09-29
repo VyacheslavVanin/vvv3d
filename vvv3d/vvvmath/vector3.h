@@ -36,7 +36,7 @@ namespace vvv
 
         vector3() {}
 
-        vector3(T x)
+        explicit vector3(T x)
             : x(x), y(x), z(x)
         {}
 
@@ -44,7 +44,7 @@ namespace vvv
         : x(x), y(y), z(z)
         {}
         
-        vector3(const T* v)
+        explicit vector3(const T* v)
         : x(v[0]), y(v[1]), z(v[0])
         {}
 

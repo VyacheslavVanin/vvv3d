@@ -7,7 +7,8 @@ std::shared_ptr<Shader> Shader::fromStrings(const std::string& name,
                                             const char* vertexSource,
                                             const char* fragmentSource)
 {
-    auto ret = std::make_shared<Shader>();
+    // workaround std::make_shared with private constructor
+    auto ret = std::make_shared<Shader>(_private{});
     ret->program.CreateProgram(
          LowLevelShader::fromString(vertexSource, GL_VERTEX_SHADER).get(),
          LowLevelShader::fromString(fragmentSource, GL_FRAGMENT_SHADER).get(),
@@ -22,7 +23,8 @@ std::shared_ptr<Shader> Shader::fromFiles(const std::string& name,
                                           const char* vertexFileName,
                                           const char* fragmentFileName)
 {
-    auto ret = std::make_shared<Shader>();
+    // workaround std::make_shared with private constructor
+    auto ret = std::make_shared<Shader>(_private{});
     ret->program.CreateProgram( LowLevelShader(vertexFileName,
                                                GL_VERTEX_SHADER).get(),
                                 LowLevelShader(fragmentFileName,

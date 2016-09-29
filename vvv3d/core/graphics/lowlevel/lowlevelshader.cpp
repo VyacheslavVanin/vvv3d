@@ -11,9 +11,9 @@
 static GLint ShaderStatus( GLuint shader, GLenum param)
 {
     GLint status, length;
-    GLchar buffer[1024];
     glGetShaderiv( shader, param, &status);
     if( status != GL_TRUE ){
+        GLchar buffer[1024];
         glGetShaderInfoLog( shader, 1024, &length, buffer);
         std::cout << "Shader: " << buffer << std::endl;}
     return status;

@@ -14,9 +14,9 @@ LowLevelShaderProgram::~LowLevelShaderProgram()
 static GLint ProgramStatus( GLuint program, GLenum param)
 {
     GLint status, length;
-    GLchar buffer[1024];
     glGetProgramiv( program, param, &status);
     if( status != GL_TRUE ){
+        GLchar buffer[1024];
         glGetProgramInfoLog( program, 1024, &length, buffer);
         std::cout << "Program: " << buffer << std::endl;}
     return status;

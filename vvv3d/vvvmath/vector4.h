@@ -39,7 +39,7 @@ namespace vvv
         } ;
 
         vector4() : x(0), y(0), z(0), w(0)      { }
-        vector4( T x) : x(x), y(x), z(x), w(x)  { }
+        explicit vector4( T x) : x(x), y(x), z(x), w(x)  { }
 
         vector4( T x, T y, T z, T w=1) : x(x), y(y), z(z), w(w) { }
 

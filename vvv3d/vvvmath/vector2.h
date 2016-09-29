@@ -28,7 +28,7 @@ namespace vvv
             };
             
             vector2(){}
-            vector2( T x) : x(x), y(x) {}
+            explicit vector2( T x) : x(x), y(x) {}
             vector2( T x, T y)
                     : x(x), y(y) {}
             
