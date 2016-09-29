@@ -40,12 +40,16 @@ class FontManager
 {
 public:
     FontManager();
+    FontManager(const FontManager&) = delete;
+    FontManager& operator=(const FontManager&) = delete;
+    FontManager(FontManager&&) = default;
+    FontManager& operator=(FontManager&&) = default;
+    ~FontManager();
+
     void addFont(const std::string& name,
                  const std::string& filename,
                  unsigned int fontsize);
-
     std::shared_ptr<Font> getFont(const std::string& name) const;
-    ~FontManager(); // TODO: Add "big 5" methods
 
 private:
     std::map<std::string, std::shared_ptr<Font>> fonts;
