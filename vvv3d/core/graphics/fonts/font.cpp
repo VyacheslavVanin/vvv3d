@@ -203,4 +203,4 @@ std::shared_ptr<Font> FontManager::getFont(const string &name) const
     return fonts.at(name);
 }
 
-
+FontManager::~FontManager() = default;

@@ -45,10 +45,11 @@ public:
                  unsigned int fontsize);
 
     std::shared_ptr<Font> getFont(const std::string& name) const;
+    ~FontManager(); // TODO: Add "big 5" methods
 
 private:
     std::map<std::string, std::shared_ptr<Font>> fonts;
-    MgrFreetype* freetypeMgr;
+    std::unique_ptr<MgrFreetype> freetypeMgr;
 };
 
 

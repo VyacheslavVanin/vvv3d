@@ -8,9 +8,9 @@ public:
     vvv::vector4f vec;
     Colour()                                         : vec()       {}
     Colour(const Colour&) = default;
-    Colour(float f)                                  : vec(f)      {}
+    explicit Colour(float f)                         : vec(f)      {}
     Colour(float r, float g, float b, float a = 1)   : vec(r,g,b,a){}
-    Colour(const vvv::vector4f& v)                   : vec(v)      {}
+    explicit Colour(const vvv::vector4f& v)          : vec(v)      {}
     Colour(const vvv::vector3f& v, float a = 1)      : vec(v,a)    {}
 
     static Colour WHITE;

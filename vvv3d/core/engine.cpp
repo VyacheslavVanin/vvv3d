@@ -10,7 +10,7 @@ static const int DEFAULT_SCREEN_HEIGHT = 480;
 std::shared_ptr<Engine> Engine::activeEngine = std::shared_ptr<Engine>();
 
 Engine::Engine(int argc, char** argv, const char* windowName)
-    : viewportWidth(DEFAULT_SCREEN_WIDTH),
+    : currentfps(0), viewportWidth(DEFAULT_SCREEN_WIDTH),
       viewportHeight(DEFAULT_SCREEN_HEIGHT),
       resourceManager(new ResourceManager())
 {
