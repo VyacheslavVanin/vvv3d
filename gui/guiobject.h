@@ -21,6 +21,7 @@ public:
 
     const vvv::vector2f& getSize() const;
     void setSize(const vvv::vector2f& size);
+    void setSize(float width, float height);
 
     const vvv::vector2f getAbsolutePosition() const;
 

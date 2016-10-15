@@ -109,12 +109,13 @@ protected:
             s.transform.move(randomVector(350));
         }
 
-        ImageWidget* w = new ImageWidget();
-        w->setTexture(spriteTex.get());
-        w->setSize(vvv::vector2f(100,100));
+        ImageWidget* w = new ImageWidget(spriteTex.get());
         w->setPosition(vvv::vector2f(50,50));
-
         guilayer.addWidget(w);
+
+        ImageWidget* w1 = new ImageWidget(spriteTex.get());
+        w1->setPosition(vvv::vector2f(250,150));
+        guilayer.addWidget(w1);
     }
 
     void onDraw() override {

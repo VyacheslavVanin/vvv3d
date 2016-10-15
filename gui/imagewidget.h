@@ -9,6 +9,7 @@ class ImageWidget final: public Widget
 {
 public:
     ImageWidget();
+    ImageWidget(Texture* texture);
     ~ImageWidget();
 
     void setTexture(Texture* texture);

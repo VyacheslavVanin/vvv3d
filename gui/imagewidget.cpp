@@ -41,6 +41,14 @@ ImageWidget::ImageWidget()
     } );
 }
 
+ImageWidget::ImageWidget(Texture* texture) : ImageWidget()
+{
+    if(texture){
+        setTexture(texture);
+        setSize(texture->getWidth(), texture->getHeight());
+    }
+}
+
 void ImageWidget::setTexture(Texture* texture)
 {
     pImpl->texture = texture;

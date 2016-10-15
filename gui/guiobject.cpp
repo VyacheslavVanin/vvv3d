@@ -92,6 +92,11 @@ void Widget::setSize(const vvv::vector2f& size)
     onResize(oldSize, size);
 }
 
+void Widget::setSize(float width, float height)
+{
+    setSize(vvv::vector2f(width, height));
+}
+
 const vvv::vector2f Widget::getAbsolutePosition() const
 {
     auto ret = getPosition();
