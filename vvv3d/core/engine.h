@@ -16,6 +16,7 @@ public:
     float getCurrentFps() const;
     int getVieportWidth() const;
     int getVieportHeight() const;
+    static Engine& getActiveEngine();
 
 protected:
     virtual void initialSetup();

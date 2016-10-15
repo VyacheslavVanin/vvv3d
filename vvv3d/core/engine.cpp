@@ -68,6 +68,11 @@ void Engine::onResize(int x, int y) {(void)x, (void)y;}
 int Engine::getVieportWidth() const {return viewportWidth;}
 int Engine::getVieportHeight() const {return viewportHeight;}
 
+Engine& Engine::getActiveEngine()
+{
+    return *activeEngine;
+}
+
 void Engine::resize(int x, int y)
 {
     y = (y!=0) ? y : 1;
