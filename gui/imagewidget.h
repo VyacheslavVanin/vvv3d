@@ -14,15 +14,13 @@ public:
 
     void setTexture(Texture* texture);
 
-
 private:
     struct ImageWidgetImpl;
     std::unique_ptr<ImageWidgetImpl> pImpl;
 
     // Widget interface
 protected:
-    void onDraw();
-    void onResize(const vvv::vector2f& oldSize, const vvv::vector2f& newSize);
+    void onDraw() override;
 };
 
 #endif // IMAGEWIDGET_H

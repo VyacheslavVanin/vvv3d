@@ -13,7 +13,8 @@ LIBS += -lvvv3dnew -lGLEW -lGL -lglut -lpng -lfreetype
 SOURCES += main.cpp \
     gui/guiobject.cpp \
     gui/guilayer.cpp \
-    gui/imagewidget.cpp
+    gui/imagewidget.cpp \
+    gui/colorrectanglewidget.cpp
 
 
 DISTFILES += \
@@ -23,10 +24,10 @@ DISTFILES += \
     resources/shaders/sprite.vsh \
     resources/shaders/text.fsh \
     resources/shaders/text.vsh \
-    resources/shaders/solidcolor.fsh \
-    resources/shaders/solidcolor.vsh \
-    resources/shaders/guiimage.fsh \
-    resources/shaders/guiimage.vsh
+    resources/shaders/imagewidget.fsh \
+    resources/shaders/imagewidget.vsh \
+    resources/shaders/solidrect.fsh \
+    resources/shaders/solidrect.vsh
 shaders.path = data/shaders
 shaders.files = $$DISTFILES
 
@@ -35,4 +36,5 @@ INSTALLS += shaders
 HEADERS += \
     gui/guiobject.h \
     gui/guilayer.h \
-    gui/imagewidget.h
+    gui/imagewidget.h \
+    gui/colorrectanglewidget.h

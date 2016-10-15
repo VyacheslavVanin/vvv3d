@@ -33,8 +33,8 @@ ImageWidget::ImageWidget()
         auto& e = Engine::getActiveEngine();
         auto& resman = e.getResourceManager();
         auto& shaderMan = resman.getShaderManager();
-        shaderMan.add("ImageWidget", "data/shaders/guiimage.vsh",
-                      "data/shaders/guiimage.fsh");
+        shaderMan.add("ImageWidget", "data/shaders/imagewidget.vsh",
+                      "data/shaders/imagewidget.fsh");
 
         auto& geomMan   = resman.getGeometryManager();
         geomMan.add("ImageWidget", makeImageGeometry());
@@ -84,10 +84,5 @@ void ImageWidget::onDraw()
     geom->draw();
 }
 
-void ImageWidget::onResize(const vvv::vector2f& oldSize,
-                           const vvv::vector2f& newSize)
-{
-
-}
 
 ImageWidget::~ImageWidget() = default;

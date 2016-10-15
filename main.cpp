@@ -4,6 +4,7 @@
 #include <vvv3d/vvv3d.h>
 #include <gui/guilayer.h>
 #include <gui/imagewidget.h>
+#include <gui/colorrectanglewidget.h>
 #include <random>
 
 vvv::vector3f randomVector(float range)
@@ -113,8 +114,16 @@ protected:
         w->setPosition(vvv::vector2f(50,50));
         guilayer.addWidget(w);
 
-        ImageWidget* w1 = new ImageWidget(spriteTex.get());
-        w1->setPosition(vvv::vector2f(250,150));
+        Widget* w1 = new ColorRectangleWidget(Colour(0.8, 0.3, 0.1, 0.5));
+        w1->setPosition(vvv::vector2f(250,30));
+        w1->setSize(110,60);
+
+        Widget* w2 = new ColorRectangleWidget(Colour::FUCHSIA);
+        w2->setPosition(vvv::vector2f(350,0));
+
+        //w->addWidget(w2);
+        //w->addWidget(w1);
+        guilayer.addWidget(w2);
         guilayer.addWidget(w1);
     }
 
@@ -125,6 +134,7 @@ protected:
                  *font, Colour::ORANGE);
 
         //drawSprites(*this, camera, sprites);
+        DRAW_TRANSPARENT
         guilayer.draw();
     }
 
@@ -159,8 +169,6 @@ private:
                                 "data/shaders/sprite.fsh");
         shaderMan.add("text", "data/shaders/text.vsh",
                               "data/shaders/text.fsh");
-        shaderMan.add("solid", "data/shaders/solidcolor.vsh",
-                              "data/shaders/solidcolor.fsh");
     }
 
     void initTextures()
