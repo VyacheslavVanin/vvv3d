@@ -65,9 +65,6 @@ namespace vvv
             inline vector2<T>& normalize();
     };
 
-    typedef vector2<double> vector2d;
-    typedef vector2<float>  vector2f;
-
     template<typename T>
     inline vector2<T>& vector2<T>::set(T x, T y)
     {

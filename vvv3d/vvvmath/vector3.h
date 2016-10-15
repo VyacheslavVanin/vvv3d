@@ -96,10 +96,6 @@ namespace vvv
 
     } ;
 
-
-    typedef vector3<double> vector3d;
-    typedef vector3<float>  vector3f;
-
     template<typename T>
     inline vector3<T>& vector3<T>::set(T x, T y, T z)
     {

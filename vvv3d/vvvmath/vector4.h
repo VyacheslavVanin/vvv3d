@@ -84,9 +84,6 @@ namespace vvv
         }
     } ;
 
-    typedef vector4<double> vector4d;
-    typedef vector4<float>  vector4f;
-
     template<typename T>
     inline vector4<T>& vector4<T>::set(T x, T y, T z, T w)
     {
