@@ -2,10 +2,10 @@
 
 static const std::map<ATTRIB_LOCATION,std::string> attributesNamesBindings =
 {
-    {ATTRIB_LOCATION::POSITION, "position"  },
-    {ATTRIB_LOCATION::TEXCOORD, "texCoord"  },
-    {ATTRIB_LOCATION::NORMAL,   "normal"    },
-    {ATTRIB_LOCATION::COLOR,    "color"     },
+    {ATTRIB_LOCATION::POSITION, "va_position"  },
+    {ATTRIB_LOCATION::TEXCOORD, "va_texCoord"  },
+    {ATTRIB_LOCATION::NORMAL,   "va_normal"    },
+    {ATTRIB_LOCATION::COLOR,    "va_color"     },
 };
 
 const char *getAttribLocationName(ATTRIB_LOCATION attrib)
