@@ -11,10 +11,10 @@ LIBS += -lvvv3dnew -lGLEW -lGL -lglut -lpng -lfreetype
 
 
 SOURCES += main.cpp \
-    gui/guiobject.cpp \
     gui/guilayer.cpp \
     gui/imagewidget.cpp \
-    gui/colorrectanglewidget.cpp
+    gui/colorrectanglewidget.cpp \
+    gui/widget.cpp
 
 
 DISTFILES += \
@@ -34,7 +34,7 @@ shaders.files = $$DISTFILES
 INSTALLS += shaders
 
 HEADERS += \
-    gui/guiobject.h \
     gui/guilayer.h \
     gui/imagewidget.h \
-    gui/colorrectanglewidget.h
+    gui/colorrectanglewidget.h \
+    gui/widget.h

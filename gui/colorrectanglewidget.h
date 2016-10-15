@@ -1,6 +1,6 @@
 #ifndef COLORRECTANGLEWIDGET_H
 #define COLORRECTANGLEWIDGET_H
-#include "guiobject.h"
+#include "widget.h"
 #include <memory>
 
 class Colour;

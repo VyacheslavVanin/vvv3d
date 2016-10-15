@@ -1,4 +1,4 @@
-#include "guiobject.h"
+#include "widget.h"
 #include "guilayer.h"
 #include <vvv3d/vvvmath/linalg.h>
 #include <memory>

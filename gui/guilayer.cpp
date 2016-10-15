@@ -1,5 +1,5 @@
 #include "guilayer.h"
-#include "guiobject.h"
+#include "widget.h"
 #include <vvv3d/vvv3d.h>
 #include <vector>
 #include <algorithm>

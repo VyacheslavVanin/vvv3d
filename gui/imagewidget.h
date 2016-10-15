@@ -1,6 +1,6 @@
 #ifndef IMAGEWIDGET_H
 #define IMAGEWIDGET_H
-#include "guiobject.h"
+#include "widget.h"
 #include <memory>
 
 class Texture;
