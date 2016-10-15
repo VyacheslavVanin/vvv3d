@@ -6,7 +6,7 @@
 #include <algorithm>
 
 class GuiLayer;
-struct Widget::GuiObjectObjectImpl
+struct Widget::WidgetImpl
 {
     vvv::vector2f   pos     {0};
     vvv::vector2f   size    {1};
@@ -15,7 +15,7 @@ struct Widget::GuiObjectObjectImpl
     GuiLayer*    layer   {nullptr};
     std::vector<Widget*> children;
 
-    GuiObjectObjectImpl(Widget* obj) : obj(obj) {}
+    WidgetImpl(Widget* obj) : obj(obj) {}
 
     void removeChild(Widget* child){
         const auto it = std::find(children.begin(), children.end(), child);
@@ -50,7 +50,7 @@ struct Widget::GuiObjectObjectImpl
 };
 
 Widget::Widget()
-    : impl(std::make_unique<GuiObjectObjectImpl>(this))
+    : impl(std::make_unique<WidgetImpl>(this))
 {}
 
 void Widget::onDraw()

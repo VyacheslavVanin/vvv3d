@@ -42,8 +42,8 @@ private:
     friend class GuiLayer;
     void setGuiLayer(GuiLayer* layer);
 
-    struct GuiObjectObjectImpl;
-    std::unique_ptr<GuiObjectObjectImpl> impl;
+    struct WidgetImpl;
+    std::unique_ptr<WidgetImpl> impl;
 };
 
 #endif // GUIOBJECT_H
