@@ -47,6 +47,7 @@ private:
         TEXTURE7,
         TIME,
         AMBIENT_COLOUR,
+        POSITION,
         COUNT };
     static const char* locations_names[static_cast<size_t>(LOCATIONS::COUNT)];
     GLint locations[static_cast<size_t>(LOCATIONS::COUNT)];
@@ -92,6 +93,7 @@ public:
     void setTexture7(const Texture& tex);
     void setTime(float t);
     void setAmbientLightColor(const Colour& colour);
+    void setPosition(const vvv::vector4f& pos);
     void setLightPos(int n, const vvv::vector3f& pos);
     void setLightDir(int n, const vvv::vector3f& pos);
     void setLightColour(int n, const Colour& colour);

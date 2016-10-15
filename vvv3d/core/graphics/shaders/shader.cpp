@@ -244,6 +244,13 @@ void Shader::setAmbientLightColor(const Colour &colour)
     program.setUniform(loc, colour.vec);
 }
 
+void Shader::setPosition(const vvv::vector4f& pos)
+{
+    const auto loc = LOC_(LOCATIONS::POSITION);
+    CHECK_LOC();
+    program.setUniform(loc, pos);
+}
+
 void Shader::setLightPos(int, const vvv::vector3f&)
 {
     std::cout << "Shader::setLightPos not implemented yet" << std::endl;
@@ -303,13 +310,14 @@ const char* Shader::locations_names[]=
     "texture7",
     "time",
     "ambientColour",
+    "position"
 };
 
 ShaderManager::ShaderManager() : shaders(){}
 
 void ShaderManager::add(const std::string &name,
-                          const std::string &vertexShaderFilename,
-                          const std::string &fragmentShaderFilename)
+                        const std::string &vertexShaderFilename,
+                        const std::string &fragmentShaderFilename)
 {
     shaders[name] = Shader::fromFiles(name.c_str(),
                                       vertexShaderFilename.c_str(),
