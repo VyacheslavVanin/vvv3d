@@ -1,86 +1,98 @@
 #include "guiobject.h"
+#include "guilayer.h"
 #include <vvv3d/vvvmath/linalg.h>
 #include <memory>
 #include <set>
 
-struct GuiObject::GuiObjectObjectImpl
+class GuiLayer;
+struct Widget::GuiObjectObjectImpl
 {
     vvv::vector2f   pos     {0};
     vvv::vector2f   size    {1};
-    GuiObject*      obj     {nullptr};
-    GuiObject*      parent  {nullptr};
-    std::set<GuiObject*> children;
+    Widget*      obj     {nullptr};
+    Widget*      parent  {nullptr};
+    GuiLayer*    layer   {nullptr};
+    std::set<Widget*> children;
 
-    GuiObjectObjectImpl(GuiObject* obj) : obj(obj) {}
+    GuiObjectObjectImpl(Widget* obj) : obj(obj) {}
 
-    void removeChild(GuiObject* child){
+    void removeChild(Widget* child){
         children.erase(child);
-        GuiObject* childParent = child->impl->parent;
+        Widget* childParent = child->impl->parent;
         if(childParent == obj)
             child->impl->parent = nullptr;
     }
 
-    void setParent(GuiObject* newParent)
-    {
-        if(newParent == parent) return;
-
-        if(parent)
-            parent->impl->removeChild(obj);
-
-        parent = newParent;
-        parent->impl->children.insert(obj);
+    void addChild(Widget* child){
+        auto p = child->getParent();
+        if(p)
+            p->removeWidget(child);
+        child->impl->parent = obj;
+        child->impl->layer  = obj->impl->layer;
+        children.insert(child);
     }
 
-    GuiObject* getParent() const {
+    void setParent(Widget* newParent)
+    {
+        if(newParent == parent) return;
+        newParent->addWidget(obj);
+    }
+
+    Widget* getParent() const {
         return parent;
     }
 
 };
 
-GuiObject::GuiObject()
+Widget::Widget()
     : impl(std::make_unique<GuiObjectObjectImpl>(this))
 {}
 
-void GuiObject::onDraw()
+void Widget::onDraw()
 {}
 
-void GuiObject::onResize(const vvv::vector2f& oldSize,
+void Widget::onResize(const vvv::vector2f& oldSize,
                          const vvv::vector2f& newSize)
 {
     (void)oldSize;
     (void)newSize;
 }
 
-void GuiObject::Draw()
+void Widget::setGuiLayer(GuiLayer* layer)
+{
+    impl->layer = layer;
+}
+
+void Widget::Draw()
 {
     onDraw();
     for(auto c: impl->children)
         c->Draw();
 }
 
-const vvv::vector2f& GuiObject::getPosition() const
+const vvv::vector2f& Widget::getPosition() const
 {
     return impl->pos;
 }
 
-void GuiObject::setPosition(const vvv::vector2f& newPos)
+void Widget::setPosition(const vvv::vector2f& newPos)
 {
     impl->pos = newPos;
 }
 
-const vvv::vector2f& GuiObject::getSize() const
+const vvv::vector2f& Widget::getSize() const
 {
     return impl->size;
 }
 
-void GuiObject::setSize(const vvv::vector2f& size)
+void Widget::setSize(const vvv::vector2f& size)
 {
     const auto oldSize = impl->size;
     impl->size = size;
     onResize(oldSize, size);
 }
 
-const vvv::vector2f GuiObject::getAbsolutePosition() const
+const vvv::vector2f Widget::getAbsolutePosition() const
 {
     auto ret = getPosition();
     auto parent = getParent();
@@ -91,16 +103,31 @@ const vvv::vector2f GuiObject::getAbsolutePosition() const
     return ret;
 }
 
-void GuiObject::setParent(GuiObject* parent)
+void Widget::setParent(Widget* parent)
 {
     impl->setParent(parent);
 }
 
-GuiObject*GuiObject::getParent() const
+Widget* Widget::getParent() const
 {
     return impl->getParent();
 }
 
-GuiObject::~GuiObject() = default;
-GuiObject& GuiObject::operator=(GuiObject&&) noexcept = default;
-GuiObject::GuiObject(GuiObject&&) noexcept = default;
+void Widget::addWidget(Widget* widget)
+{
+    impl->addChild(widget);
+}
+
+void Widget::removeWidget(Widget* widget)
+{
+    impl->removeChild(widget);
+}
+
+const Camera& Widget::getCamera() const
+{
+    return impl->layer->getCamera();
+}
+
+Widget::~Widget() = default;
+Widget& Widget::operator=(Widget&&) noexcept = default;
+Widget::Widget(Widget&&) noexcept = default;

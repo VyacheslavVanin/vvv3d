@@ -2,8 +2,8 @@
 #define GUILAYER_H
 #include <memory>
 
-class GuiObject;
-
+class Widget;
+class Camera;
 class GuiLayer final
 {
 public:
@@ -13,8 +13,11 @@ public:
     GuiLayer& operator=(GuiLayer&&) noexcept;
 
     void draw();
-    void addWidget(GuiObject* widget);
-    void removeWidget(GuiObject* widget);
+    void addWidget(Widget* widget);
+    void removeWidget(Widget* widget);
+    void resize(int width, int height);
+
+    const Camera& getCamera() const;
 
 private:
     struct GuiLayerImpl;

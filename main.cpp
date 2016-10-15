@@ -2,6 +2,8 @@
 #include <iomanip>
 #include <string>
 #include <vvv3d/vvv3d.h>
+#include <gui/guilayer.h>
+#include <gui/imagewidget.h>
 #include <random>
 
 vvv::vector3f randomVector(float range)
@@ -106,6 +108,13 @@ protected:
                                  0);
             s.transform.move(randomVector(350));
         }
+
+        ImageWidget* w = new ImageWidget();
+        w->setTexture(spriteTex.get());
+        w->setSize(vvv::vector2f(100,100));
+        w->setPosition(vvv::vector2f(50,50));
+
+        guilayer.addWidget(w);
     }
 
     void onDraw() override {
@@ -114,7 +123,8 @@ protected:
         drawText(camera, *shaderMan.get("text"), *textGeometry, textTransform,
                  *font, Colour::ORANGE);
 
-        drawSprites(*this, camera, sprites);
+        //drawSprites(*this, camera, sprites);
+        guilayer.draw();
     }
 
     void onResize(int x, int y) override
@@ -124,6 +134,7 @@ protected:
         const int top  = y/2;
         const int bottom = top - y;
         camera.setOrtho(left, right, bottom, top, -100, 100);
+        guilayer.resize(x,y);
     }
 
 private:
@@ -138,6 +149,8 @@ private:
 
     std::shared_ptr<Font>       font;
     std::shared_ptr<Geometry>   textGeometry;
+
+    GuiLayer guilayer;
 
     void initShaders()
     {

@@ -3,14 +3,16 @@
 #include <memory>
 #include <vvv3d/vvvmath/matrices_types.h>
 
-class GuiObject
+class GuiLayer;
+class Camera;
+class Widget
 {
 public:
-    GuiObject();
-    GuiObject(GuiObject&&) noexcept;
-    GuiObject& operator=(GuiObject&&) noexcept;
+    Widget();
+    Widget(Widget&&) noexcept;
+    Widget& operator=(Widget&&) noexcept;
 
-    virtual ~GuiObject();
+    virtual ~Widget();
 
     void Draw();
 
@@ -22,10 +24,13 @@ public:
 
     const vvv::vector2f getAbsolutePosition() const;
 
-    void setParent(GuiObject* parent);
-    GuiObject* getParent() const;
+    void setParent(Widget* parent);
+    Widget* getParent() const;
+    void addWidget(Widget* widget);
+    void removeWidget(Widget* widget);
 
 protected:
+    const Camera& getCamera() const;
     /**
      * @brief Implement to draw something */
     virtual void onDraw();
@@ -33,6 +38,9 @@ protected:
                           const vvv::vector2f& newSize);
 
 private:
+    friend class GuiLayer;
+    void setGuiLayer(GuiLayer* layer);
+
     struct GuiObjectObjectImpl;
     std::unique_ptr<GuiObjectObjectImpl> impl;
 };

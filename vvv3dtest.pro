@@ -12,7 +12,8 @@ LIBS += -lvvv3dnew -lGLEW -lGL -lglut -lpng -lfreetype
 
 SOURCES += main.cpp \
     gui/guiobject.cpp \
-    gui/guilayer.cpp
+    gui/guilayer.cpp \
+    gui/imagewidget.cpp
 
 
 DISTFILES += \
@@ -23,7 +24,9 @@ DISTFILES += \
     resources/shaders/text.fsh \
     resources/shaders/text.vsh \
     resources/shaders/solidcolor.fsh \
-    resources/shaders/solidcolor.vsh
+    resources/shaders/solidcolor.vsh \
+    resources/shaders/guiimage.fsh \
+    resources/shaders/guiimage.vsh
 shaders.path = data/shaders
 shaders.files = $$DISTFILES
 
@@ -31,4 +34,5 @@ INSTALLS += shaders
 
 HEADERS += \
     gui/guiobject.h \
-    gui/guilayer.h
+    gui/guilayer.h \
+    gui/imagewidget.h
