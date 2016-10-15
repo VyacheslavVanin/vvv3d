@@ -1,11 +1,12 @@
 #include "guilayer.h"
 #include "guiobject.h"
 #include <vvv3d/vvv3d.h>
-#include <set>
+#include <vector>
+#include <algorithm>
 
 struct GuiLayer::GuiLayerImpl
 {
-    std::set<Widget*> widgets;
+    std::vector<Widget*> widgets;
     /**
      * @brief Orthographic camera; top-left corner (0,0)
      */
@@ -49,12 +50,16 @@ void GuiLayer::GuiLayerImpl::resize(int width, int height)
 
 void GuiLayer::GuiLayerImpl::addWidget(Widget* widget)
 {
-    widgets.insert(widget);
+    const auto it = std::find(widgets.begin(), widgets.end(), widget);
+    if(it == widgets.end())
+        widgets.push_back(widget);
 }
 
 void GuiLayer::GuiLayerImpl::removeWidget(Widget* widget)
 {
-    widgets.erase(widget);
+    const auto it = std::find(widgets.begin(), widgets.end(), widget);
+    if(it != widgets.end())
+        widgets.erase(it);
 }
 
 GuiLayer::GuiLayerImpl::~GuiLayerImpl()
