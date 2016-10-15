@@ -121,10 +121,10 @@ protected:
         Widget* w2 = new ColorRectangleWidget(Colour::FUCHSIA);
         w2->setPosition(vvv::vector2f(350,0));
 
-        //w->addWidget(w2);
-        //w->addWidget(w1);
-        guilayer.addWidget(w2);
-        guilayer.addWidget(w1);
+        w->addWidget(w2);
+        w->addWidget(w1);
+        //guilayer.addWidget(w2);
+        //guilayer.addWidget(w1);
     }
 
     void onDraw() override {

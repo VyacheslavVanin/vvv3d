@@ -2,7 +2,8 @@
 #include "guilayer.h"
 #include <vvv3d/vvvmath/linalg.h>
 #include <memory>
-#include <set>
+#include <vector>
+#include <algorithm>
 
 class GuiLayer;
 struct Widget::GuiObjectObjectImpl
@@ -12,12 +13,14 @@ struct Widget::GuiObjectObjectImpl
     Widget*      obj     {nullptr};
     Widget*      parent  {nullptr};
     GuiLayer*    layer   {nullptr};
-    std::set<Widget*> children;
+    std::vector<Widget*> children;
 
     GuiObjectObjectImpl(Widget* obj) : obj(obj) {}
 
     void removeChild(Widget* child){
-        children.erase(child);
+        const auto it = std::find(children.begin(), children.end(), child);
+        if(it != children.end())
+            children.erase(it);
         Widget* childParent = child->impl->parent;
         if(childParent == obj)
             child->impl->parent = nullptr;
@@ -29,7 +32,9 @@ struct Widget::GuiObjectObjectImpl
             p->removeWidget(child);
         child->impl->parent = obj;
         child->impl->layer  = obj->impl->layer;
-        children.insert(child);
+        const auto it = std::find(children.begin(), children.end(), child);
+        if(it == children.end())
+            children.push_back(child);
     }
 
     void setParent(Widget* newParent)
