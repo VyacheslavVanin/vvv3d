@@ -6,8 +6,16 @@ struct GuiLayer::GuiLayerImpl
 {
     std::set<GuiObject*> widgets;
 
+    /**
+     * @brief Draw all widgets. */
     void draw();
+
+    /**
+     * @brief Add widget to layer.
+     *  Container become responsible for deleting widget.
+     * @param widget widget to add. */
     void addWidget(GuiObject* widget);
+
     /**
      * @brief Remove widget from Layer.
      *  After this call you responsible for deleting widget.
