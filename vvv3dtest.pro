@@ -11,7 +11,7 @@ LIBS += -lvvv3dnew -lGLEW -lGL -lglut -lpng -lfreetype
 
 
 SOURCES += main.cpp \
-    guiobject.cpp
+    gui/guiobject.cpp
 
 
 DISTFILES += \
@@ -29,4 +29,4 @@ shaders.files = $$DISTFILES
 INSTALLS += shaders
 
 HEADERS += \
-    guiobject.h
+    gui/guiobject.h
