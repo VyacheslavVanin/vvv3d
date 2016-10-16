@@ -22,15 +22,15 @@ static std::shared_ptr<Geometry> makeRectGeometry()
 
 struct ColorRectangleWidget::ColorRectangleWidgetImpl
 {
-    ColorRectangleWidgetImpl(const Colour& colour = Colour::ORANGE)
-        : colour(colour)
+    ColorRectangleWidgetImpl(const Color& color = Color::ORANGE)
+        : color(color)
     {}
-    Colour colour;
+    Color color;
 };
 
 
-ColorRectangleWidget::ColorRectangleWidget(const Colour& colour)
-    : pImpl(std::make_unique<ColorRectangleWidgetImpl>(colour))
+ColorRectangleWidget::ColorRectangleWidget(const Color& color)
+    : pImpl(std::make_unique<ColorRectangleWidgetImpl>(color))
 {
     static std::once_flag flag;
     std::call_once(flag, [](){
@@ -47,7 +47,7 @@ ColorRectangleWidget::ColorRectangleWidget(const Colour& colour)
 }
 
 ColorRectangleWidget::ColorRectangleWidget()
-    : ColorRectangleWidget(Colour::ORANGE)
+    : ColorRectangleWidget(Color::ORANGE)
 {}
 
 void ColorRectangleWidget::onDraw()
@@ -67,7 +67,7 @@ void ColorRectangleWidget::onDraw()
 
     sh->activate();
     sh->setPosition(fullPosInfo);
-    sh->setColour0(pImpl->colour);
+    sh->setColor0(pImpl->color);
     sh->setViewProjection(camera.getViewProjection());
 
     geom->draw();

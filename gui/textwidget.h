@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 
-class Colour;
+class Color;
 class TextWidget final : public Widget
 {
 public:
@@ -13,7 +13,7 @@ public:
     ~TextWidget();
 
     void setText(const std::string& text);
-    void setColor(const Colour& color);
+    void setColor(const Color& color);
 
 private:
     struct TextWidgetImpl;

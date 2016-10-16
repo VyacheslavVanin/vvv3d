@@ -3,16 +3,16 @@
 #include "widget.h"
 #include <memory>
 
-class Colour;
+class Color;
 
 class ColorRectangleWidget final : public Widget
 {
 public:
-    ColorRectangleWidget(const Colour& colour);
+    ColorRectangleWidget(const Color& colour);
     ColorRectangleWidget();
     ~ColorRectangleWidget();
 
-    void setColour(const Colour& colour);
+    void setColour(const Color& colour);
 
 private:
     struct ColorRectangleWidgetImpl;

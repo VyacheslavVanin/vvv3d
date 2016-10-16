@@ -63,7 +63,7 @@ struct TextWidget::TextWidgetImpl
         changed = true;
     }
 
-    void setColor(const Colour& color)
+    void setColor(const Color& color)
     {
         this->color = color;
     }
@@ -81,7 +81,7 @@ struct TextWidget::TextWidgetImpl
     std::u32string            text;
     std::shared_ptr<Geometry> geometry;
     std::shared_ptr<Font>     font;
-    Colour                    color = Colour::WHITE;
+    Color                    color = Color::WHITE;
     mutable bool changed;
 };
 
@@ -105,7 +105,7 @@ void TextWidget::setText(const std::string& text)
     pImpl->setText(text);
 }
 
-void TextWidget::setColor(const Colour& color)
+void TextWidget::setColor(const Color& color)
 {
     pImpl->setColor(color);
 }
@@ -126,7 +126,7 @@ void TextWidget::onDraw()
     const auto& pos = getAbsolutePosition();
     transform.setPosition(pos.x, -pos.y - font.getAscender(), 0);
 
-    drawTexturedColoured(camera, *sh, geometry,
+    drawTexturedColored(camera, *sh, geometry,
                          transform, texture,
                          pImpl->color);
 }

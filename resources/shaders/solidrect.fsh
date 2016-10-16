@@ -1,10 +1,10 @@
 #version 330 core
 precision mediump float;
-uniform vec4 colour0;
+uniform vec4 color0;
 
 out vec4 color;
 
 void main(void)
 {
-    color = colour0;
+    color = color0;
 }
