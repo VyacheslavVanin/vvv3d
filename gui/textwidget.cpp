@@ -120,7 +120,7 @@ void TextWidget::onDraw()
 
     const auto& geometry = pImpl->getGeometry();
     const auto& font     = *pImpl->font;
-    const auto& texture  = *font.getTexture();
+    const auto& texture  = font.getTexture();
     auto& transform      = pImpl->transform;
 
     const auto& pos = getAbsolutePosition();
