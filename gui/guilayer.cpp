@@ -39,6 +39,7 @@ GuiLayer::GuiLayerImpl::GuiLayerImpl()
 
 void GuiLayer::GuiLayerImpl::draw()
 {
+    DRAW_TRANSPARENT
     for(auto w: widgets)
         w->Draw();
 }
