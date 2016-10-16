@@ -1,6 +1,7 @@
 #include "textline.h"
 #include <vvv3d/vvvmath/linalg.h>
 #include <vvv3d/core/engine.h>
+#include <codecvt>
 
 struct textVertex
 {
@@ -85,10 +86,27 @@ void updateTextGeometry(std::shared_ptr<Geometry> in,
                        static_cast<GLsizei>(indices.size()*sizeof(GLsizei)));
 }
 
+std::u32string toU32(const std::string& u8)
+{
+    std::locale::global(std::locale("en_US.utf8"));
+    std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv32;
+    return conv32.from_bytes(u8);
+}
+
+
 std::shared_ptr<Geometry>
-createTextGeometry(const Font& f, const std::string& str);
+createTextGeometry(const Font& f, const std::string& str)
+{
+    return createTextGeometry(f, toU32(str));
+}
+
 std::shared_ptr<Geometry>
 createTextGeometry(const Font& f, std::u32string&& str)
 {
     return createTextLineGeometry(f, str);
+}
+
+void updateTextGeometry(std::shared_ptr<Geometry> in, const Font& font, const std::string& text)
+{
+    updateTextGeometry(in, font, toU32(text));
 }

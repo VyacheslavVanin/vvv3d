@@ -16,11 +16,13 @@ std::shared_ptr<Geometry>
 createTextGeometry(const Font& font, const std::u32string& text);
 
 std::shared_ptr<Geometry>
-createTextGeometry(const Font& f, const std::string& str);
-
-std::shared_ptr<Geometry>
 createTextGeometry(const Font& f, std::u32string&& str);
 
 
+std::shared_ptr<Geometry>
+createTextGeometry(const Font& f, const std::string& str);
+
+void updateTextGeometry(std::shared_ptr<Geometry> in,
+                        const Font& font, const std::string& text );
 
 #endif // TEXTLINE_H
