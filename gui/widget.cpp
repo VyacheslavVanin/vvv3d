@@ -87,6 +87,11 @@ void Widget::setPosition(const vvv::vector2f& newPos)
     impl->pos = newPos;
 }
 
+void Widget::setPosition(float x, float y)
+{
+    impl->pos.set(x,y);
+}
+
 const vvv::vector2f& Widget::getSize() const
 {
     return impl->size;

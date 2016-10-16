@@ -18,6 +18,7 @@ public:
 
     const vvv::vector2f& getPosition() const;
     void setPosition(const vvv::vector2f& newPos);
+    void setPosition(float x, float y);
 
     const vvv::vector2f& getSize() const;
     void setSize(const vvv::vector2f& size);
