@@ -5,6 +5,7 @@
 #include <gui/guilayer.h>
 #include <gui/imagewidget.h>
 #include <gui/colorrectanglewidget.h>
+#include <gui/textwidget.h>
 #include <random>
 
 vvv::vector3f randomVector(float range)
@@ -121,8 +122,11 @@ protected:
         Widget* w2 = new ColorRectangleWidget(Colour::FUCHSIA);
         w2->setPosition(vvv::vector2f(350,0));
 
+        TextWidget* w3 = new TextWidget("Прювет Лунатикам!!!");
+
         w->addWidget(w2);
         w->addWidget(w1);
+        w->addWidget(w3);
         //guilayer.addWidget(w2);
         //guilayer.addWidget(w1);
     }
@@ -203,7 +207,7 @@ private:
     {
         fontMan.addFont("default", "data/fonts/DejaVuSans.ttf", 20);
         font = fontMan.getFont("default");
-        textGeometry = createTextGeometry(*font, std::u32string(U"Hello World"));
+        textGeometry = createTextGeometry(*font, "Привет Мир!!! Hello");
     }
 };
 

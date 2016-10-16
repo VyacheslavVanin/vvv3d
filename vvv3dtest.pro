@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     gui/guilayer.cpp \
     gui/imagewidget.cpp \
     gui/colorrectanglewidget.cpp \
-    gui/widget.cpp
+    gui/widget.cpp \
+    gui/textwidget.cpp
 
 
 DISTFILES += \
@@ -37,4 +38,5 @@ HEADERS += \
     gui/guilayer.h \
     gui/imagewidget.h \
     gui/colorrectanglewidget.h \
-    gui/widget.h
+    gui/widget.h \
+    gui/textwidget.h
