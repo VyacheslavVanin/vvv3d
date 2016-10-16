@@ -33,7 +33,6 @@ HEADERS += \
     vvv3d/core/graphics/textures/textureatlas.h \
     vvv3d/core/graphics/textures/texturemanager.h \
     vvv3d/core/graphics/shaders/shader.h \
-    vvv3d/core/graphics/colour.h \
     vvv3d/core/graphics/framebufferobject.h \
     vvv3d/core/graphics/geometry.h \
     vvv3d/utils/helper.h \
@@ -50,7 +49,8 @@ HEADERS += \
     vvv3d/vvvmath/vector4.h \
     vvv3d/std/draw.h \
     vvv3d/core/resourcemanager.h \
-    vvv3d/vvv3d.h
+    vvv3d/vvv3d.h \
+    vvv3d/core/graphics/color.h
 
 SOURCES += \
     vvv3d/core/engine.cpp \
@@ -68,12 +68,12 @@ SOURCES += \
     vvv3d/core/graphics/textures/textureatlas.cpp \
     vvv3d/core/graphics/textures/texturemanager.cpp \
     vvv3d/core/graphics/shaders/shader.cpp \
-    vvv3d/core/graphics/colour.cpp \
     vvv3d/core/graphics/framebufferobject.cpp \
     vvv3d/core/graphics/geometry.cpp \
     vvv3d/utils/helper.cpp \
     vvv3d/utils/myutils.cpp \
-    vvv3d/std/draw.cpp
+    vvv3d/std/draw.cpp \
+    vvv3d/core/graphics/color.cpp
 
 INSTALL_HEADERS = $$HEADERS
 INSTALL_PREFIX  = $$DESTDIR

@@ -66,34 +66,34 @@ void drawTextured(const Camera& camera, Shader& shader,
     geometry.draw();
 }
 
-void drawColoured(const Camera& camera, Shader& shader,
+void drawColored(const Camera& camera, Shader& shader,
                         const Geometry& geometry, const Transform& transform,
-                        const Colour& colour0)
+                        const Color& color0)
 {
     setup_shader(shader, camera, transform);
-    shader.setColour0(colour0);
+    shader.setColor0(color0);
     geometry.draw();
 }
 
-void drawTexturedColoured(const Camera& camera, Shader& shader,
+void drawTexturedColored(const Camera& camera, Shader& shader,
                           const Geometry& geometry, const Transform& transform,
-                          const Texture& texture, const Colour& colour)
+                          const Texture& texture, const Color& color)
 {
     setup_shader(shader, camera, transform);
     shader.setTexturePosition(texture.getTexturePosition());
     shader.setTexture0(texture);
-    shader.setColour0(colour);
+    shader.setColor0(color);
     geometry.draw();
 }
 
 void drawText(const Camera& camera, Shader& shader, const Geometry& geometry,
-              const Transform& transform, const Font& font, const Colour& colour)
+              const Transform& transform, const Font& font, const Color& color)
 {
     setup_shader(shader, camera, transform);
     const auto& tex = font.getTexture();
     shader.setTexturePosition(tex.getTexturePosition());
     shader.setTexture0(tex);
-    shader.setColour0(colour);
+    shader.setColor0(color);
     DRAW_TRANSPARENT
             geometry.draw();
 }

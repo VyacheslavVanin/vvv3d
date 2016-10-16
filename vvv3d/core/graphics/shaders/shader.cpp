@@ -87,68 +87,68 @@ void Shader::setModelRotation(const vvv::matrix33f &m)
     program.setUniform(loc, m);
 }
 
-void Shader::setColour(int n, const Colour &colour)
+void Shader::setColor(int n, const Color &color)
 {
-    const auto loc = LOC_(static_cast<size_t>(LOCATIONS::COLOUR0)+n);
+    const auto loc = LOC_(static_cast<size_t>(LOCATIONS::COLOR0)+n);
     CHECK_LOC()
     program.setUniform(loc,
-                       colour.vec);
+                       color.vec);
 }
 
-void Shader::setColour0(const Colour &colour)
+void Shader::setColor0(const Color &color)
 {
-    const auto loc = LOC_(LOCATIONS::COLOUR0);
+    const auto loc = LOC_(LOCATIONS::COLOR0);
     CHECK_LOC()
-    program.setUniform(loc, colour.vec);
+    program.setUniform(loc, color.vec);
 }
 
-void Shader::setColour1(const Colour &colour)
+void Shader::setColor1(const Color &color)
 {
-    const auto loc = LOC_(LOCATIONS::COLOUR1);
+    const auto loc = LOC_(LOCATIONS::COLOR1);
     CHECK_LOC()
-    program.setUniform(loc, colour.vec);
+    program.setUniform(loc, color.vec);
 }
 
-void Shader::setColour2(const Colour &colour)
+void Shader::setColor2(const Color &color)
 {
-    const auto loc = LOC_(LOCATIONS::COLOUR2);
+    const auto loc = LOC_(LOCATIONS::COLOR2);
     CHECK_LOC()
-    program.setUniform(loc, colour.vec);
+    program.setUniform(loc, color.vec);
 }
 
-void Shader::setColour3(const Colour &colour)
+void Shader::setColor3(const Color &color)
 {
-    const auto loc = LOC_(LOCATIONS::COLOUR3);
+    const auto loc = LOC_(LOCATIONS::COLOR3);
     CHECK_LOC()
-    program.setUniform(loc, colour.vec);
+    program.setUniform(loc, color.vec);
 }
 
-void Shader::setColour4(const Colour &colour)
+void Shader::setColor4(const Color &color)
 {
-    const auto loc = LOC_(LOCATIONS::COLOUR4);
+    const auto loc = LOC_(LOCATIONS::COLOR4);
     CHECK_LOC()
-    program.setUniform(loc, colour.vec);
+    program.setUniform(loc, color.vec);
 }
 
-void Shader::setColour5(const Colour &colour)
+void Shader::setColor5(const Color &color)
 {
-    const auto loc = LOC_(LOCATIONS::COLOUR5);
+    const auto loc = LOC_(LOCATIONS::COLOR5);
     CHECK_LOC()
-    program.setUniform(loc, colour.vec);
+    program.setUniform(loc, color.vec);
 }
 
-void Shader::setColour6(const Colour &colour)
+void Shader::setColor6(const Color &color)
 {
-    const auto loc = LOC_(LOCATIONS::COLOUR6);
+    const auto loc = LOC_(LOCATIONS::COLOR6);
     CHECK_LOC()
-    program.setUniform(loc, colour.vec);
+    program.setUniform(loc, color.vec);
 }
 
-void Shader::setColour7(const Colour &colour)
+void Shader::setColor7(const Color &color)
 {
-    const auto loc = LOC_(LOCATIONS::COLOUR7);
+    const auto loc = LOC_(LOCATIONS::COLOR7);
     CHECK_LOC()
-    program.setUniform(loc, colour.vec);
+    program.setUniform(loc, color.vec);
 }
 
 void Shader::setTexturePosition(const vvv::vector4f &pos)
@@ -237,11 +237,11 @@ void Shader::setTime(float t)
     program.setUniform(loc, t);
 }
 
-void Shader::setAmbientLightColor(const Colour &colour)
+void Shader::setAmbientLightColor(const Color &color)
 {
-    const auto loc = LOC_(LOCATIONS::AMBIENT_COLOUR);
+    const auto loc = LOC_(LOCATIONS::AMBIENT_COLOR);
     CHECK_LOC()
-    program.setUniform(loc, colour.vec);
+    program.setUniform(loc, color.vec);
 }
 
 void Shader::setPosition(const vvv::vector4f& pos)
@@ -261,9 +261,9 @@ void Shader::setLightDir(int, const vvv::vector3f&)
     std::cout << "Shader::setLightDir not implemented yet" <<std::endl;
 }
 
-void Shader::setLightColour(int, const Colour &)
+void Shader::setLightColor(int, const Color &)
 {
-    std::cout << "Shader::setLightColour not implemented yet" <<std::endl;
+    std::cout << "Shader::setLightColor not implemented yet" <<std::endl;
 }
 
 GLint Shader::loadLocation(const char *name)
@@ -291,14 +291,14 @@ const char* Shader::locations_names[]=
     "viewProjectionMatrix",
     "modelViewProjectionMatrix",
     "modelRotation",
-    "colour0",
-    "colour1",
-    "colour2",
-    "colour3",
-    "colour4",
-    "colour5",
-    "colour6",
-    "colour7",
+    "color0",
+    "color1",
+    "color2",
+    "color3",
+    "color4",
+    "color5",
+    "color6",
+    "color7",
     "texturePosition",
     "texture0",
     "texture1",
@@ -309,7 +309,7 @@ const char* Shader::locations_names[]=
     "texture6",
     "texture7",
     "time",
-    "ambientColour",
+    "ambientColor",
     "position"
 };
 

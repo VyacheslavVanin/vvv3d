@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <vvv3d/vvvmath/linalg.h>
-#include <vvv3d/core/graphics/colour.h>
+#include <vvv3d/core/graphics/color.h>
 #include <vvv3d/core/graphics/textures/texture.h>
 #include <vvv3d/core/graphics/lowlevel/lowlevelshaderprogram.h>
 
@@ -28,14 +28,14 @@ private:
         VIEW_PROJECITON,
         MODEL_VIEW_PROJECTION,
         MODEL_ROTATION,
-        COLOUR0,
-        COLOUR1,
-        COLOUR2,
-        COLOUR3,
-        COLOUR4,
-        COLOUR5,
-        COLOUR6,
-        COLOUR7,
+        COLOR0,
+        COLOR1,
+        COLOR2,
+        COLOR3,
+        COLOR4,
+        COLOR5,
+        COLOR6,
+        COLOR7,
         TEXTURE_POSITION,
         TEXTURE0,
         TEXTURE1,
@@ -46,7 +46,7 @@ private:
         TEXTURE6,
         TEXTURE7,
         TIME,
-        AMBIENT_COLOUR,
+        AMBIENT_COLOR,
         POSITION,
         COUNT };
     static const char* locations_names[static_cast<size_t>(LOCATIONS::COUNT)];
@@ -72,15 +72,15 @@ public:
     void setViewProjection(const vvv::matrix44f& m);
     void setModelViewProjeciton(const vvv::matrix44f& m);
     void setModelRotation(const vvv::matrix33f& m);
-    void setColour(int n, const Colour& colour);
-    void setColour0(const Colour& colour);
-    void setColour1(const Colour& colour);
-    void setColour2(const Colour& colour);
-    void setColour3(const Colour& colour);
-    void setColour4(const Colour& colour);
-    void setColour5(const Colour& colour);
-    void setColour6(const Colour& colour);
-    void setColour7(const Colour& colour);
+    void setColor(int n, const Color& color);
+    void setColor0(const Color& color);
+    void setColor1(const Color& color);
+    void setColor2(const Color& color);
+    void setColor3(const Color& color);
+    void setColor4(const Color& color);
+    void setColor5(const Color& color);
+    void setColor6(const Color& color);
+    void setColor7(const Color& color);
     void setTexturePosition(const vvv::vector4f& pos);
     void setTexture(int n, const Texture &tex);
     void setTexture0(const Texture& tex);
@@ -92,11 +92,11 @@ public:
     void setTexture6(const Texture& tex);
     void setTexture7(const Texture& tex);
     void setTime(float t);
-    void setAmbientLightColor(const Colour& colour);
+    void setAmbientLightColor(const Color& color);
     void setPosition(const vvv::vector4f& pos);
     void setLightPos(int n, const vvv::vector3f& pos);
     void setLightDir(int n, const vvv::vector3f& pos);
-    void setLightColour(int n, const Colour& colour);
+    void setLightColor(int n, const Color& color);
 
     // part of workaround std::make_shared with private constructor
     explicit Shader(const _private&) : Shader() {}

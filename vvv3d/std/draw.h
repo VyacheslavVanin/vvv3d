@@ -11,7 +11,7 @@ class Shader;
 class Geometry;
 class Transform;
 class Texture;
-class Colour;
+class Color;
 class Font;
 
 void drawTextured(const Camera& camera, Shader& shader,
@@ -32,16 +32,16 @@ void drawTextured(const Camera& camera, Shader& shader,
                   const Texture& texture0, const Texture& texture1,
                   const Texture& texture2, const Texture& texture3);
 
-void drawColoured(const Camera& camera, Shader& shader,
+void drawColored(const Camera& camera, Shader& shader,
                   const Geometry& geometry, const Transform& transform,
-                  const Colour& colour0);
+                  const Color& color0);
 
-void drawTexturedColoured(const Camera& camera, Shader& shader,
+void drawTexturedColored(const Camera& camera, Shader& shader,
                           const Geometry& geometry, const Transform& transform,
-                          const Texture& texture, const Colour& colour);
+                          const Texture& texture, const Color& color);
 
 void drawText(const Camera& camera, Shader& shader, const Geometry& geometry,
-              const Transform& transform, const Font& font, const Colour& colour);
+              const Transform& transform, const Font& font, const Color& color);
 
 
 #endif // DRAW_H

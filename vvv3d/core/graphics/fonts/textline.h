@@ -4,7 +4,7 @@
 #include <memory>
 #include <vvv3d/core/graphics/geometry.h>
 #include <vvv3d/core/graphics/fonts/font.h>
-#include <vvv3d/core/graphics/colour.h>
+#include <vvv3d/core/graphics/color.h>
 #include <vvv3d/core/transform.h>
 #include <vvv3d/std/draw.h>
 
