@@ -95,7 +95,6 @@ public:
 protected:
 
     void initialSetup() override {
-        camera.setOrtho(-100, 100, -100, 100, -100, 100);
         initGeometry();
         initShaders();
         initTextures();
@@ -123,22 +122,16 @@ protected:
         w2->setPosition(vvv::vector2f(350,0));
 
         TextWidget* w3 = new TextWidget("Прювет Лунатикам!!!");
+        w3->setColor(Colour::ORANGE);
 
         w->addWidget(w2);
         w->addWidget(w1);
         w->addWidget(w3);
-        //guilayer.addWidget(w2);
-        //guilayer.addWidget(w1);
     }
 
-    void onDraw() override {
-        Transform textTransform;
-        textTransform.move(0, -80, 0);
-        drawText(camera, *shaderMan.get("text"), *textGeometry, textTransform,
-                 *font, Colour::ORANGE);
-
-        //drawSprites(*this, camera, sprites);
-        DRAW_TRANSPARENT
+    void onDraw() override
+    {
+        drawSprites(*this, camera, sprites);
         guilayer.draw();
     }
 
@@ -171,8 +164,6 @@ private:
     {
         shaderMan.add("sprite", "data/shaders/sprite.vsh",
                                 "data/shaders/sprite.fsh");
-        shaderMan.add("text", "data/shaders/text.vsh",
-                              "data/shaders/text.fsh");
     }
 
     void initTextures()
@@ -205,9 +196,6 @@ private:
 
     void initFonts()
     {
-        fontMan.addFont("default", "data/fonts/DejaVuSans.ttf", 20);
-        font = fontMan.getFont("default");
-        textGeometry = createTextGeometry(*font, "Привет Мир!!! Hello");
     }
 };
 
