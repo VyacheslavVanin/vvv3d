@@ -9,6 +9,7 @@
 #include <vvv3d/std/draw.h>
 
 
+std::u32string toU32(const std::string& u8);
 void updateTextGeometry(const std::shared_ptr<Geometry>& in,
                         const Font& font, const std::u32string& text );
 
