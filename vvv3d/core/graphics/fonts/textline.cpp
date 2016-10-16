@@ -100,12 +100,6 @@ createTextGeometry(const Font& f, const std::string& str)
     return createTextGeometry(f, toU32(str));
 }
 
-std::shared_ptr<Geometry>
-createTextGeometry(const Font& f, std::u32string&& str)
-{
-    return createTextLineGeometry(f, str);
-}
-
 void updateTextGeometry(std::shared_ptr<Geometry> in, const Font& font, const std::string& text)
 {
     updateTextGeometry(in, font, toU32(text));
