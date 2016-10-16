@@ -9,7 +9,7 @@
 #include <vvv3d/std/draw.h>
 
 
-void updateTextGeometry(std::shared_ptr<Geometry> in,
+void updateTextGeometry(const std::shared_ptr<Geometry>& in,
                         const Font& font, const std::u32string& text );
 
 std::shared_ptr<Geometry>
@@ -19,7 +19,7 @@ createTextGeometry(const Font& font, const std::u32string& text);
 std::shared_ptr<Geometry>
 createTextGeometry(const Font& f, const std::string& str);
 
-void updateTextGeometry(std::shared_ptr<Geometry> in,
+void updateTextGeometry(const std::shared_ptr<Geometry>& in,
                         const Font& font, const std::string& text );
 
 #endif // TEXTLINE_H

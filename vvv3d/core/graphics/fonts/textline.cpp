@@ -17,7 +17,7 @@ struct GlyphQuad
 };
 
 std::shared_ptr<Geometry>
-createTextLineGeometry(const Font& font, const std::u32string& text)
+createTextGeometry(const Font& font, const std::u32string& text)
 {
     auto ret = std::make_shared<Geometry>(
                VertexAttributes({
@@ -28,7 +28,7 @@ createTextLineGeometry(const Font& font, const std::u32string& text)
     return ret;
 }
 
-void updateTextGeometry(std::shared_ptr<Geometry> in,
+void updateTextGeometry(const std::shared_ptr<Geometry>& in,
                         const Font& font, const std::u32string& text )
 {
     const size_t numChars = text.size();
@@ -100,7 +100,8 @@ createTextGeometry(const Font& f, const std::string& str)
     return createTextGeometry(f, toU32(str));
 }
 
-void updateTextGeometry(std::shared_ptr<Geometry> in, const Font& font, const std::string& text)
+void updateTextGeometry(const std::shared_ptr<Geometry>& in, const Font& font,
+                        const std::string& text)
 {
     updateTextGeometry(in, font, toU32(text));
 }
