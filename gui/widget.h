@@ -35,6 +35,11 @@ protected:
     /**
      * @brief Implement to draw something */
     virtual void onDraw();
+
+    /**
+     * @brief Called after setSize()
+     * @param oldSize
+     * @param newSize */
     virtual void onResize(const vvv::vector2f& oldSize,
                           const vvv::vector2f& newSize);
 
