@@ -98,21 +98,21 @@ template<typename T, typename SIZE_TYPE, typename GET, typename SORT, typename S
  * @param width Widht of rectangle.
  * @param height Height of rectangle.
  * @return Vector of positions in rectangle related to input sequence.  */
-std::vector<std::shared_ptr<T> >
-pack2d(const std::vector<std::shared_ptr<T>>& input, SIZE_TYPE width, SIZE_TYPE height,
+std::vector<T>
+pack2d(const std::vector<T>& input, SIZE_TYPE width, SIZE_TYPE height,
                 const SORT& sortPred, const GET &getSizePred, const SETOFFSET& setOffset,
-                std::vector<std::shared_ptr<T>>& notPlaced, int border=0)
+                std::vector<T>& notPlaced, int border=0)
 {
     using namespace std;
 
-    vector<shared_ptr<T>> ret;
+    vector<T> ret;
     auto inputCopy = input;
     sort(inputCopy.begin(), inputCopy.end(), sortPred);
     auto rootNode = packNode<T,SIZE_TYPE,GET,SETOFFSET>(width, height, 0, 0, border);
     for_each( inputCopy.rbegin(), inputCopy.rend(),
-                    [&](shared_ptr<T>& current)
+                    [&](T& current)
                     {
-                        if(rootNode.placeImage(current.get(), getSizePred, setOffset))
+                        if(rootNode.placeImage(&current, getSizePred, setOffset))
                             ret.push_back(current);
                         else
                             notPlaced.push_back(current);

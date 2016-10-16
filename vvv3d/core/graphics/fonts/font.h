@@ -24,7 +24,7 @@ struct FontImpl;
 class Font
 {
 public:
-    std::shared_ptr<Glyph> getGlyph(uint32_t c) const;
+    const Glyph& getGlyph(uint32_t c) const;
     void activate(GLuint texUnit=0);
     std::shared_ptr<Texture> getTexture() const;
     long getAscender() const;

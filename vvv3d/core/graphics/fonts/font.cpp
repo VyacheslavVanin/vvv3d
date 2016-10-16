@@ -46,10 +46,10 @@ convert8to32tex(const void* in, size_t width, size_t height)
 
 
 static
-std::vector<std::shared_ptr<Glyph>>
+std::vector<Glyph>
 loadGlyphes(FT_Face face, const std::u32string& characters)
 {
-    std::vector<std::shared_ptr<Glyph>> glyphes;
+    std::vector<Glyph> glyphes;
     for(const auto& c : characters)
     {
         const auto glyph_index = FT_Get_Char_Index(face, c);
@@ -63,22 +63,22 @@ loadGlyphes(FT_Face face, const std::u32string& characters)
         const auto xoffset = glyph->metrics.horiBearingX/64;
         const auto yoffset = glyph->metrics.horiBearingY/64 - height;
         const auto advance = glyph->metrics.horiAdvance/64;
-        auto* glyphPtr = new Glyph{ static_cast<uint32_t>(c),
+        Glyph toPlace { static_cast<uint32_t>(c),
                           static_cast<int32_t>(width), static_cast<int32_t>(height),
                           static_cast<int32_t>(xoffset), static_cast<int32_t>(yoffset),
                           static_cast<int32_t>(advance),
                           convert8to32tex(bm.buffer, width, height),
                           0,0};
-        glyphes.push_back(std::shared_ptr<Glyph>(glyphPtr));
+        glyphes.push_back(toPlace);
     }
     return glyphes;
 }
 
 
-static bool glyphSizeComparisionHeightFirst(std::shared_ptr<Glyph>& l, std::shared_ptr<Glyph>& r)
+static bool glyphSizeComparisionHeightFirst(const Glyph& l, const Glyph& r)
 {
-    return l->height < r->height ? true
-                                 : l->height == r->height ? l->width < r->width
+    return l.height < r.height ? true
+                                 : l.height == r.height ? l.width < r.width
                                                           : false;
 }
 
@@ -107,16 +107,16 @@ static void clearTexture(std::shared_ptr<Texture> lltex)
 }
 
 static void drawGlyphesToTexture(std::shared_ptr<Texture> lltex,
-                                 std::vector<shared_ptr<Glyph>>& glyphes)
+                                 std::vector<Glyph>& glyphes)
 {
     lltex->bind();
     clearTexture(lltex);
-    for(shared_ptr<Glyph>& g: glyphes)
+    for(auto& g: glyphes)
         glTexSubImage2D(GL_TEXTURE_2D, 0,
-                        g->textureOffsetX,
-                        g->textureOffsetY,
-                        g->width, g->height,
-                        GL_RGBA, GL_UNSIGNED_BYTE, g->buffer.data());
+                        g.textureOffsetX,
+                        g.textureOffsetY,
+                        g.width, g.height,
+                        GL_RGBA, GL_UNSIGNED_BYTE, g.buffer.data());
 }
 
 struct FontImpl
@@ -124,7 +124,7 @@ struct FontImpl
     FontImpl(FT_Face f, unsigned int size=16, unsigned int charSize=16,
          unsigned int  dpi=96, unsigned int textureSize=512);
 
-    std::map<uint32_t, std::shared_ptr<Glyph>> mapCharToGlyph;
+    std::map<uint32_t, Glyph> mapCharToGlyph;
     std::shared_ptr<Texture> lltex;
 
     FT_Face face;
@@ -145,8 +145,8 @@ FontImpl::FontImpl(FT_Face f, unsigned int size, unsigned int charSize,
     FT_Set_Char_Size(face, charSize*64, charSize*64, dpi, dpi);
     FT_Set_Pixel_Sizes(face, 0, size);
 
-    vector<shared_ptr<Glyph>> glyphes = loadGlyphes(face, characters);
-    vector<shared_ptr<Glyph>> notPlaced;
+    vector<Glyph> glyphes = loadGlyphes(face, characters);
+    vector<Glyph> notPlaced;
     glyphes = pack2d( glyphes, textureSize, textureSize,
                       glyphSizeComparisionHeightFirst,
                       glyphGetSize,
@@ -157,7 +157,7 @@ FontImpl::FontImpl(FT_Face f, unsigned int size, unsigned int charSize,
     DebugVar(notPlaced.size());
 
     for(const auto& g: glyphes)
-        mapCharToGlyph[g->character] = g;
+        mapCharToGlyph[g.character] = g;
 }
 
 void Font::activate(GLuint texUnit) { pImpl->lltex->bind(texUnit); }
@@ -182,7 +182,7 @@ long Font::getMinLeftGlyphEdge() const
     return pImpl->face->bbox.xMin;
 }
 
-std::shared_ptr<Glyph> Font::getGlyph(uint32_t c) const
+const Glyph& Font::getGlyph(uint32_t c) const
 {
     return pImpl->mapCharToGlyph.at(c);
 }

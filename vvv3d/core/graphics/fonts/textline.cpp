@@ -41,18 +41,18 @@ void updateTextGeometry(const std::shared_ptr<Geometry>& in,
     auto texture = font.getTexture();
     for(auto c: text)
     {
-        auto g = font.getGlyph(c);
+        const auto& g = font.getGlyph(c);
         GlyphQuad& currentQuad = vertices[iVerts];
         const GLsizei nVerts = static_cast<GLsizei>(iVerts)*4;
-        const float x       = advance + g->xoffset;
-        const float rightx  = x + g->width;
-        const float y       = g->yoffset;
-        const float top_y   = y + g->height;
+        const float x       = advance + g.xoffset;
+        const float rightx  = x + g.width;
+        const float y       = g.yoffset;
+        const float top_y   = y + g.height;
         const float tmultiplyer = 1.0f / texture->getWidth();
-        const float left_tx = g->textureOffsetX*tmultiplyer;
-        const float bottom_ty = g->textureOffsetY*tmultiplyer;
-        const float right_tx = left_tx + g->width*tmultiplyer;
-        const float top_ty   = bottom_ty + g->height*tmultiplyer;
+        const float left_tx = g.textureOffsetX*tmultiplyer;
+        const float bottom_ty = g.textureOffsetY*tmultiplyer;
+        const float right_tx = left_tx + g.width*tmultiplyer;
+        const float top_ty   = bottom_ty + g.height*tmultiplyer;
 
         currentQuad.bottomLeft.pos.set(x, y);
         currentQuad.bottomLeft.texcoord.set(left_tx, bottom_ty);
@@ -75,7 +75,7 @@ void updateTextGeometry(const std::shared_ptr<Geometry>& in,
         indices[iInds + 3] = nVerts + 0;
         indices[iInds + 4] = nVerts + 1;
         indices[iInds + 5] = nVerts + 3;
-        advance += g->advance;
+        advance += g.advance;
         ++iVerts;
         iInds += 6;
     }
