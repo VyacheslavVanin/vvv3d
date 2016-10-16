@@ -169,12 +169,12 @@ std::shared_ptr<Texture> Font::getTexture() const
 
 long Font::getAscender() const
 {
-    return pImpl->face->bbox.yMax;
+    return pImpl->face->size->metrics.ascender / 64;
 }
 
 long Font::getDescender() const
 {
-    return pImpl->face->bbox.yMin;
+    return pImpl->face->size->metrics.descender / 64;
 }
 
 long Font::getMinLeftGlyphEdge() const
