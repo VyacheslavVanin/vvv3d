@@ -162,9 +162,9 @@ FontImpl::FontImpl(FT_Face f, unsigned int size, unsigned int charSize,
 
 void Font::activate(GLuint texUnit) { pImpl->lltex->bind(texUnit); }
 
-std::shared_ptr<Texture> Font::getTexture() const
+const Texture& Font::getTexture() const
 {
-    return pImpl->lltex;
+    return *pImpl->lltex;
 }
 
 long Font::getAscender() const

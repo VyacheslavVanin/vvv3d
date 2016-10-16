@@ -38,7 +38,7 @@ void updateTextGeometry(const std::shared_ptr<Geometry>& in,
     float advance = 0;
     size_t iVerts = 0;
     size_t iInds  = 0;
-    auto texture = font.getTexture();
+    const auto& texture = font.getTexture();
     for(auto c: text)
     {
         const auto& g = font.getGlyph(c);
@@ -48,7 +48,7 @@ void updateTextGeometry(const std::shared_ptr<Geometry>& in,
         const float rightx  = x + g.width;
         const float y       = g.yoffset;
         const float top_y   = y + g.height;
-        const float tmultiplyer = 1.0f / texture->getWidth();
+        const float tmultiplyer = 1.0f / texture.getWidth();
         const float left_tx = g.textureOffsetX*tmultiplyer;
         const float bottom_ty = g.textureOffsetY*tmultiplyer;
         const float right_tx = left_tx + g.width*tmultiplyer;

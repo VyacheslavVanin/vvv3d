@@ -90,9 +90,9 @@ void drawText(const Camera& camera, Shader& shader, const Geometry& geometry,
               const Transform& transform, const Font& font, const Colour& colour)
 {
     setup_shader(shader, camera, transform);
-    auto tex = font.getTexture();
-    shader.setTexturePosition(tex->getTexturePosition());
-    shader.setTexture0(*tex);
+    const auto& tex = font.getTexture();
+    shader.setTexturePosition(tex.getTexturePosition());
+    shader.setTexture0(tex);
     shader.setColour0(colour);
     DRAW_TRANSPARENT
             geometry.draw();
