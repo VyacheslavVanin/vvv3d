@@ -66,6 +66,8 @@ void Widget::onResize(const vvv::vector2f& oldSize,
 void Widget::setGuiLayer(GuiLayer* layer)
 {
     impl->layer = layer;
+    for(auto c : impl->children)
+        c->setGuiLayer(layer);
 }
 
 void Widget::Draw()
