@@ -7,7 +7,7 @@
 
 static const int DEFAULT_SCREEN_WIDTH = 640;
 static const int DEFAULT_SCREEN_HEIGHT = 480;
-std::shared_ptr<Engine> Engine::activeEngine = std::shared_ptr<Engine>();
+Engine* Engine::activeEngine = nullptr;
 
 Engine::Engine(int argc, char** argv, const char* windowName)
     : currentfps(0), viewportWidth(DEFAULT_SCREEN_WIDTH),
@@ -33,7 +33,7 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     glutIdleFunc( [](void){glutPostRedisplay();} );
     glutDisplayFunc( [](){activeEngine->display();} );
     glutReshapeFunc( [](int x,int y){activeEngine->resize(x,y); } );
-    activeEngine = std::shared_ptr<Engine>(this);
+    activeEngine = this;
 }
 
 Engine::~Engine() {}

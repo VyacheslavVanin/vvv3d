@@ -23,7 +23,7 @@ protected:
     virtual void onDraw();
     virtual void onResize(int x, int y);
 
-    static std::shared_ptr<Engine>  activeEngine;
+    static Engine*  activeEngine;
 
 private:
     void display();
