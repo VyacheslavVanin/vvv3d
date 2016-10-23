@@ -1,6 +1,7 @@
 #ifndef GUILAYER_H
 #define GUILAYER_H
 #include <memory>
+#include <vvv3d/vvvmath/vector2.h>
 
 class Widget;
 class Camera;
@@ -16,6 +17,7 @@ public:
     void addWidget(Widget* widget);
     void removeWidget(Widget* widget);
     void resize(int width, int height);
+    const vvv::vector2<int>& getSize() const;
 
     const Camera& getCamera() const;
 

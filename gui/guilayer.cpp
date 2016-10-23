@@ -7,6 +7,7 @@
 struct GuiLayer::GuiLayerImpl
 {
     std::vector<Widget*> widgets;
+    vvv::vector2<int>    size;
     /**
      * @brief Orthographic camera; top-left corner (0,0)
      */
@@ -47,6 +48,7 @@ void GuiLayer::GuiLayerImpl::draw()
 void GuiLayer::GuiLayerImpl::resize(int width, int height)
 {
     camera.setOrtho(0, width, -height, 0, 1, -1);
+    size.set(width, height);
 }
 
 void GuiLayer::GuiLayerImpl::addWidget(Widget* widget)
@@ -95,6 +97,11 @@ void GuiLayer::removeWidget(Widget* widget)
 void GuiLayer::resize(int width, int height)
 {
     impl->resize(width, height);
+}
+
+const vvv::vector2<int>& GuiLayer::getSize() const
+{
+    return impl->size;
 }
 
 const Camera& GuiLayer::getCamera() const
