@@ -97,3 +97,21 @@ void drawText(const Camera& camera, Shader& shader, const Geometry& geometry,
     DRAW_TRANSPARENT
             geometry.draw();
 }
+
+void scissor(int x, int y, int width, int height)
+{
+    glEnable(GL_SCISSOR_TEST);
+    glScissor(x, y, width, height);
+}
+
+vvv::vector4<int> getScissor()
+{
+    vvv::vector4<int> ret;
+    glGetIntegerv(GL_SCISSOR_BOX, ret.vector);
+    return ret;
+}
+
+void scissorDisable()
+{
+    glDisable(GL_SCISSOR_TEST);
+}
