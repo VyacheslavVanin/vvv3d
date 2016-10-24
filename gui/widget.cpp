@@ -54,6 +54,13 @@ struct Widget::WidgetImpl
 
     WidgetImpl(Widget* obj) : obj(obj) {}
 
+    void setGuiLayer(GuiLayer* layer)
+    {
+        this->layer = layer;
+        for(auto w: children)
+            w->setGuiLayer(layer);
+    }
+
     void updateClipArea()
     {
         const auto& absPos = obj->getAbsolutePosition();
@@ -110,12 +117,10 @@ void Widget::onResize(const vvv::vector2f& oldSize,
 
 void Widget::setGuiLayer(GuiLayer* layer)
 {
-    impl->layer = layer;
-    for(auto c : impl->children)
-        c->setGuiLayer(layer);
+    impl->setGuiLayer(layer);
 }
 
-Rect RectToScissor(const Rect& r, const vvv::vector2i& layerSize)
+static Rect RectToScissor(const Rect& r, const vvv::vector2i& layerSize)
 {
     const vvv::vector2i pos(r.x, r.y);
     const vvv::vector2i size(r.z, r.w);
