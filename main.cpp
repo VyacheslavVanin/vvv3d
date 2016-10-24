@@ -137,14 +137,14 @@ protected:
         initFonts();
 
         auto spriteTex = textureMan.get("data/images/aaa.png");
-        sprites.resize(50);
-        for(auto& s : sprites){
-            s.setTexture(spriteTex.get());
-            s.transform.setScale(spriteTex->getWidth()/2,
-                                 spriteTex->getHeight()/2,
-                                 0);
-            s.transform.move(randomVector(350));
-        }
+        //sprites.resize(50);
+        //for(auto& s : sprites){
+        //    s.setTexture(spriteTex.get());
+        //    s.transform.setScale(spriteTex->getWidth()/2,
+        //                         spriteTex->getHeight()/2,
+        //                         0);
+        //    s.transform.move(randomVector(350));
+        //}
 
         ImageWidget* w = new ImageWidget(spriteTex.get());
         w->setPosition(50, 50);
@@ -241,8 +241,8 @@ private:
 
 int main(int argc, char** argv)
 {
-    Engine* engine = new TestEngine(argc,argv);
-    engine->run();
+    TestEngine engine(argc, argv);
+    engine.run();
 
     return 0;
 }

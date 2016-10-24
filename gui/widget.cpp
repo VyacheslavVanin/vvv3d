@@ -4,18 +4,63 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+#include <vvv3d/std/draw.h>
+
+using Rect = vvv::vector4i;
+
+static int rectTop(const Rect& r)
+{
+    return r.y;
+}
+
+static int rectBottom(const Rect& r)
+{
+    return r.y + r.w;
+}
+
+static int rectLeft(const Rect& r)
+{
+    return r.x;
+}
+
+static int rectRight(const Rect& r)
+{
+    return r.x + r.z;
+}
+
+
+static Rect rectIntersection(const Rect& r1, const Rect& r2)
+{
+    using namespace std;
+    const auto left  = max(rectLeft(r1), rectLeft(r2));
+    const auto right = min(rectRight(r1), rectRight(r2));
+    const auto top   = max(rectTop(r1), rectTop(r2));
+    const auto bottom = min(rectBottom(r1), rectBottom(r2));
+    const auto width = max(right - left, 0);
+    const auto height = max(bottom - top, 0);
+    return vvv::vector4i(left, top, width, height);
+}
 
 class GuiLayer;
 struct Widget::WidgetImpl
 {
     vvv::vector2f   pos     {0};
     vvv::vector2f   size    {1};
+    vvv::vector4<int>    clipArea;
     Widget*      obj     {nullptr};
     Widget*      parent  {nullptr};
     GuiLayer*    layer   {nullptr};
     std::vector<Widget*> children;
 
     WidgetImpl(Widget* obj) : obj(obj) {}
+
+    void updateClipArea()
+    {
+        const auto& absPos = obj->getAbsolutePosition();
+        clipArea.set(absPos.x, absPos.y, size.x, size.y);
+        if(parent)
+            clipArea = rectIntersection(clipArea, parent->impl->clipArea);
+    }
 
     void removeChild(Widget* child){
         const auto it = std::find(children.begin(), children.end(), child);
@@ -70,9 +115,21 @@ void Widget::setGuiLayer(GuiLayer* layer)
         c->setGuiLayer(layer);
 }
 
+Rect RectToScissor(const Rect& r, const vvv::vector2i& layerSize)
+{
+    const vvv::vector2i pos(r.x, r.y);
+    const vvv::vector2i size(r.z, r.w);
+    return Rect(pos.x, layerSize.y - (pos.y + size.y),
+                size.x, size.y);
+}
+
 void Widget::Draw()
 {
+    impl->updateClipArea();
+    const Rect& clip = RectToScissor(impl->clipArea, impl->layer->getSize());
+    scissor(clip.x, clip.y, clip.z, clip.w);
     onDraw();
+    scissorDisable();
     for(auto c: impl->children)
         c->Draw();
 }
