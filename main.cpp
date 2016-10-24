@@ -95,8 +95,8 @@ private:
     // Widget interface
 protected:
     void onDraw() override {}
-    void onResize(const vvv::vector2f& oldSize,
-                  const vvv::vector2f& newSize) override;
+    void onResize(const vvv::vector2i& oldSize,
+                  const vvv::vector2i& newSize) override;
 };
 
 TestWidget::TestWidget()
@@ -111,7 +111,8 @@ TestWidget::TestWidget()
 
 TestWidget::~TestWidget() = default;
 
-void TestWidget::onResize(const vvv::vector2f& oldSize, const vvv::vector2f& newSize)
+void TestWidget::onResize(const vvv::vector2i& oldSize,
+                          const vvv::vector2i& newSize)
 {
     background->setSize(newSize);
 }

@@ -16,15 +16,15 @@ public:
 
     void Draw();
 
-    const vvv::vector2f& getPosition() const;
-    void setPosition(const vvv::vector2f& newPos);
-    void setPosition(float x, float y);
+    const vvv::vector2i& getPosition() const;
+    void setPosition(const vvv::vector2i& newPos);
+    void setPosition(int x, int y);
 
-    const vvv::vector2f& getSize() const;
-    void setSize(const vvv::vector2f& size);
-    void setSize(float width, float height);
+    const vvv::vector2i& getSize() const;
+    void setSize(const vvv::vector2i& size);
+    void setSize(int width, int height);
 
-    const vvv::vector2f getAbsolutePosition() const;
+    const vvv::vector2i getAbsolutePosition() const;
 
     void setParent(Widget* parent);
     Widget* getParent() const;
@@ -41,8 +41,8 @@ protected:
      * @brief Called after setSize()
      * @param oldSize
      * @param newSize */
-    virtual void onResize(const vvv::vector2f& oldSize,
-                          const vvv::vector2f& newSize);
+    virtual void onResize(const vvv::vector2i& oldSize,
+                          const vvv::vector2i& newSize);
 
 private:
     friend class GuiLayer;

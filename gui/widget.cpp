@@ -38,15 +38,15 @@ static Rect rectIntersection(const Rect& r1, const Rect& r2)
     const auto bottom = min(rectBottom(r1), rectBottom(r2));
     const auto width = max(right - left, 0);
     const auto height = max(bottom - top, 0);
-    return vvv::vector4i(left, top, width, height);
+    return Rect(left, top, width, height);
 }
 
 class GuiLayer;
 struct Widget::WidgetImpl
 {
-    vvv::vector2f   pos     {0};
-    vvv::vector2f   size    {1};
-    vvv::vector4<int>    clipArea;
+    vvv::vector2i   pos     {0};
+    vvv::vector2i   size    {1};
+    Rect            clipArea;
     Widget*      obj     {nullptr};
     Widget*      parent  {nullptr};
     GuiLayer*    layer   {nullptr};
@@ -108,8 +108,8 @@ Widget::Widget()
 void Widget::onDraw()
 {}
 
-void Widget::onResize(const vvv::vector2f& oldSize,
-                         const vvv::vector2f& newSize)
+void Widget::onResize(const vvv::vector2i& oldSize,
+                      const vvv::vector2i& newSize)
 {
     (void)oldSize;
     (void)newSize;
@@ -139,39 +139,39 @@ void Widget::Draw()
         c->Draw();
 }
 
-const vvv::vector2f& Widget::getPosition() const
+const vvv::vector2i& Widget::getPosition() const
 {
     return impl->pos;
 }
 
-void Widget::setPosition(const vvv::vector2f& newPos)
+void Widget::setPosition(const vvv::vector2i& newPos)
 {
     impl->pos = newPos;
 }
 
-void Widget::setPosition(float x, float y)
+void Widget::setPosition(int x, int y)
 {
     impl->pos.set(x,y);
 }
 
-const vvv::vector2f& Widget::getSize() const
+const vvv::vector2i& Widget::getSize() const
 {
     return impl->size;
 }
 
-void Widget::setSize(const vvv::vector2f& size)
+void Widget::setSize(const vvv::vector2i& size)
 {
     const auto oldSize = impl->size;
     impl->size = size;
     onResize(oldSize, size);
 }
 
-void Widget::setSize(float width, float height)
+void Widget::setSize(int width, int height)
 {
-    setSize(vvv::vector2f(width, height));
+    setSize(vvv::vector2i(width, height));
 }
 
-const vvv::vector2f Widget::getAbsolutePosition() const
+const vvv::vector2i Widget::getAbsolutePosition() const
 {
     auto ret = getPosition();
     auto parent = getParent();
