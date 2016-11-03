@@ -7,6 +7,7 @@
 #include "matrix33.h"
 #include "matrix44.h"
 #include "quaternion.h"
+#include <algorithm>
 
 namespace vvv
 {
@@ -802,6 +803,14 @@ namespace vvv
         mat.matrix[3][1] = 0;
         mat.matrix[3][2] = 0;
         mat.matrix[3][3] = 1;
+    }
+
+    template<typename T>
+    T clamp(const T& l1, const T& l2, const T& val)
+    {
+        const T& mx = l1 > l2 ? l1 : l2;
+        const T& mn = l1 > l2 ? l2 : l1;
+        return std::max(std::min(mx, val), mn);
     }
 }
 
