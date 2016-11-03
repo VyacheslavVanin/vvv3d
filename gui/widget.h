@@ -44,6 +44,9 @@ protected:
     virtual void onResize(const vvv::vector2i& oldSize,
                           const vvv::vector2i& newSize);
 
+    virtual void onAddWidget(Widget* added);
+    virtual void onRemoveWidget(Widget* removed);
+
 private:
     friend class GuiLayer;
     void setGuiLayer(GuiLayer* layer);

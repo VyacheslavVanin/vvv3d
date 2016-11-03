@@ -115,6 +115,16 @@ void Widget::onResize(const vvv::vector2i& oldSize,
     (void)newSize;
 }
 
+void Widget::onAddWidget(Widget* added)
+{
+    (void)added;
+}
+
+void Widget::onRemoveWidget(Widget* removed)
+{
+    (void)removed;
+}
+
 void Widget::setGuiLayer(GuiLayer* layer)
 {
     impl->setGuiLayer(layer);
@@ -195,11 +205,13 @@ Widget* Widget::getParent() const
 void Widget::addWidget(Widget* widget)
 {
     impl->addChild(widget);
+    onAddWidget(widget);
 }
 
 void Widget::removeWidget(Widget* widget)
 {
     impl->removeChild(widget);
+    onRemoveWidget(widget);
 }
 
 const Camera& Widget::getCamera() const
