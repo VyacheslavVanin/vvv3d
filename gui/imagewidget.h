@@ -8,8 +8,8 @@ class Texture;
 class ImageWidget final: public Widget
 {
 public:
-    ImageWidget();
-    ImageWidget(Texture* texture);
+    ImageWidget(Widget* parent = nullptr);
+    ImageWidget(Texture* texture, Widget* parent = nullptr);
     ~ImageWidget();
 
     void setTexture(Texture* texture);

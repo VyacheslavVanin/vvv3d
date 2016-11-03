@@ -55,7 +55,9 @@ struct Widget::WidgetImpl
     GuiLayer*    layer   {nullptr};
     std::vector<Widget*> children;
 
-    WidgetImpl(Widget* obj) : obj(obj) {}
+    WidgetImpl(Widget* obj) : obj(obj)
+    {
+    }
 
     void setGuiLayer(GuiLayer* layer)
     {
@@ -134,9 +136,12 @@ struct Widget::WidgetImpl
     }
 };
 
-Widget::Widget()
+Widget::Widget(Widget* parent)
     : impl(std::make_unique<WidgetImpl>(this))
-{}
+{
+    if(parent)
+        parent->addWidget(this);
+}
 
 void Widget::onDraw()
 {}

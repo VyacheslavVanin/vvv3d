@@ -85,12 +85,12 @@ void drawSprites(Engine& engine, const Camera& camera, const C<Sprite, A>& sprs)
 class TestWidget : public Widget
 {
 public:
-    TestWidget();
+    TestWidget(Widget* parent = nullptr);
     ~TestWidget();
 
 private:
-    TextWidget* text;
     ColorRectangleWidget* background;
+    TextWidget* text;
 
     // Widget interface
 protected:
@@ -99,12 +99,11 @@ protected:
                   const vvv::vector2i& newSize) override;
 };
 
-TestWidget::TestWidget()
-    : Widget(), text(new TextWidget("Test Widget")),
-      background(new ColorRectangleWidget(Color::WHITE))
+TestWidget::TestWidget(Widget* parent)
+    : Widget(parent),
+      background(new ColorRectangleWidget(Color::WHITE, this)),
+      text(new TextWidget("Test Widget", this))
 {
-    addWidget(background);
-    addWidget(text);
     text->setColor(Color::BLUE);
     setSize(text->getSize());
 }
@@ -149,24 +148,21 @@ protected:
 
         ImageWidget* w = new ImageWidget(spriteTex.get());
         w->setPosition(50, 50);
-        guilayer.addWidget(w);
 
-        Widget* w1 = new ColorRectangleWidget(Color(0.8, 0.3, 0.1, 0.5));
-        w1->setPosition(250, 30);
+        Widget* w1 = new ColorRectangleWidget(Color(0.8, 0.3, 0.1, 0.5), w);
+        w1->setPosition(25, 30);
         w1->setSize(110, 60);
 
-        Widget* w2 = new ColorRectangleWidget(Color::FUCHSIA);
-        w2->setPosition(350, 0);
+        Widget* w2 = new ColorRectangleWidget(Color::FUCHSIA, w);
+        w2->setPosition(35, 0);
 
-        TextWidget* w3 = new TextWidget("Прювет Лунатикам!!!");
-        w3->setColor(Color::ORANGE);
-
-        w->addWidget(w2);
-        w->addWidget(w1);
-        w->addWidget(w3);
+        TextWidget* w3 = new TextWidget("Прювет Лунатикам!!!", w);
+        w3->setColor(Color::BLUE);
 
         TestWidget* tw = new TestWidget();
         tw->setPosition(1000, 500);
+
+        guilayer.addWidget(w);
         guilayer.addWidget(tw);
     }
 
