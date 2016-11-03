@@ -8,7 +8,7 @@ class Camera;
 class Widget
 {
 public:
-    Widget(Widget* parent = nullptr);
+    explicit Widget(Widget* parent = nullptr);
     Widget(Widget&&) noexcept;
     Widget& operator=(Widget&&) noexcept;
 
