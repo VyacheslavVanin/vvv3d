@@ -17,6 +17,7 @@ public:
     void Draw();
 
     const vvv::vector2i& getPosition() const;
+    const vvv::vector2i getAbsolutePosition() const;
     void setPosition(const vvv::vector2i& newPos);
     void setPosition(int x, int y);
 
@@ -24,7 +25,13 @@ public:
     void setSize(const vvv::vector2i& size);
     void setSize(int width, int height);
 
-    const vvv::vector2i getAbsolutePosition() const;
+    const vvv::vector2i& getMinSize() const;
+    const vvv::vector2i& getMaxSize() const;
+    void setMinSize(int width, int height);
+    void setMinSize(const vvv::vector2i& size);
+    void setMaxSize(int width, int height);
+    void setMaxSize(const vvv::vector2i& size);
+
 
     void setParent(Widget* parent);
     Widget* getParent() const;

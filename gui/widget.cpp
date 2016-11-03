@@ -46,6 +46,9 @@ struct Widget::WidgetImpl
 {
     vvv::vector2i   pos     {0};
     vvv::vector2i   size    {1};
+    vvv::vector2i   minSize {1};
+    vvv::vector2i   maxSize {INT32_MAX};
+
     Rect            clipArea;
     Widget*      obj     {nullptr};
     Widget*      parent  {nullptr};
@@ -99,6 +102,36 @@ struct Widget::WidgetImpl
         return parent;
     }
 
+    const vvv::vector2i& getMinSize() const {return minSize;}
+    const vvv::vector2i& getMaxSize() const {return minSize;}
+
+    const vvv::vector2i& getSize() const {return size;}
+    void setSize(int width, int height)
+    {
+        using namespace vvv;
+        size.x = clamp_fast(minSize.x, maxSize.x, width);
+        size.y = clamp_fast(minSize.y, maxSize.y, height);
+    }
+
+    void setMinSize(int width, int height)
+    {
+        using namespace vvv;
+        minSize.set(clamp(1, maxSize.x, width),
+                    clamp(1, maxSize.y, height));
+        /// Update size with new constraint
+        const auto currentSize = getSize();
+        setSize(currentSize.x, currentSize.y);
+    }
+
+    void setMaxSize(int width, int height)
+    {
+        using namespace vvv;
+        maxSize.set(clamp(INT32_MAX, minSize.x, width),
+                    clamp(INT32_MAX, minSize.y, height));
+        /// Update size with new constraint
+        const auto currentSize = getSize();
+        setSize(currentSize.x, currentSize.y);
+    }
 };
 
 Widget::Widget()
@@ -166,19 +199,52 @@ void Widget::setPosition(int x, int y)
 
 const vvv::vector2i& Widget::getSize() const
 {
-    return impl->size;
+    return impl->getSize();
 }
 
 void Widget::setSize(const vvv::vector2i& size)
 {
-    const auto oldSize = impl->size;
-    impl->size = size;
-    onResize(oldSize, size);
+    setSize(size.x, size.y);
 }
 
 void Widget::setSize(int width, int height)
 {
-    setSize(vvv::vector2i(width, height));
+    using namespace std;
+    using namespace vvv;
+    const auto oldSize = impl->getSize();
+    impl->setSize(width, height);
+    const auto& newSize = getSize();
+    onResize(oldSize, newSize);
+}
+
+const vvv::vector2i& Widget::getMinSize() const
+{
+    return impl->getMinSize();
+}
+
+const vvv::vector2i& Widget::getMaxSize() const
+{
+    return impl->getMaxSize();
+}
+
+void Widget::setMinSize(int width, int height)
+{
+    impl->setMinSize(width, height);
+}
+
+void Widget::setMinSize(const vvv::vector2i& size)
+{
+    impl->setMinSize(size.x, size.y);
+}
+
+void Widget::setMaxSize(int width, int height)
+{
+    impl->setMaxSize(width, height);
+}
+
+void Widget::setMaxSize(const vvv::vector2i& size)
+{
+    impl->setMaxSize(size.x, size.y);
 }
 
 const vvv::vector2i Widget::getAbsolutePosition() const
