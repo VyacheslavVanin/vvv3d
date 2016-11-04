@@ -94,6 +94,7 @@ TextWidget::TextWidget(const std::string& text, Widget* parent)
     const int lineWidth = textLineWidth(toU32(text), *pImpl->font);
     const int lineHeight = textLineHeight(*pImpl->font);
     setSize(lineWidth, lineHeight);
+    setMinSize(1, lineHeight);
 }
 
 TextWidget::TextWidget(Widget* parent)

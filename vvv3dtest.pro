@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     gui/imagewidget.cpp \
     gui/colorrectanglewidget.cpp \
     gui/widget.cpp \
-    gui/textwidget.cpp
+    gui/textwidget.cpp \
+    gui/verticallayout.cpp
 
 
 DISTFILES += \
@@ -39,4 +40,5 @@ HEADERS += \
     gui/imagewidget.h \
     gui/colorrectanglewidget.h \
     gui/widget.h \
-    gui/textwidget.h
+    gui/textwidget.h \
+    gui/verticallayout.h

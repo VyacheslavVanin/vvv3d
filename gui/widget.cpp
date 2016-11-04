@@ -163,6 +163,24 @@ void Widget::onRemoveWidget(Widget* removed)
     (void)removed;
 }
 
+void Widget::onContentChanged(Widget* changed)
+{
+
+}
+
+void Widget::setSizeNoNotify(int width, int height)
+{
+    const auto oldSize = impl->getSize();
+    impl->setSize(width, height);
+    const auto& newSize = getSize();
+    onResize(oldSize, newSize);
+}
+
+void Widget::setPositionNoNotify(int x, int y)
+{
+    impl->pos.set(x, y);
+}
+
 void Widget::setGuiLayer(GuiLayer* layer)
 {
     impl->setGuiLayer(layer);
@@ -194,17 +212,30 @@ const vvv::vector2i& Widget::getPosition() const
 
 void Widget::setPosition(const vvv::vector2i& newPos)
 {
-    impl->pos = newPos;
+    setPosition(newPos.x, newPos.y);
 }
 
 void Widget::setPosition(int x, int y)
 {
-    impl->pos.set(x,y);
+    setPositionNoNotify(x, y);
+    Widget* parent = getParent();
+    if(parent)
+        parent->onContentChanged(this);
 }
 
 const vvv::vector2i& Widget::getSize() const
 {
     return impl->getSize();
+}
+
+int Widget::getWidth() const
+{
+    return getSize().x;
+}
+
+int Widget::getHeight() const
+{
+    return getSize().y;
 }
 
 void Widget::setSize(const vvv::vector2i& size)
@@ -214,12 +245,10 @@ void Widget::setSize(const vvv::vector2i& size)
 
 void Widget::setSize(int width, int height)
 {
-    using namespace std;
-    using namespace vvv;
-    const auto oldSize = impl->getSize();
-    impl->setSize(width, height);
-    const auto& newSize = getSize();
-    onResize(oldSize, newSize);
+    setSizeNoNotify(width, height);
+    Widget* parent = getParent();
+    if(parent)
+        parent->onContentChanged(this);
 }
 
 const vvv::vector2i& Widget::getMinSize() const

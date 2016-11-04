@@ -23,6 +23,8 @@ public:
     void setPosition(int x, int y);
 
     const vvv::vector2i& getSize() const;
+    int getWidth() const;
+    int getHeight() const;
     void setSize(const vvv::vector2i& size);
     void setSize(int width, int height);
 
@@ -39,6 +41,8 @@ public:
     void addWidget(Widget* widget);
     void removeWidget(Widget* widget);
 
+    void setSizeNoNotify(int width, int height);
+    void setPositionNoNotify(int x, int y);
 protected:
     const Camera& getCamera() const;
     const std::vector<Widget*>& getChildren() const;
@@ -56,6 +60,8 @@ protected:
 
     virtual void onAddWidget(Widget* added);
     virtual void onRemoveWidget(Widget* removed);
+    virtual void onContentChanged(Widget* changed);
+
 
 private:
     friend class GuiLayer;

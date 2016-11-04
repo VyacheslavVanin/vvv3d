@@ -6,6 +6,7 @@
 #include <gui/imagewidget.h>
 #include <gui/colorrectanglewidget.h>
 #include <gui/textwidget.h>
+#include <gui/verticallayout.h>
 #include <random>
 
 vvv::vector3f randomVector(float range)
@@ -146,7 +147,8 @@ protected:
         //    s.transform.move(randomVector(350));
         //}
 
-        ImageWidget* w = new ImageWidget(spriteTex.get());
+        //ImageWidget* w = new ImageWidget(spriteTex.get());
+        VerticalLayout* w = new VerticalLayout();
         w->setPosition(50, 50);
 
         Widget* w1 = new ColorRectangleWidget(Color(0.8, 0.3, 0.1, 0.5), w);
@@ -159,11 +161,15 @@ protected:
         TextWidget* w3 = new TextWidget("Прювет Лунатикам!!!", w);
         w3->setColor(Color::BLUE);
 
-        TestWidget* tw = new TestWidget();
+        TestWidget* tw = new TestWidget(w);
         tw->setPosition(1000, 500);
 
         guilayer.addWidget(w);
-        guilayer.addWidget(tw);
+        w->setBorder(5);
+        w->setPadding(6);
+
+        tw->setSize(120, 40);
+       // guilayer.addWidget(tw);
     }
 
     void onDraw() override
