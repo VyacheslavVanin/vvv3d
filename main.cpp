@@ -113,7 +113,7 @@ private:
 
     // Widget interface
 protected:
-    void onResize(const vvv::vector2i& oldSize,
+    void onResize(const vvv::vector2i&,
                   const vvv::vector2i& newSize) override
     {
         background->setSize(newSize);
@@ -125,7 +125,7 @@ public:
     {
         if(added != layout && added != background)
             layout->addWidget(added);
-        setSize(layout->getSize());
+        setMinSize(layout->getSize());
     }
 
     void removeWidget(Widget* removed)
