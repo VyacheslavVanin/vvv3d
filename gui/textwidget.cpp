@@ -88,8 +88,8 @@ struct TextWidget::TextWidgetImpl
 
 
 
-TextWidget::TextWidget(const std::string& text, Widget* parent)
-    : Widget(parent), pImpl(std::make_unique<TextWidgetImpl>(text))
+TextWidget::TextWidget(const std::string& text)
+    : pImpl(std::make_unique<TextWidgetImpl>(text))
 {
     const int lineWidth = textLineWidth(toU32(text), *pImpl->font);
     const int lineHeight = textLineHeight(*pImpl->font);
@@ -97,8 +97,8 @@ TextWidget::TextWidget(const std::string& text, Widget* parent)
     setMinSize(1, lineHeight);
 }
 
-TextWidget::TextWidget(Widget* parent)
-    :TextWidget("Text", parent)
+TextWidget::TextWidget()
+    :TextWidget("Text")
 {}
 
 void TextWidget::setText(const std::string& text)

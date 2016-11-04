@@ -9,7 +9,7 @@ enum class HALIGN {
 class VerticalLayout : public Widget
 {
 public:
-    VerticalLayout(Widget* parent=nullptr);
+    VerticalLayout();
 
     int getBorder() const;
     void setBorder(int value);

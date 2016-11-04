@@ -8,9 +8,8 @@ class Color;
 class ColorRectangleWidget final : public Widget
 {
 public:
-    explicit ColorRectangleWidget(Widget* parent = nullptr);
-    explicit ColorRectangleWidget(const Color& colour,
-                                  Widget* parent = nullptr);
+    explicit ColorRectangleWidget();
+    explicit ColorRectangleWidget(const Color& colour);
     ~ColorRectangleWidget();
 
     void setColour(const Color& colour);

@@ -9,11 +9,7 @@
 
 class GuiLayer;
 
-Widget::Widget(Widget* parent)
-{
-    if(parent)
-        parent->addChild(this);
-}
+Widget::Widget() {}
 
 void Widget::onDraw()
 {}

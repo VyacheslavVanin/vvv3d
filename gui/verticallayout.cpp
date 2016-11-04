@@ -3,8 +3,7 @@
 #include <algorithm>
 #include <numeric>
 
-VerticalLayout::VerticalLayout(Widget* parent) :
-    Widget(parent),
+VerticalLayout::VerticalLayout() :
     border(1), padding(1), align(HALIGN::CENTER)
 {
 

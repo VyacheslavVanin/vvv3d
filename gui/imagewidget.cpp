@@ -25,8 +25,8 @@ struct ImageWidget::ImageWidgetImpl
     Texture* texture = nullptr;
 };
 
-ImageWidget::ImageWidget(Widget* parent)
-    : Widget(parent), pImpl(std::make_unique<ImageWidgetImpl>())
+ImageWidget::ImageWidget()
+    : pImpl(std::make_unique<ImageWidgetImpl>())
 {
     static std::once_flag flag;
     std::call_once(flag, [](){
@@ -41,8 +41,8 @@ ImageWidget::ImageWidget(Widget* parent)
     } );
 }
 
-ImageWidget::ImageWidget(Texture* texture, Widget* parent)
-    : ImageWidget(parent)
+ImageWidget::ImageWidget(Texture* texture)
+    : ImageWidget()
 {
     if(texture){
         setTexture(texture);

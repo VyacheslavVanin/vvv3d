@@ -8,9 +8,8 @@ class Color;
 class TextWidget final : public Widget
 {
 public:
-    explicit TextWidget(Widget* parent = nullptr);
-    explicit TextWidget(const std::string& text = "Text",
-                        Widget* parent = nullptr);
+    explicit TextWidget();
+    explicit TextWidget(const std::string& text = "Text");
     ~TextWidget();
 
     void setText(const std::string& text);

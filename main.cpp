@@ -86,9 +86,9 @@ void drawSprites(Engine& engine, const Camera& camera, const C<Sprite, A>& sprs)
 class TestWidget : public Widget
 {
 public:
-    TestWidget(Widget* parent = nullptr) : Widget(parent),
+    TestWidget() : Widget(),
         layout(new VerticalLayout()),
-        background(new ColorRectangleWidget(Color::GRAY))
+        background(new ColorRectangleWidget(Color(0.1, 0.8, 0.4, 0.5)))
     {
         addChild(background);
         addChild(layout);
@@ -155,14 +155,14 @@ protected:
         initFonts();
 
         auto spriteTex = textureMan.get("data/images/aaa.png");
-        //sprites.resize(50);
-        //for(auto& s : sprites){
-        //    s.setTexture(spriteTex.get());
-        //    s.transform.setScale(spriteTex->getWidth()/2,
-        //                         spriteTex->getHeight()/2,
-        //                         0);
-        //    s.transform.move(randomVector(350));
-        //}
+        sprites.resize(50);
+        for(auto& s : sprites){
+            s.setTexture(spriteTex.get());
+            s.transform.setScale(spriteTex->getWidth()/2,
+                                 spriteTex->getHeight()/2,
+                                 0);
+            s.transform.move(randomVector(350));
+        }
 
         auto* tw = new TestWidget();
         tw->setPosition(20, 20);

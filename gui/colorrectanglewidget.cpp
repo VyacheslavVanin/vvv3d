@@ -29,8 +29,8 @@ struct ColorRectangleWidget::ColorRectangleWidgetImpl
 };
 
 
-ColorRectangleWidget::ColorRectangleWidget(const Color& color, Widget* parent)
-    : Widget(parent), pImpl(std::make_unique<ColorRectangleWidgetImpl>(color))
+ColorRectangleWidget::ColorRectangleWidget(const Color& color)
+    : pImpl(std::make_unique<ColorRectangleWidgetImpl>(color))
 {
     static std::once_flag flag;
     std::call_once(flag, [](){
@@ -46,8 +46,8 @@ ColorRectangleWidget::ColorRectangleWidget(const Color& color, Widget* parent)
     setSize(60, 60);
 }
 
-ColorRectangleWidget::ColorRectangleWidget(Widget* parent)
-    : ColorRectangleWidget(Color::ORANGE, parent)
+ColorRectangleWidget::ColorRectangleWidget()
+    : ColorRectangleWidget(Color::ORANGE)
 {}
 
 void ColorRectangleWidget::onDraw()
