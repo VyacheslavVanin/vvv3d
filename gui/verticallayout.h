@@ -9,7 +9,7 @@ enum class HALIGN {
 class VerticalLayout : public Widget
 {
 public:
-    VerticalLayout();
+    VerticalLayout(Widget* parent=nullptr);
 
     int getBorder() const;
     void setBorder(int value);
@@ -20,13 +20,17 @@ public:
     HALIGN getAlign() const;
     void setAlign(HALIGN value);
 
+    void addWidget(Widget* widget);
+    void removeWidget(Widget* widget);
+
+
 protected:
     // Widget interface
     void onResize(const vvv::vector2i& oldSize,
                   const vvv::vector2i& newSize) override;
-    void onAddWidget(Widget* added) override;
-    void onRemoveWidget(Widget* removed) override;
-    void onContentChanged(Widget* changed) override;
+    void onAddWidget(Widget* added);
+    void onRemoveWidget(Widget* removed);
+    void onContentChanged(Widget* changed);
 
 private:
     int border;

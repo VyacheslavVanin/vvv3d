@@ -3,7 +3,8 @@
 #include <algorithm>
 #include <numeric>
 
-VerticalLayout::VerticalLayout() :
+VerticalLayout::VerticalLayout(Widget* parent) :
+    Widget(parent),
     border(1), padding(1), align(HALIGN::CENTER)
 {
 
@@ -14,7 +15,7 @@ void VerticalLayout::onResize(const vvv::vector2i& oldSize,
 {
     (void)oldSize;
     (void)newSize;
-    rearrange();
+    //rearrange();
 }
 
 
@@ -63,7 +64,7 @@ void VerticalLayout::rearrange()
             case HALIGN::CENTER: offsetX += (contentWidth - w->getWidth()) / 2; break;
             case HALIGN::RIGHT: offsetX += contentWidth - w->getWidth(); break;
         }
-        w->setPositionNoNotify(offsetX, offsetY);
+        w->setPosition(offsetX, offsetY);
         offsetY += w->getHeight() + getPadding();
     }
 }
@@ -94,6 +95,18 @@ HALIGN VerticalLayout::getAlign() const
 void VerticalLayout::setAlign(HALIGN value)
 {
     align = value;
+}
+
+void VerticalLayout::addWidget(Widget* widget)
+{
+    addChild(widget);
+    rearrange();
+}
+
+void VerticalLayout::removeWidget(Widget* widget)
+{
+    removeChild(widget);
+    rearrange();
 }
 
 int VerticalLayout::getPadding() const

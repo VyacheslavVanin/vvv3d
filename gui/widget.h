@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include <vvv3d/vvvmath/matrices_types.h>
+#include "rect.h"
 
 class GuiLayer;
 class Camera;
@@ -36,13 +37,7 @@ public:
     void setMaxSize(const vvv::vector2i& size);
 
 
-    void setParent(Widget* parent);
-    Widget* getParent() const;
-    void addWidget(Widget* widget);
-    void removeWidget(Widget* widget);
 
-    void setSizeNoNotify(int width, int height);
-    void setPositionNoNotify(int x, int y);
 protected:
     const Camera& getCamera() const;
     const std::vector<Widget*>& getChildren() const;
@@ -58,17 +53,26 @@ protected:
     virtual void onResize(const vvv::vector2i& oldSize,
                           const vvv::vector2i& newSize);
 
-    virtual void onAddWidget(Widget* added);
-    virtual void onRemoveWidget(Widget* removed);
-    virtual void onContentChanged(Widget* changed);
-
+    void setParent(Widget* newParent);
+    Widget* getParent() const;
+    bool addChild(Widget* widget);
+    bool removeChild(Widget* child);
 
 private:
     friend class GuiLayer;
     void setGuiLayer(GuiLayer* layer);
 
-    struct WidgetImpl;
-    std::unique_ptr<WidgetImpl> impl;
+    vvv::vector2i   pos     {0};
+    vvv::vector2i   size    {1};
+    vvv::vector2i   minSize {1};
+    vvv::vector2i   maxSize {INT32_MAX};
+
+    Rect            clipArea;
+    Widget*         obj     {nullptr};
+    Widget*         parent  {nullptr};
+    GuiLayer*       layer   {nullptr};
+    std::vector<Widget*> children;
+    void updateClipArea();
 };
 
 #endif // GUIOBJECT_H

@@ -86,36 +86,42 @@ void drawSprites(Engine& engine, const Camera& camera, const C<Sprite, A>& sprs)
 class TestWidget : public Widget
 {
 public:
-    TestWidget(Widget* parent = nullptr);
-    ~TestWidget();
+    TestWidget(Widget* parent = nullptr) : Widget(parent),
+        layout(new VerticalLayout()),
+        background(new ColorRectangleWidget(Color::GRAY))
+    {
+        addChild(background);
+        addChild(layout);
+    }
+
 
 private:
+    VerticalLayout*       layout;
     ColorRectangleWidget* background;
-    TextWidget* text;
+
 
     // Widget interface
 protected:
-    void onDraw() override {}
     void onResize(const vvv::vector2i& oldSize,
-                  const vvv::vector2i& newSize) override;
+                  const vvv::vector2i& newSize) override
+    {
+        background->setSize(newSize);
+        layout->setSize(newSize);
+    }
+
+public:
+    void addWidget(Widget* added)
+    {
+        if(added != layout && added != background)
+            layout->addWidget(added);
+        setSize(layout->getSize());
+    }
+
+    void removeWidget(Widget* removed)
+    {
+        layout->removeWidget(removed);
+    }
 };
-
-TestWidget::TestWidget(Widget* parent)
-    : Widget(parent),
-      background(new ColorRectangleWidget(Color::WHITE, this)),
-      text(new TextWidget("Test Widget", this))
-{
-    text->setColor(Color::BLUE);
-    setSize(text->getSize());
-}
-
-TestWidget::~TestWidget() = default;
-
-void TestWidget::onResize(const vvv::vector2i& oldSize,
-                          const vvv::vector2i& newSize)
-{
-    background->setSize(newSize);
-}
 
 
 class TestEngine : public Engine
@@ -147,29 +153,25 @@ protected:
         //    s.transform.move(randomVector(350));
         //}
 
-        //ImageWidget* w = new ImageWidget(spriteTex.get());
-        VerticalLayout* w = new VerticalLayout();
+        auto* tw = new TestWidget();
+        ImageWidget* w = new ImageWidget(spriteTex.get());
         w->setPosition(50, 50);
 
-        Widget* w1 = new ColorRectangleWidget(Color(0.8, 0.3, 0.1, 0.5), w);
+        Widget* w1 = new ColorRectangleWidget(Color(0.8, 0.3, 0.1, 0.5));
         w1->setPosition(25, 30);
         w1->setSize(110, 60);
 
-        Widget* w2 = new ColorRectangleWidget(Color::FUCHSIA, w);
+        Widget* w2 = new ColorRectangleWidget(Color::FUCHSIA);
         w2->setPosition(35, 0);
 
-        TextWidget* w3 = new TextWidget("Прювет Лунатикам!!!", w);
+        TextWidget* w3 = new TextWidget("Прювет Лунатикам!!!");
         w3->setColor(Color::BLUE);
 
-        TestWidget* tw = new TestWidget(w);
-        tw->setPosition(1000, 500);
-
-        guilayer.addWidget(w);
-        w->setBorder(5);
-        w->setPadding(6);
-
-        tw->setSize(120, 40);
-       // guilayer.addWidget(tw);
+        tw->addWidget(w);
+        tw->addWidget(w1);
+        tw->addWidget(w2);
+        tw->addWidget(w3);
+        guilayer.addWidget(tw);
     }
 
     void onDraw() override

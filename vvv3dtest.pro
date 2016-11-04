@@ -41,4 +41,5 @@ HEADERS += \
     gui/colorrectanglewidget.h \
     gui/widget.h \
     gui/textwidget.h \
-    gui/verticallayout.h
+    gui/verticallayout.h \
+    gui/rect.h
