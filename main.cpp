@@ -92,12 +92,23 @@ public:
     {
         addChild(background);
         addChild(layout);
+        layout->setPadding(16);
     }
 
 
 private:
     VerticalLayout*       layout;
     ColorRectangleWidget* background;
+
+    void rearrange()
+    {
+        const auto widgetSize = getSize();
+        const auto layoutSize = layout->getSize();
+        const auto layoutHeight = layoutSize.y;
+        const auto layoutWidth = layoutSize.x;
+        layout->setPosition((widgetSize.x - layoutWidth) / 2,
+                            (widgetSize.y - layoutHeight) / 2);
+    }
 
 
     // Widget interface
@@ -106,7 +117,7 @@ protected:
                   const vvv::vector2i& newSize) override
     {
         background->setSize(newSize);
-        layout->setSize(newSize);
+        rearrange();
     }
 
 public:
@@ -154,6 +165,8 @@ protected:
         //}
 
         auto* tw = new TestWidget();
+        tw->setPosition(20, 20);
+
         ImageWidget* w = new ImageWidget(spriteTex.get());
         w->setPosition(50, 50);
 
@@ -165,12 +178,13 @@ protected:
         w2->setPosition(35, 0);
 
         TextWidget* w3 = new TextWidget("Прювет Лунатикам!!!");
-        w3->setColor(Color::BLUE);
+        w3->setColor(Color::WHITE);
 
+        tw->addWidget(w3);
         tw->addWidget(w);
         tw->addWidget(w1);
         tw->addWidget(w2);
-        tw->addWidget(w3);
+        tw->setSize(300, 400);
         guilayer.addWidget(tw);
     }
 
