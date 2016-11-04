@@ -290,6 +290,11 @@ const Camera& Widget::getCamera() const
     return impl->layer->getCamera();
 }
 
+const std::vector<Widget*>&Widget::getChildren() const
+{
+    return impl->children;
+}
+
 Widget::~Widget() = default;
 Widget& Widget::operator=(Widget&&) noexcept = default;
 Widget::Widget(Widget&&) noexcept = default;

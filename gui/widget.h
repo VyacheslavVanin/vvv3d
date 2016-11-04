@@ -1,6 +1,7 @@
 #ifndef GUIOBJECT_H
 #define GUIOBJECT_H
 #include <memory>
+#include <vector>
 #include <vvv3d/vvvmath/matrices_types.h>
 
 class GuiLayer;
@@ -40,6 +41,8 @@ public:
 
 protected:
     const Camera& getCamera() const;
+    const std::vector<Widget*>& getChildren() const;
+
     /**
      * @brief Implement to draw something */
     virtual void onDraw();
