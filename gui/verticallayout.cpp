@@ -1,42 +1,9 @@
 #include "verticallayout.h"
-#include <vvv3d/vvvmath/linalg.h>
-#include <algorithm>
 #include <numeric>
 
-VerticalLayout::VerticalLayout() :
-    border(1), padding(1), align(HALIGN::CENTER)
-{
-
-}
-
-void VerticalLayout::onResize(const vvv::vector2i& oldSize,
-                              const vvv::vector2i& newSize)
-{
-    (void)oldSize;
-    (void)newSize;
-    //rearrange();
-}
-
-
-int VerticalLayout::getMaxChildWidth(const std::vector<Widget*>& children)
-{
-    if(children.empty())
-        return 0;
-
-    const auto max = max_element(children.begin(), children.end(),
-                                 [](auto w1, auto w2) {
-                                    return w1->getSize().x < w2->getSize().x;
-                                 });
-    return (*max)->getSize().x;
-}
-
-int VerticalLayout::getChildrenHeight(const std::vector<Widget*>& children)
-{
-    return  std::accumulate(children.begin(), children.end(), 0,
-                            [](int sum, Widget* w){
-                                return sum + w->getSize().y;
-                            });
-}
+VerticalLayout::VerticalLayout()
+    : align(HALIGN::CENTER)
+{  }
 
 void VerticalLayout::rearrange()
 {
@@ -58,7 +25,7 @@ void VerticalLayout::rearrange()
     int offsetY = getBorder();
     for(auto w: children){
         int offsetX = getBorder();
-        switch(align){
+        switch(getAlign()){
             case HALIGN::LEFT: break;
             case HALIGN::CENTER: offsetX += (contentWidth - w->getWidth()) / 2; break;
             case HALIGN::RIGHT: offsetX += contentWidth - w->getWidth(); break;
@@ -68,22 +35,24 @@ void VerticalLayout::rearrange()
     }
 }
 
-void VerticalLayout::onAddWidget(Widget* added)
+int VerticalLayout::getMaxChildWidth(const std::vector<Widget*>& children)
 {
-    (void)added;
-    rearrange();
+    if(children.empty())
+        return 0;
+
+    const auto max = max_element(children.begin(), children.end(),
+                                 [](auto w1, auto w2) {
+                                    return w1->getSize().x < w2->getSize().x;
+                                 });
+    return (*max)->getSize().x;
 }
 
-void VerticalLayout::onRemoveWidget(Widget* removed)
+int VerticalLayout::getChildrenHeight(const std::vector<Widget*>& children)
 {
-    (void)removed;
-    rearrange();
-}
-
-void VerticalLayout::onContentChanged(Widget* changed)
-{
-    (void)changed;
-    rearrange();
+    return  std::accumulate(children.begin(), children.end(), 0,
+                            [](int sum, Widget* w){
+                                return sum + w->getSize().y;
+                            });
 }
 
 HALIGN VerticalLayout::getAlign() const
@@ -94,38 +63,4 @@ HALIGN VerticalLayout::getAlign() const
 void VerticalLayout::setAlign(HALIGN value)
 {
     align = value;
-}
-
-void VerticalLayout::addWidget(Widget* widget)
-{
-    addChild(widget);
-    rearrange();
-}
-
-void VerticalLayout::removeWidget(Widget* widget)
-{
-    removeChild(widget);
-    rearrange();
-}
-
-int VerticalLayout::getPadding() const
-{
-    return padding;
-}
-
-void VerticalLayout::setPadding(int value)
-{
-    padding = value;
-    rearrange();
-}
-
-int VerticalLayout::getBorder() const
-{
-    return border;
-}
-
-void VerticalLayout::setBorder(int value)
-{
-    border = value;
-    rearrange();
 }

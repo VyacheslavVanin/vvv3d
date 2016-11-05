@@ -1,0 +1,33 @@
+#ifndef LAYOUT_H
+#define LAYOUT_H
+#include "widget.h"
+
+class Layout : public Widget
+{
+public:
+    Layout();
+
+    int getBorder() const;
+    void setBorder(int value);
+
+    int getPadding() const;
+    void setPadding(int value);
+
+    void addWidget(Widget* widget);
+    void removeWidget(Widget* widget);
+
+protected:
+    // Widget interface
+    void onResize(const vvv::vector2i& oldSize,
+                  const vvv::vector2i& newSize) override;
+    void onAddWidget(Widget* added);
+    void onRemoveWidget(Widget* removed);
+    void onContentChanged(Widget* changed);
+    virtual void rearrange() = 0;
+
+private:
+    int border;
+    int padding;
+};
+
+#endif // LAYOUT_H

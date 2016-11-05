@@ -97,7 +97,7 @@ public:
 
 
 private:
-    VerticalLayout*       layout;
+    Layout*       layout;
     ColorRectangleWidget* background;
 
     void rearrange()
