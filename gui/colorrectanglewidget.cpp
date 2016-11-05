@@ -20,7 +20,7 @@ static std::shared_ptr<Geometry> makeRectGeometry()
                 GL_TRIANGLES);
 }
 
-struct ColorRectangleWidget::ColorRectangleWidgetImpl
+struct ColorRectWidget::ColorRectangleWidgetImpl
 {
     ColorRectangleWidgetImpl(const Color& color = Color::ORANGE)
         : color(color)
@@ -29,7 +29,7 @@ struct ColorRectangleWidget::ColorRectangleWidgetImpl
 };
 
 
-ColorRectangleWidget::ColorRectangleWidget(const Color& color)
+ColorRectWidget::ColorRectWidget(const Color& color)
     : pImpl(std::make_unique<ColorRectangleWidgetImpl>(color))
 {
     static std::once_flag flag;
@@ -46,11 +46,11 @@ ColorRectangleWidget::ColorRectangleWidget(const Color& color)
     setSize(60, 60);
 }
 
-ColorRectangleWidget::ColorRectangleWidget()
-    : ColorRectangleWidget(Color::ORANGE)
+ColorRectWidget::ColorRectWidget()
+    : ColorRectWidget(Color::ORANGE)
 {}
 
-void ColorRectangleWidget::onDraw()
+void ColorRectWidget::onDraw()
 {
     auto& e = Engine::getActiveEngine();
     auto& resman = e.getResourceManager();
@@ -73,4 +73,4 @@ void ColorRectangleWidget::onDraw()
     geom->draw();
 }
 
-ColorRectangleWidget::~ColorRectangleWidget() = default;
+ColorRectWidget::~ColorRectWidget() = default;

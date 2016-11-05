@@ -115,17 +115,17 @@ protected:
 
         auto* panel = new Panel(
                           new VerticalLayout(),
-                          new ColorRectangleWidget(Color(0.1, 0.8, 0.6, 0.5)));
+                          new ColorRectWidget(Color(0.1, 0.8, 0.6, 0.5)));
         panel->setPosition(20, 20);
 
         auto* w = new ImageWidget(spriteTex.get());
         w->setPosition(50, 50);
 
-        auto* w1 = new ColorRectangleWidget(Color(0.8, 0.3, 0.1, 0.5));
+        auto* w1 = new ColorRectWidget(Color(0.8, 0.3, 0.1, 0.5));
         w1->setPosition(25, 30);
         w1->setSize(110, 60);
 
-        auto* w2 = new ColorRectangleWidget(Color::FUCHSIA);
+        auto* w2 = new ColorRectWidget(Color::FUCHSIA);
         w2->setPosition(35, 0);
 
         auto* w3 = new TextWidget("Прювет Лунатикам!!!");

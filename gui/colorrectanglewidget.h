@@ -5,12 +5,12 @@
 
 class Color;
 
-class ColorRectangleWidget final : public Widget
+class ColorRectWidget final : public Widget
 {
 public:
-    explicit ColorRectangleWidget();
-    explicit ColorRectangleWidget(const Color& colour);
-    ~ColorRectangleWidget();
+    explicit ColorRectWidget();
+    explicit ColorRectWidget(const Color& colour);
+    ~ColorRectWidget();
 
     void setColour(const Color& colour);
 
