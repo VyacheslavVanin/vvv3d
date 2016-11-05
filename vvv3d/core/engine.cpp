@@ -24,15 +24,15 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     glutInitWindowPosition( 100, 100 );
     glutCreateWindow( windowName );
     glutIgnoreKeyRepeat(true);
-    glewInit();
+    glutIdleFunc( [](void){glutPostRedisplay();} );
+    glutDisplayFunc( [](){activeEngine->display();} );
+    glutReshapeFunc( [](int x,int y){activeEngine->resize(x,y); } );
 
+    glewInit();
     glClearColor( 0.05f, 0.1f, 0.2f, 0);
     glEnable( GL_DEPTH_TEST );
     glEnable( GL_MULTISAMPLE);
 
-    glutIdleFunc( [](void){glutPostRedisplay();} );
-    glutDisplayFunc( [](){activeEngine->display();} );
-    glutReshapeFunc( [](int x,int y){activeEngine->resize(x,y); } );
     activeEngine = this;
 }
 
