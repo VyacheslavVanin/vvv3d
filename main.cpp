@@ -7,6 +7,7 @@
 #include <gui/colorrectanglewidget.h>
 #include <gui/textwidget.h>
 #include <gui/verticallayout.h>
+#include <gui/panel.h>
 #include <random>
 
 vvv::vector3f randomVector(float range)
@@ -83,58 +84,6 @@ void drawSprites(Engine& engine, const Camera& camera, const C<Sprite, A>& sprs)
 }
 
 
-class TestWidget : public Widget
-{
-public:
-    TestWidget() : Widget(),
-        layout(new VerticalLayout()),
-        background(new ColorRectangleWidget(Color(0.1, 0.8, 0.4, 0.5)))
-    {
-        addChild(background);
-        addChild(layout);
-        layout->setPadding(16);
-    }
-
-
-private:
-    Layout*       layout;
-    ColorRectangleWidget* background;
-
-    void rearrange()
-    {
-        const auto widgetSize = getSize();
-        const auto layoutSize = layout->getSize();
-        const auto layoutHeight = layoutSize.y;
-        const auto layoutWidth = layoutSize.x;
-        layout->setPosition((widgetSize.x - layoutWidth) / 2,
-                            (widgetSize.y - layoutHeight) / 2);
-    }
-
-
-    // Widget interface
-protected:
-    void onResize(const vvv::vector2i&,
-                  const vvv::vector2i& newSize) override
-    {
-        background->setSize(newSize);
-        rearrange();
-    }
-
-public:
-    void addWidget(Widget* added)
-    {
-        if(added != layout && added != background)
-            layout->addWidget(added);
-        setMinSize(layout->getSize());
-    }
-
-    void removeWidget(Widget* removed)
-    {
-        layout->removeWidget(removed);
-    }
-};
-
-
 class TestEngine : public Engine
 {
 public:
@@ -164,28 +113,30 @@ protected:
             s.transform.move(randomVector(350));
         }
 
-        auto* tw = new TestWidget();
-        tw->setPosition(20, 20);
+        auto* panel = new Panel(
+                          new VerticalLayout(),
+                          new ColorRectangleWidget(Color(0.1, 0.8, 0.6, 0.5)));
+        panel->setPosition(20, 20);
 
-        ImageWidget* w = new ImageWidget(spriteTex.get());
+        auto* w = new ImageWidget(spriteTex.get());
         w->setPosition(50, 50);
 
-        Widget* w1 = new ColorRectangleWidget(Color(0.8, 0.3, 0.1, 0.5));
+        auto* w1 = new ColorRectangleWidget(Color(0.8, 0.3, 0.1, 0.5));
         w1->setPosition(25, 30);
         w1->setSize(110, 60);
 
-        Widget* w2 = new ColorRectangleWidget(Color::FUCHSIA);
+        auto* w2 = new ColorRectangleWidget(Color::FUCHSIA);
         w2->setPosition(35, 0);
 
-        TextWidget* w3 = new TextWidget("Прювет Лунатикам!!!");
+        auto* w3 = new TextWidget("Прювет Лунатикам!!!");
         w3->setColor(Color::WHITE);
 
-        tw->addWidget(w3);
-        tw->addWidget(w);
-        tw->addWidget(w1);
-        tw->addWidget(w2);
-        tw->setSize(300, 400);
-        guilayer.addWidget(tw);
+        panel->addWidget(w3);
+        panel->addWidget(w);
+        panel->addWidget(w1);
+        panel->addWidget(w2);
+        panel->setSize(300, 400);
+        guilayer.addWidget(panel);
     }
 
     void onDraw() override
@@ -212,7 +163,6 @@ private:
     FontManager&        fontMan;
 
     std::vector<Sprite> sprites;
-
 
     std::shared_ptr<Font>       font;
     std::shared_ptr<Geometry>   textGeometry;

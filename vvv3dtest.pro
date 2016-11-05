@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     gui/widget.cpp \
     gui/textwidget.cpp \
     gui/verticallayout.cpp \
-    gui/layout.cpp
+    gui/layout.cpp \
+    gui/panel.cpp
 
 
 DISTFILES += \
@@ -45,4 +46,5 @@ HEADERS += \
     gui/verticallayout.h \
     gui/rect.h \
     gui/layout.h \
-    gui/align.h
+    gui/align.h \
+    gui/panel.h
