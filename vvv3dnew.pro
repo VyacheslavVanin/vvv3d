@@ -50,7 +50,9 @@ HEADERS += \
     vvv3d/std/draw.h \
     vvv3d/core/resourcemanager.h \
     vvv3d/vvv3d.h \
-    vvv3d/core/graphics/color.h
+    vvv3d/core/graphics/color.h \
+    vvv3d/core/hal.h \
+    vvv3d/core/gluthal.h
 
 SOURCES += \
     vvv3d/core/engine.cpp \
@@ -73,7 +75,9 @@ SOURCES += \
     vvv3d/utils/helper.cpp \
     vvv3d/utils/myutils.cpp \
     vvv3d/std/draw.cpp \
-    vvv3d/core/graphics/color.cpp
+    vvv3d/core/graphics/color.cpp \
+    vvv3d/core/hal.cpp \
+    vvv3d/core/gluthal.cpp
 
 INSTALL_HEADERS = $$HEADERS
 INSTALL_PREFIX  = $$DESTDIR

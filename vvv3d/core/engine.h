@@ -3,6 +3,7 @@
 #include <memory>
 
 class ResourceManager;
+class HAL;
 
 class Engine
 {
@@ -32,6 +33,7 @@ private:
     int viewportWidth;
     int viewportHeight;
     std::unique_ptr<ResourceManager> resourceManager;
+    std::unique_ptr<HAL> hal;
 };
 #endif // ENGINE
 

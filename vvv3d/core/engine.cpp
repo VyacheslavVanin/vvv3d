@@ -4,6 +4,8 @@
 #include <core/graphics/lowlevel/openglprovider.h>
 #include <core/camera.h>
 #include <core/resourcemanager.h>
+#include <core/gluthal.h>
+
 
 static const int DEFAULT_SCREEN_WIDTH = 640;
 static const int DEFAULT_SCREEN_HEIGHT = 480;
@@ -12,23 +14,15 @@ Engine* Engine::activeEngine = nullptr;
 Engine::Engine(int argc, char** argv, const char* windowName)
     : currentfps(0), viewportWidth(DEFAULT_SCREEN_WIDTH),
       viewportHeight(DEFAULT_SCREEN_HEIGHT),
-      resourceManager(new ResourceManager())
+      resourceManager(new ResourceManager()),
+      hal(new glutLayer(argc, argv))
 {
-    glewExperimental = GL_TRUE;
-    glutInit( &argc, argv);
-    glutInitContextProfile(GLUT_CORE_PROFILE);
-    glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
-    glutInitContextVersion( 3, 3 );
-    glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE);
-    glutInitWindowSize( viewportWidth, viewportHeight);
-    glutInitWindowPosition( 100, 100 );
-    glutCreateWindow( windowName );
-    glutIgnoreKeyRepeat(true);
-    glutIdleFunc( [](void){glutPostRedisplay();} );
-    glutDisplayFunc( [](){activeEngine->display();} );
-    glutReshapeFunc( [](int x,int y){activeEngine->resize(x,y); } );
+    hal->initContext(argc, argv);
+    hal->createWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, "glut");
+    hal->setDisplayFunction([](){activeEngine->display();});
+    hal->setIdleFunction([](){});
+    hal->setResizeFunction([](int x, int y){activeEngine->resize(x,y);});
 
-    glewInit();
     glClearColor( 0.05f, 0.1f, 0.2f, 0);
     glEnable( GL_DEPTH_TEST );
     glEnable( GL_MULTISAMPLE);
@@ -41,7 +35,7 @@ Engine::~Engine() {}
 void Engine::run()
 {
     initialSetup();
-    glutMainLoop();
+    hal->run();
 }
 
 ResourceManager& Engine::getResourceManager() {return *resourceManager;}
@@ -53,7 +47,7 @@ void Engine::display()
 
     onDraw();
 
-    glutSwapBuffers();
+    hal->swap();
     const auto t2 = std::chrono::system_clock::now();
     const auto dt = t2 -t1;
     const auto milis = (float)(std::chrono::duration_cast<std::chrono::microseconds>(dt).count())/1000;
