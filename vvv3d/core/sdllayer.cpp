@@ -208,7 +208,7 @@ void sdlLayer::createWindow(int width, int height, const char* name)
     sdl->createWindow(name, width, height);
 }
 
-void sdlLayer::run()
+void sdlLayer::mainLoop()
 {
     sdl->run();
 }

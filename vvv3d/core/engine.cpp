@@ -7,7 +7,6 @@
 #include <core/gluthal.h>
 #include <core/sdllayer.h>
 
-
 static const int DEFAULT_SCREEN_WIDTH = 640;
 static const int DEFAULT_SCREEN_HEIGHT = 480;
 Engine* Engine::activeEngine = nullptr;
@@ -36,7 +35,7 @@ Engine::~Engine() {}
 void Engine::run()
 {
     initialSetup();
-    hal->run();
+    hal->mainLoop();
 }
 
 ResourceManager& Engine::getResourceManager() {return *resourceManager;}

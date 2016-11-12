@@ -46,7 +46,7 @@ void glutLayer::setIdleFunction(const std::function<void ()>& idleFunction)
     glutIdleFunc( [](void){glutLayer::idleFunction(); glutPostRedisplay();} );
 }
 
-void glutLayer::run()
+void glutLayer::mainLoop()
 {
     glutMainLoop();
 }

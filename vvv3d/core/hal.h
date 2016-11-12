@@ -14,7 +14,7 @@ public:
     virtual void setDisplayFunction(const std::function<void()>&
                                     displayFunction) = 0;
     virtual void setIdleFunction(const std::function<void()>& idleFunction) = 0;
-    virtual void run() = 0;
+    virtual void mainLoop() = 0;
     virtual void swap() = 0;
 };
 

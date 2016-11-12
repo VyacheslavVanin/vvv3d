@@ -11,7 +11,7 @@ public:
 
     void initContext(int argc, char** argv) override;
     void createWindow(int width, int height, const char* name) override;
-    void run() override;
+    void mainLoop() override;
     void swap() override;
 
     void setResizeFunction(const std::function<void(int x, int y)>&
