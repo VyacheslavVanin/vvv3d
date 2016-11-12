@@ -5,6 +5,7 @@
 #include <core/camera.h>
 #include <core/resourcemanager.h>
 #include <core/gluthal.h>
+#include <core/sdllayer.h>
 
 
 static const int DEFAULT_SCREEN_WIDTH = 640;
@@ -15,10 +16,10 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     : currentfps(0), viewportWidth(DEFAULT_SCREEN_WIDTH),
       viewportHeight(DEFAULT_SCREEN_HEIGHT),
       resourceManager(new ResourceManager()),
-      hal(new glutLayer(argc, argv))
+      hal(new sdlLayer(argc, argv))
 {
     hal->initContext(argc, argv);
-    hal->createWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, "glut");
+    hal->createWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, windowName);
     hal->setDisplayFunction([](){activeEngine->display();});
     hal->setIdleFunction([](){});
     hal->setResizeFunction([](int x, int y){activeEngine->resize(x,y);});

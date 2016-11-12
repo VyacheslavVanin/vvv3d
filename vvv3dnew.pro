@@ -10,7 +10,7 @@ QMAKE_INCDIR += /usr/include/freetype2
 
 DEFINES += GLEW_STATIC
 QMAKE_CXXFLAGS += -Wall -Wextra
-LIBS += -lGLEW -lGL -lglut -lpng -lfreetype
+LIBS += -lGLEW -lGL -lglut -lpng -lfreetype -lSDL2
 #LIBS += -lGLESv2
 #LIBS += -l3ds
 
@@ -52,7 +52,8 @@ HEADERS += \
     vvv3d/vvv3d.h \
     vvv3d/core/graphics/color.h \
     vvv3d/core/hal.h \
-    vvv3d/core/gluthal.h
+    vvv3d/core/gluthal.h \
+    vvv3d/core/sdllayer.h
 
 SOURCES += \
     vvv3d/core/engine.cpp \
@@ -77,7 +78,8 @@ SOURCES += \
     vvv3d/std/draw.cpp \
     vvv3d/core/graphics/color.cpp \
     vvv3d/core/hal.cpp \
-    vvv3d/core/gluthal.cpp
+    vvv3d/core/gluthal.cpp \
+    vvv3d/core/sdllayer.cpp
 
 INSTALL_HEADERS = $$HEADERS
 INSTALL_PREFIX  = $$DESTDIR
