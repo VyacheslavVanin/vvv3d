@@ -40,6 +40,11 @@ void Engine::run()
 
 ResourceManager& Engine::getResourceManager() {return *resourceManager;}
 
+const Engine::Input&Engine::getInput() const
+{
+    return input;
+}
+
 void Engine::display()
 {
     const auto t1 = std::chrono::system_clock::now();
@@ -77,3 +82,63 @@ void Engine::resize(int x, int y)
 }
 
 float Engine::getCurrentFps() const {return currentfps;}
+
+const Engine::Input::Keyboard& Engine::Input::getKeyboard() const
+{
+    return keyboard;
+}
+
+const Engine::Input::Mouse&Engine::Input::getMouse() const
+{
+    return mouse;
+}
+
+bool Engine::Input::Keyboard::keyDown(uint16_t scancode) const
+{
+    return Engine::getActiveEngine().hal->keyDown(scancode);
+}
+
+bool Engine::Input::Keyboard::hasText() const
+{
+    return Engine::getActiveEngine().hal->hasText();
+}
+
+const std::string& Engine::Input::Keyboard::getText() const
+{
+    return Engine::getActiveEngine().hal->getText();
+}
+
+bool Engine::Input::Mouse::buttonDown(uint16_t button) const
+{
+    return Engine::getActiveEngine().hal->mouseButtonDown(button);
+}
+
+vvv::vector2i Engine::Input::Mouse::getMousePos() const
+{
+    return vvv::vector2i(getMouseX(), getMouseY());
+}
+
+vvv::vector2i Engine::Input::Mouse::getMouseRel() const
+{
+    return vvv::vector2i(getMouseRelX(), getMouseRelY());
+}
+
+int Engine::Input::Mouse::getMouseX() const
+{
+    return Engine::getActiveEngine().hal->getMouseX();
+}
+
+int Engine::Input::Mouse::getMouseY() const
+{
+    return Engine::getActiveEngine().hal->getMouseY();
+}
+
+int Engine::Input::Mouse::getMouseRelX() const
+{
+    return Engine::getActiveEngine().hal->getMouseRelX();
+}
+
+int Engine::Input::Mouse::getMouseRelY() const
+{
+    return Engine::getActiveEngine().hal->getMouseRelY();
+}
