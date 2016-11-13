@@ -5,6 +5,15 @@
 
 enum class GLPROFILE { ES, CORE };
 
+/**
+ * @brief The HAL class.
+ *  Interface that provide:<br>
+ *  - initialization of OpenGL Context <br>
+ *  - Main window creation <br>
+ *  - callback functions (resize, display, idle)
+ *  - main event loop
+ *  - acces to input data (mouse, keyboard etc.)
+ */
 class HAL
 {
 public:
