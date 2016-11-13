@@ -112,7 +112,7 @@ private:
         switch(e.window.event){
             case SDL_WINDOWEVENT_RESIZED:
                 resizeFunction(e.window.data1, e.window.data2); break;
-            default: printf("Window event\n"); break;
+            default: break;
         }
     }
 
