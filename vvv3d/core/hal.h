@@ -1,6 +1,7 @@
 #ifndef HAL_H
 #define HAL_H
 #include <functional>
+#include <vvv3d/vvvmath/matrices_types.h>
 
 enum class GLPROFILE { ES, CORE };
 
@@ -16,6 +17,19 @@ public:
     virtual void setIdleFunction(const std::function<void()>& idleFunction) = 0;
     virtual void mainLoop() = 0;
     virtual void swap() = 0;
+
+    virtual bool keyDown(uint16_t scancode) const = 0;
+    virtual bool mouseButtonDown(uint16_t button) const = 0;
+    virtual int getMouseX() const = 0;
+    virtual int getMouseY() const = 0;
+    vvv::vector2i getMousePos() const;
+
+    virtual int getMouseRelX() const = 0;
+    virtual int getMouseRelY() const = 0;
+    vvv::vector2i getMouseRel() const;
+
+    virtual bool hasText() const = 0;
+    virtual const std::string& getText() const = 0;
 };
 
 

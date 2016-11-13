@@ -27,6 +27,17 @@ public:
 private:
     class SDLWraper;
     std::unique_ptr<SDLWraper> sdl;
+
+    // HAL interface
+public:
+    bool keyDown(uint16_t scancode) const override;
+    bool mouseButtonDown(uint16_t button) const override;
+    int getMouseX() const override;
+    int getMouseY() const override;
+    int getMouseRelX() const override;
+    int getMouseRelY() const override;
+    bool hasText() const override;
+    const std::string& getText() const override;
 };
 
 

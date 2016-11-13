@@ -236,7 +236,44 @@ void sdlLayer::setIdleFunction(const std::function<void ()>&
     sdl->idleFunction = idleFunction;
 }
 
-sdlLayer::~sdlLayer()
-{
+sdlLayer::~sdlLayer() = default;
 
+bool sdlLayer::keyDown(uint16_t scancode) const
+{
+    return sdl->eventLoop.keyDown(scancode);
+}
+
+bool sdlLayer::mouseButtonDown(uint16_t button) const
+{
+    return sdl->eventLoop.buttonDown(button);
+}
+
+int sdlLayer::getMouseX() const
+{
+    return sdl->eventLoop.getMouseX();
+}
+
+int sdlLayer::getMouseY() const
+{
+    return sdl->eventLoop.getMouseY();
+}
+
+int sdlLayer::getMouseRelX() const
+{
+    return sdl->eventLoop.getMouseRelX();
+}
+
+int sdlLayer::getMouseRelY() const
+{
+    return sdl->eventLoop.getMouseRelY();
+}
+
+bool sdlLayer::hasText() const
+{
+    return sdl->eventLoop.hasText();
+}
+
+const std::string& sdlLayer::getText() const
+{
+    return sdl->eventLoop.getText();
 }
