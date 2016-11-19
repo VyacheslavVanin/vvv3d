@@ -7,7 +7,7 @@ QMAKE_INCDIR += ../vvv3dnew/build/
 QMAKE_LIBDIR += ../vvv3dnew/build/
 
 QMAKE_CXXFLAGS += -Wall -Wextra
-LIBS += -lvvv3dnew -lGLEW -lGL -lglut -lpng -lfreetype
+LIBS += -lvvv3dnew -lGLEW -lGL -lglut
 
 
 SOURCES += main.cpp \
