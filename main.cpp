@@ -62,7 +62,6 @@ void drawSprite(Engine& engine, const Camera& camera, const Sprite& spr){
     drawTextured(camera, *sh, *g, spr.transform, *spr.getTexture());
 }
 
-
 template<typename A, template<typename, typename> class C >
 void drawSprites(Engine& engine, const Camera& camera, const C<Sprite, A>& sprs)
 {
@@ -82,6 +81,7 @@ void drawSprites(Engine& engine, const Camera& camera, const C<Sprite, A>& sprs)
         g->draw();
     }
 }
+
 
 
 class TestEngine : public Engine
@@ -116,6 +116,7 @@ protected:
         auto* panel = new Panel(
                           new VerticalLayout(),
                           new ColorRectWidget(Color(0.1, 0.8, 0.6, 0.5)));
+                         // new ImageWidget(spriteTex.get()));
         panel->setPosition(20, 20);
 
         auto* w = new ImageWidget(spriteTex.get());
@@ -143,6 +144,13 @@ protected:
     {
         drawSprites(*this, camera, sprites);
         guilayer.draw();
+
+        auto& i = getInput();
+        auto pos = i.getMouse().getMouseRel();
+        if(pos.x != 0 || pos.y != 0)
+            std::cout << i.getMouse().getMouseRel() << "\n";
+        if(i.getKeyboard().hasText())
+            std::cout << i.getKeyboard().getText() << "\n";
     }
 
     void onResize(int x, int y) override
