@@ -143,6 +143,8 @@ void Widget::setMaxSize(const vvv::vector2i& size)
     setMaxSize(size.x, size.y);
 }
 
+const Rect&Widget::getRect() const {return clipArea;}
+
 const vvv::vector2i Widget::getAbsolutePosition() const
 {
     auto ret = getPosition();

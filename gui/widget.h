@@ -36,6 +36,7 @@ public:
     void setMaxSize(int width, int height);
     void setMaxSize(const vvv::vector2i& size);
 
+    const Rect& getRect() const;
 
 
 protected:
