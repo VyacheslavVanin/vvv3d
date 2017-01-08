@@ -4,14 +4,33 @@
 #include <vector>
 #include <algorithm>
 
+using WidgetsContainer = std::vector<Widget*>;
+
+class GuiPointer
+{
+public:
+    GuiPointer(WidgetsContainer& widgets)
+        : widgets(widgets), currentFocus(nullptr)
+    {}
+
+    void processInput(const Input& input);
+
+    Widget* getWidgetAtPoint(const vvv::vector2i& pos);
+
+private:
+    WidgetsContainer& widgets;
+    Widget* currentFocus;
+};
+
 struct GuiLayer::GuiLayerImpl
 {
-    std::vector<Widget*> widgets;
+    WidgetsContainer widgets;
     vvv::vector2<int>    size;
     /**
      * @brief Orthographic camera; top-left corner (0,0)
      */
     Camera camera;
+    GuiPointer pointer;
 
     GuiLayerImpl();
 
@@ -19,6 +38,7 @@ struct GuiLayer::GuiLayerImpl
      * @brief Draw all widgets. */
     void draw();
     void resize(int width, int height);
+    void processInputEvents(const Input& input);
 
     /**
      * @brief Add widget to layer.
@@ -35,7 +55,7 @@ struct GuiLayer::GuiLayerImpl
     ~GuiLayerImpl();
 };
 
-GuiLayer::GuiLayerImpl::GuiLayerImpl()
+GuiLayer::GuiLayerImpl::GuiLayerImpl() : pointer(this->widgets)
 {  }
 
 void GuiLayer::GuiLayerImpl::draw()
@@ -63,6 +83,12 @@ void GuiLayer::GuiLayerImpl::removeWidget(Widget* widget)
     const auto it = std::find(widgets.begin(), widgets.end(), widget);
     if(it != widgets.end())
         widgets.erase(it);
+}
+
+
+void GuiLayer::GuiLayerImpl::processInputEvents(const Input& input)
+{
+    pointer.processInput(input);
 }
 
 GuiLayer::GuiLayerImpl::~GuiLayerImpl()
@@ -109,7 +135,55 @@ const Camera& GuiLayer::getCamera() const
     return impl->camera;
 }
 
+void GuiLayer::processInputEvents(const Input& input)
+{
+    impl->processInputEvents(input);
+}
+
 
 GuiLayer::~GuiLayer() = default;
 GuiLayer::GuiLayer(GuiLayer&&) noexcept = default;
 GuiLayer& GuiLayer::operator=(GuiLayer&&) noexcept = default;
+
+
+
+
+static bool isPointInWidget(const Widget* w, const vvv::vector2i& point)
+{
+    return rectContainPoint(w->getRect(), point);
+}
+
+/**
+ * @brief Return pointer to widget that contain pos
+ * @param pos point to test
+ * @return Widget or nullptr if no widgets under point */
+Widget* GuiPointer::getWidgetAtPoint(const vvv::vector2i& pos)
+{
+    auto w = std::find_if(widgets.begin(), widgets.end(),
+                          [&pos](const auto w){
+                            return isPointInWidget(w, pos);
+                          });
+    if(w == widgets.end())
+        return nullptr;
+    return *w;
+}
+
+void GuiPointer::processInput(const Input& input)
+{
+    const auto& mouse = input.getMouse();
+    const auto& pos   = mouse.getMousePos();
+
+    auto newFocus = getWidgetAtPoint(pos);
+    auto oldFocus = currentFocus;
+    if(newFocus != oldFocus){
+        //leaveWidget(oldFocus);
+        //enterWidget(newFocus);
+         /* Здесь пригодился бы конечный автомат
+            а то придется учитывать "признаки":
+                - есть/нет фокус
+                - зажата ли кнопка, когда мы имеем фокус
+         */
+    }else{
+    }
+
+}

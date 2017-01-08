@@ -5,6 +5,7 @@
 
 class Widget;
 class Camera;
+class Input;
 class GuiLayer final
 {
 public:
@@ -20,6 +21,8 @@ public:
     const vvv::vector2<int>& getSize() const;
 
     const Camera& getCamera() const;
+
+    void processInputEvents(const Input& input);
 
 private:
     struct GuiLayerImpl;
