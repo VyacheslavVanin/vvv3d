@@ -2,6 +2,7 @@
 #include "widget.h"
 #include <vvv3d/vvv3d.h>
 #include <vector>
+#include <queue>
 #include <algorithm>
 
 using WidgetsContainer = std::vector<Widget*>;
@@ -10,16 +11,20 @@ class GuiPointer
 {
 public:
     GuiPointer(WidgetsContainer& widgets)
-        : widgets(widgets), currentFocus(nullptr)
+        : widgets(widgets), focus(nullptr), hover(nullptr)
     {}
 
     void processInput(const Input& input);
 
     Widget* getWidgetAtPoint(const vvv::vector2i& pos);
 
+    constexpr static uint16_t NUM_MOUSE_BUTTONS = 8;
+
 private:
     WidgetsContainer& widgets;
-    Widget* currentFocus;
+    Widget* focus;
+    Widget* hover;
+    bool    mouseButtonsStates[NUM_MOUSE_BUTTONS] {false};
 };
 
 struct GuiLayer::GuiLayerImpl
@@ -159,11 +164,30 @@ static bool isPointInWidget(const Widget* w, const vvv::vector2i& point)
  * @return Widget or nullptr if no widgets under point */
 Widget* GuiPointer::getWidgetAtPoint(const vvv::vector2i& pos)
 {
-    auto w = std::find_if(widgets.begin(), widgets.end(),
+    // Find leaves
+    std::vector<Widget*> leaves;
+    std::deque<Widget*> toDiscover(widgets.begin(), widgets.end());
+
+    while(!toDiscover.empty()) {
+        auto next = toDiscover.front();
+        toDiscover.pop_front();
+
+        if(next->children.empty())
+            leaves.push_back(next);
+        else {
+            for(auto c: next->children)
+                toDiscover.push_back(c);
+        }
+    }
+
+    // Find in reversed direction, to handle one over another widgets.
+    // see Panel widget class: Layer widget over background widget, if we search
+    // in forward direction then background widget will be found first
+    auto w = std::find_if(leaves.rbegin(), leaves.rend(),
                           [&pos](const auto w){
                             return isPointInWidget(w, pos);
                           });
-    if(w == widgets.end())
+    if(w == leaves.rend())
         return nullptr;
     return *w;
 }
@@ -171,19 +195,41 @@ Widget* GuiPointer::getWidgetAtPoint(const vvv::vector2i& pos)
 void GuiPointer::processInput(const Input& input)
 {
     const auto& mouse = input.getMouse();
-    const auto& pos   = mouse.getMousePos();
+    const auto& mousePos   = mouse.getMousePos();
 
-    auto newFocus = getWidgetAtPoint(pos);
-    auto oldFocus = currentFocus;
-    if(newFocus != oldFocus){
-        //leaveWidget(oldFocus);
-        //enterWidget(newFocus);
-         /* Здесь пригодился бы конечный автомат
-            а то придется учитывать "признаки":
-                - есть/нет фокус
-                - зажата ли кнопка, когда мы имеем фокус
-         */
-    }else{
+    const auto x = mouse.getMouseX();
+    const auto y = mouse.getMouseY();
+
+    // Detect hover events and dispatch to widget
+    const auto currentHover = getWidgetAtPoint(mousePos);
+    if (currentHover != hover) {
+        if (hover)
+            hover->PointerLeave(x, y);
+        if (currentHover)
+            currentHover->PointerEnter(x, y);
+    }
+    hover = currentHover;
+
+    // Detect mouse buttons state changes
+    for (auto i = 0; i < NUM_MOUSE_BUTTONS; ++i){
+        const auto currentButtonState = mouse.buttonDown(i);
+        const auto oldButtonState = mouseButtonsStates[i];
+        // if event occure
+        if (currentButtonState != oldButtonState) {
+            if (currentButtonState == true){ // button pressed
+                if (hover) {
+                    hover->ButtonPressed(i, x, y);
+                    focus = hover;
+                } else {
+                    focus = nullptr; // pressed in without hover
+                }
+            } else { // button released
+                if (focus)
+                    focus->ButtonReleased(i, x, y);
+            }
+        }
+
+        mouseButtonsStates[i] = currentButtonState;
     }
 
 }

@@ -144,13 +144,14 @@ protected:
     {
         drawSprites(*this, camera, sprites);
         guilayer.draw();
+        guilayer.processInputEvents(getInput());
 
-        auto& i = getInput();
-        auto pos = i.getMouse().getMouseRel();
-        if(pos.x != 0 || pos.y != 0)
-            std::cout << i.getMouse().getMouseRel() << "\n";
-        if(i.getKeyboard().hasText())
-            std::cout << i.getKeyboard().getText() << "\n";
+        //auto& i = getInput();
+        //auto pos = i.getMouse().getMouseRel();
+        //if(pos.x != 0 || pos.y != 0)
+        //    std::cout << i.getMouse().getMouseRel() << "\n";
+        //if(i.getKeyboard().hasText())
+        //    std::cout << i.getKeyboard().getText() << "\n";
     }
 
     void onResize(int x, int y) override
