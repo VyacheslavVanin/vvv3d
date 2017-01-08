@@ -36,5 +36,16 @@ inline Rect rectIntersection(const Rect& r1, const Rect& r2)
     return Rect(left, top, width, height);
 }
 
+template<typename T>
+inline bool valueInRange(const T& value, const T& left, const T&  right)
+{
+    return value >= left && value <= right;
+}
+
+inline bool rectContainPoint(const Rect& r, const vvv::vector2i& point)
+{
+    return valueInRange(point.x, rectLeft(r), rectRight(r)) &&
+           valueInRange(point.y, rectTop(r), rectBottom(r));
+}
 
 #endif // RECT_H
