@@ -25,6 +25,9 @@ private:
     Widget* focus;
     Widget* hover;
     bool    mouseButtonsStates[NUM_MOUSE_BUTTONS] {false};
+    void detectHoverEvents(const Input::Mouse& mousePos);
+    void detectMouseButtonEvents(const Input::Mouse& mouse);
+    void detectMouseMoveEvent(const Input::Mouse& mouse);
 };
 
 struct GuiLayer::GuiLayerImpl
@@ -192,15 +195,11 @@ Widget* GuiPointer::getWidgetAtPoint(const vvv::vector2i& pos)
     return *w;
 }
 
-void GuiPointer::processInput(const Input& input)
+void GuiPointer::detectHoverEvents(const Input::Mouse& mouse)
 {
-    const auto& mouse = input.getMouse();
-    const auto& mousePos   = mouse.getMousePos();
-
     const auto x = mouse.getMouseX();
     const auto y = mouse.getMouseY();
-
-    // Detect hover events and dispatch to widget
+    const auto& mousePos = mouse.getMousePos();
     const auto currentHover = getWidgetAtPoint(mousePos);
     if (currentHover != hover) {
         if (hover)
@@ -209,21 +208,28 @@ void GuiPointer::processInput(const Input& input)
             currentHover->PointerEnter(x, y);
     }
     hover = currentHover;
+}
 
-    // Detect mouse buttons state changes
+void GuiPointer::detectMouseButtonEvents(const Input::Mouse& mouse)
+{
+    const auto x = mouse.getMouseX();
+    const auto y = mouse.getMouseY();
+
     for (auto i = 0; i < NUM_MOUSE_BUTTONS; ++i){
         const auto currentButtonState = mouse.buttonDown(i);
         const auto oldButtonState = mouseButtonsStates[i];
         // if event occure
         if (currentButtonState != oldButtonState) {
-            if (currentButtonState == true){ // button pressed
+            if (currentButtonState == true){
+                // button pressed
                 if (hover) {
                     hover->ButtonPressed(i, x, y);
                     focus = hover;
                 } else {
                     focus = nullptr; // pressed in without hover
                 }
-            } else { // button released
+            } else {
+                // button released
                 if (focus)
                     focus->ButtonReleased(i, x, y);
             }
@@ -231,5 +237,25 @@ void GuiPointer::processInput(const Input& input)
 
         mouseButtonsStates[i] = currentButtonState;
     }
+}
 
+void GuiPointer::detectMouseMoveEvent(const Input::Mouse& mouse)
+{
+    if (focus && (mouse.getMouseRelX() || mouse.getMouseRelY())) {
+        focus->PointerMove(mouse.getMouseX(), mouse.getMouseY());
+    }
+}
+
+void GuiPointer::processInput(const Input& input)
+{
+    const auto& mouse = input.getMouse();
+
+    // Detect hover events and dispatch to widget
+    detectHoverEvents(mouse);
+
+    // Detect mouse buttons state changes
+    detectMouseButtonEvents(mouse);
+
+    // Detect mouse move event
+    detectMouseMoveEvent(mouse);
 }
