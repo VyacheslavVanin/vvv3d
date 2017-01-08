@@ -28,6 +28,41 @@ void Widget::setGuiLayer(GuiLayer* layer)
         w->setGuiLayer(layer);
 }
 
+void Widget::PointerEnter(int x, int y)
+{
+    OnPointerEnter(x, y);
+}
+
+void Widget::PointerLeave(int x, int y)
+{
+    OnPointerLeave(x, y);
+}
+
+void Widget::PointerMove(int x, int y)
+{
+    OnPointerMove(x, y);
+}
+
+void Widget::ButtonPressed(int button, int x, int y)
+{
+    OnButtonPressed(button, x, y);
+}
+
+void Widget::ButtonReleased(int button, int x, int y)
+{
+    OnButtonReleased(button, x, y);
+}
+
+void Widget::setFocus()
+{
+    OnGetFocus();
+}
+
+void Widget::setUnfocused()
+{
+    OnLoseFocus();
+}
+
 static Rect RectToScissor(const Rect& r, const vvv::vector2i& layerSize)
 {
     const vvv::vector2i pos(r.x, r.y);
@@ -193,6 +228,41 @@ bool Widget::removeChild(Widget* child)
     if(childParent == this)
         child->parent = nullptr;
     return true;
+}
+
+void Widget::OnPointerEnter(int, int)
+{
+
+}
+
+void Widget::OnPointerLeave(int, int)
+{
+
+}
+
+void Widget::OnPointerMove(int, int)
+{
+
+}
+
+void Widget::OnButtonPressed(int, int, int)
+{
+
+}
+
+void Widget::OnButtonReleased(int, int, int)
+{
+
+}
+
+void Widget::OnGetFocus()
+{
+
+}
+
+void Widget::OnLoseFocus()
+{
+
 }
 
 const Camera& Widget::getCamera() const

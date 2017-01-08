@@ -59,9 +59,25 @@ protected:
     bool addChild(Widget* widget);
     bool removeChild(Widget* child);
 
+    virtual void OnPointerEnter(int x, int y);
+    virtual void OnPointerLeave(int x, int y);
+    virtual void OnPointerMove(int x, int y);
+    virtual void OnButtonPressed(int button, int x, int y);
+    virtual void OnButtonReleased(int button, int x, int y);
+    virtual void OnGetFocus();
+    virtual void OnLoseFocus();
+
 private:
     friend class GuiLayer;
     void setGuiLayer(GuiLayer* layer);
+    void PointerEnter(int x, int y);
+    void PointerLeave(int x, int y);
+    void PointerMove(int x, int y);
+    void ButtonPressed(int button, int x, int y);
+    void ButtonReleased(int button, int x, int y);
+    friend class GuiPointer;
+    void setFocus();
+    void setUnfocused();
 
     vvv::vector2i   pos     {0};
     vvv::vector2i   size    {1};
