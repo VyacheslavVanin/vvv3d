@@ -97,9 +97,6 @@ TextWidget::TextWidget(const std::string& text)
     setMinSize(1, lineHeight);
 }
 
-TextWidget::TextWidget()
-    :TextWidget("Text")
-{}
 
 void TextWidget::setText(const std::string& text)
 {

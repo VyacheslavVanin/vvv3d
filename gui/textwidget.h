@@ -5,10 +5,9 @@
 #include <string>
 
 class Color;
-class TextWidget final : public Widget
+class TextWidget: public Widget
 {
 public:
-    explicit TextWidget();
     explicit TextWidget(const std::string& text = "Text");
     ~TextWidget();
 
