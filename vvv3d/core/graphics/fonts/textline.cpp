@@ -1,7 +1,11 @@
 #include "textline.h"
 #include <vvv3d/vvvmath/linalg.h>
 #include <vvv3d/core/engine.h>
+#if __GNUC__ > 4
 #include <codecvt>
+#else
+#include <boost/locale/encoding_utf.hpp>
+#endif
 
 struct textVertex
 {
@@ -88,9 +92,14 @@ void updateTextGeometry(const std::shared_ptr<Geometry>& in,
 
 std::u32string toU32(const std::string& u8)
 {
+#if __GNUC__ > 4
     std::locale::global(std::locale("en_US.utf8"));
     std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv32;
     return conv32.from_bytes(u8);
+#else
+    return boost::locale::conv::utf_to_utf<char32_t>(u8.c_str(),
+                                                     u8.c_str() + u8.size());
+#endif
 }
 
 
