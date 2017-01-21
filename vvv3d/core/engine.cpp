@@ -40,7 +40,7 @@ void Engine::run()
 
 ResourceManager& Engine::getResourceManager() {return *resourceManager;}
 
-const Engine::Input&Engine::getInput() const
+const Input& Engine::getInput() const
 {
     return input;
 }
@@ -83,62 +83,62 @@ void Engine::resize(int x, int y)
 
 float Engine::getCurrentFps() const {return currentfps;}
 
-const Engine::Input::Keyboard& Engine::Input::getKeyboard() const
+const Input::Keyboard& Input::getKeyboard() const
 {
     return keyboard;
 }
 
-const Engine::Input::Mouse&Engine::Input::getMouse() const
+const Input::Mouse&Input::getMouse() const
 {
     return mouse;
 }
 
-bool Engine::Input::Keyboard::keyDown(uint16_t scancode) const
+bool Input::Keyboard::keyDown(uint16_t scancode) const
 {
     return Engine::getActiveEngine().hal->keyDown(scancode);
 }
 
-bool Engine::Input::Keyboard::hasText() const
+bool Input::Keyboard::hasText() const
 {
     return Engine::getActiveEngine().hal->hasText();
 }
 
-const std::string& Engine::Input::Keyboard::getText() const
+const std::string& Input::Keyboard::getText() const
 {
     return Engine::getActiveEngine().hal->getText();
 }
 
-bool Engine::Input::Mouse::buttonDown(uint16_t button) const
+bool Input::Mouse::buttonDown(uint16_t button) const
 {
     return Engine::getActiveEngine().hal->mouseButtonDown(button);
 }
 
-vvv::vector2i Engine::Input::Mouse::getMousePos() const
+vvv::vector2i Input::Mouse::getMousePos() const
 {
     return vvv::vector2i(getMouseX(), getMouseY());
 }
 
-vvv::vector2i Engine::Input::Mouse::getMouseRel() const
+vvv::vector2i Input::Mouse::getMouseRel() const
 {
     return vvv::vector2i(getMouseRelX(), getMouseRelY());
 }
 
-int Engine::Input::Mouse::getMouseX() const
+int Input::Mouse::getMouseX() const
 {
     return Engine::getActiveEngine().hal->getMouseX();
 }
 
-int Engine::Input::Mouse::getMouseY() const
+int Input::Mouse::getMouseY() const
 {
     return Engine::getActiveEngine().hal->getMouseY();
 }
 
-int Engine::Input::Mouse::getMouseRelX() const
+int Input::Mouse::getMouseRelX() const
 {
     return Engine::getActiveEngine().hal->getMouseRelX();
 }
 
-int Engine::Input::Mouse::getMouseRelY() const
+int Input::Mouse::getMouseRelY() const
 {
     return Engine::getActiveEngine().hal->getMouseRelY();
 }
