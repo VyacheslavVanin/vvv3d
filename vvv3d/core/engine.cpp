@@ -4,7 +4,6 @@
 #include <core/graphics/lowlevel/openglprovider.h>
 #include <core/camera.h>
 #include <core/resourcemanager.h>
-#include <core/gluthal.h>
 #include <core/sdllayer.h>
 
 static const int DEFAULT_SCREEN_WIDTH = 640;
@@ -25,7 +24,6 @@ Engine::Engine(int argc, char** argv, const char* windowName)
 
     glClearColor( 0.05f, 0.1f, 0.2f, 0);
     glEnable( GL_DEPTH_TEST );
-    glEnable( GL_MULTISAMPLE);
 
     activeEngine = this;
 }

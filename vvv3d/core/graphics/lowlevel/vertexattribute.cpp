@@ -28,7 +28,9 @@ GLsizei sizeOfComponent(GLenum componentType)
     static const std::map<GLenum,GLsizei> typeSizeMapping =
     {
         {GL_FLOAT,          sizeof(GLfloat )},
+#ifdef GL_DOUBLE
         {GL_DOUBLE,         sizeof(GLdouble)},
+#endif
         {GL_BYTE,           sizeof(GLbyte)  },
         {GL_SHORT,          sizeof(GLshort) },
         {GL_INT,            sizeof(GLint)   },

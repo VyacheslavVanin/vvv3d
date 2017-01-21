@@ -91,7 +91,8 @@ void TextureAtlas::constructorFunction(size_t width, size_t height,
     // Draw all images on atlass
     for(auto& t: texsToPack){
         t->bind();
-        glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, buff.get());
+        glReadPixels(0, 0, t->getWidth(), t->getHeight(),
+                     GL_RGBA, GL_UNSIGNED_BYTE, buff.get());
         atlas->bind();
 
         const GLuint texOffsetX = t->getTexturePosition().x * width;
