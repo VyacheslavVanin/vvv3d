@@ -127,7 +127,9 @@ private:
 class sdlLayer::SDLWraper
 {
 public:
-    SDLWraper(){
+    SDLWraper(GLPROFILE profile, int major_ver, int minor_ver)
+        : profile(profile), major_ver(major_ver), minor_ver(minor_ver)
+    {
     }
 
     void swap()
@@ -147,9 +149,9 @@ public:
             throw std::logic_error("SDL initialization failed...");
 
         int profile = SDL_GL_CONTEXT_PROFILE_CORE;
-        GLPROFILE p = GLPROFILE::ES;
-        const int major = 3;
-        const int minor = 2;
+        GLPROFILE p = this->profile;
+        const int major = major_ver;
+        const int minor = minor_ver;
         switch(p){
             case GLPROFILE::ES: profile = SDL_GL_CONTEXT_PROFILE_ES; break;
             case GLPROFILE::CORE: profile = SDL_GL_CONTEXT_PROFILE_CORE; break;
@@ -190,10 +192,13 @@ public:
     SDL_GLContext maincontext; /* Our opengl context handle */
     std::function<void()> displayFunction;
     std::function<void()> idleFunction;
+    GLPROFILE profile;
+    int major_ver;
+    int minor_ver;
 };
 
 sdlLayer::sdlLayer(int argc, char** argv, GLPROFILE p, int major, int minor)
-    :sdl(new SDLWraper())
+    :sdl(new SDLWraper(p, major, minor))
 {
 
 }

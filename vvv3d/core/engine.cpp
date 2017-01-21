@@ -15,7 +15,7 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     : currentfps(0), viewportWidth(DEFAULT_SCREEN_WIDTH),
       viewportHeight(DEFAULT_SCREEN_HEIGHT),
       resourceManager(new ResourceManager()),
-      hal(new sdlLayer(argc, argv))
+      hal(new sdlLayer(argc, argv, GLPROFILE::ES, 2, 0))
 {
     hal->initContext(argc, argv);
     hal->createWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, windowName);
