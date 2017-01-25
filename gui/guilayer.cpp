@@ -197,14 +197,12 @@ void GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
         if (newState == oldState)
             continue;
 
-        // Check widget under cursor
-        if (underCursorWidget == nullptr)
-            continue;
-
-        if (newState)
+        if (newState && underCursorWidget)
             underCursorWidget->invokeButtonPressed(i, pos.x, pos.y);
-        else
-            underCursorWidget->invokeButtonReleased(i, pos.x, pos.y);
+
+        if (!newState)
+            for (auto w: widgets)
+                w->invokeButtonReleased(i, pos.x, pos.y);
     }
 }
 
