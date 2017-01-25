@@ -35,6 +35,7 @@ public:
 
     virtual int getMouseRelX() const = 0;
     virtual int getMouseRelY() const = 0;
+    bool isMouseMoved() const;
     vvv::vector2i getMouseRel() const;
 
     virtual bool hasText() const = 0;

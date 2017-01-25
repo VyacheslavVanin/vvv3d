@@ -23,6 +23,7 @@ public:
         int getMouseY() const;
         int getMouseRelX() const;
         int getMouseRelY() const;
+        bool isMoved() const;
     };
     const Keyboard& getKeyboard() const;
     const Mouse& getMouse() const;

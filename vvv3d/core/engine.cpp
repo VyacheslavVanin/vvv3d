@@ -140,3 +140,8 @@ int Input::Mouse::getMouseRelY() const
 {
     return Engine::getActiveEngine().hal->getMouseRelY();
 }
+
+bool Input::Mouse::isMoved() const
+{
+    return Engine::getActiveEngine().hal->isMouseMoved();
+}
