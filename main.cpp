@@ -82,6 +82,41 @@ void drawSprites(Engine& engine, const Camera& camera, const C<Sprite, A>& sprs)
     }
 }
 
+class TestWidget : public TextWidget
+{
+public:
+    TestWidget() : TextWidget("Idle")
+    {
+        setSize(150, 50);
+    }
+
+    // Widget interface
+protected:
+    void OnPointerEnter(int x, int y) override
+    {
+        setText("Enter");
+    }
+
+    void OnPointerLeave(int x, int y) override
+    {
+        setText("Leave");
+    }
+
+    void OnPointerMove(int x, int y) override
+    {
+        setText("Move");
+    }
+
+    void OnButtonPressed(int button, int x, int y) override
+    {
+        setText(std::string("Pressed ") + std::to_string(button));
+    }
+
+    void OnButtonReleased(int button, int x, int y) override
+    {
+        setText(std::string("Released ") + std::to_string(button));
+    }
+};
 
 
 class TestEngine : public Engine
@@ -138,6 +173,14 @@ protected:
         panel->addWidget(w2);
         panel->setSize(300, 400);
         guilayer.addWidget(panel);
+
+        auto* test = new TestWidget();
+        test->setPosition(500,600);
+        guilayer.addWidget(test);
+
+        auto* test2 = new TestWidget();
+        test2->setPosition(300,600);
+        guilayer.addWidget(test2);
     }
 
     void onDraw() override

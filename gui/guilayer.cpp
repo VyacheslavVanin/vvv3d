@@ -11,7 +11,7 @@ class GuiPointer
 {
 public:
     GuiPointer(WidgetsContainer& widgets)
-        : widgets(widgets), focus(nullptr), hover(nullptr)
+        : widgets(widgets), focus(nullptr)
     {}
 
     void processInput(const Input& input);
@@ -23,11 +23,9 @@ public:
 private:
     WidgetsContainer& widgets;
     Widget* focus;
-    Widget* hover;
     bool    mouseButtonsStates[NUM_MOUSE_BUTTONS] {false};
-    void detectHoverEvents(const Input::Mouse& mousePos);
-    void detectMouseButtonEvents(const Input::Mouse& mouse);
-    void detectMouseMoveEvent(const Input::Mouse& mouse);
+    void detectMouseMove(const Input::Mouse& mouse);
+    void detectMouseButtons(const Input::Mouse& mouse);
 };
 
 struct GuiLayer::GuiLayerImpl
@@ -167,82 +165,46 @@ static bool isPointInWidget(const Widget* w, const vvv::vector2i& point)
  * @return Widget or nullptr if no widgets under point */
 Widget* GuiPointer::getWidgetAtPoint(const vvv::vector2i& pos)
 {
-    // Find leaves
-    std::vector<Widget*> leaves;
-    std::deque<Widget*> toDiscover(widgets.begin(), widgets.end());
-
-    while(!toDiscover.empty()) {
-        auto next = toDiscover.front();
-        toDiscover.pop_front();
-
-        if(next->children.empty())
-            leaves.push_back(next);
-        else {
-            for(auto c: next->children)
-                toDiscover.push_back(c);
-        }
-    }
-
-    // Find in reversed direction, to handle one over another widgets.
-    // see Panel widget class: Layer widget over background widget, if we search
-    // in forward direction then background widget will be found first
-    auto w = std::find_if(leaves.rbegin(), leaves.rend(),
+    auto w = std::find_if(widgets.rbegin(), widgets.rend(),
                           [&pos](const auto w){
                             return isPointInWidget(w, pos);
                           });
-    if(w == leaves.rend())
+    if(w == widgets.rend())
         return nullptr;
     return *w;
 }
 
-void GuiPointer::detectHoverEvents(const Input::Mouse& mouse)
+
+void GuiPointer::detectMouseMove(const Input::Mouse& mouse)
 {
+    if (!mouse.isMoved())
+        return;
     const auto x = mouse.getMouseX();
     const auto y = mouse.getMouseY();
-    const auto& mousePos = mouse.getMousePos();
-    const auto currentHover = getWidgetAtPoint(mousePos);
-    if (currentHover != hover) {
-        if (hover)
-            hover->PointerLeave(x, y);
-        if (currentHover)
-            currentHover->PointerEnter(x, y);
-    }
-    hover = currentHover;
+    for (auto w: widgets)
+        w->invokePointerMove(x, y);
 }
 
-void GuiPointer::detectMouseButtonEvents(const Input::Mouse& mouse)
+void GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
 {
-    const auto x = mouse.getMouseX();
-    const auto y = mouse.getMouseY();
+    const auto& pos = mouse.getMousePos();
+    Widget* underCursorWidget = getWidgetAtPoint(pos);
+    for (uint16_t i = 0; i < NUM_MOUSE_BUTTONS; ++i) {
+        const auto oldState = mouseButtonsStates[i];
+        const auto newState = mouse.buttonDown(i);
+        mouseButtonsStates[i] = newState;
 
-    for (auto i = 0; i < NUM_MOUSE_BUTTONS; ++i){
-        const auto currentButtonState = mouse.buttonDown(i);
-        const auto oldButtonState = mouseButtonsStates[i];
-        // if event occure
-        if (currentButtonState != oldButtonState) {
-            if (currentButtonState == true){
-                // button pressed
-                if (hover) {
-                    hover->ButtonPressed(i, x, y);
-                    focus = hover;
-                } else {
-                    focus = nullptr; // pressed in without hover
-                }
-            } else {
-                // button released
-                if (focus)
-                    focus->ButtonReleased(i, x, y);
-            }
-        }
+        if (newState == oldState)
+            continue;
 
-        mouseButtonsStates[i] = currentButtonState;
-    }
-}
+        // Check widget under cursor
+        if (underCursorWidget == nullptr)
+            continue;
 
-void GuiPointer::detectMouseMoveEvent(const Input::Mouse& mouse)
-{
-    if (focus && (mouse.getMouseRelX() || mouse.getMouseRelY())) {
-        focus->PointerMove(mouse.getMouseX(), mouse.getMouseY());
+        if (newState)
+            underCursorWidget->invokeButtonPressed(i, pos.x, pos.y);
+        else
+            underCursorWidget->invokeButtonReleased(i, pos.x, pos.y);
     }
 }
 
@@ -250,12 +212,6 @@ void GuiPointer::processInput(const Input& input)
 {
     const auto& mouse = input.getMouse();
 
-    // Detect hover events and dispatch to widget
-    detectHoverEvents(mouse);
-
-    // Detect mouse buttons state changes
-    detectMouseButtonEvents(mouse);
-
-    // Detect mouse move event
-    detectMouseMoveEvent(mouse);
+    detectMouseMove(mouse);
+    detectMouseButtons(mouse);
 }

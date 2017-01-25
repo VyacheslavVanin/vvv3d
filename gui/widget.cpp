@@ -28,27 +28,27 @@ void Widget::setGuiLayer(GuiLayer* layer)
         w->setGuiLayer(layer);
 }
 
-void Widget::PointerEnter(int x, int y)
-{
-    OnPointerEnter(x, y);
-}
-
-void Widget::PointerLeave(int x, int y)
-{
-    OnPointerLeave(x, y);
-}
-
-void Widget::PointerMove(int x, int y)
+void Widget::invokePointerMove(int x, int y)
 {
     OnPointerMove(x, y);
+    const auto oldHover = hover;
+    hover = rectContainPoint(clipArea, x, y);
+
+    if(hover == oldHover)
+        return;
+
+    if(hover)
+        OnPointerEnter(x, y);
+    else
+        OnPointerLeave(x, y);
 }
 
-void Widget::ButtonPressed(int button, int x, int y)
+void Widget::invokeButtonPressed(int button, int x, int y)
 {
     OnButtonPressed(button, x, y);
 }
 
-void Widget::ButtonReleased(int button, int x, int y)
+void Widget::invokeButtonReleased(int button, int x, int y)
 {
     OnButtonReleased(button, x, y);
 }

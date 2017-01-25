@@ -48,4 +48,10 @@ inline bool rectContainPoint(const Rect& r, const vvv::vector2i& point)
            valueInRange(point.y, rectTop(r), rectBottom(r));
 }
 
+inline bool rectContainPoint(const Rect& r, int x, int y)
+{
+    return valueInRange(x, rectLeft(r), rectRight(r)) &&
+           valueInRange(y, rectTop(r), rectBottom(r));
+}
+
 #endif // RECT_H

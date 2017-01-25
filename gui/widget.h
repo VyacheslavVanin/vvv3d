@@ -67,14 +67,11 @@ protected:
     virtual void OnGetFocus();
     virtual void OnLoseFocus();
 
-private:
     friend class GuiLayer;
     void setGuiLayer(GuiLayer* layer);
-    void PointerEnter(int x, int y);
-    void PointerLeave(int x, int y);
-    void PointerMove(int x, int y);
-    void ButtonPressed(int button, int x, int y);
-    void ButtonReleased(int button, int x, int y);
+    void invokePointerMove(int x, int y);
+    void invokeButtonPressed(int button, int x, int y);
+    void invokeButtonReleased(int button, int x, int y);
     friend class GuiPointer;
     void setFocus();
     void setUnfocused();
@@ -89,6 +86,7 @@ private:
     Widget*         parent  {nullptr};
     GuiLayer*       layer   {nullptr};
     std::vector<Widget*> children;
+    bool            hover = false;
     void updateClipArea();
 };
 
