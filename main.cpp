@@ -171,6 +171,7 @@ protected:
         panel->addWidget(w);
         panel->addWidget(w1);
         panel->addWidget(w2);
+        panel->addWidget(new TestWidget());
         panel->setSize(300, 400);
         guilayer.addWidget(panel);
 

@@ -13,6 +13,37 @@ void Layout::onResize(const vvv::vector2i& oldSize,
     (void)newSize;
 }
 
+void Layout::OnPointerMove(int x, int y)
+{
+    const auto& children = getChildren();
+    for(auto w: children)
+        w->invokePointerMove(x, y);
+}
+
+void Layout::OnButtonPressed(int button, int x, int y)
+{
+    const auto& children = getChildren();
+    auto w = std::find_if(children.begin(), children.end(),
+                          [&x, &y](auto w){
+                            return rectContainPoint(w->getRect(), x, y);
+                          });
+    if (w == children.end())
+        return;
+    (*w)->invokeButtonPressed(button, x, y);
+}
+
+void Layout::OnButtonReleased(int button, int x, int y)
+{
+    const auto& children = getChildren();
+    auto w = std::find_if(children.begin(), children.end(),
+                          [&x, &y](auto w){
+                            return rectContainPoint(w->getRect(), x, y);
+                          });
+    if (w == children.end())
+        return;
+    (*w)->invokeButtonReleased(button, x, y);
+}
+
 void Layout::onAddWidget(Widget* added)
 {
     (void)added;

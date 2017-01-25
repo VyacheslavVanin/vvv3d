@@ -38,6 +38,9 @@ public:
 
     const Rect& getRect() const;
 
+    void invokePointerMove(int x, int y);
+    void invokeButtonPressed(int button, int x, int y);
+    void invokeButtonReleased(int button, int x, int y);
 
 protected:
     const Camera& getCamera() const;
@@ -69,9 +72,6 @@ protected:
 
     friend class GuiLayer;
     void setGuiLayer(GuiLayer* layer);
-    void invokePointerMove(int x, int y);
-    void invokeButtonPressed(int button, int x, int y);
-    void invokeButtonReleased(int button, int x, int y);
     friend class GuiPointer;
     void setFocus();
     void setUnfocused();

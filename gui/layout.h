@@ -20,6 +20,10 @@ protected:
     // Widget interface
     void onResize(const vvv::vector2i& oldSize,
                   const vvv::vector2i& newSize) override;
+    void OnPointerMove(int x, int y) override;
+    void OnButtonPressed(int button, int x, int y) override;
+    void OnButtonReleased(int button, int x, int y) override;
+
     void onAddWidget(Widget* added);
     void onRemoveWidget(Widget* removed);
     void onContentChanged(Widget* changed);

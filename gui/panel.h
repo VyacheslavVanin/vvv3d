@@ -16,6 +16,10 @@ public:
 protected:
     void onResize(const vvv::vector2i&,
                   const vvv::vector2i& newSize) override;
+    void OnPointerMove(int x, int y) override;
+    void OnButtonPressed(int button, int x, int y) override;
+    void OnButtonReleased(int button, int x, int y) override;
+
 private:
     Layout* layout;
     Widget* background;
