@@ -5,6 +5,7 @@
 #include <string>
 
 class Color;
+class Font;
 class TextWidget: public Widget
 {
 public:
@@ -13,12 +14,18 @@ public:
 
     void setText(const std::string& text);
     void setColor(const Color& color);
+    void setFont(std::shared_ptr<Font> font);
+    void resizeToContent();
+    void setAutoSize(bool value);
 
 private:
     struct TextWidgetImpl;
     std::unique_ptr<TextWidgetImpl> pImpl;
-    
+    bool autosize;
+
     // Widget interface
+    void autoresize();
+
 protected:
     void onDraw() override;
 };

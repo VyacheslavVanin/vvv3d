@@ -5,7 +5,7 @@
 int textLineWidth(const std::u32string& text, const Font& f)
 {
     int ret = 0;
-    for(auto c: text){
+    for(auto c: text) {
         const auto& g = f.getGlyph(c);
         ret += g.advance;
     }
@@ -81,7 +81,7 @@ struct TextWidget::TextWidgetImpl
     std::u32string            text;
     std::shared_ptr<Geometry> geometry;
     std::shared_ptr<Font>     font;
-    Color                    color = Color::WHITE;
+    Color                     color = Color::WHITE;
     mutable bool changed;
 };
 
@@ -89,23 +89,47 @@ struct TextWidget::TextWidgetImpl
 
 
 TextWidget::TextWidget(const std::string& text)
-    : pImpl(std::make_unique<TextWidgetImpl>(text))
+    : pImpl(std::make_unique<TextWidgetImpl>(text)), autosize(false)
 {
-    const int lineWidth = textLineWidth(toU32(text), *pImpl->font);
-    const int lineHeight = textLineHeight(*pImpl->font);
-    setSize(lineWidth, lineHeight);
-    setMinSize(1, lineHeight);
+    resizeToContent();
+    setMinSize(1, getHeight());
 }
 
+
+void TextWidget::autoresize()
+{
+    if(autosize)
+        resizeToContent();
+}
 
 void TextWidget::setText(const std::string& text)
 {
     pImpl->setText(text);
+    autoresize();
 }
 
 void TextWidget::setColor(const Color& color)
 {
     pImpl->setColor(color);
+}
+
+void TextWidget::setFont(std::shared_ptr<Font> font)
+{
+    pImpl->setFont(font);
+    autoresize();
+}
+
+void TextWidget::resizeToContent()
+{
+    const int lineWidth  = textLineWidth(pImpl->text, *pImpl->font);
+    const int lineHeight = textLineHeight(*pImpl->font);
+    setSize(lineWidth, lineHeight);
+}
+
+void TextWidget::setAutoSize(bool value)
+{
+    this->autosize = value;
+    autoresize();
 }
 
 void TextWidget::onDraw()
@@ -122,11 +146,13 @@ void TextWidget::onDraw()
     auto& transform      = pImpl->transform;
 
     const auto& pos = getAbsolutePosition();
-    transform.setPosition(pos.x, -pos.y - font.getAscender(), 0);
+    const auto posx = pos.x;
+    const auto posy = -pos.y - font.getAscender();
+    transform.setPosition(posx, posy, 0);
 
     drawTexturedColored(camera, *sh, geometry,
-                         transform, texture,
-                         pImpl->color);
+                        transform, texture,
+                        pImpl->color);
 }
 
 TextWidget::~TextWidget() = default;
