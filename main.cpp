@@ -119,6 +119,21 @@ protected:
 };
 
 
+class Button : public Widget
+{
+public:
+    Button(const std::string& caption = "Button") :
+        text(new TextWidget(caption))
+    {
+        addChild(text);
+
+    }
+
+private:
+    TextWidget* text;
+};
+
+
 class TestEngine : public Engine
 {
 public:
@@ -164,7 +179,10 @@ protected:
         auto* w2 = new ColorRectWidget(Color::FUCHSIA);
         w2->setPosition(35, 0);
 
-        auto* w3 = new TextWidget("Прювет Лунатикам!!!");
+        //auto* w3 = new TextWidget("Прювет Лунатикам!!!");
+        auto* w3 = new TextWidget("Hello to lunatics!!!");
+        w3->setSize(500, 50);
+        w3->setHAlign(HALIGN::RIGHT);
         w3->setColor(Color::WHITE);
 
         panel->addWidget(w3);
@@ -172,15 +190,17 @@ protected:
         panel->addWidget(w1);
         panel->addWidget(w2);
         panel->addWidget(new TestWidget());
-        panel->setSize(300, 400);
+        panel->setSize(500, 400);
         guilayer.addWidget(panel);
 
         auto* test = new TestWidget();
         test->setPosition(500,600);
+        test->setAutoSize(true);
         guilayer.addWidget(test);
 
         auto* test2 = new TestWidget();
         test2->setPosition(300,600);
+        test2->setAutoSize(true);
         guilayer.addWidget(test2);
     }
 

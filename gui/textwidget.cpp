@@ -20,7 +20,7 @@ int textLineHeight(const Font& f)
 struct TextWidget::TextWidgetImpl
 {
     TextWidgetImpl(const std::string& text)
-        : text(toU32(text))
+        : text(toU32(text)), changed(true)
     {
         static std::once_flag flag;
         std::call_once(flag, [](){
@@ -68,13 +68,25 @@ struct TextWidget::TextWidgetImpl
         this->color = color;
     }
 
-    Geometry& getGeometry() const
+    void lazyUpdateGeometryData() const
     {
         if(changed){
             updateTextGeometry(geometry, *font, text);
+            widthInPixels = textLineWidth(text, *font);
             changed = false;
         }
+    }
+
+    Geometry& getGeometry() const
+    {
+        lazyUpdateGeometryData();
         return *geometry;
+    }
+
+    int getWidthInPixels() const
+    {
+        lazyUpdateGeometryData();
+        return widthInPixels;
     }
 
     Transform                 transform;
@@ -82,6 +94,7 @@ struct TextWidget::TextWidgetImpl
     std::shared_ptr<Geometry> geometry;
     std::shared_ptr<Font>     font;
     Color                     color = Color::WHITE;
+    mutable int               widthInPixels = 0;
     mutable bool changed;
 };
 
@@ -89,7 +102,8 @@ struct TextWidget::TextWidgetImpl
 
 
 TextWidget::TextWidget(const std::string& text)
-    : pImpl(std::make_unique<TextWidgetImpl>(text)), autosize(false)
+    : pImpl(std::make_unique<TextWidgetImpl>(text)),
+      autosize(false), halign(HALIGN::CENTER)
 {
     resizeToContent();
     setMinSize(1, getHeight());
@@ -132,6 +146,23 @@ void TextWidget::setAutoSize(bool value)
     autoresize();
 }
 
+void TextWidget::setHAlign(HALIGN value)
+{
+    this->halign = value;
+}
+
+
+int TextWidget::getHAlignOffset() const
+{
+    const auto& size = getSize();
+    switch(halign) {
+    case HALIGN::LEFT: return 0;
+    case HALIGN::RIGHT: return size.x - pImpl->getWidthInPixels();
+    case HALIGN::CENTER: return (size.x - pImpl->getWidthInPixels())/2;
+    }
+    throw std::logic_error("Shouldn't be here");
+}
+
 void TextWidget::onDraw()
 {
     const auto& camera = getCamera();
@@ -146,7 +177,10 @@ void TextWidget::onDraw()
     auto& transform      = pImpl->transform;
 
     const auto& pos = getAbsolutePosition();
-    const auto posx = pos.x;
+
+    const auto hAlignOffset = getHAlignOffset();
+
+    const auto posx = pos.x + hAlignOffset;
     const auto posy = -pos.y - font.getAscender();
     transform.setPosition(posx, posy, 0);
 

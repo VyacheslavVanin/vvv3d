@@ -3,6 +3,7 @@
 #include "widget.h"
 #include <memory>
 #include <string>
+#include "align.h"
 
 class Color;
 class Font;
@@ -18,14 +19,19 @@ public:
     void resizeToContent();
     void setAutoSize(bool value);
 
+    void setHAlign(HALIGN value);
+
 private:
     struct TextWidgetImpl;
     std::unique_ptr<TextWidgetImpl> pImpl;
     bool autosize;
+    HALIGN halign;
 
     // Widget interface
     void autoresize();
 
+    int getHAlignOffset() const;
+    
 protected:
     void onDraw() override;
 };
