@@ -103,7 +103,7 @@ struct TextWidget::TextWidgetImpl
 
 TextWidget::TextWidget(const std::string& text)
     : pImpl(std::make_unique<TextWidgetImpl>(text)),
-      autosize(false), halign(HALIGN::CENTER)
+      autosize(false), halign(HALIGN::CENTER), valign(VALIGN::CENTER)
 {
     resizeToContent();
     setMinSize(1, getHeight());
@@ -151,6 +151,11 @@ void TextWidget::setHAlign(HALIGN value)
     this->halign = value;
 }
 
+void TextWidget::setVAlign(VALIGN value)
+{
+    this->valign = value;
+}
+
 
 int TextWidget::getHAlignOffset() const
 {
@@ -159,6 +164,16 @@ int TextWidget::getHAlignOffset() const
     case HALIGN::LEFT: return 0;
     case HALIGN::RIGHT: return size.x - pImpl->getWidthInPixels();
     case HALIGN::CENTER: return (size.x - pImpl->getWidthInPixels())/2;
+    }
+    throw std::logic_error("Shouldn't be here");
+}
+
+int TextWidget::getVAlignOffset() const
+{
+    switch(valign){
+    case VALIGN::CENTER: return -(size.y - textLineHeight(*pImpl->font))/2;
+    case VALIGN::TOP: return 0;
+    case VALIGN::BOTTOM:  return -(size.y - textLineHeight(*pImpl->font));
     }
     throw std::logic_error("Shouldn't be here");
 }
@@ -179,9 +194,10 @@ void TextWidget::onDraw()
     const auto& pos = getAbsolutePosition();
 
     const auto hAlignOffset = getHAlignOffset();
+    const int vAlignOffset  = getVAlignOffset();
 
     const auto posx = pos.x + hAlignOffset;
-    const auto posy = -pos.y - font.getAscender();
+    const auto posy = -pos.y - font.getAscender() + vAlignOffset;
     transform.setPosition(posx, posy, 0);
 
     drawTexturedColored(camera, *sh, geometry,

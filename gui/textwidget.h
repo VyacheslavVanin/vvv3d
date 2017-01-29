@@ -20,18 +20,22 @@ public:
     void setAutoSize(bool value);
 
     void setHAlign(HALIGN value);
+    void setVAlign(VALIGN value);
 
 private:
     struct TextWidgetImpl;
     std::unique_ptr<TextWidgetImpl> pImpl;
     bool autosize;
     HALIGN halign;
+    VALIGN valign;
 
     // Widget interface
     void autoresize();
 
     int getHAlignOffset() const;
     
+    int getVAlignOffset() const;
+
 protected:
     void onDraw() override;
 };

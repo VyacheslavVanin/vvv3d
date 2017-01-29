@@ -85,8 +85,10 @@ void drawSprites(Engine& engine, const Camera& camera, const C<Sprite, A>& sprs)
 class TestWidget : public TextWidget
 {
 public:
-    TestWidget() : TextWidget("Idle")
+    TestWidget() : TextWidget("Idle"),
+        backgroundWidget(new ColorRectWidget(Color(0.2, 0.6, 0.8, 0.5)))
     {
+        addChild(backgroundWidget);
         setSize(150, 50);
     }
 
@@ -115,6 +117,19 @@ protected:
     void OnButtonReleased(int button, int x, int y) override
     {
         setText(std::string("Released ") + std::to_string(button));
+    }
+
+private:
+    Widget* backgroundWidget = nullptr;
+
+    // Widget interface
+protected:
+    void onResize(const vvv::vector2i& oldSize,
+                  const vvv::vector2i& newSize) override
+    {
+        if(backgroundWidget==nullptr)
+            return;
+        backgroundWidget->setSize(newSize);
     }
 };
 
@@ -179,10 +194,11 @@ protected:
         auto* w2 = new ColorRectWidget(Color::FUCHSIA);
         w2->setPosition(35, 0);
 
-        //auto* w3 = new TextWidget("Прювет Лунатикам!!!");
-        auto* w3 = new TextWidget("Hello to lunatics!!!");
+        auto* w3 = new TextWidget("Прювет Лунатикам!!!");
+        //auto* w3 = new TextWidget("Hello to lunatics!!!");
         w3->setSize(500, 50);
-        w3->setHAlign(HALIGN::RIGHT);
+        w3->setHAlign(HALIGN::CENTER);
+        w3->setVAlign(VALIGN::BOTTOM);
         w3->setColor(Color::WHITE);
 
         panel->addWidget(w3);
