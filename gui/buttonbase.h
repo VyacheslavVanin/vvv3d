@@ -1,11 +1,13 @@
 #ifndef BUTTONBASE_H
 #define BUTTONBASE_H
 #include "widget.h"
+#include "actionlist.h"
 
 class ButtonBase : public Widget
 {
 public:
     ButtonBase() {}
+    void addOnClickAction(const std::function<void(void)>& action);
 
 private:
     enum class STATE {
@@ -15,9 +17,12 @@ private:
         PRESSED_MOVEDOUT,
     };
     STATE state = STATE::START;
+
+    ActionList<void(void)> actions;
+    void onClicked();
+
     // Widget interface
 protected:
-    virtual void onClicked();
     virtual void onHover();
     virtual void onUnhover();
 

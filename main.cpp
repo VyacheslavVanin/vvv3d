@@ -155,10 +155,6 @@ private:
 
     // ButtonBase interface
 protected:
-    void onClicked() override
-    {
-        std::cout << "Pressed\n";
-    }
     void onHover() override
     {
         background->setColor(Color::RED);
@@ -228,7 +224,10 @@ protected:
         panel->addWidget(w2);
         panel->addWidget(new TestWidget());
         panel->setSize(500, 400);
-        panel->addWidget(new ButtonText());
+        auto button = new ButtonText();
+        button->addOnClickAction([](){std::cout << "buttonClicked\n";});
+        button->addOnClickAction([](){std::cout << "another buttonClicked action\n";});
+        panel->addWidget(button);
         guilayer.addWidget(panel);
 
         auto* test = new TestWidget();

@@ -1,6 +1,11 @@
 #include "buttonbase.h"
 
-void ButtonBase::onClicked() {}
+void ButtonBase::addOnClickAction(const std::function<void ()>& action)
+{
+    actions.addAction(action);
+}
+
+void ButtonBase::onClicked() {actions.invoke();}
 
 void ButtonBase::onHover()   {}
 
