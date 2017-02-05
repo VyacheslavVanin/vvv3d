@@ -2,8 +2,8 @@
 Color    Color::ORANGE   = Color(1, 0.5, 0);
 Color    Color::WHITE    =  Color(1    );
 Color    Color::SILVER   =  Color(0.75f);
-Color    Color::GRAY     =  Color(0.5f );
-Color    Color::BLACK    =  Color(0);
+Color    Color::GRAY     =  Color(0.5f, 0.5f, 0.5f);
+Color    Color::BLACK    =  Color(0, 0, 0);
 Color    Color::RED      =  Color(1,   0, 0);
 Color    Color::MAROON   =  Color(0.5, 0, 0);
 Color    Color::YELLOW   =  Color(1,1,0);
