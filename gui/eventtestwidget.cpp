@@ -12,26 +12,31 @@ EventTestWidget::EventTestWidget() : TextWidget("Idle"),
 void EventTestWidget::OnPointerEnter(int x, int y)
 {
     setText("Enter");
+    (void)x; (void)y;
 }
 
 void EventTestWidget::OnPointerLeave(int x, int y)
 {
     setText("Leave");
+    (void)x; (void)y;
 }
 
 void EventTestWidget::OnPointerMove(int x, int y)
 {
     setText("Move");
+    (void)x; (void)y;
 }
 
 void EventTestWidget::OnButtonPressed(int button, int x, int y)
 {
     setText(std::string("Pressed ") + std::to_string(button));
+    (void)x; (void)y;
 }
 
 void EventTestWidget::OnButtonReleased(int button, int x, int y)
 {
     setText(std::string("Released ") + std::to_string(button));
+    (void)x; (void)y;
 }
 
 void EventTestWidget::onResize(const vvv::vector2i& oldSize,
@@ -40,4 +45,5 @@ void EventTestWidget::onResize(const vvv::vector2i& oldSize,
     if(backgroundWidget==nullptr)
         return;
     backgroundWidget->setSize(newSize);
+    (void)oldSize;
 }

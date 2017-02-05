@@ -21,6 +21,7 @@ void ButtonBase::OnButtonPressed(int button, int x, int y)
     case STATE::HOVER: state = STATE::HOVER_PRESSED; onPressDown(); break;
     default: break;
     }
+    (void)x; (void)y;
 }
 
 void ButtonBase::OnButtonReleased(int button, int x, int y)
@@ -32,6 +33,7 @@ void ButtonBase::OnButtonReleased(int button, int x, int y)
     case STATE::HOVER: break;
     default: state = STATE::START; break;
     }
+    (void)x; (void)y;
 }
 
 void ButtonBase::OnPointerEnter(int x, int y)
@@ -42,6 +44,7 @@ void ButtonBase::OnPointerEnter(int x, int y)
     case STATE::PRESSED_MOVEDOUT: state = STATE::HOVER_PRESSED; onPressDown(); break;
     default: break;
     }
+    (void)x; (void)y;
 }
 
 void ButtonBase::OnPointerLeave(int x, int y)
@@ -52,4 +55,5 @@ void ButtonBase::OnPointerLeave(int x, int y)
     case STATE::HOVER_PRESSED: state = STATE::PRESSED_MOVEDOUT; break;
     default: break;
     }
+    (void)x; (void)y;
 }
