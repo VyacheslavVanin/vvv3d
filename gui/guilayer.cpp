@@ -61,7 +61,8 @@ struct GuiLayer::GuiLayerImpl
     ~GuiLayerImpl();
 };
 
-GuiLayer::GuiLayerImpl::GuiLayerImpl() : pointer(this->widgets)
+GuiLayer::GuiLayerImpl::GuiLayerImpl()
+    : widgets(), size(), camera(), pointer(this->widgets)
 {  }
 
 void GuiLayer::GuiLayerImpl::draw()

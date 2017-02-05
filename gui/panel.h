@@ -8,6 +8,8 @@ class Panel : public Widget
 public:
     Panel();
     Panel(Layout* layout, Widget* background);
+    Panel(const Panel&) = delete;
+    Panel& operator=(const Panel&) = delete;
 
     void addWidget(Widget* added);
     void removeWidget(Widget* removed);

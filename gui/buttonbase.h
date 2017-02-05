@@ -6,7 +6,7 @@
 class ButtonBase : public Widget
 {
 public:
-    ButtonBase() {}
+    ButtonBase();
     void addOnClickAction(const std::function<void(void)>& action);
 
 private:

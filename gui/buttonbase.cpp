@@ -1,5 +1,7 @@
 #include "buttonbase.h"
 
+ButtonBase::ButtonBase() : actions() {}
+
 void ButtonBase::addOnClickAction(const std::function<void ()>& action)
 {
     actions.addAction(action);

@@ -41,7 +41,7 @@ std::shared_ptr<Geometry> makeSpriteGeometry()
 class Sprite
 {
 public:
-    Sprite() : transform() {}
+    Sprite() : transform(), texture(nullptr) {}
     Sprite(const Sprite&) = default;
     Sprite& operator=(const Sprite&) = default;
     ~Sprite() = default;
@@ -122,10 +122,12 @@ int main(int argc, char** argv)
 
 TestEngine::TestEngine(int argc, char** argv, const char* wname)
     : Engine(argc, argv, wname),
+      camera(),
       shaderMan(getResourceManager().getShaderManager()),
       textureMan(getResourceManager().getTextureManager()),
       geometryMan(getResourceManager().getGeometryManager()),
-      fontMan(getResourceManager().getFontManager())
+      fontMan(getResourceManager().getFontManager()),
+      sprites(), font(), textGeometry(), guilayer()
 {}
 
 void TestEngine::initialSetup() {

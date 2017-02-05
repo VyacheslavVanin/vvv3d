@@ -39,7 +39,7 @@ class ActionList
         }
 
     private:
-        std::vector<std::function<T>> actions;
+        std::vector<std::function<T>> actions = {};
 };
 
 #endif // ACTIONLIST_H

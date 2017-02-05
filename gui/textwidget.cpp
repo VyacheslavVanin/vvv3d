@@ -20,7 +20,8 @@ int textLineHeight(const Font& f)
 struct TextWidget::TextWidgetImpl
 {
     TextWidgetImpl(const std::string& text)
-        : text(toU32(text)), changed(true)
+        : transform(), text(toU32(text)),
+          geometry(), font(), changed(true)
     {
         static std::once_flag flag;
         std::call_once(flag, [](){

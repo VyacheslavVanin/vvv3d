@@ -6,7 +6,7 @@ CONFIG -= qt
 QMAKE_INCDIR += ../vvv3dnew/build/
 QMAKE_LIBDIR += ../vvv3dnew/build/
 
-QMAKE_CXXFLAGS += -Wall -Wextra
+QMAKE_CXXFLAGS += -Wall -Wextra -Weffc++
 LIBS += -lvvv3dnew -lGLEW -lGL -lglut
 
 

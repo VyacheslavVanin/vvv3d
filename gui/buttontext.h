@@ -9,6 +9,8 @@ class ButtonText : public ButtonBase
 {
 public:
     ButtonText(const std::string& caption = "Button");
+    ButtonText(const ButtonText&) = delete;
+    ButtonText& operator=(const ButtonText&) = delete;
 
 private:
     TextWidget* text;

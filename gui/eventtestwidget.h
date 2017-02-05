@@ -9,6 +9,8 @@ class EventTestWidget : public TextWidget
 {
 public:
     EventTestWidget();
+    EventTestWidget(const EventTestWidget&) = delete;
+    EventTestWidget& operator=(const EventTestWidget&) = delete;
 
     // Widget interface
 protected:

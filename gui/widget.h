@@ -14,6 +14,10 @@ public:
     Widget(Widget&&) noexcept;
     Widget& operator=(Widget&&) noexcept;
 
+    Widget(const Widget&) = delete;
+    Widget& operator=(const Widget&) = delete;
+
+
     virtual ~Widget();
 
     void Draw();
@@ -76,17 +80,17 @@ protected:
     void setFocus();
     void setUnfocused();
 
-    vvv::vector2i   pos     {0};
-    vvv::vector2i   size    {1};
-    vvv::vector2i   minSize {1};
-    vvv::vector2i   maxSize {INT32_MAX};
+    vvv::vector2i   pos;
+    vvv::vector2i   size;
+    vvv::vector2i   minSize;
+    vvv::vector2i   maxSize;
 
     Rect            clipArea;
-    Widget*         obj     {nullptr};
-    Widget*         parent  {nullptr};
-    GuiLayer*       layer   {nullptr};
+    Widget*         obj;
+    Widget*         parent;
+    GuiLayer*       layer;
     std::vector<Widget*> children;
-    bool            hover = false;
+    bool            hover;
     void updateClipArea();
 };
 

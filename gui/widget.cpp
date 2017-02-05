@@ -9,7 +9,12 @@
 
 class GuiLayer;
 
-Widget::Widget() {}
+Widget::Widget() :
+    pos(0), size(1),
+    minSize(1), maxSize(INT32_MAX), clipArea(0),
+    obj(nullptr), parent(nullptr), layer(nullptr),
+    children(), hover(false)
+{}
 
 void Widget::onDraw()
 {}
