@@ -34,6 +34,7 @@ public:
 class GeometryManager
 {
 public:
+    GeometryManager();
     void add(const std::string& name, std::shared_ptr<Geometry> geom);
     std::shared_ptr<Geometry> get(const std::string& name);
     std::vector<std::string> listNames()const;

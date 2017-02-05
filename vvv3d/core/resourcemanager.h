@@ -8,6 +8,10 @@
 class ResourceManager
 {
 public:
+    ResourceManager() :
+        textureManager(), fontManager(), shaderManger(), geometryManager()
+    {}
+
     TextureManager&  getTextureManager()    {return textureManager;}
     FontManager&     getFontManager()       {return fontManager;}
     ShaderManager&   getShaderManager()     {return shaderManger;};

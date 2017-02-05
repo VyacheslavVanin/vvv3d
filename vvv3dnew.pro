@@ -9,7 +9,7 @@ QMAKE_INCDIR += /usr/include/freetype2
 
 
 DEFINES += GLEW_STATIC
-QMAKE_CXXFLAGS += -Wall -Wextra -std=c++14
+QMAKE_CXXFLAGS += -Wall -Wextra -Weffc++ -std=c++14
 LIBS += -lGLEW -lGL -lpng -lfreetype -lSDL2
 #LIBS += -lGLESv2
 #LIBS += -l3ds
@@ -77,7 +77,8 @@ SOURCES += \
     vvv3d/std/draw.cpp \
     vvv3d/core/graphics/color.cpp \
     vvv3d/core/hal.cpp \
-    vvv3d/core/sdllayer.cpp
+    vvv3d/core/sdllayer.cpp \
+    vvv3d/core/graphics/fonts/mgrfreetype.cpp
 
 INSTALL_HEADERS = $$HEADERS
 INSTALL_PREFIX  = $$DESTDIR

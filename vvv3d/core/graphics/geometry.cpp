@@ -55,6 +55,12 @@ void Geometry::draw() const
 
 
 
+GeometryManager::GeometryManager()
+    : geometries()
+{
+
+}
+
 void GeometryManager::add(const string &name, std::shared_ptr<Geometry> geom)
 {
     geometries[name] = geom;

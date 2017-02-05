@@ -1,6 +1,7 @@
 #include "framebufferobject.h"
 
 FrameBufferObject::FrameBufferObject()
+    : framebuffer(0)
 {
     glGenFramebuffers(1,&framebuffer);
 }

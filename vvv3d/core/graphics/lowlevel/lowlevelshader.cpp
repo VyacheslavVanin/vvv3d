@@ -74,4 +74,4 @@ LowLevelShader LowLevelShader::vertexFromString(const char* source)
     return fromString(source, GL_VERTEX_SHADER);
 }
 
-LowLevelShader::LowLevelShader(){}
+LowLevelShader::LowLevelShader() : shader(0) {}

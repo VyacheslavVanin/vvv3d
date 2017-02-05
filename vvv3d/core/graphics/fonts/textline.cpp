@@ -9,11 +9,13 @@
 
 struct textVertex
 {
+    textVertex() : pos(), texcoord() {}
     vvv::vector2f pos;
     vvv::vector2f texcoord;
 };
 struct GlyphQuad
 {
+    GlyphQuad() : bottomLeft(), topRight(), topLeft(), bottomRight() {}
     textVertex bottomLeft;
     textVertex topRight;
     textVertex topLeft;

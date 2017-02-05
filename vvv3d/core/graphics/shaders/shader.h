@@ -13,7 +13,7 @@ class Shader
 {
 private:
 
-    Shader() = default;
+    Shader();
     GLint loadLocation(const char* name);
     void loadLocations(const std::string &name);
 

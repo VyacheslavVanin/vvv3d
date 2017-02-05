@@ -6,6 +6,8 @@
 #include <memory>
 #include <algorithm>
 
+// TODO: Refactor this !!!
+
 /**
  *  T - image type
  *  SIZE_TYPE - type used to mesure width/height/offset in pixels
@@ -20,6 +22,8 @@ class packNode
             width(width), height(height), xoff(xoff), yoff(yoff),
             placed(nullptr), right(nullptr), bottom(nullptr), border(border)
             {}
+        packNode(const packNode&) = delete;
+        packNode& operator=(const packNode&) = delete;
 
         bool placeImage( T* image, const GET& getSizePred, const SET& setOffsetPred)
         {
@@ -108,7 +112,7 @@ pack2d(const std::vector<T>& input, SIZE_TYPE width, SIZE_TYPE height,
     vector<T> ret;
     auto inputCopy = input;
     sort(inputCopy.begin(), inputCopy.end(), sortPred);
-    auto rootNode = packNode<T,SIZE_TYPE,GET,SETOFFSET>(width, height, 0, 0, border);
+    packNode<T,SIZE_TYPE,GET,SETOFFSET> rootNode(width, height, 0, 0, border);
     for_each( inputCopy.rbegin(), inputCopy.rend(),
                     [&](T& current)
                     {

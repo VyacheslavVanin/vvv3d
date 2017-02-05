@@ -123,6 +123,8 @@ struct FontImpl
 {
     FontImpl(FT_Face f, unsigned int size=16, unsigned int charSize=16,
          unsigned int  dpi=96, unsigned int textureSize=512);
+    FontImpl(const FontImpl&) = delete;
+    FontImpl& operator=(const FontImpl&) = delete;
 
     std::map<uint32_t, Glyph> mapCharToGlyph;
     std::shared_ptr<Texture> lltex;
@@ -136,7 +138,8 @@ struct FontImpl
 
 FontImpl::FontImpl(FT_Face f, unsigned int size, unsigned int charSize,
                    unsigned int dpi, unsigned int textureSize)
-    : lltex(new Texture(
+    : mapCharToGlyph(),
+      lltex(new Texture(
                 std::make_shared<LowLevelTexture>(
                     nullptr, textureSize, textureSize, GL_RGBA, GL_RGBA))),
       face(f), charSize(charSize), dpi(dpi),
@@ -180,6 +183,11 @@ long Font::getDescender() const
 long Font::getMinLeftGlyphEdge() const
 {
     return pImpl->face->bbox.xMin;
+}
+
+Font::Font() : pImpl()
+{
+
 }
 
 const Glyph& Font::getGlyph(uint32_t c) const

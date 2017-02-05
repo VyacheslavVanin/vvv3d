@@ -6,7 +6,9 @@
 class sdl_input
 {
 public:
-    sdl_input(): keys{0}, mousebuttons{0}, x(0), y(0), exit(false)
+    sdl_input(): resizeFunction(),
+        keys{0}, mousebuttons{0}, text(),
+        x(0), y(0), xrel(0), yrel(0), exit(false)
     {
     }
 
@@ -128,9 +130,13 @@ class sdlLayer::SDLWraper
 {
 public:
     SDLWraper(GLPROFILE profile, int major_ver, int minor_ver)
-        : profile(profile), major_ver(major_ver), minor_ver(minor_ver)
-    {
-    }
+        : eventLoop(), mainwindow(), maincontext(),
+          displayFunction(), idleFunction(),
+          profile(profile), major_ver(major_ver), minor_ver(minor_ver)
+    { }
+
+    SDLWraper(const SDLWraper&) = delete;
+    SDLWraper& operator=(const SDLWraper&) = delete;
 
     void swap()
     {
@@ -200,12 +206,13 @@ public:
 sdlLayer::sdlLayer(int argc, char** argv, GLPROFILE p, int major, int minor)
     :sdl(new SDLWraper(p, major, minor))
 {
-
+    (void)argc; (void)argv;
 }
 
 void sdlLayer::initContext(int argc, char** argv)
 {
     sdl->initContext();
+    (void)argc; (void)argv;
 }
 
 void sdlLayer::createWindow(int width, int height, const char* name)
