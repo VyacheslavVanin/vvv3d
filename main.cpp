@@ -8,6 +8,7 @@
 #include <gui/textwidget.h>
 #include <gui/verticallayout.h>
 #include <gui/panel.h>
+#include <gui/buttonbase.h>
 #include <random>
 
 vvv::vector3f randomVector(float range)
@@ -134,18 +135,38 @@ protected:
 };
 
 
-class Button : public Widget
+class ButtonText : public ButtonBase
 {
 public:
-    Button(const std::string& caption = "Button") :
-        text(new TextWidget(caption))
+    ButtonText(const std::string& caption = "Button") :
+        text(new TextWidget(caption)),
+        background(new ColorRectWidget(Color::GRAY)),
+        panel(new Panel(new VerticalLayout(), background))
     {
-        addChild(text);
-
+        panel->addWidget(text);
+        addChild(panel);
+        setSize(text->getSize());
     }
 
 private:
     TextWidget* text;
+    ColorRectWidget* background;
+    Panel* panel;
+
+    // ButtonBase interface
+protected:
+    void onClicked() override
+    {
+        std::cout << "Pressed\n";
+    }
+    void onHover() override
+    {
+        background->setColor(Color::RED);
+    }
+    void onUnhover() override
+    {
+        background->setColor(Color::GRAY);
+    }
 };
 
 
@@ -207,6 +228,7 @@ protected:
         panel->addWidget(w2);
         panel->addWidget(new TestWidget());
         panel->setSize(500, 400);
+        panel->addWidget(new ButtonText());
         guilayer.addWidget(panel);
 
         auto* test = new TestWidget();
