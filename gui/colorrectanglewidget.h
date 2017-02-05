@@ -12,7 +12,7 @@ public:
     explicit ColorRectWidget(const Color& colour);
     ~ColorRectWidget();
 
-    void setColour(const Color& colour);
+    void setColor(const Color& colour);
 
 private:
     struct ColorRectangleWidgetImpl;

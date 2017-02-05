@@ -46,6 +46,11 @@ ColorRectWidget::ColorRectWidget(const Color& color)
     setSize(60, 60);
 }
 
+void ColorRectWidget::setColor(const Color& colour)
+{
+    pImpl->color = colour;
+}
+
 ColorRectWidget::ColorRectWidget()
     : ColorRectWidget(Color::ORANGE)
 {}
