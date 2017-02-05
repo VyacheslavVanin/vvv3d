@@ -157,11 +157,17 @@ private:
 protected:
     void onHover() override
     {
-        background->setColor(Color::RED);
+        background->setColor(Color::ORANGE);
     }
+
     void onUnhover() override
     {
         background->setColor(Color::GRAY);
+    }
+
+    void onPressDown() override
+    {
+        background->setColor(Color::RED);
     }
 };
 

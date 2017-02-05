@@ -25,6 +25,7 @@ private:
 protected:
     virtual void onHover();
     virtual void onUnhover();
+    virtual void onPressDown();
 
     void OnButtonPressed(int button, int x, int y) override;
     void OnButtonReleased(int button, int x, int y) override;

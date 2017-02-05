@@ -11,12 +11,14 @@ void ButtonBase::onHover()   {}
 
 void ButtonBase::onUnhover() {}
 
+void ButtonBase::onPressDown() {}
+
 void ButtonBase::OnButtonPressed(int button, int x, int y)
 {
     if(button != 1)
         return;
     switch(state) {
-    case STATE::HOVER: state = STATE::HOVER_PRESSED; break;
+    case STATE::HOVER: state = STATE::HOVER_PRESSED; onPressDown(); break;
     default: break;
     }
 }
@@ -26,7 +28,7 @@ void ButtonBase::OnButtonReleased(int button, int x, int y)
     if(button != 1)
         return;
     switch(state) {
-    case STATE::HOVER_PRESSED: state = STATE::HOVER; onClicked(); break;
+    case STATE::HOVER_PRESSED: state = STATE::HOVER; onClicked(); onHover(); break;
     case STATE::HOVER: break;
     default: state = STATE::START; break;
     }
@@ -37,7 +39,7 @@ void ButtonBase::OnPointerEnter(int x, int y)
     onHover();
     switch(state) {
     case STATE::START:            state = STATE::HOVER;         break;
-    case STATE::PRESSED_MOVEDOUT: state = STATE::HOVER_PRESSED; break;
+    case STATE::PRESSED_MOVEDOUT: state = STATE::HOVER_PRESSED; onPressDown(); break;
     default: break;
     }
 }
