@@ -49,4 +49,5 @@ HEADERS += \
     gui/layout.h \
     gui/align.h \
     gui/panel.h \
-    gui/buttonbase.h
+    gui/buttonbase.h \
+    gui/actionlist.h
