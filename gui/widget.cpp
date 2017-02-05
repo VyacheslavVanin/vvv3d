@@ -275,6 +275,11 @@ const std::vector<Widget*>& Widget::getChildren() const
     return children;
 }
 
-Widget::~Widget() = default;
+Widget::~Widget()
+{
+    for(auto c: children)
+        delete c;
+}
+
 Widget& Widget::operator=(Widget&&) noexcept = default;
 Widget::Widget(Widget&&) noexcept = default;
