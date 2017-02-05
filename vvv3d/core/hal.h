@@ -40,6 +40,7 @@ public:
 
     virtual bool hasText() const = 0;
     virtual const std::string& getText() const = 0;
+    virtual ~HAL();
 };
 
 

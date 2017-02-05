@@ -16,3 +16,5 @@ vvv::vector2i HAL::getMouseRel() const
 {
     return vvv::vector2i(getMouseRelX(), getMouseRelY());
 }
+
+HAL::~HAL() {}
