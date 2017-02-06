@@ -7,6 +7,7 @@
 #include <gui/colorrectanglewidget.h>
 #include <gui/textwidget.h>
 #include <gui/verticallayout.h>
+#include <gui/horizontallayout.h>
 #include <gui/panel.h>
 #include <gui/buttonbase.h>
 #include <gui/buttontext.h>
@@ -179,8 +180,11 @@ void TestEngine::initialSetup() {
     auto button2 = new ButtonText("Button 2");
     button2->addOnClickAction([w3](){w3->setText("You press Button 2");});
 
-    panel->addWidget(button1);
-    panel->addWidget(button2);
+    auto hl = new HorizontalLayout();
+    hl->setPadding(20);
+    hl->addWidget(button1);
+    hl->addWidget(button2);
+    panel->addWidget(hl);
     guilayer.addWidget(panel);
 }
 

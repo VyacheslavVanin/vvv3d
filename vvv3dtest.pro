@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     gui/panel.cpp \
     gui/buttonbase.cpp \
     gui/eventtestwidget.cpp \
-    gui/buttontext.cpp
+    gui/buttontext.cpp \
+    gui/horizontallayout.cpp
 
 
 DISTFILES += \
@@ -54,4 +55,5 @@ HEADERS += \
     gui/buttonbase.h \
     gui/actionlist.h \
     gui/eventtestwidget.h \
-    gui/buttontext.h
+    gui/buttontext.h \
+    gui/horizontallayout.h
