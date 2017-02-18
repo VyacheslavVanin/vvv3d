@@ -9,6 +9,8 @@
 
 class GuiLayer;
 
+Widget* Widget::focus = nullptr;
+
 Widget::Widget() :
     pos(0), size(1),
     minSize(1), maxSize(INT32_MAX), clipArea(0),
@@ -50,12 +52,36 @@ void Widget::invokePointerMove(int x, int y)
 
 void Widget::invokeButtonPressed(int button, int x, int y)
 {
+    Widget* prevFocus = focus;
+    focus = focusable ? this : focus;
     OnButtonPressed(button, x, y);
+    if(focus != this)
+        return;
+
+    if(prevFocus) {
+        prevFocus->OnLoseFocus();
+    }
+    OnGetFocus();
 }
 
 void Widget::invokeButtonReleased(int button, int x, int y)
 {
     OnButtonReleased(button, x, y);
+}
+
+Widget *Widget::getCurrentFocus()
+{
+    return focus;
+}
+
+bool Widget::isFocusable() const
+{
+    return focusable;
+}
+
+void Widget::setFocusable(bool focusable)
+{
+    this->focusable = focusable;
 }
 
 void Widget::setFocus()
@@ -282,6 +308,8 @@ const std::vector<Widget*>& Widget::getChildren() const
 
 Widget::~Widget()
 {
+    if(focus == this)
+        focus = nullptr;
     for(auto c: children)
         delete c;
 }

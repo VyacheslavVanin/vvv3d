@@ -121,6 +121,29 @@ int main(int argc, char** argv)
     return 0;
 }
 
+class TestWidget : public TextWidget
+{
+public:
+    TestWidget() : TextWidget("Idle")
+    {
+        setSize(150, 50);
+        setFocusable(true);
+    }
+
+    // Widget interface
+protected:
+    void OnGetFocus() override
+    {
+        setText("Get focus");
+    }
+
+    void OnLoseFocus() override
+    {
+        setText("lost focus");
+    }
+};
+
+
 TestEngine::TestEngine(int argc, char** argv, const char* wname)
     : Engine(argc, argv, wname),
       camera(),
@@ -185,6 +208,8 @@ void TestEngine::initialSetup() {
     hl->addWidget(button1);
     hl->addWidget(button2);
     panel->addWidget(hl);
+    panel->addWidget(new TestWidget());
+    panel->addWidget(new TestWidget());
     guilayer.addWidget(panel);
 }
 

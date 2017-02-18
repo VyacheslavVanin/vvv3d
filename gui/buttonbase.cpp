@@ -1,6 +1,6 @@
 #include "buttonbase.h"
 
-ButtonBase::ButtonBase() : actions() {}
+ButtonBase::ButtonBase() : actions() {setFocusable(true);}
 
 void ButtonBase::addOnClickAction(const std::function<void ()>& action)
 {

@@ -46,6 +46,14 @@ public:
     void invokeButtonPressed(int button, int x, int y);
     void invokeButtonReleased(int button, int x, int y);
 
+    static Widget* getCurrentFocus();
+    bool isFocusable() const;
+    void setFocusable(bool focusable);
+
+private:
+    static Widget* focus;
+    bool           focusable = false;
+
 protected:
     const Camera& getCamera() const;
     const std::vector<Widget*>& getChildren() const;

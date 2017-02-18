@@ -11,7 +11,7 @@ class GuiPointer
 {
 public:
     GuiPointer(WidgetsContainer& widgets)
-        : widgets(widgets), focus(nullptr)
+        : widgets(widgets)
     {}
 
     void processInput(const Input& input);
@@ -22,7 +22,6 @@ public:
 
 private:
     WidgetsContainer& widgets;
-    Widget* focus;
     bool    mouseButtonsStates[NUM_MOUSE_BUTTONS] {false};
     void detectMouseMove(const Input::Mouse& mouse);
     void detectMouseButtons(const Input::Mouse& mouse);
