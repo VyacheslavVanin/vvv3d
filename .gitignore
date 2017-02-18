@@ -88,3 +88,9 @@ Thumbs.db
 
 vvv3dtest
 data
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CMakeLists.txt.user
+convexsky.cbp
+convexsky
