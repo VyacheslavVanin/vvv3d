@@ -16,6 +16,9 @@ public:
     void addWidget(Widget* widget);
     void removeWidget(Widget* widget);
 
+    void setExpandToFitContent(bool expand);
+    bool isExpandToFitContent() const;
+
 protected:
     // Widget interface
     void onResize(const vvv::vector2i& oldSize,
@@ -32,6 +35,7 @@ protected:
 private:
     int border;
     int padding;
+    bool expandToFit = true;
 };
 
 #endif // LAYOUT_H

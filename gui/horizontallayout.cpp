@@ -20,7 +20,8 @@ void HorizontalLayout::rearrange()
     const auto contentHeight = getMaxChildHeight(children);
     const auto allHeight = contentHeight + borders;
 
-    setMinSize(allWidth, allHeight);
+    if(isExpandToFitContent())
+        setMinSize(allWidth, allHeight);
 
     int offsetX = getBorder();
     for(auto w: children) {

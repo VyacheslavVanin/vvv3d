@@ -170,9 +170,8 @@ void TestEngine::initialSetup() {
         s.transform.move(randomVector(350));
     }
 
-    auto* panel = new Panel(
-                      new VerticalLayout(),
-                      new ColorRectWidget(Color(0.1, 0.8, 0.6, 0.5)));
+    auto vl = new VerticalLayout();
+    auto* panel = new Panel(vl, new ColorRectWidget(Color(0.1, 0.8, 0.6, 0.5)));
     // new ImageWidget(spriteTex.get()));
     panel->setPosition(20, 20);
 

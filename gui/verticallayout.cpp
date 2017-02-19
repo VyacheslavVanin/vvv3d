@@ -20,7 +20,8 @@ void VerticalLayout::rearrange()
     const auto contentWidth    = getMaxChildWidth(children);
     const auto allWidth        = contentWidth + borders;
 
-    setMinSize(allWidth, allHeight);
+    if(isExpandToFitContent())
+        setMinSize(allWidth, allHeight);
 
     int offsetY = getBorder();
     for(auto w: children){
