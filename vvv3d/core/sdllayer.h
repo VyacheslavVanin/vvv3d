@@ -47,7 +47,7 @@ public:
     /**
      * @brief Return list of input events occurred at this cycle
      * @return  */
-    const std::vector<input_event>& getEvents() const override;
+    const std::vector<InputEvent>& getEvents() const override;
 };
 
 

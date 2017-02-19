@@ -107,6 +107,11 @@ const std::string& Input::Keyboard::getText() const
     return Engine::getActiveEngine().hal->getText();
 }
 
+const std::vector<InputEvent> &Input::Keyboard::getEvents() const
+{
+    return Engine::getActiveEngine().hal->getEvents();
+}
+
 bool Input::Mouse::buttonDown(uint16_t button) const
 {
     return Engine::getActiveEngine().hal->mouseButtonDown(button);

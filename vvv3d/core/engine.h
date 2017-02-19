@@ -1,7 +1,10 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 #include <memory>
+#include <vector>
 #include <vvv3d/vvvmath/matrices_types.h>
+#include <vvv3d/core/inputevent.h>
+
 
 class Input
 {
@@ -12,6 +15,7 @@ public:
         bool keyDown(uint16_t scancode) const;
         bool hasText() const;
         const std::string& getText() const;
+        const std::vector<InputEvent>& getEvents() const;
     };
     class Mouse
     {

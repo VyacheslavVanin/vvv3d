@@ -68,7 +68,7 @@ public:
 
     bool hasText() const {return !text.empty();}
     const std::string& getText() const{return text;}
-    const std::vector<input_event>& getEvents() const {return events;}
+    const std::vector<InputEvent>& getEvents() const {return events;}
 
     std::function<void(int x, int y)> resizeFunction;
 
@@ -76,7 +76,7 @@ private:
     char keys[SDL_NUM_SCANCODES];
     char mousebuttons[32];
     std::string text;
-    std::vector<input_event> events;
+    std::vector<InputEvent> events;
     int  x, y;
     int  xrel, yrel;
     bool exit;
@@ -300,7 +300,7 @@ const std::string& sdlLayer::getText() const
     return sdl->eventLoop.getText();
 }
 
-const std::vector<input_event>& sdlLayer::getEvents() const
+const std::vector<InputEvent>& sdlLayer::getEvents() const
 {
     return sdl->eventLoop.getEvents();
 }
