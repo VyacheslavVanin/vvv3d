@@ -45,6 +45,9 @@ public:
     void invokePointerMove(int x, int y);
     void invokeButtonPressed(int button, int x, int y);
     void invokeButtonReleased(int button, int x, int y);
+    void invokeTextEntered(const std::string& text);
+    void invokeKeyDown(uint16_t scancode);
+    void invokeKeyUp(uint16_t scancode);
 
     static Widget* getCurrentFocus();
     bool isFocusable() const;
@@ -81,6 +84,9 @@ protected:
     virtual void OnButtonReleased(int button, int x, int y);
     virtual void OnGetFocus();
     virtual void OnLoseFocus();
+    virtual void OnKeyDown(uint16_t scancode);
+    virtual void OnKeyUp(uint16_t scancode);
+    virtual void OnTextEntered(const std::string& text);
 
     friend class GuiLayer;
     void setGuiLayer(GuiLayer* layer);

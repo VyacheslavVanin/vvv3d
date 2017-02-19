@@ -4,6 +4,7 @@
 #include <vector>
 #include <queue>
 #include <algorithm>
+#include <assert.h>
 
 using WidgetsContainer = std::vector<Widget*>;
 
@@ -25,6 +26,7 @@ private:
     bool    mouseButtonsStates[NUM_MOUSE_BUTTONS] {false};
     void detectMouseMove(const Input::Mouse& mouse);
     void detectMouseButtons(const Input::Mouse& mouse);
+    void processKeyboard(const Input::Keyboard& kbd);
 };
 
 struct GuiLayer::GuiLayerImpl
@@ -206,10 +208,32 @@ void GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
     }
 }
 
+void GuiPointer::processKeyboard(const Input::Keyboard& kbd)
+{
+    const auto focus = Widget::getCurrentFocus();
+    if(!focus)
+        return;
+
+    for(const InputEvent& e: kbd.getEvents()) {
+        switch (e.type) {
+        case INPUT_EVENT_TYPE::KEY_DOWN: focus->invokeKeyDown(e.scancode); break;
+        case INPUT_EVENT_TYPE::KEY_UP: focus->invokeKeyUp(e.scancode); break;
+        default: assert("Shouldn't be here"); break;
+        }
+    }
+
+    if(kbd.hasText()) {
+        const auto& text = kbd.getText();
+        focus->invokeTextEntered(text);
+    }
+}
+
 void GuiPointer::processInput(const Input& input)
 {
     const auto& mouse = input.getMouse();
+    const auto& kbd   = input.getKeyboard();
 
     detectMouseMove(mouse);
     detectMouseButtons(mouse);
+    processKeyboard(kbd);
 }

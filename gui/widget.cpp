@@ -69,6 +69,21 @@ void Widget::invokeButtonReleased(int button, int x, int y)
     OnButtonReleased(button, x, y);
 }
 
+void Widget::invokeTextEntered(const std::string &text)
+{
+    OnTextEntered(text);
+}
+
+void Widget::invokeKeyDown(uint16_t scancode)
+{
+    OnKeyDown(scancode);
+}
+
+void Widget::invokeKeyUp(uint16_t scancode)
+{
+    OnKeyUp(scancode);
+}
+
 Widget *Widget::getCurrentFocus()
 {
     return focus;
@@ -292,6 +307,21 @@ void Widget::OnGetFocus()
 }
 
 void Widget::OnLoseFocus()
+{
+
+}
+
+void Widget::OnKeyDown(uint16_t scancode)
+{
+
+}
+
+void Widget::OnKeyUp(uint16_t scancode)
+{
+
+}
+
+void Widget::OnTextEntered(const std::string &text)
 {
 
 }

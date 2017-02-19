@@ -140,6 +140,23 @@ protected:
     void OnLoseFocus() override
     {
         setText("lost focus");
+        text.clear();
+    }
+private:
+    std::string text;
+
+    // Widget interface
+protected:
+    void OnKeyDown(uint16_t scancode) override {
+        setText("down: " + std::to_string(scancode));
+    }
+    void OnKeyUp(uint16_t scancode) override {
+        setText("up: " + std::to_string(scancode));
+    }
+    void OnTextEntered(const std::string &text) override
+    {
+        this->text += text;
+        setText(this->text);
     }
 };
 
@@ -217,13 +234,6 @@ void TestEngine::onDraw()
     drawSprites(*this, camera, sprites);
     guilayer.draw();
     guilayer.processInputEvents(getInput());
-
-    //auto& i = getInput();
-    //auto pos = i.getMouse().getMouseRel();
-    //if(pos.x != 0 || pos.y != 0)
-    //    std::cout << i.getMouse().getMouseRel() << "\n";
-    //if(i.getKeyboard().hasText())
-    //    std::cout << i.getKeyboard().getText() << "\n";
 }
 
 void TestEngine::onResize(int x, int y)
