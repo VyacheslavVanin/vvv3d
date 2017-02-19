@@ -39,6 +39,7 @@ public:
     int getMouseRelY() const override;
     bool hasText() const override;
     const std::string& getText() const override;
+    const std::vector<input_event>& getEvents() const;
 };
 
 

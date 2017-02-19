@@ -2,8 +2,26 @@
 #define HAL_H
 #include <functional>
 #include <vvv3d/vvvmath/matrices_types.h>
+#include <string>
+#include <vector>
 
 enum class GLPROFILE { ES, CORE };
+
+enum class INPUT_EVENT_TYPE
+{
+    KEY_DOWN,
+    KEY_UP
+};
+
+struct input_event
+{
+    input_event() {}
+    input_event(INPUT_EVENT_TYPE type, uint16_t scancode)
+        : type(type), scancode(scancode)
+    {}
+    INPUT_EVENT_TYPE type;
+    uint16_t         scancode;
+};
 
 /**
  * @brief The HAL class.
@@ -41,6 +59,7 @@ public:
 
     virtual bool hasText() const = 0;
     virtual const std::string& getText() const = 0;
+    virtual const std::vector<input_event>& getEvents() const = 0;
     virtual ~HAL();
 };
 

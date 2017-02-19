@@ -34,6 +34,7 @@ public:
         xrel = 0;
         yrel = 0;
         text.clear();
+        events.clear();
         while(pollEvent());
     }
 
@@ -67,6 +68,7 @@ public:
 
     bool hasText() const {return !text.empty();}
     const std::string& getText() const{return text;}
+    const std::vector<input_event>& getEvents() const {return events;}
 
     std::function<void(int x, int y)> resizeFunction;
 
@@ -74,6 +76,7 @@ private:
     char keys[SDL_NUM_SCANCODES];
     char mousebuttons[32];
     std::string text;
+    std::vector<input_event> events;
     int  x, y;
     int  xrel, yrel;
     bool exit;
@@ -81,11 +84,13 @@ private:
     void onKeyDown(const SDL_Event& e){
         const auto scancode = e.key.keysym.scancode;
         keys[scancode] = 1;
+        events.emplace_back(INPUT_EVENT_TYPE::KEY_DOWN, scancode);
     }
 
     void onKeyUp(const SDL_Event& e){
         const auto scancode = e.key.keysym.scancode;
         keys[scancode] = 0;
+        events.emplace_back(INPUT_EVENT_TYPE::KEY_UP, scancode);
     }
 
     void onMouseButtonDown(const SDL_Event& e){
@@ -293,4 +298,9 @@ bool sdlLayer::hasText() const
 const std::string& sdlLayer::getText() const
 {
     return sdl->eventLoop.getText();
+}
+
+const std::vector<input_event>& sdlLayer::getEvents() const
+{
+    return sdl->eventLoop.getEvents();
 }
