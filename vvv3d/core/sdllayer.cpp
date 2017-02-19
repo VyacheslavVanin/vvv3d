@@ -248,6 +248,11 @@ void sdlLayer::setIdleFunction(const std::function<void ()>&
     sdl->idleFunction = idleFunction;
 }
 
+size_t sdlLayer::getNumScanCodes() const
+{
+    return  SDL_NUM_SCANCODES;
+}
+
 sdlLayer::~sdlLayer() = default;
 
 bool sdlLayer::keyDown(uint16_t scancode) const

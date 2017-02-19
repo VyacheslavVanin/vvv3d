@@ -27,6 +27,7 @@ public:
     virtual void mainLoop() = 0;
     virtual void swap() = 0;
 
+    virtual size_t getNumScanCodes() const = 0;
     virtual bool keyDown(uint16_t scancode) const = 0;
     virtual bool mouseButtonDown(uint16_t button) const = 0;
     virtual int getMouseX() const = 0;

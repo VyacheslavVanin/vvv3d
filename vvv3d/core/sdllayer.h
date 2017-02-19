@@ -30,6 +30,7 @@ private:
 
     // HAL interface
 public:
+    size_t getNumScanCodes() const override;
     bool keyDown(uint16_t scancode) const override;
     bool mouseButtonDown(uint16_t button) const override;
     int getMouseX() const override;
