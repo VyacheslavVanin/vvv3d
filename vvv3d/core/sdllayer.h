@@ -38,8 +38,16 @@ public:
     int getMouseRelX() const override;
     int getMouseRelY() const override;
     bool hasText() const override;
+
+    /**
+     * @brief Return string of text entered at this cycle
+     * @return  */
     const std::string& getText() const override;
-    const std::vector<input_event>& getEvents() const;
+
+    /**
+     * @brief Return list of input events occurred at this cycle
+     * @return  */
+    const std::vector<input_event>& getEvents() const override;
 };
 
 
