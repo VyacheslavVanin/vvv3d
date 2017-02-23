@@ -10,6 +10,7 @@
 
 
 std::u32string toU32(const std::string& u8);
+std::string toU8(const std::u32string& u32);
 void updateTextGeometry(const std::shared_ptr<Geometry>& in,
                         const Font& font, const std::u32string& text );
 
