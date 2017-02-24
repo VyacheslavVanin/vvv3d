@@ -42,21 +42,63 @@ struct TextWidget::TextWidgetImpl
         geometry = createTextGeometry(*font, text);
     }
 
-    template<typename T,
-             class = std::enable_if_t<std::is_same<std::remove_reference_t<T>,
-                                                   std::u32string>::value>
-             >
-    void setText(T&& text)
+    void setText(std::u32string&& text)
     {
-        this->text = std::forward<T>(text);
+        this->text = std::move(text);
         changed = true;
     }
 
-    void setText(const std::string& text)
+    void setText(const std::u32string& text)
     {
-        setText(toU32(text));
+        this->text = text;
+        changed = true;
     }
 
+    void append(const std::u32string& text)
+    {
+        this->text += text;
+        changed = true;
+    }
+
+    void append(char32_t c)
+    {
+        this->text += c;
+        changed = true;
+    }
+
+    void prepend(std::u32string&& text)
+    {
+        this->text = std::move(text.append(this->text));
+        changed = true;
+    }
+
+    void prepend(const std::u32string& text)
+    {
+        this->text = text + this->text;
+        changed = true;
+    }
+
+    void prepend(char32_t c)
+    {
+        text.insert(text.begin(), c);
+        changed = true;
+    }
+
+    char32_t popBack()
+    {
+        auto ret = text.back();
+        text.pop_back();
+        changed = true;
+        return ret;
+    }
+
+    char32_t popFront()
+    {
+        auto ret = text.front();
+        text.erase(text.begin());
+        changed = true;
+        return ret;
+    }
 
     void setFont(std::shared_ptr<Font> font)
     {
@@ -119,8 +161,72 @@ void TextWidget::autoresize()
 
 void TextWidget::setText(const std::string& text)
 {
+    setText(toU32(text));
+}
+
+void TextWidget::setText(const std::u32string& text)
+{
     pImpl->setText(text);
     autoresize();
+}
+
+void TextWidget::setText(std::u32string&& text)
+{
+    pImpl->setText(std::move(text));
+    autoresize();
+}
+
+const std::u32string& TextWidget::getText() const
+{
+    return pImpl->text;
+}
+
+void TextWidget::append(const std::string& text)
+{
+    append(toU32(text));
+}
+
+void TextWidget::append(const std::u32string& text)
+{
+    pImpl->append(text);
+    autoresize();
+}
+
+void TextWidget::append(char32_t character)
+{
+    pImpl->append(character);
+    autoresize();
+}
+
+void TextWidget::prepend(const std::string& text)
+{
+    prepend(toU32(text));
+}
+
+void TextWidget::prepend(const std::u32string& text)
+{
+    pImpl->prepend(text);
+    autoresize();
+}
+
+void TextWidget::prepend(char32_t character)
+{
+    pImpl->prepend(character);
+    autoresize();
+}
+
+char32_t TextWidget::popBack()
+{
+    auto ret = pImpl->popBack();
+    autoresize();
+    return ret;
+}
+
+char32_t TextWidget::popFront()
+{
+    auto ret = pImpl->popFront();
+    autoresize();
+    return ret;
 }
 
 void TextWidget::setColor(const Color& color)

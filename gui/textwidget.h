@@ -14,6 +14,20 @@ public:
     ~TextWidget();
 
     void setText(const std::string& text);
+    void setText(const std::u32string& text);
+    void setText(std::u32string&& text);
+    const std::u32string& getText() const;
+
+    void append(const std::string& text);
+    void append(const std::u32string& text);
+    void append(char32_t character);
+    void prepend(const std::string& text);
+    void prepend(const std::u32string& text);
+    void prepend(char32_t character);
+
+    char32_t popBack();
+    char32_t popFront();
+
     void setColor(const Color& color);
     void setFont(std::shared_ptr<Font> font);
     void resizeToContent();
