@@ -126,31 +126,37 @@ void LineEdit::OnTextEntered(const std::string& text)
     placeWidgets();
 }
 
+int LineEdit::roughLeftOffset(int leftMargin, int width,
+                              int fullTextWidth, int rightMargin) const
+{
+    if(fullTextWidth < rightMargin) {
+        switch (hAlign) {
+        case HALIGN::LEFT:   return leftMargin;
+        case HALIGN::RIGHT:  return rightMargin - fullTextWidth;
+        case HALIGN::CENTER: return (width - fullTextWidth) / 2;
+        }
+    }
+
+    return leftpart->getPosition().x;
+}
+
 void LineEdit::placeWidgets()
 {
     const auto leftWidth  = leftpart->getWidth();
     const auto rightWidth = rightpart->getWidth();
     const auto width      = getWidth();
 
-    const auto cursorWidth = cursor->getWidth();
-    const auto leftMargin = cursorWidth;
-    const auto rightMargin = width - cursorWidth;
+    const auto cursorWidth  = cursor->getWidth();
+    const auto leftMargin   = cursorWidth;
+    const auto rightMargin  = width - cursorWidth;
     const int fullTextWidth = leftWidth + rightWidth;
 
-    int leftOffset = leftpart->getPosition().x;
-
-    if(fullTextWidth < rightMargin) {
-        switch (hAlign) {
-        case HALIGN::LEFT:   leftOffset = leftMargin; break;
-        case HALIGN::RIGHT:  leftOffset = rightMargin - fullTextWidth; break;
-        case HALIGN::CENTER: leftOffset = (width - fullTextWidth) / 2; break;
-        }
-    }
+    const int roughOffset = roughLeftOffset(leftMargin, width,
+                                           fullTextWidth, rightMargin);
 
     const int cursorPosition = vvv::clamp(leftMargin, rightMargin,
-                                          leftOffset + leftWidth);
-    leftOffset = cursorPosition - leftWidth;
-
+                                          roughOffset + leftWidth);
+    const int leftOffset  = cursorPosition - leftWidth;
     const int textOffsetY = (getHeight() - leftpart->getHeight())/2;
 
     rightpart->setPosition(cursorPosition, textOffsetY);
