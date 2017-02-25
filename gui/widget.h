@@ -91,8 +91,6 @@ protected:
     friend class GuiLayer;
     void setGuiLayer(GuiLayer* layer);
     friend class GuiPointer;
-    void setFocus();
-    void setUnfocused();
 
     vvv::vector2i   pos;
     vvv::vector2i   size;
