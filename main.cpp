@@ -11,6 +11,7 @@
 #include <gui/panel.h>
 #include <gui/buttonbase.h>
 #include <gui/buttontext.h>
+#include <gui/lineedit.h>
 #include <random>
 
 vvv::vector3f randomVector(float range)
@@ -161,6 +162,7 @@ protected:
 };
 
 
+
 TestEngine::TestEngine(int argc, char** argv, const char* wname)
     : Engine(argc, argv, wname),
       camera(),
@@ -169,7 +171,9 @@ TestEngine::TestEngine(int argc, char** argv, const char* wname)
       geometryMan(getResourceManager().getGeometryManager()),
       fontMan(getResourceManager().getFontManager()),
       sprites(), font(), textGeometry(), guilayer()
-{}
+{
+    onResize(getVieportWidth(), getVieportHeight());
+}
 
 void TestEngine::initialSetup() {
     initGeometry();
@@ -226,6 +230,10 @@ void TestEngine::initialSetup() {
     panel->addWidget(hl);
     panel->addWidget(new TestWidget());
     panel->addWidget(new TestWidget());
+    auto le = new LineEdit();
+    le->addOnPressEnterAction([w3](const std::string& str){w3->setText(str);});
+    le->setSize(200, 50);
+    panel->addWidget(le);
     guilayer.addWidget(panel);
 }
 
