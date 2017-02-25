@@ -218,21 +218,29 @@ void TestEngine::initialSetup() {
     panel->addWidget(w2);
     panel->setSize(250, 220);
 
-    auto button1 = new ButtonText("Button 1");
-    button1->addOnClickAction([w3](){w3->setText("You press Button 1");});
-    auto button2 = new ButtonText("Button 2");
-    button2->addOnClickAction([w3](){w3->setText("You press Button 2");});
+    auto button1 = new ButtonText("Button Left");
+    auto button2 = new ButtonText("Button Center");
+    auto button3 = new ButtonText("Button Right");
 
     auto hl = new HorizontalLayout();
     hl->setPadding(20);
     hl->addWidget(button1);
     hl->addWidget(button2);
+    hl->addWidget(button3);
     panel->addWidget(hl);
     panel->addWidget(new TestWidget());
     panel->addWidget(new TestWidget());
     auto le = new LineEdit();
     le->addOnPressEnterAction([w3](const std::string& str){w3->setText(str);});
     le->setSize(200, 50);
+
+    button1->addOnClickAction([w3](){w3->setText("You press Button 1");});
+    button2->addOnClickAction([w3](){w3->setText("You press Button 2");});
+    button3->addOnClickAction([w3](){w3->setText("You press Button 3");});
+    button1->addOnClickAction([le](){le->setHAlign(HALIGN::LEFT);});
+    button2->addOnClickAction([le](){le->setHAlign(HALIGN::CENTER);});
+    button3->addOnClickAction([le](){le->setHAlign(HALIGN::RIGHT);});
+
     panel->addWidget(le);
     guilayer.addWidget(panel);
 }

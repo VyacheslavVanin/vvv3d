@@ -2,7 +2,7 @@
 #include <vvv3d/vvv3d.h>
 
 LineEdit::LineEdit(const std::string& text)
-    : Widget(), hAlign(HALIGN::RIGHT)
+    : Widget(), hAlign(HALIGN::LEFT)
 {
     auto lp  = std::make_unique<TextWidget>(text);
     auto rp  = std::make_unique<TextWidget>("");
@@ -117,6 +117,7 @@ void LineEdit::OnKeyDown(uint16_t scancode)
 void LineEdit::onResize(const vvv::vector2i& oldSize, const vvv::vector2i& newSize)
 {
     background->setSize(newSize);
+    placeWidgets();
 }
 
 void LineEdit::OnTextEntered(const std::string& text)
@@ -134,68 +135,27 @@ void LineEdit::placeWidgets()
     const auto cursorWidth = cursor->getWidth();
     const auto leftMargin = cursorWidth;
     const auto rightMargin = width - cursorWidth;
-
+    const int fullTextWidth = leftWidth + rightWidth;
 
     int leftOffset = leftpart->getPosition().x;
-    auto rightOffset = leftWidth + leftOffset;
 
-    if (rightOffset < leftMargin) {
-        rightOffset = leftMargin;
-        leftOffset = rightOffset - leftWidth;
-
-    }
-    else if (rightOffset > rightMargin) {
-        rightOffset = rightMargin;
-        leftOffset = rightOffset - leftWidth;
-    }
-
-    switch (hAlign) {
-    case HALIGN::LEFT: {
-            if( leftOffset < leftMargin &&
-                rightOffset+rightWidth < rightMargin)
-            {
-                rightOffset = rightMargin - rightWidth;
-                leftOffset = rightOffset - leftWidth;
-            }
-
-            if( leftOffset > leftMargin )
-            {
-                leftOffset = leftMargin;
-                rightOffset = leftOffset + leftWidth;
-            }
-
-            break;
-        }
-    case HALIGN::RIGHT: {
-            if( rightOffset + rightWidth > rightMargin &&
-                leftOffset > leftMargin)
-            {
-                rightOffset = rightMargin -rightOffset;
-                leftOffset  = rightOffset - leftWidth;
-            }
-
-            if( rightOffset + rightWidth < rightMargin )
-            {
-                rightOffset = rightMargin - rightWidth;
-                leftOffset  = rightOffset - leftWidth;
-            }
-            break;
-        }
-    case HALIGN::CENTER: {
-            const int fullTextWidth = leftWidth + rightWidth;
-            const int center = width / 2;
-            leftOffset = center - fullTextWidth / 2;
-            rightOffset = leftOffset + leftWidth;
-            break;
+    if(fullTextWidth < rightMargin) {
+        switch (hAlign) {
+        case HALIGN::LEFT:   leftOffset = leftMargin; break;
+        case HALIGN::RIGHT:  leftOffset = rightMargin - fullTextWidth; break;
+        case HALIGN::CENTER: leftOffset = (width - fullTextWidth) / 2; break;
         }
     }
+
+    const int cursorPosition = vvv::clamp(leftMargin, rightMargin,
+                                          leftOffset + leftWidth);
+    leftOffset = cursorPosition - leftWidth;
 
     const int textOffsetY = (getHeight() - leftpart->getHeight())/2;
 
-    rightpart->setPosition(rightOffset, textOffsetY);
+    rightpart->setPosition(cursorPosition, textOffsetY);
     leftpart->setPosition(leftOffset, textOffsetY);
     background->setPosition(0, 0);
 
-    int cursorPos = rightOffset;
-    cursor->setPosition(cursorPos, textOffsetY);
+    cursor->setPosition(cursorPosition, textOffsetY);
 }
