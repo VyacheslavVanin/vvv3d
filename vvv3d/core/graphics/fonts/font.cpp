@@ -11,7 +11,7 @@ using namespace std;
 const std::u32string characters = U"abcdefghijklmnopqrstuvwxyz"
                                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                    "0123456789 ~`!@#$%^&*()_+-="
-                                   "{}[]|\\/?,.<>;:'\""
+                                   "{}[]|\\/?,.<>;:'\"№"
                                    "абвгдеёжзиЙклмнопрстуфхцчшщъыьэюя"
                                    "АБВГДЕЁЖЗИйКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"  ;
 
