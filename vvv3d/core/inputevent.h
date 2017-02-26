@@ -26,6 +26,12 @@ struct InputEvent
     InputEvent(INPUT_EVENT_TYPE type, uint16_t scancode)
         : type(type), scancode(scancode)
     {}
+
+    bool operator==(const InputEvent& other) const
+    {
+        return type == other.type && scancode == other.scancode;
+    }
+
     INPUT_EVENT_TYPE type;
     uint16_t         scancode;
 };
