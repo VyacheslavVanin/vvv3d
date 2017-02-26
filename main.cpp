@@ -13,6 +13,7 @@
 #include <gui/buttontext.h>
 #include <gui/lineedit.h>
 #include <random>
+#include <vvvstlhelper.hpp>
 
 vvv::vector3f randomVector(float range)
 {
@@ -122,47 +123,6 @@ int main(int argc, char** argv)
     return 0;
 }
 
-class TestWidget : public TextWidget
-{
-public:
-    TestWidget() : TextWidget("Idle")
-    {
-        setSize(150, 50);
-        setFocusable(true);
-    }
-
-    // Widget interface
-protected:
-    void OnGetFocus() override
-    {
-        setText("Get focus");
-    }
-
-    void OnLoseFocus() override
-    {
-        setText("lost focus");
-        text.clear();
-    }
-private:
-    std::string text;
-
-    // Widget interface
-protected:
-    void OnKeyDown(uint16_t scancode) override {
-        setText("down: " + std::to_string(scancode));
-    }
-    void OnKeyUp(uint16_t scancode) override {
-        setText("up: " + std::to_string(scancode));
-    }
-    void OnTextEntered(const std::string &text) override
-    {
-        this->text += text;
-        setText(this->text);
-    }
-};
-
-
-
 TestEngine::TestEngine(int argc, char** argv, const char* wname)
     : Engine(argc, argv, wname),
       camera(),
@@ -228,18 +188,16 @@ void TestEngine::initialSetup() {
     hl->addWidget(button2);
     hl->addWidget(button3);
     panel->addWidget(hl);
-    panel->addWidget(new TestWidget());
-    panel->addWidget(new TestWidget());
     auto le = new LineEdit();
     le->addOnPressEnterAction([w3](const std::string& str){w3->setText(str);});
-    le->setSize(200, 50);
+    le->setSize(200, 30);
 
     button1->addOnClickAction([w3](){w3->setText("You press Button 1");});
     button2->addOnClickAction([w3](){w3->setText("You press Button 2");});
     button3->addOnClickAction([w3](){w3->setText("You press Button 3");});
-    button1->addOnClickAction([le](){le->setHAlign(HALIGN::LEFT);});
-    button2->addOnClickAction([le](){le->setHAlign(HALIGN::CENTER);});
-    button3->addOnClickAction([le](){le->setHAlign(HALIGN::RIGHT);});
+    button1->addOnClickAction([le](){le->setHAlign(HALIGN::LEFT); le->setFocus();});
+    button2->addOnClickAction([le](){le->setHAlign(HALIGN::CENTER);le->setFocus();});
+    button3->addOnClickAction([le](){le->setHAlign(HALIGN::RIGHT);le->setFocus();});
 
     panel->addWidget(le);
     guilayer.addWidget(panel);
