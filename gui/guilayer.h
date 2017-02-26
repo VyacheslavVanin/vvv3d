@@ -24,6 +24,9 @@ public:
 
     void processInputEvents(const Input& input);
 
+    void setVisible(bool visisble);
+    bool getVisible() const;
+
 private:
     struct GuiLayerImpl;
     std::unique_ptr<GuiLayerImpl> impl;

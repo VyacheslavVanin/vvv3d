@@ -1,10 +1,11 @@
-#include "guilayer.h"
-#include "widget.h"
 #include <vvv3d/vvv3d.h>
 #include <vector>
 #include <queue>
 #include <algorithm>
 #include <assert.h>
+#include "guilayer.h"
+#include "widget.h"
+#include "vvvstlhelper.hpp"
 
 using WidgetsContainer = std::vector<Widget*>;
 
@@ -38,6 +39,7 @@ struct GuiLayer::GuiLayerImpl
      */
     Camera camera;
     GuiPointer pointer;
+    bool visible;
 
     GuiLayerImpl();
 
@@ -60,14 +62,31 @@ struct GuiLayer::GuiLayerImpl
     void removeWidget(Widget* widget);
 
     ~GuiLayerImpl();
+
+public:
+    bool getVisible() const;
+    void setVisible(bool value);
 };
 
+bool GuiLayer::GuiLayerImpl::getVisible() const
+{
+    return visible;
+}
+
+void GuiLayer::GuiLayerImpl::setVisible(bool value)
+{
+    visible = value;
+}
+
 GuiLayer::GuiLayerImpl::GuiLayerImpl()
-    : widgets(), size(), camera(), pointer(this->widgets)
+    : widgets(), size(), camera(), pointer(this->widgets), visible(false)
 {  }
 
 void GuiLayer::GuiLayerImpl::draw()
 {
+    if(!visible)
+        return;
+
     DRAW_TRANSPARENT
     for(auto w: widgets)
         w->Draw();
@@ -145,7 +164,24 @@ const Camera& GuiLayer::getCamera() const
 
 void GuiLayer::processInputEvents(const Input& input)
 {
+    const auto& kbd   = input.getKeyboard();
+    if(contain(kbd.getEvents(),
+               InputEvent{INPUT_EVENT_TYPE::KEY_DOWN, SCANCODE_ESC}))
+        setVisible(!getVisible());
+
+    if(!getVisible())
+        return;
     impl->processInputEvents(input);
+}
+
+void GuiLayer::setVisible(bool visisble)
+{
+    impl->setVisible(visisble);
+}
+
+bool GuiLayer::getVisible() const
+{
+    return impl->getVisible();
 }
 
 
