@@ -52,6 +52,7 @@ public:
     static Widget* getCurrentFocus();
     bool isFocusable() const;
     void setFocusable(bool focusable);
+    void setFocus();
 
 private:
     static Widget* focus;

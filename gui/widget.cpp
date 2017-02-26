@@ -99,6 +99,18 @@ void Widget::setFocusable(bool focusable)
     this->focusable = focusable;
 }
 
+void Widget::setFocus()
+{
+    if(!isFocusable())
+        return;
+
+    auto oldFocus = Widget::getCurrentFocus();
+    if(oldFocus)
+        oldFocus->OnLoseFocus();
+    Widget::focus = this;
+    OnGetFocus();
+}
+
 static Rect RectToScissor(const Rect& r, const vvv::vector2i& layerSize)
 {
     const vvv::vector2i pos(r.x, r.y);
