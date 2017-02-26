@@ -37,7 +37,6 @@ protected:
     void OnTextEntered(const std::string& text) override;
 
 private:
-    ActionList<void(const std::string&)> onTextChangedActions;
     ActionList<void(const std::string&)> onEnterPressedActions;
 
     TextWidget*      leftpart   = nullptr;
