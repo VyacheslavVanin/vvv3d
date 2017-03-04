@@ -164,11 +164,6 @@ const Camera& GuiLayer::getCamera() const
 
 void GuiLayer::processInputEvents(const Input& input)
 {
-    const auto& kbd   = input.getKeyboard();
-    if(contain(kbd.getEvents(),
-               InputEvent{INPUT_EVENT_TYPE::KEY_DOWN, SCANCODE_ESC}))
-        setVisible(!getVisible());
-
     if(!getVisible())
         return;
     impl->processInputEvents(input);

@@ -207,6 +207,12 @@ void TestEngine::onDraw()
 {
     drawSprites(*this, camera, sprites);
     guilayer.draw();
+
+    const auto& kbd   = getInput().getKeyboard();
+    if(contain(kbd.getEvents(),
+               InputEvent{INPUT_EVENT_TYPE::KEY_DOWN, SCANCODE_ESC}))
+        guilayer.setVisible(!guilayer.getVisible());
+
     guilayer.processInputEvents(getInput());
 }
 
