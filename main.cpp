@@ -14,6 +14,7 @@
 #include <gui/lineedit.h>
 #include <random>
 #include <vvvstlhelper.hpp>
+#include "sprites/sprite.h"
 
 vvv::vector3f randomVector(float range)
 {
@@ -23,69 +24,6 @@ vvv::vector3f randomVector(float range)
     return {uniform_dist(e1),uniform_dist(e1), 0};
 }
 
-std::shared_ptr<Geometry> makeSpriteGeometry()
-{
-    static const GLfloat spriteVertices[] = { -0.5, -0.5,   0, 0,
-                                               0.5,  0.5,   1, 1,
-                                              -0.5,  0.5,   0, 1,
-                                               0.5, -0.5,   1, 0 };
-    static const size_t sizeOfVertices    = sizeof(spriteVertices);
-    static const GLuint spriteIndices[]   = { 0,1,2, 0, 1, 3 };
-    static const size_t numIndices        =  sizeof(spriteIndices)
-                                            /sizeof(spriteIndices[0]);
-    return std::make_shared<Geometry>(
-                spriteVertices, sizeOfVertices,
-                spriteIndices,  numIndices,
-                VertexAttributes({ VertexAttribDesc(ATTRIB_LOCATION::POSITION, 2, GL_FLOAT),
-                                   VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT) }),
-                GL_TRIANGLES);
-}
-
-class Sprite
-{
-public:
-    Sprite() : transform(), texture(nullptr) {}
-    Sprite(const Sprite&) = default;
-    Sprite& operator=(const Sprite&) = default;
-    ~Sprite() = default;
-
-    void setTexture(Texture* texture) {this->texture = texture;}
-    Texture* getTexture() const {return texture;}
-
-    Transform transform;
-private:
-    Texture* texture;
-};
-
-void drawSprite(Engine& engine, const Camera& camera, const Sprite& spr){
-    auto& resman = engine.getResourceManager();
-    auto& shaderman = resman.getShaderManager();
-    auto& geomman = resman.getGeometryManager();
-    auto sh = shaderman.get("sprite");
-    auto g = geomman.get("sprite");
-
-    drawTextured(camera, *sh, *g, spr.transform, *spr.getTexture());
-}
-
-template<typename A, template<typename, typename> class C >
-void drawSprites(Engine& engine, const Camera& camera, const C<Sprite, A>& sprs)
-{
-    auto& resman = engine.getResourceManager();
-    auto& shaderman = resman.getShaderManager();
-    auto& geomman = resman.getGeometryManager();
-    auto sh = shaderman.get("sprite");
-    auto g = geomman.get("sprite");
-
-    sh->activate();
-    sh->setViewProjection(camera.getViewProjection());
-    for(const auto& s : sprs){
-        const auto texture = s.getTexture();
-        sh->setModel(s.transform.getModelMatrix());
-        sh->setTexturePosition(texture->getTexturePosition());
-        sh->setTexture0(*texture);
-        g->draw();
-    }
-}
 
 class TestEngine : public Engine
 {
@@ -99,22 +37,13 @@ protected:
 
 private:
     Camera camera;
-    ShaderManager&      shaderMan;
     TextureManager&     textureMan;
-    GeometryManager&    geometryMan;
-    FontManager&        fontMan;
 
     std::vector<Sprite> sprites;
 
-    std::shared_ptr<Font>       font;
-    std::shared_ptr<Geometry>   textGeometry;
-
     GuiLayer guilayer;
 
-    void initShaders();
     void initTextures();
-    void initGeometry();
-    void initFonts();
 };
 
 int main(int argc, char** argv)
@@ -126,20 +55,14 @@ int main(int argc, char** argv)
 TestEngine::TestEngine(int argc, char** argv, const char* wname)
     : Engine(argc, argv, wname),
       camera(),
-      shaderMan(getResourceManager().getShaderManager()),
       textureMan(getResourceManager().getTextureManager()),
-      geometryMan(getResourceManager().getGeometryManager()),
-      fontMan(getResourceManager().getFontManager()),
-      sprites(), font(), textGeometry(), guilayer()
+      sprites(), guilayer()
 {
     onResize(getVieportWidth(), getVieportHeight());
 }
 
 void TestEngine::initialSetup() {
-    initGeometry();
-    initShaders();
     initTextures();
-    initFonts();
 
     auto spriteTex = textureMan.get("data/images/aaa.png");
     sprites.resize(50);
@@ -189,15 +112,24 @@ void TestEngine::initialSetup() {
     hl->addWidget(button3);
     panel->addWidget(hl);
     auto le = new LineEdit();
-    le->addOnPressEnterAction([w3](const std::string& str){w3->setText(str);});
+    le->addOnPressEnterAction([w3](const std::string& str)
+    {
+        const static auto quitlist = {"Exit", "exit", "quit", "q"};
+        if (contain(quitlist, str))
+            exit(EXIT_SUCCESS);
+        w3->setText(str);
+    });
     le->setSize(200, 30);
 
     button1->addOnClickAction([w3](){w3->setText("You press Button 1");});
     button2->addOnClickAction([w3](){w3->setText("You press Button 2");});
     button3->addOnClickAction([w3](){w3->setText("You press Button 3");});
-    button1->addOnClickAction([le](){le->setHAlign(HALIGN::LEFT); le->setFocus();});
-    button2->addOnClickAction([le](){le->setHAlign(HALIGN::CENTER);le->setFocus();});
-    button3->addOnClickAction([le](){le->setHAlign(HALIGN::RIGHT);le->setFocus();});
+    button1->addOnClickAction([le](){le->setHAlign(HALIGN::LEFT);
+                                     le->setFocus();});
+    button2->addOnClickAction([le](){le->setHAlign(HALIGN::CENTER);
+                                     le->setFocus();});
+    button3->addOnClickAction([le](){le->setHAlign(HALIGN::RIGHT);
+                                     le->setFocus();});
 
     panel->addWidget(le);
     guilayer.addWidget(panel);
@@ -226,12 +158,6 @@ void TestEngine::onResize(int x, int y)
     guilayer.resize(x,y);
 }
 
-void TestEngine::initShaders()
-{
-    shaderMan.add("sprite", "data/shaders/sprite.vsh",
-                  "data/shaders/sprite.fsh");
-}
-
 void TestEngine::initTextures()
 {
     TextureAtlas ta(512, 512, {
@@ -253,13 +179,4 @@ void TestEngine::initTextures()
                     });
     textureMan.add("data/images/aaa.png");
     textureMan.addAtlas(ta);
-}
-
-void TestEngine::initGeometry()
-{
-    geometryMan.add("sprite", makeSpriteGeometry());
-}
-
-void TestEngine::initFonts()
-{
 }

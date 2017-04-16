@@ -4,7 +4,7 @@ set (CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
 
-file(GLOB_RECURSE SRCS gui/*.cpp main.cpp)
+file(GLOB_RECURSE SRCS gui/*.cpp sprites/*.cpp main.cpp)
 file(GLOB_RECURSE HDRS *.h *.hpp)
 
 add_executable(convexsky ${SRCS} ${HDRS})
