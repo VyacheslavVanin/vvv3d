@@ -3,6 +3,7 @@
 #include "widget.h"
 #include <memory>
 #include <string>
+#include <vvv3d/vvv3d.h>
 #include "align.h"
 
 class Color;
@@ -37,18 +38,25 @@ public:
     void setVAlign(VALIGN value);
 
 private:
-    struct TextWidgetImpl;
-    std::unique_ptr<TextWidgetImpl> pImpl;
     bool autosize;
     HALIGN halign;
     VALIGN valign;
+    Transform                 transform;
+    std::u32string            text;
+    std::shared_ptr<Geometry> geometry;
+    std::shared_ptr<Font>     font;
+    Color                     color = Color::WHITE;
+    mutable int               widthInPixels = 0;
+    mutable bool changed;
 
     // Widget interface
     void autoresize();
 
     int getHAlignOffset() const;
-    
     int getVAlignOffset() const;
+    void lazyUpdateGeometryData() const;
+    Geometry& getGeometry() const;
+    int getWidthInPixels() const;
 
 protected:
     void onDraw() override;

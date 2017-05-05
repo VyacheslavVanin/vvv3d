@@ -17,141 +17,31 @@ int textLineHeight(const Font& f)
     return f.getAscender() - f.getDescender();
 }
 
-struct TextWidget::TextWidgetImpl
+TextWidget::TextWidget(const std::string& text)
+    : autosize(false), halign(HALIGN::CENTER), valign(VALIGN::CENTER),
+      transform(), text(toU32(text)), geometry(), font(), changed(true)
 {
-    TextWidgetImpl(const std::string& text)
-        : transform(), text(toU32(text)),
-          geometry(), font(), changed(true)
-    {
-        static std::once_flag flag;
-        std::call_once(flag, [](){
-            auto& e = Engine::getActiveEngine();
-            auto& resman = e.getResourceManager();
-            auto& shaderMan = resman.getShaderManager();
-            shaderMan.add("text", "data/shaders/text.vsh",
-                          "data/shaders/text.fsh");
-
-            auto& fontMan = resman.getFontManager();
-            fontMan.addFont("default", "data/fonts/DejaVuSans.ttf", 20);
-        } );
-
+    static std::once_flag flag;
+    std::call_once(flag, [](){
         auto& e = Engine::getActiveEngine();
         auto& resman = e.getResourceManager();
+        auto& shaderMan = resman.getShaderManager();
+        shaderMan.add("text", "data/shaders/text.vsh",
+                      "data/shaders/text.fsh");
+
         auto& fontMan = resman.getFontManager();
-        font = fontMan.getFont("default");
-        geometry = createTextGeometry(*font, text);
-    }
+        fontMan.addFont("default", "data/fonts/DejaVuSans.ttf", 20);
+    } );
 
-    void setText(std::u32string&& text)
-    {
-        this->text = std::move(text);
-        changed = true;
-    }
+    auto& e = Engine::getActiveEngine();
+    auto& resman = e.getResourceManager();
+    auto& fontMan = resman.getFontManager();
+    font = fontMan.getFont("default");
+    geometry = createTextGeometry(*font, text);
 
-    void setText(const std::u32string& text)
-    {
-        this->text = text;
-        changed = true;
-    }
-
-    void append(const std::u32string& text)
-    {
-        this->text += text;
-        changed = true;
-    }
-
-    void append(char32_t c)
-    {
-        this->text += c;
-        changed = true;
-    }
-
-    void prepend(std::u32string&& text)
-    {
-        this->text = std::move(text.append(this->text));
-        changed = true;
-    }
-
-    void prepend(const std::u32string& text)
-    {
-        this->text = text + this->text;
-        changed = true;
-    }
-
-    void prepend(char32_t c)
-    {
-        text.insert(text.begin(), c);
-        changed = true;
-    }
-
-    char32_t popBack()
-    {
-        auto ret = text.back();
-        text.pop_back();
-        changed = true;
-        return ret;
-    }
-
-    char32_t popFront()
-    {
-        auto ret = text.front();
-        text.erase(text.begin());
-        changed = true;
-        return ret;
-    }
-
-    void setFont(std::shared_ptr<Font> font)
-    {
-        this->font = font;
-        changed = true;
-    }
-
-    void setColor(const Color& color)
-    {
-        this->color = color;
-    }
-
-    void lazyUpdateGeometryData() const
-    {
-        if(changed){
-            updateTextGeometry(geometry, *font, text);
-            widthInPixels = textLineWidth(text, *font);
-            changed = false;
-        }
-    }
-
-    Geometry& getGeometry() const
-    {
-        lazyUpdateGeometryData();
-        return *geometry;
-    }
-
-    int getWidthInPixels() const
-    {
-        lazyUpdateGeometryData();
-        return widthInPixels;
-    }
-
-    Transform                 transform;
-    std::u32string            text;
-    std::shared_ptr<Geometry> geometry;
-    std::shared_ptr<Font>     font;
-    Color                     color = Color::WHITE;
-    mutable int               widthInPixels = 0;
-    mutable bool changed;
-};
-
-
-
-
-TextWidget::TextWidget(const std::string& text)
-    : pImpl(std::make_unique<TextWidgetImpl>(text)),
-      autosize(false), halign(HALIGN::CENTER), valign(VALIGN::CENTER)
-{
     resizeToContent();
     setMinSize(1, getHeight());
 }
-
 
 void TextWidget::autoresize()
 {
@@ -166,19 +56,21 @@ void TextWidget::setText(const std::string& text)
 
 void TextWidget::setText(const std::u32string& text)
 {
-    pImpl->setText(text);
+    this->text = text;
+    changed = true;
     autoresize();
 }
 
 void TextWidget::setText(std::u32string&& text)
 {
-    pImpl->setText(std::move(text));
+    this->text = std::move(text);
+    changed = true;
     autoresize();
 }
 
 const std::u32string& TextWidget::getText() const
 {
-    return pImpl->text;
+    return text;
 }
 
 void TextWidget::append(const std::string& text)
@@ -188,13 +80,15 @@ void TextWidget::append(const std::string& text)
 
 void TextWidget::append(const std::u32string& text)
 {
-    pImpl->append(text);
+    this->text += text;
+    changed = true;
     autoresize();
 }
 
 void TextWidget::append(char32_t character)
 {
-    pImpl->append(character);
+    this->text += character;
+    changed = true;
     autoresize();
 }
 
@@ -205,45 +99,52 @@ void TextWidget::prepend(const std::string& text)
 
 void TextWidget::prepend(const std::u32string& text)
 {
-    pImpl->prepend(text);
+    this->text = text + this->text;
+    changed = true;
     autoresize();
 }
 
 void TextWidget::prepend(char32_t character)
 {
-    pImpl->prepend(character);
+    text.insert(text.begin(), character);
+    changed = true;
     autoresize();
 }
 
 char32_t TextWidget::popBack()
 {
-    auto ret = pImpl->popBack();
+    auto ret = text.back();
+    text.pop_back();
+    changed = true;
     autoresize();
     return ret;
 }
 
 char32_t TextWidget::popFront()
 {
-    auto ret = pImpl->popFront();
+    auto ret = text.front();
+    text.erase(text.begin());
+    changed = true;
     autoresize();
     return ret;
 }
 
 void TextWidget::setColor(const Color& color)
 {
-    pImpl->setColor(color);
+    this->color = color;
 }
 
 void TextWidget::setFont(std::shared_ptr<Font> font)
 {
-    pImpl->setFont(font);
+    this->font = font;
+    changed = true;
     autoresize();
 }
 
 void TextWidget::resizeToContent()
 {
-    const int lineWidth  = textLineWidth(pImpl->text, *pImpl->font);
-    const int lineHeight = textLineHeight(*pImpl->font);
+    const int lineWidth  = textLineWidth(text, *font);
+    const int lineHeight = textLineHeight(*font);
     setSize(lineWidth, lineHeight);
 }
 
@@ -269,8 +170,8 @@ int TextWidget::getHAlignOffset() const
     const auto& size = getSize();
     switch(halign) {
     case HALIGN::LEFT: return 0;
-    case HALIGN::RIGHT: return size.x - pImpl->getWidthInPixels();
-    case HALIGN::CENTER: return (size.x - pImpl->getWidthInPixels())/2;
+    case HALIGN::RIGHT: return size.x - getWidthInPixels();
+    case HALIGN::CENTER: return (size.x - getWidthInPixels())/2;
     }
     throw std::logic_error("Shouldn't be here");
 }
@@ -278,11 +179,32 @@ int TextWidget::getHAlignOffset() const
 int TextWidget::getVAlignOffset() const
 {
     switch(valign){
-    case VALIGN::CENTER: return -(size.y - textLineHeight(*pImpl->font))/2;
+    case VALIGN::CENTER: return -(size.y - textLineHeight(*font))/2;
     case VALIGN::TOP: return 0;
-    case VALIGN::BOTTOM:  return -(size.y - textLineHeight(*pImpl->font));
+    case VALIGN::BOTTOM:  return -(size.y - textLineHeight(*font));
     }
     throw std::logic_error("Shouldn't be here");
+}
+
+void TextWidget::lazyUpdateGeometryData() const
+{
+    if(changed){
+        updateTextGeometry(geometry, *font, text);
+        widthInPixels = textLineWidth(text, *font);
+        changed = false;
+    }
+}
+
+Geometry& TextWidget::getGeometry() const
+{
+    lazyUpdateGeometryData();
+    return *geometry;
+}
+
+int TextWidget::getWidthInPixels() const
+{
+    lazyUpdateGeometryData();
+    return widthInPixels;
 }
 
 void TextWidget::onDraw()
@@ -293,10 +215,10 @@ void TextWidget::onDraw()
     auto& shaderMan = resman.getShaderManager();
     auto sh = shaderMan.get("text");
 
-    const auto& geometry = pImpl->getGeometry();
-    const auto& font     = *pImpl->font;
+    const auto& geometry = getGeometry();
+    const auto& font     = *this->font;
     const auto& texture  = font.getTexture();
-    auto& transform      = pImpl->transform;
+    auto& transform      = this->transform;
 
     const auto& pos = getAbsolutePosition();
 
@@ -309,7 +231,7 @@ void TextWidget::onDraw()
 
     drawTexturedColored(camera, *sh, geometry,
                         transform, texture,
-                        pImpl->color);
+                        this->color);
 }
 
 TextWidget::~TextWidget() = default;
