@@ -15,8 +15,7 @@ public:
     void setTexture(Texture* texture);
 
 private:
-    struct ImageWidgetImpl;
-    std::unique_ptr<ImageWidgetImpl> pImpl;
+    Texture* texture = nullptr;
 
     // Widget interface
 protected:

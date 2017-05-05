@@ -20,13 +20,9 @@ static std::shared_ptr<Geometry> makeImageGeometry()
                 GL_TRIANGLES);
 }
 
-struct ImageWidget::ImageWidgetImpl
-{
-    Texture* texture = nullptr;
-};
 
 ImageWidget::ImageWidget()
-    : pImpl(std::make_unique<ImageWidgetImpl>())
+    : texture(nullptr)
 {
     static std::once_flag flag;
     std::call_once(flag, [](){
@@ -52,12 +48,12 @@ ImageWidget::ImageWidget(Texture* texture)
 
 void ImageWidget::setTexture(Texture* texture)
 {
-    pImpl->texture = texture;
+    this->texture = texture;
 }
 
 void ImageWidget::onDraw()
 {
-    if(pImpl->texture == nullptr){
+    if(texture == nullptr){
         std::cerr << "Error: ImageWidget::Draw() without texture" <<std::endl;
         return;
     }
@@ -74,7 +70,7 @@ void ImageWidget::onDraw()
     const auto& size = getSize();
     const auto& fullPosInfo = vvv::vector4f(pos.x, -pos.y,
                                             size.x, size.y);
-    const auto& texture = *pImpl->texture;
+    const auto& texture = *this->texture;
 
     sh->activate();
     sh->setPosition(fullPosInfo);
