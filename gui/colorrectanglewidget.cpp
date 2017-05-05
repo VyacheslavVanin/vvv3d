@@ -20,17 +20,8 @@ static std::shared_ptr<Geometry> makeRectGeometry()
                 GL_TRIANGLES);
 }
 
-struct ColorRectWidget::ColorRectangleWidgetImpl
-{
-    ColorRectangleWidgetImpl(const Color& color = Color::ORANGE)
-        : color(color)
-    {}
-    Color color;
-};
-
-
 ColorRectWidget::ColorRectWidget(const Color& color)
-    : pImpl(std::make_unique<ColorRectangleWidgetImpl>(color))
+    : color(color)
 {
     static std::once_flag flag;
     std::call_once(flag, [](){
@@ -48,7 +39,7 @@ ColorRectWidget::ColorRectWidget(const Color& color)
 
 void ColorRectWidget::setColor(const Color& colour)
 {
-    pImpl->color = colour;
+    this->color = colour;
 }
 
 ColorRectWidget::ColorRectWidget()
@@ -72,7 +63,7 @@ void ColorRectWidget::onDraw()
 
     sh->activate();
     sh->setPosition(fullPosInfo);
-    sh->setColor0(pImpl->color);
+    sh->setColor0(color);
     sh->setViewProjection(camera.getViewProjection());
 
     geom->draw();

@@ -2,10 +2,9 @@
 #define COLORRECTANGLEWIDGET_H
 #include "widget.h"
 #include <memory>
+#include <vvv3d/vvv3d.h>
 
-class Color;
-
-class ColorRectWidget final : public Widget
+class ColorRectWidget : public Widget
 {
 public:
     explicit ColorRectWidget();
@@ -15,8 +14,7 @@ public:
     void setColor(const Color& colour);
 
 private:
-    struct ColorRectangleWidgetImpl;
-    std::unique_ptr<ColorRectangleWidgetImpl> pImpl;
+    Color color;
 
     // Widget interface
 protected:
