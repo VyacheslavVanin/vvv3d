@@ -40,25 +40,25 @@ public:
     void setVAlign(VALIGN value);
 
 private:
-    bool                      autosize;
-    HALIGN                    halign;
-    VALIGN                    valign;
-    vvv3d::Transform                 transform;
-    std::u32string            text;
+    bool autosize;
+    HALIGN halign;
+    VALIGN valign;
+    vvv3d::Transform transform;
+    std::u32string text;
     std::shared_ptr<vvv3d::Geometry> geometry;
-    std::shared_ptr<vvv3d::Font>     font;
-    vvv3d::Color                     color         = vvv3d::Color::WHITE;
-    mutable int               widthInPixels = 0;
-    mutable bool              changed;
+    std::shared_ptr<vvv3d::Font> font;
+    vvv3d::Color color        = vvv3d::Color::WHITE;
+    mutable int widthInPixels = 0;
+    mutable bool changed;
 
     // Widget interface
     void autoresize();
 
-    int       getHAlignOffset() const;
-    int       getVAlignOffset() const;
-    void      lazyUpdateGeometryData() const;
+    int getHAlignOffset() const;
+    int getVAlignOffset() const;
+    void lazyUpdateGeometryData() const;
     vvv3d::Geometry& getGeometry() const;
-    int       getWidthInPixels() const;
+    int getWidthInPixels() const;
 
 protected:
     void onDraw() override;

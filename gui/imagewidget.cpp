@@ -52,13 +52,13 @@ void ImageWidget::onDraw()
         return;
     }
 
-    auto&       e         = Engine::getActiveEngine();
-    auto&       resman    = e.getResourceManager();
-    auto&       shaderMan = resman.getShaderManager();
-    auto&       geomMan   = resman.getGeometryManager();
-    const auto& camera    = getCamera();
-    auto        sh        = shaderMan.get("ImageWidget");
-    auto        geom      = geomMan.get("ImageWidget");
+    auto& e            = Engine::getActiveEngine();
+    auto& resman       = e.getResourceManager();
+    auto& shaderMan    = resman.getShaderManager();
+    auto& geomMan      = resman.getGeometryManager();
+    const auto& camera = getCamera();
+    auto sh            = shaderMan.get("ImageWidget");
+    auto geom          = geomMan.get("ImageWidget");
 
     const auto& pos         = getAbsolutePosition();
     const auto& size        = getSize();

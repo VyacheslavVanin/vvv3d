@@ -100,8 +100,8 @@ void GuiLayer::GuiPointer::detectMouseMove(const Input::Mouse& mouse)
 
 void GuiLayer::GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
 {
-    const auto& pos               = mouse.getMousePos();
-    Widget*     underCursorWidget = getWidgetAtPoint(pos);
+    const auto& pos           = mouse.getMousePos();
+    Widget* underCursorWidget = getWidgetAtPoint(pos);
     for (uint16_t i = 0; i < NUM_MOUSE_BUTTONS; ++i) {
         const auto oldState   = mouseButtonsStates[i];
         const auto newState   = mouse.buttonDown(i);

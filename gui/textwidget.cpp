@@ -185,21 +185,21 @@ int TextWidget::getWidthInPixels() const
 
 void TextWidget::onDraw()
 {
-    const auto& camera    = getCamera();
-    auto&       e         = Engine::getActiveEngine();
-    auto&       resman    = e.getResourceManager();
-    auto&       shaderMan = resman.getShaderManager();
-    auto        sh        = shaderMan.get("text");
+    const auto& camera = getCamera();
+    auto& e            = Engine::getActiveEngine();
+    auto& resman       = e.getResourceManager();
+    auto& shaderMan    = resman.getShaderManager();
+    auto sh            = shaderMan.get("text");
 
-    const auto& geometry  = getGeometry();
-    const auto& font      = *this->font;
-    const auto& texture   = font.getTexture();
-    auto&       transform = this->transform;
+    const auto& geometry = getGeometry();
+    const auto& font     = *this->font;
+    const auto& texture  = font.getTexture();
+    auto& transform      = this->transform;
 
     const auto& pos = getAbsolutePosition();
 
     const auto hAlignOffset = getHAlignOffset();
-    const int  vAlignOffset = getVAlignOffset();
+    const int vAlignOffset  = getVAlignOffset();
 
     const auto posx = pos.x + hAlignOffset;
     const auto posy = -pos.y - font.getAscender() + vAlignOffset;

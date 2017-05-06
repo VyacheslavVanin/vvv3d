@@ -4,7 +4,6 @@
 #include <vector>
 #include <vvv3d/vvv3d.h>
 #include <vvv3d/vvvmath/vector2.h>
-#include <vvv3d/vvv3d.h>
 
 class Widget;
 class GuiLayer final {
@@ -42,20 +41,20 @@ private:
 
     private:
         WidgetsContainer* widgets;
-        bool              mouseButtonsStates[NUM_MOUSE_BUTTONS]{false};
+        bool mouseButtonsStates[NUM_MOUSE_BUTTONS]{false};
         void detectMouseMove(const vvv3d::Input::Mouse& mouse);
         void detectMouseButtons(const vvv3d::Input::Mouse& mouse);
         void processKeyboard(const vvv3d::Input::Keyboard& kbd);
     };
 
-    WidgetsContainer  widgets;
+    WidgetsContainer widgets;
     vvv::vector2<int> size;
     /**
      * @brief Orthographic camera; top-left corner (0,0)
      */
-    vvv3d::Camera     camera;
+    vvv3d::Camera camera;
     GuiPointer pointer;
-    bool       visible;
+    bool visible;
 };
 
 #endif // GUILAYER_H

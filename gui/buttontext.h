@@ -12,9 +12,9 @@ public:
     ButtonText& operator=(const ButtonText&) = delete;
 
 private:
-    TextWidget*      text;
+    TextWidget* text;
     ColorRectWidget* background;
-    Panel*           panel;
+    Panel* panel;
 
     // ButtonBase interface
 protected:

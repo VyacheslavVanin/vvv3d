@@ -5,7 +5,7 @@ HorizontalLayout::HorizontalLayout() : align(HALIGN::CENTER) {}
 
 void HorizontalLayout::rearrange()
 {
-    const int   borders  = 2 * getBorder();
+    const int borders    = 2 * getBorder();
     const auto& children = getChildren();
 
     const auto numPaddings     = children.size() - 1;
@@ -40,16 +40,17 @@ int HorizontalLayout::getMaxChildHeight(const std::vector<Widget*>& children)
     using namespace std;
     if (children.empty())
         return 0;
-    const auto max = max_element(children.begin(), children.end(),
-                                 [](auto w1, auto w2) {
-                                      return w1->getSize().y < w2->getSize().y;
-                                 });
+    const auto max =
+        max_element(children.begin(), children.end(), [](auto w1, auto w2) {
+            return w1->getSize().y < w2->getSize().y;
+        });
     return (*max)->getSize().y;
 }
 
 int HorizontalLayout::getChildrenWidth(const std::vector<Widget*>& children)
 {
-    return std::accumulate(children.begin(), children.end(), 0,
+    return std::accumulate(
+        children.begin(), children.end(), 0,
         [](int sum, Widget* w) { return sum + w->getSize().x; });
 }
 

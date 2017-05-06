@@ -42,13 +42,13 @@ ColorRectWidget::ColorRectWidget() : ColorRectWidget(Color::ORANGE) {}
 
 void ColorRectWidget::onDraw()
 {
-    auto&       e         = Engine::getActiveEngine();
-    auto&       resman    = e.getResourceManager();
-    auto&       shaderMan = resman.getShaderManager();
-    auto&       geomMan   = resman.getGeometryManager();
-    const auto& camera    = getCamera();
-    auto        sh        = shaderMan.get("SolidRect");
-    auto        geom      = geomMan.get("SolidRect");
+    auto& e            = Engine::getActiveEngine();
+    auto& resman       = e.getResourceManager();
+    auto& shaderMan    = resman.getShaderManager();
+    auto& geomMan      = resman.getGeometryManager();
+    const auto& camera = getCamera();
+    auto sh            = shaderMan.get("SolidRect");
+    auto geom          = geomMan.get("SolidRect");
 
     const auto& pos         = getAbsolutePosition();
     const auto& size        = getSize();

@@ -140,10 +140,10 @@ void LineEdit::placeWidgets()
     const auto rightWidth = rightpart->getWidth();
     const auto width      = getWidth();
 
-    const auto cursorWidth   = cursor->getWidth();
-    const auto leftMargin    = cursorWidth;
-    const auto rightMargin   = width - cursorWidth;
-    const int  fullTextWidth = leftWidth + rightWidth;
+    const auto cursorWidth  = cursor->getWidth();
+    const auto leftMargin   = cursorWidth;
+    const auto rightMargin  = width - cursorWidth;
+    const int fullTextWidth = leftWidth + rightWidth;
 
     const int roughOffset =
         roughLeftOffset(leftMargin, width, fullTextWidth, rightMargin);

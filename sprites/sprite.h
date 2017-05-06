@@ -11,7 +11,7 @@ public:
     ~Sprite()                        = default;
 
     void setTexture(vvv3d::Texture* texture) { this->texture = texture; }
-    vvv3d::Texture*                 getTexture() const { return texture; }
+    vvv3d::Texture* getTexture() const { return texture; }
 
     vvv3d::Transform transform;
 
@@ -29,8 +29,8 @@ inline void drawSprites(vvv3d::Engine& engine, const vvv3d::Camera& camera,
     auto& resman    = engine.getResourceManager();
     auto& shaderman = resman.getShaderManager();
     auto& geomman   = resman.getGeometryManager();
-    auto  sh        = shaderman.get("sprite");
-    auto  g         = geomman.get("sprite");
+    auto sh         = shaderman.get("sprite");
+    auto g          = geomman.get("sprite");
 
     sh->activate();
     sh->setViewProjection(camera.getViewProjection());

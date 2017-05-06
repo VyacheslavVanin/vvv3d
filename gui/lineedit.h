@@ -39,11 +39,11 @@ protected:
 private:
     ActionList<void(const std::string&)> onEnterPressedActions;
 
-    TextWidget*      leftpart   = nullptr;
-    TextWidget*      rightpart  = nullptr;
+    TextWidget* leftpart        = nullptr;
+    TextWidget* rightpart       = nullptr;
     ColorRectWidget* cursor     = nullptr;
     ColorRectWidget* background = nullptr;
-    HALIGN           hAlign;
+    HALIGN hAlign;
 
     void placeWidgets();
     int roughLeftOffset(int leftMargin, int width, int fullTextWidth,

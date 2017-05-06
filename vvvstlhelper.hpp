@@ -35,11 +35,11 @@ inline bool contain(const C& c, const V& v)
 }
 
 inline std::string joinStringsWith(const std::vector<std::string>& v,
-                                   const std::string&              delimiter)
+                                   const std::string& delimiter)
 {
     std::string ret;
-    const auto  numStrings = v.size();
-    const auto  lastIndex  = numStrings - 1;
+    const auto numStrings = v.size();
+    const auto lastIndex  = numStrings - 1;
     for (size_t i = 0; i < numStrings; ++i) {
         ret += v[i];
         if (i != lastIndex)
@@ -72,7 +72,7 @@ inline void split(const std::string& input, char delimiter,
 }
 
 inline std::vector<std::string> split(const std::string& str,
-                                      char               delimiter = ' ')
+                                      char delimiter = ' ')
 {
     std::vector<std::string> ret;
     split(str, delimiter, ret);

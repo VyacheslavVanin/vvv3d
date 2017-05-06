@@ -4,7 +4,6 @@
 #include <memory>
 #include <vvv3d/core/graphics/textures/texture.h>
 
-
 class ImageWidget final : public Widget {
 public:
     explicit ImageWidget();

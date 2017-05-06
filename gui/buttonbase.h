@@ -18,7 +18,7 @@ private:
     STATE state = STATE::START;
 
     ActionList<void(void)> actions;
-    void                   onClicked();
+    void onClicked();
 
     // Widget interface
 protected:

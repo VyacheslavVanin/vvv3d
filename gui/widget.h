@@ -3,8 +3,8 @@
 #include "rect.h"
 #include <memory>
 #include <vector>
-#include <vvv3d/vvvmath/matrices_types.h>
 #include <vvv3d/core/camera.h>
+#include <vvv3d/vvvmath/matrices_types.h>
 
 class GuiLayer;
 
@@ -22,13 +22,13 @@ public:
     void Draw();
 
     const vvv::vector2i& getPosition() const;
-    const vvv::vector2i  getAbsolutePosition() const;
+    const vvv::vector2i getAbsolutePosition() const;
     void setPosition(const vvv::vector2i& newPos);
     void setPosition(int x, int y);
 
     const vvv::vector2i& getSize() const;
-    int                  getWidth() const;
-    int                  getHeight() const;
+    int getWidth() const;
+    int getHeight() const;
     void setSize(const vvv::vector2i& size);
     void setSize(int width, int height);
 
@@ -49,16 +49,16 @@ public:
     void invokeKeyUp(uint16_t scancode);
 
     static Widget* getCurrentFocus();
-    bool           isFocusable() const;
+    bool isFocusable() const;
     void setFocusable(bool focusable);
     void setFocus();
 
 private:
     static Widget* focus;
-    bool           focusable = false;
+    bool focusable = false;
 
 protected:
-    const vvv3d::Camera&        getCamera() const;
+    const vvv3d::Camera& getCamera() const;
     const std::vector<Widget*>& getChildren() const;
 
     /**
@@ -97,13 +97,13 @@ protected:
     vvv::vector2i minSize;
     vvv::vector2i maxSize;
 
-    Rect                 clipArea;
-    Widget*              obj;
-    Widget*              parent;
-    GuiLayer*            layer;
+    Rect clipArea;
+    Widget* obj;
+    Widget* parent;
+    GuiLayer* layer;
     std::vector<Widget*> children;
-    bool                 hover;
-    void                 updateClipArea();
+    bool hover;
+    void updateClipArea();
 };
 
 #endif // GUIOBJECT_H

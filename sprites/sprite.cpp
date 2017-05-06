@@ -36,8 +36,8 @@ void drawSprite(Engine& engine, const Camera& camera, const Sprite& spr)
     auto& resman    = engine.getResourceManager();
     auto& shaderman = resman.getShaderManager();
     auto& geomman   = resman.getGeometryManager();
-    auto  sh        = shaderman.get("sprite");
-    auto  g         = geomman.get("sprite");
+    auto sh         = shaderman.get("sprite");
+    auto g          = geomman.get("sprite");
 
     drawTextured(camera, *sh, *g, spr.transform, *spr.getTexture());
 }
