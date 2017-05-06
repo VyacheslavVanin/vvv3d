@@ -1,15 +1,14 @@
 #ifndef TEXTWIDGET_H
 #define TEXTWIDGET_H
+#include "align.h"
 #include "widget.h"
 #include <memory>
 #include <string>
 #include <vvv3d/vvv3d.h>
-#include "align.h"
 
 class Color;
 class Font;
-class TextWidget: public Widget
-{
+class TextWidget : public Widget {
 public:
     explicit TextWidget(const std::string& text = "Text");
     ~TextWidget();
@@ -38,25 +37,25 @@ public:
     void setVAlign(VALIGN value);
 
 private:
-    bool autosize;
-    HALIGN halign;
-    VALIGN valign;
+    bool                      autosize;
+    HALIGN                    halign;
+    VALIGN                    valign;
     Transform                 transform;
     std::u32string            text;
     std::shared_ptr<Geometry> geometry;
     std::shared_ptr<Font>     font;
-    Color                     color = Color::WHITE;
+    Color                     color         = Color::WHITE;
     mutable int               widthInPixels = 0;
-    mutable bool changed;
+    mutable bool              changed;
 
     // Widget interface
     void autoresize();
 
-    int getHAlignOffset() const;
-    int getVAlignOffset() const;
-    void lazyUpdateGeometryData() const;
+    int       getHAlignOffset() const;
+    int       getVAlignOffset() const;
+    void      lazyUpdateGeometryData() const;
     Geometry& getGeometry() const;
-    int getWidthInPixels() const;
+    int       getWidthInPixels() const;
 
 protected:
     void onDraw() override;

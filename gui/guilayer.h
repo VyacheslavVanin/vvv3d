@@ -43,20 +43,20 @@ private:
 
     private:
         WidgetsContainer* widgets;
-        bool mouseButtonsStates[NUM_MOUSE_BUTTONS]{false};
+        bool              mouseButtonsStates[NUM_MOUSE_BUTTONS]{false};
         void detectMouseMove(const Input::Mouse& mouse);
         void detectMouseButtons(const Input::Mouse& mouse);
         void processKeyboard(const Input::Keyboard& kbd);
     };
 
-    WidgetsContainer widgets;
+    WidgetsContainer  widgets;
     vvv::vector2<int> size;
     /**
      * @brief Orthographic camera; top-left corner (0,0)
      */
-    Camera camera;
+    Camera     camera;
     GuiPointer pointer;
-    bool visible;
+    bool       visible;
 };
 
 #endif // GUILAYER_H

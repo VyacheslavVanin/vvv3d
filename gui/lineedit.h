@@ -1,17 +1,16 @@
 #ifndef LINEEDIT_H
 #define LINEEDIT_H
-#include <string>
-#include <vvv3d/core/graphics/color.h>
-#include "widget.h"
-#include "colorrectanglewidget.h"
-#include "textwidget.h"
 #include "actionlist.h"
 #include "align.h"
+#include "colorrectanglewidget.h"
+#include "textwidget.h"
+#include "widget.h"
+#include <string>
+#include <vvv3d/core/graphics/color.h>
 
-class LineEdit : public Widget
-{
+class LineEdit : public Widget {
 public:
-    LineEdit(const std::string& text="");
+    LineEdit(const std::string& text = "");
 
     void setText(const std::string& text);
 
@@ -23,7 +22,8 @@ public:
     void setBackgroundColor(const Color& color);
     void setCursorColor(const Color& color);
 
-    void addOnPressEnterAction(const std::function<void(const std::string&)>& f);
+    void
+    addOnPressEnterAction(const std::function<void(const std::string&)>& f);
 
     // Widget interface
 protected:
@@ -46,9 +46,8 @@ private:
     HALIGN           hAlign;
 
     void placeWidgets();
-    int roughLeftOffset(int leftMargin, int width,
-                      int fullTextWidth, int rightMargin) const;
+    int roughLeftOffset(int leftMargin, int width, int fullTextWidth,
+                        int rightMargin) const;
 };
 
 #endif
-

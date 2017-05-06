@@ -1,10 +1,9 @@
 #ifndef BUTTONBASE_H
 #define BUTTONBASE_H
-#include "widget.h"
 #include "actionlist.h"
+#include "widget.h"
 
-class ButtonBase : public Widget
-{
+class ButtonBase : public Widget {
 public:
     ButtonBase();
     void addOnClickAction(const std::function<void(void)>& action);
@@ -19,7 +18,7 @@ private:
     STATE state = STATE::START;
 
     ActionList<void(void)> actions;
-    void onClicked();
+    void                   onClicked();
 
     // Widget interface
 protected:
@@ -32,6 +31,5 @@ protected:
     void OnPointerEnter(int x, int y) override;
     void OnPointerLeave(int x, int y) override;
 };
-
 
 #endif // BUTTONBASE_H

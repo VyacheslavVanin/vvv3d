@@ -1,16 +1,12 @@
 #include "panel.h"
 #include "verticallayout.h"
 
-Panel::Panel():
-    Panel(new VerticalLayout(), nullptr)
-{
+Panel::Panel() : Panel(new VerticalLayout(), nullptr) {}
 
-}
-
-Panel::Panel(Layout* layout, Widget* background) : Widget(),
-    layout(layout), background(background)
+Panel::Panel(Layout* layout, Widget* background)
+    : Widget(), layout(layout), background(background)
 {
-    if(background)
+    if (background)
         addChild(background);
     addChild(layout);
     layout->setPadding(16);
@@ -18,25 +14,22 @@ Panel::Panel(Layout* layout, Widget* background) : Widget(),
 
 void Panel::rearrange()
 {
-    const auto widgetSize = getSize();
-    const auto layoutSize = layout->getSize();
+    const auto widgetSize   = getSize();
+    const auto layoutSize   = layout->getSize();
     const auto layoutHeight = layoutSize.y;
-    const auto layoutWidth = layoutSize.x;
+    const auto layoutWidth  = layoutSize.x;
     layout->setPosition((widgetSize.x - layoutWidth) / 2,
                         (widgetSize.y - layoutHeight) / 2);
 }
 
 void Panel::onResize(const vvv::vector2i&, const vvv::vector2i& newSize)
 {
-    if(background)
+    if (background)
         background->setSize(newSize);
     rearrange();
 }
 
-void Panel::OnPointerMove(int x, int y)
-{
-    layout->invokePointerMove(x, y);
-}
+void Panel::OnPointerMove(int x, int y) { layout->invokePointerMove(x, y); }
 
 void Panel::OnButtonPressed(int button, int x, int y)
 {
@@ -54,7 +47,4 @@ void Panel::addWidget(Widget* added)
     setMinSize(layout->getSize());
 }
 
-void Panel::removeWidget(Widget* removed)
-{
-    layout->removeWidget(removed);
-}
+void Panel::removeWidget(Widget* removed) { layout->removeWidget(removed); }

@@ -5,8 +5,7 @@
 /**
  * @brief The EventTestWidget class is class used to demonstrate
  *    base mouse events */
-class EventTestWidget : public TextWidget
-{
+class EventTestWidget : public TextWidget {
 public:
     EventTestWidget();
     EventTestWidget(const EventTestWidget&) = delete;
@@ -32,6 +31,5 @@ protected:
     void onResize(const vvv::vector2i& oldSize,
                   const vvv::vector2i& newSize) override;
 };
-
 
 #endif // EVENTTESTWIDGET_H

@@ -98,8 +98,8 @@ void GuiLayer::GuiPointer::detectMouseMove(const Input::Mouse& mouse)
 
 void GuiLayer::GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
 {
-    const auto& pos           = mouse.getMousePos();
-    Widget* underCursorWidget = getWidgetAtPoint(pos);
+    const auto& pos               = mouse.getMousePos();
+    Widget*     underCursorWidget = getWidgetAtPoint(pos);
     for (uint16_t i = 0; i < NUM_MOUSE_BUTTONS; ++i) {
         const auto oldState   = mouseButtonsStates[i];
         const auto newState   = mouse.buttonDown(i);
@@ -119,23 +119,21 @@ void GuiLayer::GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
 
 void GuiLayer::GuiPointer::processKeyboard(const Input::Keyboard& kbd)
 {
-    const auto focus = Widget::getCurrentFocus();
-    if (!focus)
+    const auto foc = Widget::getCurrentFocus();
+    if (!foc)
         return;
 
     for (const InputEvent& e : kbd.getEvents()) {
         switch (e.type) {
-        case INPUT_EVENT_TYPE::KEY_DOWN:
-            focus->invokeKeyDown(e.scancode);
-            break;
-        case INPUT_EVENT_TYPE::KEY_UP: focus->invokeKeyUp(e.scancode); break;
+        case INPUT_EVENT_TYPE::KEY_DOWN: foc->invokeKeyDown(e.scancode); break;
+        case INPUT_EVENT_TYPE::KEY_UP: foc->invokeKeyUp(e.scancode); break;
         default: assert("Shouldn't be here"); break;
         }
     }
 
     if (kbd.hasText()) {
         const auto& text = kbd.getText();
-        focus->invokeTextEntered(text);
+        foc->invokeTextEntered(text);
     }
 }
 

@@ -5,8 +5,7 @@
 
 class Texture;
 
-class ImageWidget final: public Widget
-{
+class ImageWidget final : public Widget {
 public:
     explicit ImageWidget();
     explicit ImageWidget(Texture* texture);

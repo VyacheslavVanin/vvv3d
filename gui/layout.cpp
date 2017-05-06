@@ -1,13 +1,11 @@
 #include "layout.h"
-#include <vvv3d/vvvmath/linalg.h>
 #include <algorithm>
+#include <vvv3d/vvvmath/linalg.h>
 
-Layout::Layout() :
-    border(1), padding(1)
-{  }
+Layout::Layout() : border(1), padding(1) {}
 
 void Layout::onResize(const vvv::vector2i& oldSize,
-                              const vvv::vector2i& newSize)
+                      const vvv::vector2i& newSize)
 {
     (void)oldSize;
     (void)newSize;
@@ -16,17 +14,16 @@ void Layout::onResize(const vvv::vector2i& oldSize,
 void Layout::OnPointerMove(int x, int y)
 {
     const auto& children = getChildren();
-    for(auto w: children)
+    for (auto w : children)
         w->invokePointerMove(x, y);
 }
 
 void Layout::OnButtonPressed(int button, int x, int y)
 {
     const auto& children = getChildren();
-    auto w = std::find_if(children.begin(), children.end(),
-                          [&x, &y](auto w){
-                            return rectContainPoint(w->getRect(), x, y);
-                          });
+    auto w = std::find_if(children.begin(), children.end(), [&x, &y](auto w) {
+        return rectContainPoint(w->getRect(), x, y);
+    });
     if (w == children.end())
         return;
     (*w)->invokeButtonPressed(button, x, y);
@@ -35,7 +32,7 @@ void Layout::OnButtonPressed(int button, int x, int y)
 void Layout::OnButtonReleased(int button, int x, int y)
 {
     const auto& children = getChildren();
-    for (auto w: children)
+    for (auto w : children)
         w->invokeButtonReleased(button, x, y);
 }
 
@@ -69,20 +66,11 @@ void Layout::removeWidget(Widget* widget)
     rearrange();
 }
 
-void Layout::setExpandToFitContent(bool expand)
-{
-    this->expandToFit = expand;
-}
+void Layout::setExpandToFitContent(bool expand) { this->expandToFit = expand; }
 
-bool Layout::isExpandToFitContent() const
-{
-    return expandToFit;
-}
+bool Layout::isExpandToFitContent() const { return expandToFit; }
 
-int Layout::getPadding() const
-{
-    return padding;
-}
+int Layout::getPadding() const { return padding; }
 
 void Layout::setPadding(int value)
 {
@@ -90,10 +78,7 @@ void Layout::setPadding(int value)
     rearrange();
 }
 
-int Layout::getBorder() const
-{
-    return border;
-}
+int Layout::getBorder() const { return border; }
 
 void Layout::setBorder(int value)
 {

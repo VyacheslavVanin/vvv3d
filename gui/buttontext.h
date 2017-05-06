@@ -5,17 +5,16 @@
 class TextWidget;
 class ColorRectWidget;
 class Panel;
-class ButtonText : public ButtonBase
-{
+class ButtonText : public ButtonBase {
 public:
     ButtonText(const std::string& caption = "Button");
-    ButtonText(const ButtonText&) = delete;
+    ButtonText(const ButtonText&)         = delete;
     ButtonText& operator=(const ButtonText&) = delete;
 
 private:
-    TextWidget* text;
+    TextWidget*      text;
     ColorRectWidget* background;
-    Panel* panel;
+    Panel*           panel;
 
     // ButtonBase interface
 protected:
@@ -23,7 +22,5 @@ protected:
     void onUnhover() override;
     void onPressDown() override;
 };
-
-
 
 #endif // BUTTONTEXT_H

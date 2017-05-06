@@ -1,13 +1,11 @@
 #ifndef HORIZONTALLAYOUT_H
 #define HORIZONTALLAYOUT_H
 
-
-#include "widget.h"
-#include "layout.h"
 #include "align.h"
+#include "layout.h"
+#include "widget.h"
 
-class HorizontalLayout : public Layout
-{
+class HorizontalLayout : public Layout {
 public:
     HorizontalLayout();
     HALIGN getAlign() const;
@@ -16,6 +14,7 @@ public:
 protected:
     // Layout interface
     void rearrange() override;
+
 private:
     int getMaxChildHeight(const std::vector<Widget*>& children);
     int getChildrenWidth(const std::vector<Widget*>& children);

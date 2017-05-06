@@ -2,15 +2,14 @@
 #define LAYOUT_H
 #include "widget.h"
 
-class Layout : public Widget
-{
+class Layout : public Widget {
 public:
     Layout();
 
-    int getBorder() const;
+    int  getBorder() const;
     void setBorder(int value);
 
-    int getPadding() const;
+    int  getPadding() const;
     void setPadding(int value);
 
     void addWidget(Widget* widget);
@@ -33,8 +32,8 @@ protected:
     virtual void rearrange() = 0;
 
 private:
-    int border;
-    int padding;
+    int  border;
+    int  padding;
     bool expandToFit = true;
 };
 

@@ -1,14 +1,13 @@
 #ifndef GUIOBJECT_H
 #define GUIOBJECT_H
+#include "rect.h"
 #include <memory>
 #include <vector>
 #include <vvv3d/vvvmath/matrices_types.h>
-#include "rect.h"
 
 class GuiLayer;
 class Camera;
-class Widget
-{
+class Widget {
 public:
     explicit Widget();
     Widget(Widget&&) noexcept;
@@ -17,19 +16,18 @@ public:
     Widget(const Widget&) = delete;
     Widget& operator=(const Widget&) = delete;
 
-
     virtual ~Widget();
 
     void Draw();
 
     const vvv::vector2i& getPosition() const;
-    const vvv::vector2i getAbsolutePosition() const;
+    const vvv::vector2i  getAbsolutePosition() const;
     void setPosition(const vvv::vector2i& newPos);
     void setPosition(int x, int y);
 
     const vvv::vector2i& getSize() const;
-    int getWidth() const;
-    int getHeight() const;
+    int                  getWidth() const;
+    int                  getHeight() const;
     void setSize(const vvv::vector2i& size);
     void setSize(int width, int height);
 
@@ -50,7 +48,7 @@ public:
     void invokeKeyUp(uint16_t scancode);
 
     static Widget* getCurrentFocus();
-    bool isFocusable() const;
+    bool           isFocusable() const;
     void setFocusable(bool focusable);
     void setFocus();
 
@@ -59,7 +57,7 @@ private:
     bool           focusable = false;
 
 protected:
-    const Camera& getCamera() const;
+    const Camera&               getCamera() const;
     const std::vector<Widget*>& getChildren() const;
 
     /**
@@ -93,18 +91,18 @@ protected:
     void setGuiLayer(GuiLayer* layer);
     friend class GuiPointer;
 
-    vvv::vector2i   pos;
-    vvv::vector2i   size;
-    vvv::vector2i   minSize;
-    vvv::vector2i   maxSize;
+    vvv::vector2i pos;
+    vvv::vector2i size;
+    vvv::vector2i minSize;
+    vvv::vector2i maxSize;
 
-    Rect            clipArea;
-    Widget*         obj;
-    Widget*         parent;
-    GuiLayer*       layer;
+    Rect                 clipArea;
+    Widget*              obj;
+    Widget*              parent;
+    GuiLayer*            layer;
     std::vector<Widget*> children;
-    bool            hover;
-    void updateClipArea();
+    bool                 hover;
+    void                 updateClipArea();
 };
 
 #endif // GUIOBJECT_H
