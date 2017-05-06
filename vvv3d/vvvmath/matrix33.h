@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   matrix33.h
  * Author: vvv
  *
@@ -6,20 +6,16 @@
  */
 
 #ifndef MATRIX33_H
-#define	MATRIX33_H
-#include <algorithm>
+#define MATRIX33_H
 #include "matrices_types.h"
+#include <algorithm>
 
+namespace vvv {
 
-namespace vvv
-{
-
-template<typename T>
-class matrix33
-{
+template <typename T>
+class matrix33 {
 public:
     T matrix[3][3];
-
 
     matrix33() { loadIdentity(); }
 
@@ -37,7 +33,7 @@ public:
         return *this;
     }
 
-    matrix33<T>& loadScale( T x, T y, T z)
+    matrix33<T>& loadScale(T x, T y, T z)
     {
         matrix[0][0] = x;
         matrix[0][1] = 0;
@@ -51,80 +47,78 @@ public:
         return *this;
     }
 
-    matrix33<T>& loadRotation( T angle, T ax, T ay, T az );
+    matrix33<T>& loadRotation(T angle, T ax, T ay, T az);
 
-    matrix33<T>& loadRotationX( T angle );
-    matrix33<T>& loadRotationY( T angle );
-    matrix33<T>& loadRotationZ( T angle );
+    matrix33<T>& loadRotationX(T angle);
+    matrix33<T>& loadRotationY(T angle);
+    matrix33<T>& loadRotationZ(T angle);
 
     T determinant() const
     {
-        return    matrix[0][0] * matrix[1][1] * matrix[2][2]
-            - matrix[0][0] * matrix[1][2] * matrix[2][1]
-            - matrix[0][1] * matrix[1][0] * matrix[2][2]
-            + matrix[0][1] * matrix[1][2] * matrix[2][0]
-            + matrix[0][2] * matrix[1][0] * matrix[2][1]
-            - matrix[0][2] * matrix[1][1] * matrix[2][0];
+        return matrix[0][0] * matrix[1][1] * matrix[2][2] -
+               matrix[0][0] * matrix[1][2] * matrix[2][1] -
+               matrix[0][1] * matrix[1][0] * matrix[2][2] +
+               matrix[0][1] * matrix[1][2] * matrix[2][0] +
+               matrix[0][2] * matrix[1][0] * matrix[2][1] -
+               matrix[0][2] * matrix[1][1] * matrix[2][0];
     }
 
-    matrix33&        invert();
+    matrix33& invert();
 
-    matrix33    inverted() const
+    matrix33 inverted() const
     {
         matrix33 ret(*this);
         ret.invert();
         return ret;
     }
 
-    matrix33&   transpose()
+    matrix33& transpose()
     {
-        std::swap( matrix[0][1], matrix[1][0]);
-        std::swap( matrix[0][2], matrix[2][0]);
-        std::swap( matrix[1][2], matrix[2][1]);
+        std::swap(matrix[0][1], matrix[1][0]);
+        std::swap(matrix[0][2], matrix[2][0]);
+        std::swap(matrix[1][2], matrix[2][1]);
         return *this;
     }
 
-    matrix33    transposed() const
+    matrix33 transposed() const
     {
         matrix33 ret(*this);
         ret.transpose();
         return ret;
     }
 
-    static matrix33<T> createMatrixFromRows(const vector3<T>& v0, const vector3<T>& v1, const vector3<T>& v2);
-    static matrix33<T> createMatrixFromColumns(const vector3<T>& v0, const vector3<T>& v1, const vector3<T>& v2);
+    static matrix33<T> createMatrixFromRows(const vector3<T>& v0,
+                                            const vector3<T>& v1,
+                                            const vector3<T>& v2);
+    static matrix33<T> createMatrixFromColumns(const vector3<T>& v0,
+                                               const vector3<T>& v1,
+                                               const vector3<T>& v2);
 
-    static void mul(const matrix33<T>& lhs, const matrix33<T>& rhs, matrix33<T>& out);
-        
- 
-    matrix33<T>    operator* (const matrix33& rhs) const
+    static void mul(const matrix33<T>& lhs, const matrix33<T>& rhs,
+                    matrix33<T>& out);
+
+    matrix33<T> operator*(const matrix33& rhs) const
     {
         matrix33<T> ret;
-        mul( *this, rhs, ret );
+        mul(*this, rhs, ret);
         return ret;
     }
 
-    matrix33& operator*= (const matrix33& rhs)
+    matrix33& operator*=(const matrix33& rhs)
     {
-        mul( *this, rhs, *this);
+        mul(*this, rhs, *this);
         return *this;
     }
 
-    vector3<T>  transform( const vector3<T>& in) const;
+    vector3<T> transform(const vector3<T>& in) const;
 
-    vector3<T> operator *(const vector3<T>& in) const
-    {
-        return transform(in);
-    }
+    vector3<T> operator*(const vector3<T>& in) const { return transform(in); }
 
-    void        transform( const vector3<T>& in, vector3<T>& out) const;
- 
-} ;
+    void transform(const vector3<T>& in, vector3<T>& out) const;
+};
 
 typedef matrix33<double> matrix33d;
-typedef matrix33<float>  matrix33f;
-
+typedef matrix33<float> matrix33f;
 }
 
-#endif	/* MATRIX33_H */
-
+#endif /* MATRIX33_H */

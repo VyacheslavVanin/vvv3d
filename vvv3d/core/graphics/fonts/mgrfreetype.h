@@ -1,14 +1,13 @@
 #ifndef FREETYPECONTAINER
 #define FREETYPECONTAINER
+#include <freetype2/ft2build.h>
 #include <map>
 #include <string>
-#include <freetype2/ft2build.h>
 #include FT_FREETYPE_H
 
 namespace vvv3d {
 
-class MgrFreetype
-{
+class MgrFreetype {
 public:
     MgrFreetype();
     ~MgrFreetype();
@@ -21,11 +20,9 @@ public:
     FT_Face getFont(const std::string& fontNameOrPath) const;
 
 private:
-    FT_Library  library;
+    FT_Library library;
     std::map<std::string, FT_Face> fonts;
 };
-
 }
 
 #endif // FREETYPECONTAINER
-

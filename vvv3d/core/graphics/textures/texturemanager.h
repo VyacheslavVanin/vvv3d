@@ -9,8 +9,7 @@
 
 namespace vvv3d {
 
-class TextureManager
-{
+class TextureManager {
 public:
     TextureManager();
 
@@ -20,17 +19,16 @@ public:
     void add(const std::string& filename, const std::string& name);
     void add(const std::string& filename);
 
-    void addAtlas(const  TextureAtlas& atlas);
+    void addAtlas(const TextureAtlas& atlas);
     bool contain(const std::string& name);
     void remove(const std::string& name);
-    void clear( );
+    void clear();
 
-    std::vector<std::string> listNames()const;
+    std::vector<std::string> listNames() const;
 
 private:
-    mutable std::unordered_map<std::string, std::shared_ptr<Texture>>  texs;
+    mutable std::unordered_map<std::string, std::shared_ptr<Texture>> texs;
 };
-
 }
 
 #endif // TEXTUREMANAGER_H

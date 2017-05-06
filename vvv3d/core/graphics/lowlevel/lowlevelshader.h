@@ -4,8 +4,7 @@
 
 namespace vvv3d {
 
-class LowLevelShader
-{
+class LowLevelShader {
 public:
     LowLevelShader(const char* filename, GLenum shaderType);
     LowLevelShader(const LowLevelShader&) = delete;
@@ -14,7 +13,7 @@ public:
     LowLevelShader& operator=(LowLevelShader&& other) noexcept;
     ~LowLevelShader();
 
-    GLuint get() const {return shader;}
+    GLuint get() const { return shader; }
 
     static LowLevelShader fromString(const char* source, GLenum shaderType);
     static LowLevelShader fragmentFromString(const char* source);
@@ -24,7 +23,6 @@ private:
     LowLevelShader();
     GLuint shader;
 };
-
 }
 
 #endif // LOWLEVELSHADER_H

@@ -4,14 +4,9 @@
 
 namespace vvv3d {
 
-enum class INPUT_EVENT_TYPE
-{
-    KEY_DOWN,
-    KEY_UP
-};
+enum class INPUT_EVENT_TYPE { KEY_DOWN, KEY_UP };
 
-enum SCANCODE
-{
+enum SCANCODE {
     SCANCODE_ENTER     = 40,
     SCANCODE_ESC       = 41,
     SCANCODE_BACKSPACE = 42,
@@ -22,12 +17,12 @@ enum SCANCODE
     SCANCODE_DELETE    = 76
 };
 
-struct InputEvent
-{
+struct InputEvent {
     InputEvent() {}
     InputEvent(INPUT_EVENT_TYPE type, uint16_t scancode)
         : type(type), scancode(scancode)
-    {}
+    {
+    }
 
     bool operator==(const InputEvent& other) const
     {
@@ -35,9 +30,8 @@ struct InputEvent
     }
 
     INPUT_EVENT_TYPE type;
-    uint16_t         scancode;
+    uint16_t scancode;
 };
-
 }
 
 #endif

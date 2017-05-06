@@ -2,9 +2,9 @@
 
 using namespace vvv3d;
 
-LowLevelGeometry::LowLevelGeometry(const std::shared_ptr<LowLevelBuffer> &vb,
-                                   const std::shared_ptr<LowLevelBuffer> &ib,
-                                   const VertexAttributes &attrib)
+LowLevelGeometry::LowLevelGeometry(const std::shared_ptr<LowLevelBuffer>& vb,
+                                   const std::shared_ptr<LowLevelBuffer>& ib,
+                                   const VertexAttributes& attrib)
     : vb(vb), ib(ib), vao(~0u)
 {
     glGenVertexArrays(1, &vao);
@@ -25,49 +25,46 @@ LowLevelGeometry& LowLevelGeometry::operator=(LowLevelGeometry&& other) noexcept
     vb = std::move(other.vb);
     ib = std::move(other.ib);
     freeResources();
-    vao = other.vao;
+    vao       = other.vao;
     other.vao = 0;
     return *this;
 }
 
-LowLevelGeometry::~LowLevelGeometry()
-{
-    freeResources();
-}
+LowLevelGeometry::~LowLevelGeometry() { freeResources(); }
 
 void LowLevelGeometry::Draw(GLenum mode, GLsizei count) const
 {
     static GLuint activeVAO = ~0l;
-    if( activeVAO == vao )
+    if (activeVAO == vao)
         glDrawElements(mode, count, GL_UNSIGNED_INT, 0);
-    else {  activeVAO = vao;
+    else {
+        activeVAO = vao;
         bindVAO();
         ib->bind(); // WORKAROUND: needed due to bug in some drivers
-        glDrawElements(mode, count, GL_UNSIGNED_INT, 0);}
+        glDrawElements(mode, count, GL_UNSIGNED_INT, 0);
+    }
 }
 
-void LowLevelGeometry::setVertexBufferData(const void *data, GLsizei size)
+void LowLevelGeometry::setVertexBufferData(const void* data, GLsizei size)
 {
     bindVAO();
-    vb->setData(data,size);
+    vb->setData(data, size);
 }
 
-void LowLevelGeometry::setIndexBufferData(const void *data, GLsizei size)
+void LowLevelGeometry::setIndexBufferData(const void* data, GLsizei size)
 {
     bindVAO();
-    ib->setData(data,size);
+    ib->setData(data, size);
 }
 
-void LowLevelGeometry::setBuffersData(const void *vdata, GLsizei vsize, const void *idata, GLsizei isize)
+void LowLevelGeometry::setBuffersData(const void* vdata, GLsizei vsize,
+                                      const void* idata, GLsizei isize)
 {
     bindVAO();
-    vb->setData(vdata,vsize);
-    ib->setData(idata,isize);
+    vb->setData(vdata, vsize);
+    ib->setData(idata, isize);
 }
 
-void LowLevelGeometry::bindVAO() const {glBindVertexArray(vao);}
+void LowLevelGeometry::bindVAO() const { glBindVertexArray(vao); }
 
-void LowLevelGeometry::freeResources()
-{
-    glDeleteVertexArrays(1,&vao);
-}
+void LowLevelGeometry::freeResources() { glDeleteVertexArrays(1, &vao); }

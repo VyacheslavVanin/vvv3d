@@ -4,14 +4,13 @@
 
 namespace vvv3d {
 
-class LowLevelTexture
-{
+class LowLevelTexture {
 public:
     LowLevelTexture() = default;
-    LowLevelTexture(const void* src,
-                    GLuint imageWidth, GLuint  imageHeight,
-                    GLint format,      GLint   internalFormat, GLenum type=GL_UNSIGNED_BYTE,
-                    GLenum target=GL_TEXTURE_2D);
+    LowLevelTexture(const void* src, GLuint imageWidth, GLuint imageHeight,
+                    GLint format, GLint internalFormat,
+                    GLenum type             = GL_UNSIGNED_BYTE,
+                    GLenum target           = GL_TEXTURE_2D);
     LowLevelTexture(const LowLevelTexture&) = delete;
     LowLevelTexture& operator=(const LowLevelTexture&) = delete;
     LowLevelTexture(LowLevelTexture&& other) noexcept;
@@ -21,11 +20,11 @@ public:
     void bind() const;
     void bind(GLuint unit) const;
     void setParameter(GLenum paramName, GLint param);
-    GLuint getWidth() const {return width;}
-    GLuint getHeight() const {return height;}
+    GLuint getWidth() const { return width; }
+    GLuint getHeight() const { return height; }
 
-    GLuint getID() const {return texture;}
-    GLint  getFormat() const {return internalFormat;}
+    GLuint getID() const { return texture; }
+    GLint getFormat() const { return internalFormat; }
 
 private:
     GLuint texture;
@@ -34,7 +33,6 @@ private:
     GLuint height;
     GLint internalFormat;
 };
-
 }
 
 #endif // LOWLWVWLTEXTURE_H

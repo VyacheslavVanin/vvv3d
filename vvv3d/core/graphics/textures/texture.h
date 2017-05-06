@@ -7,11 +7,10 @@
 
 namespace vvv3d {
 
-class Texture
-{
+class Texture {
 public:
     Texture(const std::shared_ptr<LowLevelTexture>& tex,
-            const vvv::vector4f& texturePosition=vvv::vector4f(0,0,1,1));
+            const vvv::vector4f& texturePosition = vvv::vector4f(0, 0, 1, 1));
 
     void bind(GLuint unit) const;
     void bind() const;
@@ -20,43 +19,42 @@ public:
      * @brief getTexturePosition Get texture position and size in atlas texture
      * @return  xy - position offset of bootom left corner (0.0 ... 1.0f),
      *          zw - width and height (0.0 ... 1.0f) */
-    const vvv::vector4f &getTexturePosition() const { return texturePosition; }
+    const vvv::vector4f& getTexturePosition() const { return texturePosition; }
 
     /**
      * @brief getHeight get height of texture in pixels
      * @return  */
-    GLuint getHeight() const                        { return height;}
+    GLuint getHeight() const { return height; }
 
     /**
      * @brief getWidth get width of texture in pixels
      * @return  */
-    GLuint getWidth() const                         { return width;}
+    GLuint getWidth() const { return width; }
 
     /**
      * @brief getFormat get OpenGL texture format ( GL_RGBA)
      * @return */
-    GLint  getFormat() const                        { return tex->getFormat();}
+    GLint getFormat() const { return tex->getFormat(); }
 
     /**
      * @brief getID get Low level OpenGL texture id
      * @return Opengl texture id */
-    GLuint getID() const                            { return tex->getID(); }
+    GLuint getID() const { return tex->getID(); }
 
     /**
      * @brief getLowLevelTexture LowLevelTexture refferenced by this Texture
      */
-    LowLevelTexture& getLowLevelTexture() {return *tex;}
+    LowLevelTexture& getLowLevelTexture() { return *tex; }
 
 private:
     friend class TextureAtlas;
-    std::shared_ptr<LowLevelTexture> tex;// pointer to real texture
+    std::shared_ptr<LowLevelTexture> tex; // pointer to real texture
 
-    //store position in real texture (x,y)-offset, (z,w)-width,height
+    // store position in real texture (x,y)-offset, (z,w)-width,height
     vvv::vector4f texturePosition;
     GLuint width;
     GLuint height;
 };
-
 }
 
 #endif // TEXTURE_H

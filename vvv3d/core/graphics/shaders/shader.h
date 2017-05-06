@@ -1,29 +1,27 @@
 #ifndef SHADER_H
 #define SHADER_H
 #include <memory>
+#include <string>
 #include <unordered_map>
 #include <vector>
-#include <string>
-#include <vvv3d/vvvmath/linalg.h>
 #include <vvv3d/core/graphics/color.h>
-#include <vvv3d/core/graphics/textures/texture.h>
 #include <vvv3d/core/graphics/lowlevel/lowlevelshaderprogram.h>
+#include <vvv3d/core/graphics/textures/texture.h>
+#include <vvv3d/vvvmath/linalg.h>
 
 namespace vvv3d {
 
-class Shader
-{
+class Shader {
 private:
-
     Shader();
     GLint loadLocation(const char* name);
-    void loadLocations(const std::string &name);
+    void loadLocations(const std::string& name);
 
     LowLevelShaderProgram program;
     std::string vertexSourceName;
     std::string fragmentSourceName;
 
-    enum class LOCATIONS{
+    enum class LOCATIONS {
         MODEL,
         VIEW,
         PROJECTION,
@@ -50,19 +48,21 @@ private:
         TIME,
         AMBIENT_COLOR,
         POSITION,
-        COUNT };
+        COUNT
+    };
     static const char* locations_names[static_cast<size_t>(LOCATIONS::COUNT)];
     GLint locations[static_cast<size_t>(LOCATIONS::COUNT)];
 
     // part of workaround std::make_shared with private constructor
-    struct _private{};
+    struct _private {
+    };
 
 public:
-    static std::shared_ptr<Shader> fromStrings(const std::string &name,
+    static std::shared_ptr<Shader> fromStrings(const std::string& name,
                                                const char* vertexSource,
                                                const char* fragmentSource);
 
-    static std::shared_ptr<Shader> fromFiles(const std::string &name,
+    static std::shared_ptr<Shader> fromFiles(const std::string& name,
                                              const char* vertexFileName,
                                              const char* fragmentFileName);
 
@@ -84,7 +84,7 @@ public:
     void setColor6(const Color& color);
     void setColor7(const Color& color);
     void setTexturePosition(const vvv::vector4f& pos);
-    void setTexture(int n, const Texture &tex);
+    void setTexture(int n, const Texture& tex);
     void setTexture0(const Texture& tex);
     void setTexture1(const Texture& tex);
     void setTexture2(const Texture& tex);
@@ -104,14 +104,12 @@ public:
     explicit Shader(const _private&) : Shader() {}
 };
 
-class ShaderManager
-{
+class ShaderManager {
 public:
     ShaderManager();
 
-    void add(const std::string& name,
-                   const std::string& vertexShaderFilename,
-                   const std::string& fragmentShaderFilename);
+    void add(const std::string& name, const std::string& vertexShaderFilename,
+             const std::string& fragmentShaderFilename);
     void add(const std::string& name, std::shared_ptr<Shader> shader);
 
     std::shared_ptr<Shader> get(const std::string& name) const;
@@ -121,7 +119,6 @@ public:
 private:
     std::unordered_map<std::string, std::shared_ptr<Shader>> shaders;
 };
-
 }
 
 #endif // SHADER_H

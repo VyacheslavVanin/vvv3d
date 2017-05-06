@@ -4,10 +4,9 @@
 
 namespace vvv3d {
 
-class LowLevelBuffer
-{
+class LowLevelBuffer {
 public:
-    LowLevelBuffer(GLenum target,const void* data, size_t size);
+    LowLevelBuffer(GLenum target, const void* data, size_t size);
     ~LowLevelBuffer();
     LowLevelBuffer(const LowLevelBuffer&) = delete;
     LowLevelBuffer& operator=(const LowLevelBuffer&) = delete;
@@ -25,7 +24,6 @@ private:
     size_t size;
     size_t sizemax;
 };
-
 }
 
 #endif // LOWLEVELBUFFER_H

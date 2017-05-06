@@ -1,16 +1,15 @@
 #ifndef TEXTUREATLAS_H
 #define TEXTUREATLAS_H
 #include "texture.h"
-#include <string>
-#include <memory>
-#include <unordered_map>
 #include <initializer_list>
+#include <memory>
+#include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace vvv3d {
 
-class TextureAtlas
-{
+class TextureAtlas {
 public:
     TextureAtlas(size_t width, size_t height,
                  const std::vector<std::string>& filenames,
@@ -24,10 +23,10 @@ public:
                  const std::initializer_list<std::string>& names,
                  unsigned int border = 0);
 
-    std::shared_ptr<Texture> get(const std::string& name)const;
-    std::vector<std::string> listNames()const;
+    std::shared_ptr<Texture> get(const std::string& name) const;
+    std::vector<std::string> listNames() const;
 
-    auto getInternal() {return atlas;}
+    auto getInternal() { return atlas; }
 
 private:
     friend class TextureManager;
@@ -35,11 +34,11 @@ private:
     std::unordered_map<std::string, std::shared_ptr<Texture>> textures;
     size_t width;
     size_t height;
-    void constructorFunction(size_t width, size_t height,
-                 const std::vector<std::string> &names,
-                 const std::vector<std::shared_ptr<LowLevelTexture>> &texsList, unsigned int border = 0);
+    void constructorFunction(
+        size_t width, size_t height, const std::vector<std::string>& names,
+        const std::vector<std::shared_ptr<LowLevelTexture>>& texsList,
+        unsigned int border = 0);
 };
-
 }
 
 #endif // TEXTUREATLAS_H

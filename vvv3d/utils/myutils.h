@@ -4,7 +4,10 @@
 #include <string>
 #include <vvv3d/core/graphics/lowlevel/openglprovider.h>
 
-#define DebugVar(var) {std::cout << #var << " = " << var << std::endl;}
+#define DebugVar(var)                                                          \
+    {                                                                          \
+        std::cout << #var << " = " << var << std::endl;                        \
+    }
 #define GLSL(version, src) "#version " #version "\n" #src
 
 namespace vvv3d {

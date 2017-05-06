@@ -1,19 +1,18 @@
 #ifndef LOWLEVELGEOMETRY_H
 #define LOWLEVELGEOMETRY_H
-#include <stdexcept>
-#include <memory>
+#include "lowlevelbuffer.h"
 #include "openglprovider.h"
 #include "vertexattribute.h"
-#include "lowlevelbuffer.h"
+#include <memory>
+#include <stdexcept>
 
 namespace vvv3d {
 
-class LowLevelGeometry
-{
+class LowLevelGeometry {
 public:
-    LowLevelGeometry( const std::shared_ptr<LowLevelBuffer>& vb,
-                      const std::shared_ptr<LowLevelBuffer>& ib,
-                      const VertexAttributes& attrib);
+    LowLevelGeometry(const std::shared_ptr<LowLevelBuffer>& vb,
+                     const std::shared_ptr<LowLevelBuffer>& ib,
+                     const VertexAttributes& attrib);
     LowLevelGeometry(const LowLevelGeometry&) = delete;
     LowLevelGeometry& operator=(const LowLevelGeometry&) = delete;
     LowLevelGeometry(LowLevelGeometry&& other) noexcept;
@@ -27,9 +26,8 @@ public:
 
     void setIndexBufferData(const void* data, GLsizei size);
 
-    void setBuffersData(const void* vdata, GLsizei vsize,
-                        const void* idata, GLsizei isize);
-
+    void setBuffersData(const void* vdata, GLsizei vsize, const void* idata,
+                        GLsizei isize);
 
 private:
     void bindVAO() const;
@@ -39,7 +37,6 @@ private:
     std::shared_ptr<LowLevelBuffer> ib;
     GLuint vao;
 };
-
 }
 
 #endif // LOWLEVELGEOMETRY_H
