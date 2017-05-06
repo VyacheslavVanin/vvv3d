@@ -2,19 +2,19 @@
 #define IMAGEWIDGET_H
 #include "widget.h"
 #include <memory>
+#include <vvv3d/core/graphics/textures/texture.h>
 
-class Texture;
 
 class ImageWidget final : public Widget {
 public:
     explicit ImageWidget();
-    explicit ImageWidget(Texture* texture);
+    explicit ImageWidget(vvv3d::Texture* texture);
     ~ImageWidget();
 
-    void setTexture(Texture* texture);
+    void setTexture(vvv3d::Texture* texture);
 
 private:
-    Texture* texture = nullptr;
+    vvv3d::Texture* texture = nullptr;
 
     // Widget interface
 protected:

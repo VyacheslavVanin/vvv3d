@@ -4,9 +4,10 @@
 #include <memory>
 #include <vector>
 #include <vvv3d/vvvmath/matrices_types.h>
+#include <vvv3d/core/camera.h>
 
 class GuiLayer;
-class Camera;
+
 class Widget {
 public:
     explicit Widget();
@@ -57,7 +58,7 @@ private:
     bool           focusable = false;
 
 protected:
-    const Camera&               getCamera() const;
+    const vvv3d::Camera&        getCamera() const;
     const std::vector<Widget*>& getChildren() const;
 
     /**

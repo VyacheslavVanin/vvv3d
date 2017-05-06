@@ -2,6 +2,8 @@
 #include "eventtestwidget.h"
 #include "vvv3d/core/graphics/color.h"
 
+using namespace vvv3d;
+
 EventTestWidget::EventTestWidget()
     : TextWidget("Idle"),
       backgroundWidget(new ColorRectWidget(Color(0.2, 0.6, 0.8, 0.5)))

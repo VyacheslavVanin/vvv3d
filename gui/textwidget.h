@@ -6,8 +6,11 @@
 #include <string>
 #include <vvv3d/vvv3d.h>
 
+namespace vvv3d {
 class Color;
 class Font;
+}
+
 class TextWidget : public Widget {
 public:
     explicit TextWidget(const std::string& text = "Text");
@@ -28,8 +31,8 @@ public:
     char32_t popBack();
     char32_t popFront();
 
-    void setColor(const Color& color);
-    void setFont(std::shared_ptr<Font> font);
+    void setColor(const vvv3d::Color& color);
+    void setFont(std::shared_ptr<vvv3d::Font> font);
     void resizeToContent();
     void setAutoSize(bool value);
 
@@ -40,11 +43,11 @@ private:
     bool                      autosize;
     HALIGN                    halign;
     VALIGN                    valign;
-    Transform                 transform;
+    vvv3d::Transform                 transform;
     std::u32string            text;
-    std::shared_ptr<Geometry> geometry;
-    std::shared_ptr<Font>     font;
-    Color                     color         = Color::WHITE;
+    std::shared_ptr<vvv3d::Geometry> geometry;
+    std::shared_ptr<vvv3d::Font>     font;
+    vvv3d::Color                     color         = vvv3d::Color::WHITE;
     mutable int               widthInPixels = 0;
     mutable bool              changed;
 
@@ -54,7 +57,7 @@ private:
     int       getHAlignOffset() const;
     int       getVAlignOffset() const;
     void      lazyUpdateGeometryData() const;
-    Geometry& getGeometry() const;
+    vvv3d::Geometry& getGeometry() const;
     int       getWidthInPixels() const;
 
 protected:

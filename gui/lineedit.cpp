@@ -1,5 +1,6 @@
 #include "lineedit.h"
 #include <vvv3d/vvv3d.h>
+using namespace vvv3d;
 
 LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT)
 {

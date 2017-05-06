@@ -2,6 +2,8 @@
 #include <mutex>
 #include <vvv3d/vvv3d.h>
 
+using namespace vvv3d;
+
 int textLineWidth(const std::u32string& text, const Font& f)
 {
     int ret = 0;

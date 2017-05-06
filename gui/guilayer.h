@@ -4,10 +4,9 @@
 #include <vector>
 #include <vvv3d/vvv3d.h>
 #include <vvv3d/vvvmath/vector2.h>
+#include <vvv3d/vvv3d.h>
 
 class Widget;
-class Camera;
-class Input;
 class GuiLayer final {
 public:
     GuiLayer();
@@ -21,9 +20,9 @@ public:
     void resize(int width, int height);
     const vvv::vector2<int>& getSize() const;
 
-    const Camera& getCamera() const;
+    const vvv3d::Camera& getCamera() const;
 
-    void processInputEvents(const Input& input);
+    void processInputEvents(const vvv3d::Input& input);
 
     void setVisible(bool visible);
     bool getVisible() const;
@@ -35,7 +34,7 @@ private:
     public:
         GuiPointer(WidgetsContainer& widgets) : widgets(&widgets) {}
 
-        void processInput(const Input& input);
+        void processInput(const vvv3d::Input& input);
 
         Widget* getWidgetAtPoint(const vvv::vector2i& pos);
 
@@ -44,9 +43,9 @@ private:
     private:
         WidgetsContainer* widgets;
         bool              mouseButtonsStates[NUM_MOUSE_BUTTONS]{false};
-        void detectMouseMove(const Input::Mouse& mouse);
-        void detectMouseButtons(const Input::Mouse& mouse);
-        void processKeyboard(const Input::Keyboard& kbd);
+        void detectMouseMove(const vvv3d::Input::Mouse& mouse);
+        void detectMouseButtons(const vvv3d::Input::Mouse& mouse);
+        void processKeyboard(const vvv3d::Input::Keyboard& kbd);
     };
 
     WidgetsContainer  widgets;
@@ -54,7 +53,7 @@ private:
     /**
      * @brief Orthographic camera; top-left corner (0,0)
      */
-    Camera     camera;
+    vvv3d::Camera     camera;
     GuiPointer pointer;
     bool       visible;
 };

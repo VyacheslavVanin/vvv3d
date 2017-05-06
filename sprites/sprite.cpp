@@ -1,5 +1,6 @@
 #include "sprite.h"
 #include <mutex>
+using namespace vvv3d;
 
 std::shared_ptr<Geometry> makeSpriteGeometry()
 {

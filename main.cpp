@@ -16,6 +16,8 @@
 #include <vvv3d/vvv3d.h>
 #include <vvvstlhelper.hpp>
 
+using namespace vvv3d;
+
 vvv::vector3f randomVector(float range)
 {
     static std::random_device r;

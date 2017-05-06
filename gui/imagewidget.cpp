@@ -2,6 +2,8 @@
 #include <mutex>
 #include <vvv3d/vvv3d.h>
 
+using namespace vvv3d;
+
 static std::shared_ptr<Geometry> makeImageGeometry()
 {
     static const GLfloat spriteVertices[] = {0, -1, 0, 0, 1, 0,  1, 1,

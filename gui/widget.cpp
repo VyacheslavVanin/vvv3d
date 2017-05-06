@@ -7,6 +7,7 @@
 #include <vvv3d/std/draw.h>
 #include <vvv3d/vvvmath/linalg.h>
 
+using namespace vvv3d;
 class GuiLayer;
 
 Widget* Widget::focus = nullptr;

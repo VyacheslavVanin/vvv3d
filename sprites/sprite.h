@@ -10,20 +10,21 @@ public:
     Sprite& operator=(const Sprite&) = default;
     ~Sprite()                        = default;
 
-    void setTexture(Texture* texture) { this->texture = texture; }
-    Texture*                 getTexture() const { return texture; }
+    void setTexture(vvv3d::Texture* texture) { this->texture = texture; }
+    vvv3d::Texture*                 getTexture() const { return texture; }
 
-    Transform transform;
+    vvv3d::Transform transform;
 
 private:
-    Texture* texture;
+    vvv3d::Texture* texture;
 };
 
-void drawSprite(Engine& engine, const Camera& camera, const Sprite& spr);
+void drawSprite(vvv3d::Engine& engine, const vvv3d::Camera& camera,
+                const Sprite& spr);
 
 template <typename A, template <typename, typename> class C>
-inline void drawSprites(Engine& engine, const Camera& camera,
-                        const C<Sprite, A>&           sprs)
+inline void drawSprites(vvv3d::Engine& engine, const vvv3d::Camera& camera,
+                        const C<Sprite, A>& sprs)
 {
     auto& resman    = engine.getResourceManager();
     auto& shaderman = resman.getShaderManager();

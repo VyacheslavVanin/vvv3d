@@ -5,6 +5,8 @@
 #include "verticallayout.h"
 #include "vvv3d/core/graphics/color.h"
 
+using namespace vvv3d;
+
 ButtonText::ButtonText(const std::string& caption)
     : text(new TextWidget(caption)), background(new ColorRectWidget(Color(0))),
       panel(new Panel(new VerticalLayout(), background))

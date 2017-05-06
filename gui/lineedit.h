@@ -19,8 +19,8 @@ public:
     void setHAlign(HALIGN align);
     HALIGN getHAlign() const;
 
-    void setBackgroundColor(const Color& color);
-    void setCursorColor(const Color& color);
+    void setBackgroundColor(const vvv3d::Color& color);
+    void setCursorColor(const vvv3d::Color& color);
 
     void
     addOnPressEnterAction(const std::function<void(const std::string&)>& f);

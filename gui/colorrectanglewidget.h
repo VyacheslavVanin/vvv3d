@@ -7,13 +7,13 @@
 class ColorRectWidget : public Widget {
 public:
     explicit ColorRectWidget();
-    explicit ColorRectWidget(const Color& colour);
+    explicit ColorRectWidget(const vvv3d::Color& colour);
     ~ColorRectWidget();
 
-    void setColor(const Color& colour);
+    void setColor(const vvv3d::Color& colour);
 
 private:
-    Color color;
+    vvv3d::Color color;
 
     // Widget interface
 protected:
