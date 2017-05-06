@@ -4,6 +4,8 @@
 #include <functional>
 #include <vvv3d/vvvmath/linalg.h>
 
+namespace vvv3d {
+
 class LowLevelShaderProgram
 {
 public:
@@ -76,5 +78,7 @@ public:
 private:
     GLuint program;
 };
+
+}
 
 #endif // LOWLEVELSHADERPROGRAM_H

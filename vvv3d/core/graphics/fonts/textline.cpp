@@ -7,6 +7,8 @@
 #include <boost/locale/encoding_utf.hpp>
 #endif
 
+namespace vvv3d {
+
 struct textVertex
 {
     textVertex() : pos(), texcoord() {}
@@ -127,4 +129,6 @@ void updateTextGeometry(const std::shared_ptr<Geometry>& in, const Font& font,
                         const std::string& text)
 {
     updateTextGeometry(in, font, toU32(text));
+}
+
 }

@@ -5,6 +5,7 @@
 #include <vvv3d/vvvmath/matrices_types.h>
 #include <vvv3d/core/inputevent.h>
 
+namespace vvv3d {
 
 class Input
 {
@@ -73,5 +74,8 @@ private:
     friend class Input;
     Input input;
 };
+
+}
+
 #endif // ENGINE
 

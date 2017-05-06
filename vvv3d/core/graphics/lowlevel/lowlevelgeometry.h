@@ -6,6 +6,8 @@
 #include "vertexattribute.h"
 #include "lowlevelbuffer.h"
 
+namespace vvv3d {
+
 class LowLevelGeometry
 {
 public:
@@ -37,5 +39,7 @@ private:
     std::shared_ptr<LowLevelBuffer> ib;
     GLuint vao;
 };
+
+}
 
 #endif // LOWLEVELGEOMETRY_H

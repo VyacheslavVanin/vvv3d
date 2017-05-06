@@ -1,5 +1,7 @@
 #include "mgrfreetype.h"
 
+namespace vvv3d {
+
 MgrFreetype::MgrFreetype()
     : library(), fonts()
 {
@@ -8,7 +10,7 @@ MgrFreetype::MgrFreetype()
 
 MgrFreetype::~MgrFreetype() { FT_Done_FreeType(library); }
 
-FT_Face MgrFreetype::addFont(const std::__cxx11::string& name, const std::__cxx11::string& fontPath)
+FT_Face MgrFreetype::addFont(const std::string& name, const std::string& fontPath)
 {
     FT_Face     face;
     const FT_Error error = FT_New_Face( library, fontPath.c_str(), 0, &face );
@@ -21,10 +23,12 @@ FT_Face MgrFreetype::addFont(const std::__cxx11::string& name, const std::__cxx1
     return face;
 }
 
-void MgrFreetype::addFont(const std::__cxx11::string& fontNameOrPath)
+void MgrFreetype::addFont(const std::string& fontNameOrPath)
 {
     addFont(fontNameOrPath, fontNameOrPath);
 }
 
-FT_Face MgrFreetype::getFont(const std::__cxx11::string& fontNameOrPath) const
+FT_Face MgrFreetype::getFont(const std::string& fontNameOrPath) const
 { return fonts.at(fontNameOrPath); }
+
+}

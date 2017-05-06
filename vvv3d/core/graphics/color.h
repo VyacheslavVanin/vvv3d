@@ -2,6 +2,8 @@
 #define COLOR_H
 #include <vvv3d/vvvmath/vector4.h>
 
+namespace vvv3d {
+
 class Color
 {
 public:
@@ -31,5 +33,7 @@ public:
     static Color PURPLE;
     static Color ORANGE;
 };
+
+}
 
 #endif // COLOR_H

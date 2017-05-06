@@ -10,6 +10,8 @@
 #include <functional>
 #include <vvv3d/utils/myutils.h>
 
+namespace vvv3d {
+
 enum class ATTRIB_LOCATION : GLuint
 {
     POSITION,
@@ -76,5 +78,6 @@ private:
     GLsizei     stride;
 };
 
+}
 
 #endif // VERTEXATTRIBUTE_H

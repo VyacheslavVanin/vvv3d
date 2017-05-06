@@ -2,6 +2,8 @@
 #define INPUTEVENT_H
 #include <stdint.h>
 
+namespace vvv3d {
+
 enum class INPUT_EVENT_TYPE
 {
     KEY_DOWN,
@@ -35,5 +37,7 @@ struct InputEvent
     INPUT_EVENT_TYPE type;
     uint16_t         scancode;
 };
+
+}
 
 #endif

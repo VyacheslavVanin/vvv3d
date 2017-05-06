@@ -2,6 +2,8 @@
 #include "lowlevelbuffer.h"
 #include <stdexcept>
 
+using namespace vvv3d;
+
 LowLevelBuffer::LowLevelBuffer(GLenum target, const void *data, size_t size)
     : target(target), buffer(~0u), size(0), sizemax(0)
 {
@@ -66,4 +68,3 @@ void LowLevelBuffer::reset()
     size = 0;
     sizemax = 0;
 }
-

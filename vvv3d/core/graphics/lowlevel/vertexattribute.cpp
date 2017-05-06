@@ -1,5 +1,7 @@
 #include "vertexattribute.h"
 
+namespace vvv3d {
+
 static const std::map<ATTRIB_LOCATION,std::string> attributesNamesBindings =
 {
     {ATTRIB_LOCATION::POSITION, "va_position"  },
@@ -71,3 +73,6 @@ void VertexAttributes::enable() const
         glEnableVertexAttribArray(a.location);
     }
 }
+
+}
+

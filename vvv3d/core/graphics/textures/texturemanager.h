@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <vector>
 
+namespace vvv3d {
+
 class TextureManager
 {
 public:
@@ -28,5 +30,7 @@ public:
 private:
     mutable std::unordered_map<std::string, std::shared_ptr<Texture>>  texs;
 };
+
+}
 
 #endif // TEXTUREMANAGER_H

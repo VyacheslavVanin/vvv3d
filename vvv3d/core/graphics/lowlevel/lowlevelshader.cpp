@@ -8,6 +8,8 @@
 #include "lowlevelshader.h"
 #include "utils/myutils.h"
 
+using namespace vvv3d;
+
 static GLint ShaderStatus( GLuint shader, GLenum param)
 {
     GLint status, length;

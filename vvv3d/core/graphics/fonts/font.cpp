@@ -7,6 +7,8 @@
 #include <vvv3d/core/graphics/textures/texturepacker.h>
 #include <vvv3d/utils/myutils.h>
 
+namespace vvv3d {
+
 using namespace std;
 const std::u32string characters = U"abcdefghijklmnopqrstuvwxyz"
                                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -212,3 +214,5 @@ std::shared_ptr<Font> FontManager::getFont(const string &name) const
 }
 
 FontManager::~FontManager() = default;
+
+}

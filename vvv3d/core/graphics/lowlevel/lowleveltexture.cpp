@@ -1,5 +1,6 @@
 #include "lowleveltexture.h"
 
+using namespace vvv3d;
 
 LowLevelTexture::LowLevelTexture(const void* src,
                                  GLuint imageWidth, GLuint imageHeight,

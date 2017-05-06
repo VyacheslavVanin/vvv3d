@@ -6,6 +6,8 @@
 #include <vvv3d/core/graphics/lowlevel/lowleveltexture.h>
 #include <vvv3d/core/graphics/textures/texture.h>
 
+namespace vvv3d {
+
 struct Glyph
 {
     uint32_t character  = {0};
@@ -57,6 +59,6 @@ private:
     std::unique_ptr<MgrFreetype> freetypeMgr;
 };
 
-
+}
 
 #endif // FONT_H

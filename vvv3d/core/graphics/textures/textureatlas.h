@@ -7,6 +7,8 @@
 #include <initializer_list>
 #include <vector>
 
+namespace vvv3d {
+
 class TextureAtlas
 {
 public:
@@ -37,5 +39,7 @@ private:
                  const std::vector<std::string> &names,
                  const std::vector<std::shared_ptr<LowLevelTexture>> &texsList, unsigned int border = 0);
 };
+
+}
 
 #endif // TEXTUREATLAS_H

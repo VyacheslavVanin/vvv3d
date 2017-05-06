@@ -4,6 +4,8 @@
 #include <memory>
 using namespace std;
 
+using namespace vvv3d;
+
 Geometry::Geometry(const void* vertexData, GLsizei dataSize,
                                const GLuint* indices,  GLsizei numIndices,
                                const VertexAttributes& attributes,
@@ -80,3 +82,4 @@ std::vector<string> GeometryManager::listNames() const
         ret.push_back(kv.first);
     return ret;
 }
+

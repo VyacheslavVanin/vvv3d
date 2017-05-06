@@ -1,6 +1,7 @@
 #include "texturemanager.h"
 #include "utils/helper.h"
 
+using namespace vvv3d;
 
 TextureManager::TextureManager() : texs() {}
 

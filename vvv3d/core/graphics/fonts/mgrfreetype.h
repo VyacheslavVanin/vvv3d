@@ -5,6 +5,8 @@
 #include <freetype2/ft2build.h>
 #include FT_FREETYPE_H
 
+namespace vvv3d {
+
 class MgrFreetype
 {
 public:
@@ -23,6 +25,7 @@ private:
     std::map<std::string, FT_Face> fonts;
 };
 
+}
 
 #endif // FREETYPECONTAINER
 

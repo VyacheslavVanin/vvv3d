@@ -1,4 +1,5 @@
 #include  "color.h"
+using namespace vvv3d;
 Color    Color::ORANGE   = Color(1, 0.5, 0);
 Color    Color::WHITE    =  Color(1    );
 Color    Color::SILVER   =  Color(0.75f);

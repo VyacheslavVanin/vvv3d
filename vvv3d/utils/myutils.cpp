@@ -7,6 +7,8 @@
 #include <stdexcept>
 #include <map>
 
+namespace vvv3d {
+
 std::string loadFileToString(const char *filename)
 {
     std::string ret;
@@ -25,4 +27,6 @@ void loadFileToString(const char *filename, std::string &out)
     out.reserve( f.tellg() );
     f.seekg(0, std::ios::beg);
     out.assign(istreambuf_iterator<char>(f), std::istreambuf_iterator<char>());
+}
+
 }

@@ -2,6 +2,8 @@
 #define DRAW_H
 #include <vvv3d/vvvmath/vector4.h>
 
+namespace vvv3d {
+
 #define DRAW_TRANSPARENT for(auto trenable = [](){glDisable(GL_DEPTH_TEST); glEnable(GL_BLEND); \
                                                   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);return true;}(); \
                              trenable; \
@@ -47,5 +49,7 @@ void drawText(const Camera& camera, Shader& shader, const Geometry& geometry,
 void scissor(int x, int y, int width, int height);
 void scissorDisable();
 vvv::vector4<int> getScissor();
+
+}
 
 #endif // DRAW_H

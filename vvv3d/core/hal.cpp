@@ -1,6 +1,7 @@
 #include "hal.h"
 #include <vvv3d/vvvmath/linalg.h>
 
+using namespace vvv3d;
 
 vvv::vector2i HAL::getMousePos() const
 {

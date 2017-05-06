@@ -1,5 +1,6 @@
 #include "texture.h"
 
+using namespace vvv3d;
 
 void Texture::bind(GLuint unit) const { tex->bind(unit); }
 

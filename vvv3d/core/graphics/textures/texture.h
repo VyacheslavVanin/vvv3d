@@ -5,6 +5,8 @@
 #include <vvv3d/core/graphics/lowlevel/lowleveltexture.h>
 #include <vvv3d/vvvmath/linalg.h>
 
+namespace vvv3d {
+
 class Texture
 {
 public:
@@ -55,5 +57,6 @@ private:
     GLuint height;
 };
 
+}
 
 #endif // TEXTURE_H

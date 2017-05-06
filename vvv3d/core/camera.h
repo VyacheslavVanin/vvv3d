@@ -2,6 +2,8 @@
 #define CAMERA_H
 #include <vvv3d/vvvmath/linalg.h>
 
+namespace vvv3d {
+
 class Camera
 {
 public:
@@ -69,5 +71,7 @@ private:
     void updateViewMatrix()const;
     void updateViewProjectionMatrix()const;
 };
+
+}
 
 #endif // CAMERA_H

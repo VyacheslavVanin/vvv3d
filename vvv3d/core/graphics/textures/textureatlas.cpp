@@ -2,6 +2,8 @@
 #include "texturepacker.h"
 #include <utils/helper.h>
 
+using namespace vvv3d;
+
 using namespace std;
 
 TextureAtlas::TextureAtlas(size_t width, size_t height,

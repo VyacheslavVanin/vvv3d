@@ -1,6 +1,7 @@
 #include "camera.h"
 
 using namespace vvv;
+using namespace vvv3d;
 
 Camera::Camera() :  position(0,0,1),
                     forward(0,0,-1),

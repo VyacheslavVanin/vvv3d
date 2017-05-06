@@ -2,6 +2,8 @@
 #define LOWLEVELSHADER_H
 #include "openglprovider.h"
 
+namespace vvv3d {
+
 class LowLevelShader
 {
 public:
@@ -22,5 +24,7 @@ private:
     LowLevelShader();
     GLuint shader;
 };
+
+}
 
 #endif // LOWLEVELSHADER_H

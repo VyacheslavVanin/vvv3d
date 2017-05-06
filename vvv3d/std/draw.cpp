@@ -6,6 +6,7 @@
 #include <core/graphics/fonts/textline.h>
 #include <core/transform.h>
 
+namespace vvv3d {
 
 static inline
 void setup_shader(Shader& shader, const Camera& camera,
@@ -114,4 +115,6 @@ vvv::vector4<int> getScissor()
 void scissorDisable()
 {
     glDisable(GL_SCISSOR_TEST);
+}
+
 }

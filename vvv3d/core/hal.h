@@ -6,6 +6,8 @@
 #include <vector>
 #include "inputevent.h"
 
+namespace vvv3d {
+
 enum class GLPROFILE { ES, CORE };
 
 /**
@@ -48,5 +50,6 @@ public:
     virtual ~HAL();
 };
 
+}
 
 #endif // HAL_H

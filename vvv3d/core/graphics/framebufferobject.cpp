@@ -1,5 +1,7 @@
 #include "framebufferobject.h"
 
+using namespace vvv3d;
+
 FrameBufferObject::FrameBufferObject()
     : framebuffer(0)
 {
@@ -85,4 +87,3 @@ void FrameBufferObject::endDraw()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
-

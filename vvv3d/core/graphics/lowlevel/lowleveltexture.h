@@ -2,6 +2,8 @@
 #define LOWLEVELTEXTURE_H
 #include "openglprovider.h"
 
+namespace vvv3d {
+
 class LowLevelTexture
 {
 public:
@@ -32,5 +34,7 @@ private:
     GLuint height;
     GLint internalFormat;
 };
+
+}
 
 #endif // LOWLWVWLTEXTURE_H

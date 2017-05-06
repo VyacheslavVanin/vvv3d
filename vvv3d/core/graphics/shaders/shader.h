@@ -9,6 +9,8 @@
 #include <vvv3d/core/graphics/textures/texture.h>
 #include <vvv3d/core/graphics/lowlevel/lowlevelshaderprogram.h>
 
+namespace vvv3d {
+
 class Shader
 {
 private:
@@ -120,5 +122,6 @@ private:
     std::unordered_map<std::string, std::shared_ptr<Shader>> shaders;
 };
 
+}
 
 #endif // SHADER_H

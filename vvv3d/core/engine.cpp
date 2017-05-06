@@ -6,6 +6,8 @@
 #include <core/resourcemanager.h>
 #include <core/sdllayer.h>
 
+using namespace vvv3d;
+
 static const int DEFAULT_SCREEN_WIDTH = 640;
 static const int DEFAULT_SCREEN_HEIGHT = 480;
 Engine* Engine::activeEngine = nullptr;

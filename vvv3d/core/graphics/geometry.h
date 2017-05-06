@@ -4,6 +4,8 @@
 #include <memory>
 #include "lowlevel/lowlevelgeometry.h"
 
+namespace vvv3d {
+
 class Geometry
 {
 public:
@@ -44,5 +46,6 @@ private:
     std::unordered_map<std::string, std::shared_ptr<Geometry>> geometries;
 };
 
+}
 
 #endif // SIMPLEGEOMETRY_H

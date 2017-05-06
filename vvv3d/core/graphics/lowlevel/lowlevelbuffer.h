@@ -2,6 +2,8 @@
 #define LOWLEVELBUFFER_H
 #include "openglprovider.h"
 
+namespace vvv3d {
+
 class LowLevelBuffer
 {
 public:
@@ -23,5 +25,7 @@ private:
     size_t size;
     size_t sizemax;
 };
+
+}
 
 #endif // LOWLEVELBUFFER_H

@@ -6,6 +6,7 @@
 #include <memory>
 #include <algorithm>
 
+namespace vvv3d {
 // TODO: Refactor this !!!
 
 /**
@@ -124,7 +125,7 @@ pack2d(const std::vector<T>& input, SIZE_TYPE width, SIZE_TYPE height,
     return ret;
 }
 
-
+}
 
 #endif // TEXTUREPACKER_H
 

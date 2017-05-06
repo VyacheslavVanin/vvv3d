@@ -2,6 +2,8 @@
 #define FRAMEBUFFEROBJECT_H
 #include "textures/texture.h"
 
+namespace vvv3d {
+
 class FrameBufferObject
 {
 public:
@@ -28,6 +30,8 @@ public:
 private:
     GLuint framebuffer;
 };
+
+}
 
 #endif // FRAMEBUFFEROBJECT_H
 

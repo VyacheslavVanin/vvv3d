@@ -2,6 +2,8 @@
 #define TRANSFORM_H
 #include <vvv3d/vvvmath/linalg.h>
 
+namespace vvv3d {
+
 class Transform
 {
 public:
@@ -202,7 +204,6 @@ inline void Transform::scale(float s)
     m_scale *= s;
 }
 
-
-
+}
 
 #endif // TRANSFORM_H

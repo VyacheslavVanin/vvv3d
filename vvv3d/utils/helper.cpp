@@ -10,6 +10,8 @@
 #define int_p_NULL (int*)NULL
 #include <boost/gil/extension/io/png_io.hpp>
 
+namespace vvv3d {
+
 LowLevelTexture* readFromPng(const char* filename)
 {
     using namespace boost::gil;
@@ -173,5 +175,5 @@ SimpleGeometry* loadGeometryFrom3ds(const char* filename)
     return ret;
 }
 #endif
-
+}
 

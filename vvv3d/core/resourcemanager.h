@@ -5,6 +5,8 @@
 #include <vvv3d/core/graphics/geometry.h>
 #include <vvv3d/core/graphics/shaders/shader.h>
 
+namespace vvv3d {
+
 class ResourceManager
 {
 public:
@@ -22,5 +24,7 @@ private:
     ShaderManager    shaderManger;
     GeometryManager  geometryManager;
 };
+
+}
 
 #endif // RESOURCEMANAGER_H

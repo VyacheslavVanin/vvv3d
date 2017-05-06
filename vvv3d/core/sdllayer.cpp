@@ -3,6 +3,8 @@
 #include <vvv3d/core/graphics/lowlevel/openglprovider.h>
 //#include <SDL2/SDL_opengles2.h>
 
+using namespace vvv3d;
+
 class sdl_input
 {
 public:

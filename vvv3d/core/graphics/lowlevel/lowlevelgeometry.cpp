@@ -1,6 +1,6 @@
 #include "lowlevelgeometry.h"
 
-
+using namespace vvv3d;
 
 LowLevelGeometry::LowLevelGeometry(const std::shared_ptr<LowLevelBuffer> &vb,
                                    const std::shared_ptr<LowLevelBuffer> &ib,

@@ -3,6 +3,8 @@
 #include "hal.h"
 #include <memory>
 
+namespace vvv3d {
+
 class sdlLayer : public HAL
 {
 public:
@@ -50,5 +52,6 @@ public:
     const std::vector<InputEvent>& getEvents() const override;
 };
 
+}
 
 #endif // SDLLAYER_H
