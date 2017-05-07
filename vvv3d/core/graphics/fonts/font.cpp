@@ -188,12 +188,12 @@ void FontManager::addFont(const string& name, const string& filename,
     FT_Face face = freetypeMgr->addFont(name, filename);
     auto f       = new Font();
     f->pImpl.reset(new FontImpl(face, fontsize, 16, 96, 256));
-    fonts[name] = std::shared_ptr<Font>(f);
+    fonts[name].reset(f);
 }
 
-std::shared_ptr<Font> FontManager::getFont(const string& name) const
+const Font& FontManager::getFont(const string& name) const
 {
-    return fonts.at(name);
+    return *fonts.at(name);
 }
 
 FontManager::~FontManager() = default;

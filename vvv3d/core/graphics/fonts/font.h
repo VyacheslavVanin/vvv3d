@@ -48,10 +48,10 @@ public:
 
     void addFont(const std::string& name, const std::string& filename,
                  unsigned int fontsize);
-    std::shared_ptr<Font> getFont(const std::string& name) const;
+    const Font& getFont(const std::string& name) const;
 
 private:
-    std::map<std::string, std::shared_ptr<Font>> fonts;
+    std::map<std::string, std::unique_ptr<Font>> fonts;
     std::unique_ptr<MgrFreetype> freetypeMgr;
 };
 }
