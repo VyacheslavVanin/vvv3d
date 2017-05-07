@@ -30,13 +30,13 @@ public:
 class GeometryManager {
 public:
     GeometryManager();
-    void add(const std::string& name, std::shared_ptr<Geometry> geom);
-    std::shared_ptr<Geometry> get(const std::string& name);
+    void add(const std::string& name, std::unique_ptr<Geometry> geom);
+    const Geometry& get(const std::string& name);
     std::vector<std::string> listNames() const;
     void clear();
 
 private:
-    std::unordered_map<std::string, std::shared_ptr<Geometry>> geometries;
+    std::unordered_map<std::string, std::unique_ptr<Geometry>> geometries;
 };
 }
 

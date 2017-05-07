@@ -50,14 +50,14 @@ void Geometry::draw() const { geometry->Draw(mode, numIndices); }
 
 GeometryManager::GeometryManager() : geometries() {}
 
-void GeometryManager::add(const string& name, std::shared_ptr<Geometry> geom)
+void GeometryManager::add(const string& name, std::unique_ptr<Geometry> geom)
 {
-    geometries[name] = geom;
+    geometries[name].swap(geom);
 }
 
-std::shared_ptr<Geometry> GeometryManager::get(const string& name)
+const Geometry& GeometryManager::get(const string& name)
 {
-    return geometries.at(name);
+    return *geometries.at(name);
 }
 
 void GeometryManager::clear() { geometries.clear(); }
@@ -65,7 +65,7 @@ void GeometryManager::clear() { geometries.clear(); }
 std::vector<string> GeometryManager::listNames() const
 {
     std::vector<std::string> ret;
-    for (auto kv : geometries)
+    for (const auto& kv : geometries)
         ret.push_back(kv.first);
     return ret;
 }
