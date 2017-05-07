@@ -5,12 +5,12 @@
 
 using namespace vvv3d;
 
-std::shared_ptr<Shader> Shader::fromStrings(const std::string& name,
+std::unique_ptr<Shader> Shader::fromStrings(const std::string& name,
                                             const char* vertexSource,
                                             const char* fragmentSource)
 {
     // workaround std::make_shared with private constructor
-    auto ret = std::make_shared<Shader>(_private{});
+    auto ret = std::make_unique<Shader>(_private{});
     ret->program.CreateProgram(
         LowLevelShader::fromString(vertexSource, GL_VERTEX_SHADER).get(),
         LowLevelShader::fromString(fragmentSource, GL_FRAGMENT_SHADER).get(),
@@ -21,12 +21,12 @@ std::shared_ptr<Shader> Shader::fromStrings(const std::string& name,
     return ret;
 }
 
-std::shared_ptr<Shader> Shader::fromFiles(const std::string& name,
+std::unique_ptr<Shader> Shader::fromFiles(const std::string& name,
                                           const char* vertexFileName,
                                           const char* fragmentFileName)
 {
     // workaround std::make_shared with private constructor
-    auto ret = std::make_shared<Shader>(_private{});
+    auto ret = std::make_unique<Shader>(_private{});
     ret->program.CreateProgram(
         LowLevelShader(vertexFileName, GL_VERTEX_SHADER).get(),
         LowLevelShader(fragmentFileName, GL_FRAGMENT_SHADER).get(),
@@ -322,20 +322,20 @@ void ShaderManager::add(const std::string& name,
                           fragmentShaderFilename.c_str());
 }
 
-void ShaderManager::add(const std::string& name, std::shared_ptr<Shader> shader)
+void ShaderManager::add(const std::string& name, std::unique_ptr<Shader> shader)
 {
-    shaders[name] = shader;
+    shaders[name].swap(shader);
 }
 
-std::shared_ptr<Shader> ShaderManager::get(const std::string& name) const
+Shader& ShaderManager::get(const std::string& name) const
 {
-    return shaders.at(name);
+    return *shaders.at(name);
 }
 
 std::vector<std::string> ShaderManager::listNames() const
 {
     std::vector<std::string> ret;
-    for (auto kv : shaders)
+    for (const auto& kv : shaders)
         ret.push_back(kv.first);
     return ret;
 }

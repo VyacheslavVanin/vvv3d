@@ -57,14 +57,15 @@ private:
     struct _private {
     };
 
-public:
-    static std::shared_ptr<Shader> fromStrings(const std::string& name,
+    static std::unique_ptr<Shader> fromStrings(const std::string& name,
                                                const char* vertexSource,
                                                const char* fragmentSource);
 
-    static std::shared_ptr<Shader> fromFiles(const std::string& name,
+    static std::unique_ptr<Shader> fromFiles(const std::string& name,
                                              const char* vertexFileName,
                                              const char* fragmentFileName);
+    friend class ShaderManager;
+public:
 
     void activate();
 
@@ -110,14 +111,14 @@ public:
 
     void add(const std::string& name, const std::string& vertexShaderFilename,
              const std::string& fragmentShaderFilename);
-    void add(const std::string& name, std::shared_ptr<Shader> shader);
+    void add(const std::string& name, std::unique_ptr<Shader> shader);
 
-    std::shared_ptr<Shader> get(const std::string& name) const;
+    Shader& get(const std::string& name) const;
 
     std::vector<std::string> listNames() const;
 
 private:
-    std::unordered_map<std::string, std::shared_ptr<Shader>> shaders;
+    std::unordered_map<std::string, std::unique_ptr<Shader>> shaders;
 };
 }
 
