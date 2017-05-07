@@ -2,10 +2,9 @@
 
 using namespace vvv3d;
 
-LowLevelGeometry::LowLevelGeometry(LowLevelBuffer&& vb,
-                                   LowLevelBuffer&& ib,
+LowLevelGeometry::LowLevelGeometry(LowLevelBuffer&& vb, LowLevelBuffer&& ib,
                                    const VertexAttributes& attrib) noexcept
-    : vb(std::move(vb)), ib(std::move(ib)), vao(~0u)
+    : vb(std::move(vb)), ib(std::move(ib)), vao(0)
 {
     glGenVertexArrays(1, &vao);
     bindVAO();
@@ -34,7 +33,7 @@ LowLevelGeometry::~LowLevelGeometry() { freeResources(); }
 
 void LowLevelGeometry::Draw(GLenum mode, GLsizei count) const
 {
-    static GLuint activeVAO = ~0l;
+    static GLuint activeVAO = 0;
     if (activeVAO == vao)
         glDrawElements(mode, count, GL_UNSIGNED_INT, 0);
     else {
@@ -67,4 +66,7 @@ void LowLevelGeometry::setBuffersData(const void* vdata, GLsizei vsize,
 
 void LowLevelGeometry::bindVAO() const { glBindVertexArray(vao); }
 
-void LowLevelGeometry::freeResources() { glDeleteVertexArrays(1, &vao); }
+void LowLevelGeometry::freeResources()
+{
+    glDeleteVertexArrays(1, &vao);
+}
