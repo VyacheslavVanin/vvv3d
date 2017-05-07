@@ -2,15 +2,15 @@
 
 using namespace vvv3d;
 
-LowLevelGeometry::LowLevelGeometry(const std::shared_ptr<LowLevelBuffer>& vb,
-                                   const std::shared_ptr<LowLevelBuffer>& ib,
-                                   const VertexAttributes& attrib)
-    : vb(vb), ib(ib), vao(~0u)
+LowLevelGeometry::LowLevelGeometry(LowLevelBuffer&& vb,
+                                   LowLevelBuffer&& ib,
+                                   const VertexAttributes& attrib) noexcept
+    : vb(std::move(vb)), ib(std::move(ib)), vao(~0u)
 {
     glGenVertexArrays(1, &vao);
     bindVAO();
-    vb->bind();
-    ib->bind();
+    this->vb.bind();
+    this->ib.bind();
     attrib.enable();
 }
 
@@ -40,7 +40,7 @@ void LowLevelGeometry::Draw(GLenum mode, GLsizei count) const
     else {
         activeVAO = vao;
         bindVAO();
-        ib->bind(); // WORKAROUND: needed due to bug in some drivers
+        ib.bind(); // WORKAROUND: needed due to bug in some drivers
         glDrawElements(mode, count, GL_UNSIGNED_INT, 0);
     }
 }
@@ -48,21 +48,21 @@ void LowLevelGeometry::Draw(GLenum mode, GLsizei count) const
 void LowLevelGeometry::setVertexBufferData(const void* data, GLsizei size)
 {
     bindVAO();
-    vb->setData(data, size);
+    vb.setData(data, size);
 }
 
 void LowLevelGeometry::setIndexBufferData(const void* data, GLsizei size)
 {
     bindVAO();
-    ib->setData(data, size);
+    ib.setData(data, size);
 }
 
 void LowLevelGeometry::setBuffersData(const void* vdata, GLsizei vsize,
                                       const void* idata, GLsizei isize)
 {
     bindVAO();
-    vb->setData(vdata, vsize);
-    ib->setData(idata, isize);
+    vb.setData(vdata, vsize);
+    ib.setData(idata, isize);
 }
 
 void LowLevelGeometry::bindVAO() const { glBindVertexArray(vao); }

@@ -10,9 +10,9 @@ namespace vvv3d {
 
 class LowLevelGeometry {
 public:
-    LowLevelGeometry(const std::shared_ptr<LowLevelBuffer>& vb,
-                     const std::shared_ptr<LowLevelBuffer>& ib,
-                     const VertexAttributes& attrib);
+    LowLevelGeometry(LowLevelBuffer&& vb,
+                     LowLevelBuffer&& ib,
+                     const VertexAttributes& attrib) noexcept;
     LowLevelGeometry(const LowLevelGeometry&) = delete;
     LowLevelGeometry& operator=(const LowLevelGeometry&) = delete;
     LowLevelGeometry(LowLevelGeometry&& other) noexcept;
@@ -33,8 +33,8 @@ private:
     void bindVAO() const;
 
     void freeResources();
-    std::shared_ptr<LowLevelBuffer> vb;
-    std::shared_ptr<LowLevelBuffer> ib;
+    LowLevelBuffer vb;
+    LowLevelBuffer ib;
     GLuint vao;
 };
 }

@@ -10,10 +10,9 @@ Geometry::Geometry(const void* vertexData, GLsizei dataSize,
                    const GLuint* indices, GLsizei numIndices,
                    const VertexAttributes& attributes, GLenum mode)
     : geometry(new LowLevelGeometry(
-          shared_ptr<LowLevelBuffer>(
-              new LowLevelBuffer(GL_ARRAY_BUFFER, vertexData, dataSize)),
-          shared_ptr<LowLevelBuffer>(new LowLevelBuffer(
-              GL_ELEMENT_ARRAY_BUFFER, indices, numIndices * sizeof(GLuint))),
+          LowLevelBuffer(GL_ARRAY_BUFFER, vertexData, dataSize),
+          LowLevelBuffer(GL_ELEMENT_ARRAY_BUFFER, indices,
+                         numIndices * sizeof(GLuint)),
           attributes)),
       mode(mode), numIndices(numIndices)
 {
@@ -21,10 +20,8 @@ Geometry::Geometry(const void* vertexData, GLsizei dataSize,
 
 Geometry::Geometry(const VertexAttributes& attributes, GLenum mode)
     : geometry(new LowLevelGeometry(
-          shared_ptr<LowLevelBuffer>(new LowLevelBuffer(GL_ARRAY_BUFFER, 0, 0)),
-          shared_ptr<LowLevelBuffer>(new LowLevelBuffer(GL_ELEMENT_ARRAY_BUFFER,
-                                                        0, 0)),
-          attributes)),
+          LowLevelBuffer(GL_ARRAY_BUFFER, 0, 0),
+          LowLevelBuffer(GL_ELEMENT_ARRAY_BUFFER, 0, 0), attributes)),
       mode(mode), numIndices(0)
 {
 }

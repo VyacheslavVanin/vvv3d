@@ -17,7 +17,7 @@ LowLevelBuffer::LowLevelBuffer(LowLevelBuffer&& other) noexcept
     : target(other.target), buffer(other.buffer), size(other.size),
       sizemax(other.sizemax)
 {
-    other.buffer = 0;
+    other.buffer = ~0u;
 }
 
 LowLevelBuffer& LowLevelBuffer::operator=(LowLevelBuffer&& other) noexcept
@@ -27,7 +27,7 @@ LowLevelBuffer& LowLevelBuffer::operator=(LowLevelBuffer&& other) noexcept
     this->buffer  = other.buffer;
     this->size    = other.size;
     this->sizemax = other.sizemax;
-    other.buffer  = 0;
+    other.buffer  = ~0u;
     return *this;
 }
 
