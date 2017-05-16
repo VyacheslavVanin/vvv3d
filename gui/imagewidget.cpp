@@ -4,7 +4,7 @@
 
 using namespace vvv3d;
 
-static std::shared_ptr<Geometry> makeImageGeometry()
+static std::unique_ptr<Geometry> makeImageGeometry()
 {
     static const GLfloat spriteVertices[] = {0, -1, 0, 0, 1, 0,  1, 1,
                                              0, 0,  0, 1, 1, -1, 1, 0};
@@ -12,7 +12,7 @@ static std::shared_ptr<Geometry> makeImageGeometry()
     static const GLuint spriteIndices[] = {0, 1, 2, 0, 1, 3};
     static const size_t numIndices =
         sizeof(spriteIndices) / sizeof(spriteIndices[0]);
-    return std::make_shared<Geometry>(
+    return std::make_unique<Geometry>(
         spriteVertices, sizeOfVertices, spriteIndices, numIndices,
         VertexAttributes(
             {VertexAttribDesc(ATTRIB_LOCATION::POSITION, 2, GL_FLOAT),
@@ -57,21 +57,21 @@ void ImageWidget::onDraw()
     auto& shaderMan    = resman.getShaderManager();
     auto& geomMan      = resman.getGeometryManager();
     const auto& camera = getCamera();
-    auto sh            = shaderMan.get("ImageWidget");
-    auto geom          = geomMan.get("ImageWidget");
+    auto& sh           = shaderMan.get("ImageWidget");
+    const auto& geom   = geomMan.get("ImageWidget");
 
     const auto& pos         = getAbsolutePosition();
     const auto& size        = getSize();
     const auto& fullPosInfo = vvv::vector4f(pos.x, -pos.y, size.x, size.y);
     const auto& texture     = *this->texture;
 
-    sh->activate();
-    sh->setPosition(fullPosInfo);
-    sh->setTexture0(texture);
-    sh->setTexturePosition(texture.getTexturePosition());
-    sh->setViewProjection(camera.getViewProjection());
+    sh.activate();
+    sh.setPosition(fullPosInfo);
+    sh.setTexture0(texture);
+    sh.setTexturePosition(texture.getTexturePosition());
+    sh.setViewProjection(camera.getViewProjection());
 
-    geom->draw();
+    geom.draw();
 }
 
 ImageWidget::~ImageWidget() = default;

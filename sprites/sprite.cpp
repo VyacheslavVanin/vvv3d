@@ -2,7 +2,7 @@
 #include <mutex>
 using namespace vvv3d;
 
-std::shared_ptr<Geometry> makeSpriteGeometry()
+std::unique_ptr<Geometry> makeSpriteGeometry()
 {
     static const GLfloat spriteVertices[] = {-0.5, -0.5, 0, 0, 0.5, 0.5,  1, 1,
                                              -0.5, 0.5,  0, 1, 0.5, -0.5, 1, 0};
@@ -10,7 +10,7 @@ std::shared_ptr<Geometry> makeSpriteGeometry()
     static const GLuint spriteIndices[] = {0, 1, 2, 0, 1, 3};
     static const size_t numIndices =
         sizeof(spriteIndices) / sizeof(spriteIndices[0]);
-    return std::make_shared<Geometry>(
+    return std::make_unique<Geometry>(
         spriteVertices, sizeOfVertices, spriteIndices, numIndices,
         VertexAttributes(
             {VertexAttribDesc(ATTRIB_LOCATION::POSITION, 2, GL_FLOAT),
@@ -36,8 +36,8 @@ void drawSprite(Engine& engine, const Camera& camera, const Sprite& spr)
     auto& resman    = engine.getResourceManager();
     auto& shaderman = resman.getShaderManager();
     auto& geomman   = resman.getGeometryManager();
-    auto sh         = shaderman.get("sprite");
-    auto g          = geomman.get("sprite");
+    auto& sh        = shaderman.get("sprite");
+    const auto& g   = geomman.get("sprite");
 
-    drawTextured(camera, *sh, *g, spr.transform, *spr.getTexture());
+    drawTextured(camera, sh, g, spr.transform, *spr.getTexture());
 }

@@ -32,7 +32,7 @@ public:
     char32_t popFront();
 
     void setColor(const vvv3d::Color& color);
-    void setFont(std::shared_ptr<vvv3d::Font> font);
+    void setFont(const vvv3d::Font& font);
     void resizeToContent();
     void setAutoSize(bool value);
 
@@ -46,7 +46,7 @@ private:
     vvv3d::Transform transform;
     std::u32string text;
     std::shared_ptr<vvv3d::Geometry> geometry;
-    std::shared_ptr<vvv3d::Font> font;
+    const vvv3d::Font* font;
     vvv3d::Color color        = vvv3d::Color::WHITE;
     mutable int widthInPixels = 0;
     mutable bool changed;

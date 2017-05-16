@@ -34,7 +34,7 @@ TextWidget::TextWidget(const std::string& text)
     auto& e       = Engine::getActiveEngine();
     auto& resman  = e.getResourceManager();
     auto& fontMan = resman.getFontManager();
-    font          = fontMan.getFont("default");
+    font          = &fontMan.getFont("default");
     geometry      = createTextGeometry(*font, text);
 
     resizeToContent();
@@ -117,9 +117,9 @@ char32_t TextWidget::popFront()
 
 void TextWidget::setColor(const Color& color) { this->color = color; }
 
-void TextWidget::setFont(std::shared_ptr<Font> font)
+void TextWidget::setFont(const Font& font)
 {
-    this->font = font;
+    this->font = &font;
     changed    = true;
     autoresize();
 }
@@ -189,7 +189,7 @@ void TextWidget::onDraw()
     auto& e            = Engine::getActiveEngine();
     auto& resman       = e.getResourceManager();
     auto& shaderMan    = resman.getShaderManager();
-    auto sh            = shaderMan.get("text");
+    auto& sh           = shaderMan.get("text");
 
     const auto& geometry = getGeometry();
     const auto& font     = *this->font;
@@ -205,7 +205,7 @@ void TextWidget::onDraw()
     const auto posy = -pos.y - font.getAscender() + vAlignOffset;
     transform.setPosition(posx, posy, 0);
 
-    drawTexturedColored(camera, *sh, geometry, transform, texture, this->color);
+    drawTexturedColored(camera, sh, geometry, transform, texture, this->color);
 }
 
 TextWidget::~TextWidget() = default;

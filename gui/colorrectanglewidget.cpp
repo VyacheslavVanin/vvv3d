@@ -4,7 +4,7 @@
 
 using namespace vvv3d;
 
-static std::shared_ptr<Geometry> makeRectGeometry()
+static std::unique_ptr<Geometry> makeRectGeometry()
 {
     static const GLfloat spriteVertices[] = {
         0, -1, 1, 0, 0, 0, 1, -1,
@@ -13,7 +13,7 @@ static std::shared_ptr<Geometry> makeRectGeometry()
     static const GLuint spriteIndices[] = {0, 1, 2, 0, 1, 3};
     static const size_t numIndices =
         sizeof(spriteIndices) / sizeof(spriteIndices[0]);
-    return std::make_shared<Geometry>(
+    return std::make_unique<Geometry>(
         spriteVertices, sizeOfVertices, spriteIndices, numIndices,
         VertexAttributes(
             {VertexAttribDesc(ATTRIB_LOCATION::POSITION, 2, GL_FLOAT)}),
@@ -47,19 +47,19 @@ void ColorRectWidget::onDraw()
     auto& shaderMan    = resman.getShaderManager();
     auto& geomMan      = resman.getGeometryManager();
     const auto& camera = getCamera();
-    auto sh            = shaderMan.get("SolidRect");
-    auto geom          = geomMan.get("SolidRect");
+    auto& sh           = shaderMan.get("SolidRect");
+    const auto& geom   = geomMan.get("SolidRect");
 
     const auto& pos         = getAbsolutePosition();
     const auto& size        = getSize();
     const auto& fullPosInfo = vvv::vector4f(pos.x, -pos.y, size.x, size.y);
 
-    sh->activate();
-    sh->setPosition(fullPosInfo);
-    sh->setColor0(color);
-    sh->setViewProjection(camera.getViewProjection());
+    sh.activate();
+    sh.setPosition(fullPosInfo);
+    sh.setColor0(color);
+    sh.setViewProjection(camera.getViewProjection());
 
-    geom->draw();
+    geom.draw();
 }
 
 ColorRectWidget::~ColorRectWidget() = default;

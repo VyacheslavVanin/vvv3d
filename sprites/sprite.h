@@ -29,17 +29,17 @@ inline void drawSprites(vvv3d::Engine& engine, const vvv3d::Camera& camera,
     auto& resman    = engine.getResourceManager();
     auto& shaderman = resman.getShaderManager();
     auto& geomman   = resman.getGeometryManager();
-    auto sh         = shaderman.get("sprite");
-    auto g          = geomman.get("sprite");
+    auto& sh        = shaderman.get("sprite");
+    const auto& g   = geomman.get("sprite");
 
-    sh->activate();
-    sh->setViewProjection(camera.getViewProjection());
+    sh.activate();
+    sh.setViewProjection(camera.getViewProjection());
     for (const auto& s : sprs) {
         const auto texture = s.getTexture();
-        sh->setModel(s.transform.getModelMatrix());
-        sh->setTexturePosition(texture->getTexturePosition());
-        sh->setTexture0(*texture);
-        g->draw();
+        sh.setModel(s.transform.getModelMatrix());
+        sh.setTexturePosition(texture->getTexturePosition());
+        sh.setTexture0(*texture);
+        g.draw();
     }
 }
 
