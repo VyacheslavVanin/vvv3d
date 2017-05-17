@@ -15,7 +15,9 @@ Texture::Texture(const std::shared_ptr<LowLevelTexture>& tex,
 }
 
 Texture::Texture(LowLevelTexture* tex, const vvv::vector4f& texturePosition)
-    : Texture(std::shared_ptr<LowLevelTexture>(tex), texturePosition)
+    : tex(tex), texturePosition(texturePosition),
+      width(tex->getWidth() * texturePosition.z),
+      height(tex->getHeight() * texturePosition.w)
 {
 
 }
