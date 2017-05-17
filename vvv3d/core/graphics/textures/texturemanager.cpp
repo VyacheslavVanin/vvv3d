@@ -5,14 +5,14 @@ using namespace vvv3d;
 
 TextureManager::TextureManager() : texs() {}
 
-Texture* TextureManager::get(const std::string& name) const
+Texture& TextureManager::get(const std::string& name) const
 {
     try {
-        return texs.at(name).get();
+        return *texs.at(name).get();
     }
     catch (...) {
         const_cast<TextureManager*>(this)->add(name);
-        return texs.at(name).get();
+        return *texs.at(name).get();
     }
 }
 
