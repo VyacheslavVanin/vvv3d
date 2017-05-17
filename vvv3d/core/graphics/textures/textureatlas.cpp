@@ -118,9 +118,9 @@ TextureAtlas::TextureAtlas(size_t width, size_t height,
     constructorFunction(width, height, names, texsList, border);
 }
 
-std::shared_ptr<Texture> TextureAtlas::get(const string& name) const
+const Texture& TextureAtlas::get(const string& name) const
 {
-    return textures.at(name);
+    return *textures.at(name);
 }
 
 std::vector<string> TextureAtlas::listNames() const

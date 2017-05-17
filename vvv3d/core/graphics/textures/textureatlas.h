@@ -23,7 +23,7 @@ public:
                  const std::initializer_list<std::string>& names,
                  unsigned int border = 0);
 
-    std::shared_ptr<Texture> get(const std::string& name) const;
+    const Texture& get(const std::string& name) const;
     std::vector<std::string> listNames() const;
 
     auto getInternal() { return atlas; }
