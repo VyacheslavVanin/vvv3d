@@ -64,12 +64,12 @@ void TestEngine::initialSetup()
 {
     initTextures();
 
-    auto spriteTex = textureMan.get("data/images/aaa.png");
+    auto& spriteTex = textureMan.get("data/images/aaa.png");
     sprites.resize(50);
     for (auto& s : sprites) {
-        s.setTexture(spriteTex.get());
-        s.transform.setScale(spriteTex->getWidth() / 2,
-                             spriteTex->getHeight() / 2, 0);
+        s.setTexture(spriteTex);
+        s.transform.setScale(spriteTex.getWidth() / 2,
+                             spriteTex.getHeight() / 2, 0);
         s.transform.move(randomVector(350));
     }
 
@@ -78,7 +78,7 @@ void TestEngine::initialSetup()
     // new ImageWidget(spriteTex.get()));
     panel->setPosition(20, 20);
 
-    auto* w = new ImageWidget(spriteTex.get());
+    auto* w = new ImageWidget(spriteTex);
     w->setPosition(50, 50);
 
     auto* w1 = new ColorRectWidget(Color(0.8, 0.3, 0.1, 0.5));
@@ -176,5 +176,5 @@ void TestEngine::initTextures()
                         "data/images/image15.png",
                     });
     textureMan.add("data/images/aaa.png");
-    textureMan.addAtlas(ta);
+    textureMan.addAtlas(std::move(ta));
 }

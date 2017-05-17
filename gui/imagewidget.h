@@ -7,13 +7,13 @@
 class ImageWidget final : public Widget {
 public:
     explicit ImageWidget();
-    explicit ImageWidget(vvv3d::Texture* texture);
+    explicit ImageWidget(const vvv3d::Texture& texture);
     ~ImageWidget();
 
-    void setTexture(vvv3d::Texture* texture);
+    void setTexture(const vvv3d::Texture& texture);
 
 private:
-    vvv3d::Texture* texture = nullptr;
+    const vvv3d::Texture* texture = nullptr;
 
     // Widget interface
 protected:

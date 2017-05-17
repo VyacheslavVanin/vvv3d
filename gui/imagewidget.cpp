@@ -35,15 +35,16 @@ ImageWidget::ImageWidget() : texture(nullptr)
     });
 }
 
-ImageWidget::ImageWidget(Texture* texture) : ImageWidget()
+ImageWidget::ImageWidget(const Texture& texture) : ImageWidget()
 {
-    if (texture) {
-        setTexture(texture);
-        setSize(texture->getWidth(), texture->getHeight());
-    }
+    setTexture(texture);
+    setSize(texture.getWidth(), texture.getHeight());
 }
 
-void ImageWidget::setTexture(Texture* texture) { this->texture = texture; }
+void ImageWidget::setTexture(const Texture& texture)
+{
+    this->texture = &texture;
+}
 
 void ImageWidget::onDraw()
 {

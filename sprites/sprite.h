@@ -10,13 +10,13 @@ public:
     Sprite& operator=(const Sprite&) = default;
     ~Sprite()                        = default;
 
-    void setTexture(vvv3d::Texture* texture) { this->texture = texture; }
-    vvv3d::Texture* getTexture() const { return texture; }
+    void setTexture(const vvv3d::Texture& texture) { this->texture = &texture; }
+    const vvv3d::Texture& getTexture() const { return *texture; }
 
     vvv3d::Transform transform;
 
 private:
-    vvv3d::Texture* texture;
+    const vvv3d::Texture* texture;
 };
 
 void drawSprite(vvv3d::Engine& engine, const vvv3d::Camera& camera,
@@ -35,10 +35,10 @@ inline void drawSprites(vvv3d::Engine& engine, const vvv3d::Camera& camera,
     sh.activate();
     sh.setViewProjection(camera.getViewProjection());
     for (const auto& s : sprs) {
-        const auto texture = s.getTexture();
+        const auto& texture = s.getTexture();
         sh.setModel(s.transform.getModelMatrix());
-        sh.setTexturePosition(texture->getTexturePosition());
-        sh.setTexture0(*texture);
+        sh.setTexturePosition(texture.getTexturePosition());
+        sh.setTexture0(texture);
         g.draw();
     }
 }
