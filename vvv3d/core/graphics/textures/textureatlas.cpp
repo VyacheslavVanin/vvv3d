@@ -36,8 +36,8 @@ TextureAtlas::TextureAtlas(size_t width, size_t height,
     constructorFunction(width, height, names, lltexs, border);
 }
 
-static bool textureCompareHeightFirst(const std::shared_ptr<Texture>& l,
-                                      const std::shared_ptr<Texture>& r)
+static bool textureCompareHeightFirst(const Texture* l,
+                                      const Texture* r)
 {
     return l->getHeight() < r->getHeight()
                ? true
@@ -46,7 +46,7 @@ static bool textureCompareHeightFirst(const std::shared_ptr<Texture>& l,
                      : l->getWidth() < r->getWidth();
 }
 
-static pair<GLuint, GLuint> textureGetSize(const std::shared_ptr<Texture>& t)
+static pair<GLuint, GLuint> textureGetSize(const Texture* t)
 {
     return make_pair(t->getWidth(), t->getHeight());
 }
@@ -55,20 +55,20 @@ void TextureAtlas::constructorFunction(
     size_t width, size_t height, const vector<string>& names,
     const std::vector<LowLevelTexture*>& texsList, unsigned int border)
 {
-    vector<shared_ptr<Texture>> texsToPack;
+    vector<Texture*> texsToPack;
     for (const auto& t : texsList)
-        texsToPack.push_back(make_shared<Texture>(t));
+        texsToPack.push_back(new Texture(t));
 
     for (size_t i          = 0; i < texsList.size(); ++i)
-        textures[names[i]] = texsToPack[i];
+        textures[names[i]].reset(texsToPack[i]);
 
-    auto setTextureOffset = [&](std::shared_ptr<Texture>& t, int32_t xoff,
+    auto setTextureOffset = [&](Texture* t, int32_t xoff,
                                 int32_t yoff, int32_t border) {
         t->texturePosition.x = float(xoff + border) / width;
         t->texturePosition.y = float(yoff + border) / height;
     };
 
-    vector<shared_ptr<Texture>> notPlaced;
+    vector<Texture*> notPlaced;
     texsToPack = pack2d(texsToPack, static_cast<ssize_t>(width),
                         static_cast<ssize_t>(height), textureCompareHeightFirst,
                         textureGetSize, setTextureOffset, notPlaced, border);

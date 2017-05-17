@@ -31,7 +31,7 @@ public:
 private:
     friend class TextureManager;
     std::shared_ptr<LowLevelTexture> atlas;
-    std::unordered_map<std::string, std::shared_ptr<Texture>> textures;
+    std::unordered_map<std::string, std::unique_ptr<Texture>> textures;
     size_t width;
     size_t height;
     void constructorFunction(
