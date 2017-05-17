@@ -15,7 +15,7 @@ public:
 
     Texture* get(const std::string& name) const;
 
-    void add(std::shared_ptr<LowLevelTexture> texture, const std::string& name);
+    void add(LowLevelTexture* texture, const std::string& name);
     void add(const std::string& filename, const std::string& name);
     void add(const std::string& filename);
 

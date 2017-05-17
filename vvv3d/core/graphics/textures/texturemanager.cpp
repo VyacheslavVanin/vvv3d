@@ -16,7 +16,7 @@ Texture* TextureManager::get(const std::string& name) const
     }
 }
 
-void TextureManager::add(std::shared_ptr<LowLevelTexture> texture,
+void TextureManager::add(LowLevelTexture* texture,
                          const std::string& name)
 {
     if (texs.count(name) > 0)
