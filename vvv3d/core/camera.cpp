@@ -25,6 +25,16 @@ Camera& Camera::setPosition(float x, float y, float z)
     return *this;
 }
 
+Camera& Camera::move(float dx, float dy, float dz)
+{
+    return this->move(vector3f(dx, dy, dz));
+}
+
+Camera& Camera::move(const vector3f& d)
+{
+    return setPosition(getPosition() + d);
+}
+
 const vector3f& Camera::getDirection() const { return forward; }
 
 Camera& Camera::setDirection(const vector3f& value)
