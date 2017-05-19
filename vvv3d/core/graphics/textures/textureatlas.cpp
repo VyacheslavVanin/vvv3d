@@ -13,11 +13,10 @@ TextureAtlas::TextureAtlas(size_t width, size_t height,
                                          GL_RGBA, GL_UNSIGNED_BYTE)),
       textures(), width(width), height(height)
 {
-    std::vector<shared_ptr<LowLevelTexture>> lltexs;
+    std::vector<LowLevelTexture*> lltexs;
     std::transform(filenames.begin(), filenames.end(), back_inserter(lltexs),
                    [](auto& name) {
-                       return shared_ptr<LowLevelTexture>(
-                           readFromPng(name.c_str()));
+                       return readFromPng(name.c_str());
                    });
     constructorFunction(width, height, names, lltexs, border);
 }
@@ -29,45 +28,47 @@ TextureAtlas::TextureAtlas(size_t width, size_t height,
                                          GL_RGBA, GL_UNSIGNED_BYTE)),
       textures(), width(width), height(height)
 {
-    std::vector<shared_ptr<LowLevelTexture>> lltexs;
+    std::vector<LowLevelTexture*> lltexs;
     std::transform(
         names.begin(), names.end(), back_inserter(lltexs), [](auto& name) {
-            return shared_ptr<LowLevelTexture>(readFromPng(name.c_str()));
+            return readFromPng(name.c_str());
         });
     constructorFunction(width, height, names, lltexs, border);
 }
 
-static bool textureCompareHeightFirst(const std::shared_ptr<Texture>& l,
-                                      const std::shared_ptr<Texture>& r)
+static bool textureCompareHeightFirst(const Texture* l,
+                                      const Texture* r)
 {
-    return l->getHeight() < r->getHeight() ? true :
-           l->getHeight() > r->getHeight() ? false
-                                           : l->getWidth() < r->getWidth();
+    return l->getHeight() < r->getHeight()
+               ? true
+               : l->getHeight() > r->getHeight()
+                     ? false
+                     : l->getWidth() < r->getWidth();
 }
 
-static pair<GLuint, GLuint> textureGetSize(const std::shared_ptr<Texture>& t)
+static pair<GLuint, GLuint> textureGetSize(const Texture* t)
 {
     return make_pair(t->getWidth(), t->getHeight());
 }
 
 void TextureAtlas::constructorFunction(
     size_t width, size_t height, const vector<string>& names,
-    const vector<shared_ptr<LowLevelTexture>>& texsList, unsigned int border)
+    const std::vector<LowLevelTexture*>& texsList, unsigned int border)
 {
-    vector<shared_ptr<Texture>> texsToPack;
+    vector<Texture*> texsToPack;
     for (const auto& t : texsList)
-        texsToPack.push_back(make_shared<Texture>(t));
+        texsToPack.push_back(new Texture(t));
 
-    for (size_t i = 0; i < texsList.size(); ++i)
-        textures[names[i]] = texsToPack[i];
+    for (size_t i          = 0; i < texsList.size(); ++i)
+        textures[names[i]].reset(texsToPack[i]);
 
-    auto setTextureOffset = [&](std::shared_ptr<Texture>& t, int32_t xoff,
+    auto setTextureOffset = [&](Texture* t, int32_t xoff,
                                 int32_t yoff, int32_t border) {
         t->texturePosition.x = float(xoff + border) / width;
         t->texturePosition.y = float(yoff + border) / height;
     };
 
-    vector<shared_ptr<Texture>> notPlaced;
+    vector<Texture*> notPlaced;
     texsToPack = pack2d(texsToPack, static_cast<ssize_t>(width),
                         static_cast<ssize_t>(height), textureCompareHeightFirst,
                         textureGetSize, setTextureOffset, notPlaced, border);
@@ -77,7 +78,7 @@ void TextureAtlas::constructorFunction(
 
     const size_t MAX_BYTES = width * height * 4;
     auto buff              = make_unique<GLubyte[]>(MAX_BYTES);
-    for (size_t i = 0; i < MAX_BYTES; ++i)
+    for (size_t i     = 0; i < MAX_BYTES; ++i)
         buff.get()[i] = 0;
 
     // Clear atlass
@@ -108,7 +109,7 @@ void TextureAtlas::constructorFunction(
 }
 
 TextureAtlas::TextureAtlas(size_t width, size_t height,
-                           const vector<shared_ptr<LowLevelTexture>>& texsList,
+                           const vector<LowLevelTexture*>& texsList,
                            const vector<string>& names, unsigned int border)
     : atlas(make_shared<LowLevelTexture>(nullptr, width, height, GL_RGBA,
                                          GL_RGBA, GL_UNSIGNED_BYTE)),
@@ -117,9 +118,9 @@ TextureAtlas::TextureAtlas(size_t width, size_t height,
     constructorFunction(width, height, names, texsList, border);
 }
 
-std::shared_ptr<Texture> TextureAtlas::get(const string& name) const
+const Texture& TextureAtlas::get(const string& name) const
 {
-    return textures.at(name);
+    return *textures.at(name);
 }
 
 std::vector<string> TextureAtlas::listNames() const

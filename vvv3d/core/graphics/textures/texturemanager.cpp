@@ -5,18 +5,18 @@ using namespace vvv3d;
 
 TextureManager::TextureManager() : texs() {}
 
-std::shared_ptr<Texture> TextureManager::get(const std::string& name) const
+Texture& TextureManager::get(const std::string& name) const
 {
     try {
-        return texs.at(name);
+        return *texs.at(name).get();
     }
     catch (...) {
         const_cast<TextureManager*>(this)->add(name);
-        return texs.at(name);
+        return *texs.at(name).get();
     }
 }
 
-void TextureManager::add(std::shared_ptr<LowLevelTexture> texture,
+void TextureManager::add(LowLevelTexture* texture,
                          const std::string& name)
 {
     if (texs.count(name) > 0)
@@ -37,10 +37,12 @@ void TextureManager::add(const std::string& filename)
     add(filename, filename);
 }
 
-void TextureManager::addAtlas(const TextureAtlas& atlas)
+void TextureManager::addAtlas(TextureAtlas&& atlas)
 {
-    const auto& atlasTexs = atlas.textures;
-    texs.insert(atlasTexs.begin(), atlasTexs.end());
+    for (auto i = atlas.textures.begin(); i != atlas.textures.end();) {
+        texs.insert(std::move(*i));
+        i = atlas.textures.erase(i);
+    }
 }
 
 bool TextureManager::contain(const std::string& name)
@@ -60,7 +62,7 @@ void TextureManager::clear() { texs.clear(); }
 std::vector<std::string> TextureManager::listNames() const
 {
     std::vector<std::string> ret;
-    for (auto kv : texs)
+    for (auto& kv : texs)
         ret.push_back(kv.first);
     return ret;
 }

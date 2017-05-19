@@ -13,13 +13,13 @@ class TextureManager {
 public:
     TextureManager();
 
-    std::shared_ptr<Texture> get(const std::string& name) const;
+    Texture& get(const std::string& name) const;
 
-    void add(std::shared_ptr<LowLevelTexture> texture, const std::string& name);
+    void add(LowLevelTexture* texture, const std::string& name);
     void add(const std::string& filename, const std::string& name);
     void add(const std::string& filename);
 
-    void addAtlas(const TextureAtlas& atlas);
+    void addAtlas(TextureAtlas&& atlas);
     bool contain(const std::string& name);
     void remove(const std::string& name);
     void clear();
@@ -27,7 +27,7 @@ public:
     std::vector<std::string> listNames() const;
 
 private:
-    mutable std::unordered_map<std::string, std::shared_ptr<Texture>> texs;
+    mutable std::unordered_map<std::string, std::unique_ptr<Texture>> texs;
 };
 }
 
