@@ -129,6 +129,11 @@ void TextWidget::setFont(const Font& font)
     autoresize();
 }
 
+const Font& TextWidget::getFont() const
+{
+    return *this->font;
+}
+
 void TextWidget::resizeToContent()
 {
     const int lineWidth  = textLineWidth(text, *font);

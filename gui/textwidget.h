@@ -34,6 +34,7 @@ public:
     void setColor(const vvv3d::Color& color);
     const vvv3d::Color& getColor() const;
     void setFont(const vvv3d::Font& font);
+    const vvv3d::Font& getFont() const;
     void resizeToContent();
     void setAutoSize(bool value);
 
