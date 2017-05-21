@@ -2,6 +2,13 @@
 #include <vvv3d/vvv3d.h>
 using namespace vvv3d;
 
+void LineEdit::adjustCursorHeight()
+{
+    const auto& font = leftpart->getFont();
+    const auto fontHeight = font.getAscender() - font.getDescender();
+    cursor->setSize(3, fontHeight);
+}
+
 LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT),
     toggleCursorVisibilityThresholdTime(),
     toggleCursorVisiblityPeriod(std::chrono::milliseconds(750))
@@ -23,7 +30,7 @@ LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT),
     addChild(cursor);
     setFocusable(true);
 
-    cursor->setSize(3, 14);
+    adjustCursorHeight();
     leftpart->setColor(Color::BLACK);
     rightpart->setColor(Color::BLACK);
 }

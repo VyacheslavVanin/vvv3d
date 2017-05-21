@@ -52,6 +52,7 @@ private:
     void placeWidgets();
     int roughLeftOffset(int leftMargin, int width, int fullTextWidth,
                         int rightMargin) const;
+    void adjustCursorHeight();
 };
 
 #endif
