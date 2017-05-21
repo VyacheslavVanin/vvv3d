@@ -27,6 +27,8 @@ public:
     addOnPressEnterAction(const std::function<void(const std::string&)>& f);
 
     // Widget interface
+    void chargeBlink();
+
 protected:
     void OnGetFocus() override;
     void OnLoseFocus() override;

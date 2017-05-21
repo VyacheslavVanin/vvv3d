@@ -67,12 +67,17 @@ void LineEdit::addOnPressEnterAction(
     onEnterPressedActions.addAction(f);
 }
 
-void LineEdit::OnGetFocus()
+void LineEdit::chargeBlink()
 {
     using namespace std::chrono;
     toggleCursorVisibilityThresholdTime = system_clock::now() +
                                           toggleCursorVisiblityPeriod;
     cursor->setVisible(true);
+}
+
+void LineEdit::OnGetFocus()
+{
+    chargeBlink();
 }
 
 void LineEdit::OnLoseFocus()
@@ -97,6 +102,7 @@ void LineEdit::onDraw()
 
 void LineEdit::OnKeyDown(uint16_t scancode)
 {
+    chargeBlink();
     switch (scancode) {
     case SCANCODE_LEFT: {
         const auto& old = leftpart->getText();
