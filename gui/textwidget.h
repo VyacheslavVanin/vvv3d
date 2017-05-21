@@ -32,6 +32,7 @@ public:
     char32_t popFront();
 
     void setColor(const vvv3d::Color& color);
+    const vvv3d::Color& getColor() const;
     void setFont(const vvv3d::Font& font);
     void resizeToContent();
     void setAutoSize(bool value);

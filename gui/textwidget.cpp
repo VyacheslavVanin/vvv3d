@@ -117,6 +117,11 @@ char32_t TextWidget::popFront()
 
 void TextWidget::setColor(const Color& color) { this->color = color; }
 
+const Color& TextWidget::getColor() const
+{
+    return this->color;
+}
+
 void TextWidget::setFont(const Font& font)
 {
     this->font = &font;
