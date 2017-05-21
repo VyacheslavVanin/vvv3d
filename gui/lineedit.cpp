@@ -33,6 +33,7 @@ LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT),
     adjustCursorHeight();
     leftpart->setColor(Color::BLACK);
     rightpart->setColor(Color::BLACK);
+    cursor->setVisible(false);
 }
 
 void LineEdit::setText(const std::string& text)
