@@ -92,6 +92,15 @@ void Widget::setFocus()
     OnGetFocus();
 }
 
+bool Widget::isVisible() const { return visible; }
+
+void Widget::setVisible(bool visible) { this->visible = visible; }
+
+void Widget::toggleVisibility()
+{
+    setVisible(!isVisible());
+}
+
 static Rect RectToScissor(const Rect& r, const vvv::vector2i& layerSize)
 {
     const vvv::vector2i pos(r.x, r.y);
@@ -109,6 +118,9 @@ void Widget::updateClipArea()
 
 void Widget::Draw()
 {
+    if (!isVisible())
+        return;
+
     updateClipArea();
 
     const Rect& clip = RectToScissor(clipArea, layer->getSize());
