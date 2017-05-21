@@ -11,6 +11,7 @@ public:
     ~ColorRectWidget();
 
     void setColor(const vvv3d::Color& colour);
+    const vvv3d::Color& getColor() const;
 
 private:
     vvv3d::Color color;

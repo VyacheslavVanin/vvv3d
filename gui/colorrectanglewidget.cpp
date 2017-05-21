@@ -38,6 +38,11 @@ ColorRectWidget::ColorRectWidget(const Color& color) : color(color)
 
 void ColorRectWidget::setColor(const Color& colour) { this->color = colour; }
 
+const Color&ColorRectWidget::getColor() const
+{
+    return this->color;
+}
+
 ColorRectWidget::ColorRectWidget() : ColorRectWidget(Color::ORANGE) {}
 
 void ColorRectWidget::onDraw()
