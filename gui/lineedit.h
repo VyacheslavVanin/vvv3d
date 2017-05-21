@@ -6,6 +6,7 @@
 #include "textwidget.h"
 #include "widget.h"
 #include <string>
+#include <chrono>
 #include <vvv3d/core/graphics/color.h>
 
 class LineEdit : public Widget {
@@ -35,6 +36,7 @@ protected:
                   const vvv::vector2i& newSize) override;
 
     void OnTextEntered(const std::string& text) override;
+    void onDraw() override;
 
 private:
     ActionList<void(const std::string&)> onEnterPressedActions;
@@ -44,6 +46,8 @@ private:
     ColorRectWidget* cursor     = nullptr;
     ColorRectWidget* background = nullptr;
     HALIGN hAlign;
+    std::chrono::system_clock::time_point toggleCursorVisibilityThresholdTime;
+    std::chrono::system_clock::duration toggleCursorVisiblityPeriod;
 
     void placeWidgets();
     int roughLeftOffset(int leftMargin, int width, int fullTextWidth,

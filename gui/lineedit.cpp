@@ -2,7 +2,9 @@
 #include <vvv3d/vvv3d.h>
 using namespace vvv3d;
 
-LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT)
+LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT),
+    toggleCursorVisibilityThresholdTime(),
+    toggleCursorVisiblityPeriod(std::chrono::milliseconds(750))
 {
     auto lp  = std::make_unique<TextWidget>(text);
     auto rp  = std::make_unique<TextWidget>("");
@@ -58,9 +60,33 @@ void LineEdit::addOnPressEnterAction(
     onEnterPressedActions.addAction(f);
 }
 
-void LineEdit::OnGetFocus() {}
+void LineEdit::OnGetFocus()
+{
+    using namespace std::chrono;
+    toggleCursorVisibilityThresholdTime = system_clock::now() +
+                                          toggleCursorVisiblityPeriod;
+    cursor->setVisible(true);
+}
 
-void LineEdit::OnLoseFocus() {}
+void LineEdit::OnLoseFocus()
+{
+    using namespace std::chrono;
+    toggleCursorVisibilityThresholdTime = system_clock::time_point();
+    cursor->setVisible(false);
+}
+
+void LineEdit::onDraw()
+{
+    using namespace std::chrono;
+    if (this != Widget::getCurrentFocus())
+        return;
+
+    system_clock::time_point now = system_clock::now();
+    if (now >= toggleCursorVisibilityThresholdTime) {
+        toggleCursorVisibilityThresholdTime = now + toggleCursorVisiblityPeriod;
+        cursor->toggleVisibility();
+    }
+}
 
 void LineEdit::OnKeyDown(uint16_t scancode)
 {
