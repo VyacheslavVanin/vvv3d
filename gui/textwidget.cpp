@@ -26,9 +26,6 @@ TextWidget::TextWidget(const std::string& text)
         auto& resman    = e.getResourceManager();
         auto& shaderMan = resman.getShaderManager();
         shaderMan.add("text", "data/shaders/text.vsh", "data/shaders/text.fsh");
-
-        auto& fontMan = resman.getFontManager();
-        fontMan.addFont("default", "data/fonts/DejaVuSans.ttf", 20);
     });
 
     auto& e       = Engine::getActiveEngine();
