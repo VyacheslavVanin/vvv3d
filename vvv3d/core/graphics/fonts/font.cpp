@@ -6,6 +6,7 @@
 #include <vector>
 #include <vvv3d/core/graphics/textures/texturepacker.h>
 #include <vvv3d/utils/myutils.h>
+#include <vvv3d/core/graphics/fonts/systemfonts.hpp>
 
 namespace vvv3d {
 
@@ -180,7 +181,18 @@ const Glyph& Font::getGlyph(uint32_t c) const
     return pImpl->mapCharToGlyph.at(c);
 }
 
-FontManager::FontManager() : fonts(), freetypeMgr(new MgrFreetype()) {}
+FontManager::FontManager() : fonts(), freetypeMgr(new MgrFreetype())
+{
+    const auto& sysfonts = systemFonts();
+    const auto& defaultFont = sysfonts.getDefaultRegular()->getFileName();
+    const auto& defaultBold = sysfonts.getDefaultBold()->getFileName();
+    const auto& defaultItalic = sysfonts.getDefaultItalic()->getFileName();
+    const auto& defaultMono = sysfonts.getDefaultMono()->getFileName();
+    addFont("default", defaultFont, 20);
+    addFont("bold", defaultBold, 20);
+    addFont("italic", defaultItalic, 20);
+    addFont("mono", defaultMono, 20);
+}
 
 void FontManager::addFont(const string& name, const string& filename,
                           unsigned int fontsize)

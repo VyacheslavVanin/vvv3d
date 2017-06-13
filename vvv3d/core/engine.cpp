@@ -15,14 +15,17 @@ Engine* Engine::activeEngine           = nullptr;
 Engine::Engine(int argc, char** argv, const char* windowName)
     : currentfps(0), viewportWidth(DEFAULT_SCREEN_WIDTH),
       viewportHeight(DEFAULT_SCREEN_HEIGHT),
-      resourceManager(new ResourceManager()),
-      hal(new sdlLayer(argc, argv, GLPROFILE::CORE, 3, 3)), input()
+      hal(new sdlLayer(argc, argv, GLPROFILE::CORE, 3, 3)),
+      resourceManager(),
+      input()
 {
     hal->initContext(argc, argv);
     hal->createWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, windowName);
     hal->setDisplayFunction([]() { activeEngine->display(); });
     hal->setIdleFunction([]() {});
     hal->setResizeFunction([](int x, int y) { activeEngine->resize(x, y); });
+
+    resourceManager.reset(new ResourceManager());
 
     glClearColor(0.05f, 0.1f, 0.2f, 0);
     glEnable(GL_DEPTH_TEST);

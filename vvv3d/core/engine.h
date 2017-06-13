@@ -65,8 +65,8 @@ private:
     float currentfps;
     int viewportWidth;
     int viewportHeight;
-    std::unique_ptr<ResourceManager> resourceManager;
     std::unique_ptr<HAL> hal;
+    std::unique_ptr<ResourceManager> resourceManager;
     friend class Input;
     Input input;
 };
