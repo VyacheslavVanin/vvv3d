@@ -44,6 +44,8 @@ private:
     GuiLayer guilayer;
 
     void initTextures();
+    void initSprites();
+    void initGui();
 };
 
 int main(int argc, char** argv)
@@ -60,11 +62,9 @@ TestEngine::TestEngine(int argc, char** argv, const char* wname)
     onResize(getVieportWidth(), getVieportHeight());
 }
 
-void TestEngine::initialSetup()
+void TestEngine::initSprites()
 {
-    initTextures();
-
-    auto& spriteTex = textureMan.get("data/images/aaa.png");
+    const auto& spriteTex = textureMan.get("data/images/aaa.png");
     sprites.resize(50);
     for (auto& s : sprites) {
         s.setTexture(spriteTex);
@@ -72,12 +72,16 @@ void TestEngine::initialSetup()
                              spriteTex.getHeight() / 2, 0);
         s.transform.move(randomVector(350));
     }
+}
 
+void TestEngine::initGui()
+{
     auto vl     = new VerticalLayout();
     auto* panel = new Panel(vl, new ColorRectWidget(Color(0.1, 0.8, 0.6, 0.5)));
     // new ImageWidget(spriteTex.get()));
     panel->setPosition(20, 20);
 
+    const auto& spriteTex = textureMan.get("data/images/aaa.png");
     auto* w = new ImageWidget(spriteTex);
     w->setPosition(50, 50);
 
@@ -137,6 +141,13 @@ void TestEngine::initialSetup()
 
     panel->addWidget(le);
     guilayer.addWidget(panel);
+}
+
+void TestEngine::initialSetup()
+{
+    initTextures();
+    initSprites();
+    initGui();
 }
 
 void TestEngine::onDraw()
