@@ -20,16 +20,53 @@ static std::unique_ptr<Geometry> makeImageGeometry()
         GL_TRIANGLES);
 }
 
+static void loadImageShader()
+{
+    const char* fsh = R"(
+    #version 330 core
+    precision mediump float;
+    uniform sampler2D texture0;
+    uniform float time;
+
+    in  vec2 out_texCoord;
+    out vec4 color;
+
+    void main(void)
+    {
+        color = texture2D( texture0, out_texCoord );
+    }
+    )";
+
+    const char* vsh = R"(
+    #version 330 core
+    in vec2 va_position;
+    in vec2 va_texCoord;
+    uniform mat4    viewProjectionMatrix;
+    uniform vec4    texturePosition;
+    uniform vec4    position;
+    out highp vec2  out_texCoord;
+
+    void main(void)
+    {
+        vec2 fullPosition = position.xy + va_position*position.zw;
+        gl_Position  = viewProjectionMatrix*vec4(fullPosition, 0 ,1 ) ;
+        out_texCoord = texturePosition.xy + va_texCoord*texturePosition.zw;
+    }
+    )";
+    auto& e  = Engine::getActiveEngine();
+    auto& sm = e.getResourceManager().getShaderManager();
+    sm.addFromSource("ImageWidget", vsh, fsh);
+}
+
+
 ImageWidget::ImageWidget() : texture(nullptr)
 {
     static std::once_flag flag;
     std::call_once(flag, []() {
-        auto& e         = Engine::getActiveEngine();
-        auto& resman    = e.getResourceManager();
-        auto& shaderMan = resman.getShaderManager();
-        shaderMan.add("ImageWidget", "data/shaders/imagewidget.vsh",
-                      "data/shaders/imagewidget.fsh");
+        loadImageShader();
 
+        auto& e       = Engine::getActiveEngine();
+        auto& resman  = e.getResourceManager();
         auto& geomMan = resman.getGeometryManager();
         geomMan.add("ImageWidget", makeImageGeometry());
     });
