@@ -37,10 +37,20 @@ static GLuint createFromString(const char* source, GLenum shaderType)
 LowLevelShader::LowLevelShader(const char* filename, GLenum shaderType)
     : shader()
 {
-    using namespace std;
-    const string source = loadFileToString(filename);
-
-    shader = ::createFromString(source.c_str(), shaderType);
+    try {
+        using namespace std;
+        const string source = loadFileToString(filename);
+        shader = ::createFromString(source.c_str(), shaderType);
+    }
+    catch (std::ios_base::failure& f) {
+        std::cerr << "Failed to read shader from file " << filename << "\n";
+        throw;
+    }
+    catch (std::exception& e) {
+        std::cerr << "Failed to create shader from source in " << filename
+                  << "\n";
+        throw;
+    }
 }
 
 LowLevelShader::LowLevelShader(LowLevelShader&& other) noexcept
