@@ -6,7 +6,7 @@ find_package(Freetype REQUIRED)
 
 include_directories(${FREETYPE_INCLUDE_DIRS} vvv3d .)
 
-file(GLOB_RECURSE SRCS vvv3d/*.cpp gui/*.cpp)
+file(GLOB_RECURSE SRCS vvv3d/*.cpp)
 file(GLOB_RECURSE HDRS *.h *.hpp)
 
 add_library(vvv3dnew SHARED ${SRCS} ${HDRS})
