@@ -16,17 +16,50 @@ int textLineWidth(const std::u32string& text, const Font& f)
 
 int textLineHeight(const Font& f) { return f.getAscender() - f.getDescender(); }
 
+static void loadTextShader()
+{
+    const char* fsh = R"(
+    #version 330 core
+    precision mediump float;
+    uniform sampler2D texture0;
+    uniform vec4 color0;
+
+    in  vec2 out_texCoord;
+    out vec4 color;
+
+
+    void main(void)
+    {
+        color = color0*texture2D(texture0, out_texCoord);
+    }
+    )";
+
+    const char* vsh = R"(
+    #version 330 core
+    uniform mat4    modelMatrix;
+    uniform mat4    viewProjectionMatrix;
+
+    in vec2 va_position;
+    in vec2 va_texCoord;
+    out highp vec2  out_texCoord;
+
+    void main(void)
+    {
+        gl_Position  = viewProjectionMatrix*modelMatrix*vec4(va_position, 0 ,1) ;
+        out_texCoord = va_texCoord;
+    }
+    )";
+    auto& e  = Engine::getActiveEngine();
+    auto& sm = e.getResourceManager().getShaderManager();
+    sm.addFromSource("text", vsh, fsh);
+}
+
 TextWidget::TextWidget(const std::string& text)
     : autosize(false), halign(HALIGN::CENTER), valign(VALIGN::CENTER),
       transform(), text(toU32(text)), geometry(), font(), changed(true)
 {
     static std::once_flag flag;
-    std::call_once(flag, []() {
-        auto& e         = Engine::getActiveEngine();
-        auto& resman    = e.getResourceManager();
-        auto& shaderMan = resman.getShaderManager();
-        shaderMan.add("text", "data/shaders/text.vsh", "data/shaders/text.fsh");
-    });
+    std::call_once(flag, []() { loadTextShader(); });
 
     auto& e       = Engine::getActiveEngine();
     auto& resman  = e.getResourceManager();
