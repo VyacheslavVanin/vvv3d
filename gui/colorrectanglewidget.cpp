@@ -20,18 +20,48 @@ static std::unique_ptr<Geometry> makeRectGeometry()
         GL_TRIANGLES);
 }
 
+static void loadSolidRectShader()
+{
+    const char* fsh = R"(
+    #version 330 core
+    precision mediump float;
+    uniform vec4 color0;
+
+    out vec4 color;
+
+    void main(void)
+    {
+        color = color0;
+    }
+    )";
+
+    const char* vsh = R"(
+    #version 330 core
+    in vec2 va_position;
+    uniform mat4    viewProjectionMatrix;
+    uniform vec4    position;
+
+
+    void main(void)
+    {
+        vec2 fullPosition = position.xy + va_position*position.zw;
+        gl_Position  = viewProjectionMatrix*vec4(fullPosition, 0 ,1 ) ;
+    }
+    )";
+    auto& e  = Engine::getActiveEngine();
+    auto& sm = e.getResourceManager().getShaderManager();
+    sm.addFromSource("SolidRect", vsh, fsh);
+}
+
 ColorRectWidget::ColorRectWidget(const Color& color) : color(color)
 {
     static std::once_flag flag;
     std::call_once(flag, []() {
         auto& e         = Engine::getActiveEngine();
         auto& resman    = e.getResourceManager();
-        auto& shaderMan = resman.getShaderManager();
-        shaderMan.add("SolidRect", "data/shaders/solidrect.vsh",
-                      "data/shaders/solidrect.fsh");
-
         auto& geomMan = resman.getGeometryManager();
         geomMan.add("SolidRect", makeRectGeometry());
+        loadSolidRectShader();
     });
     setSize(60, 60);
 }
