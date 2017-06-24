@@ -112,6 +112,9 @@ public:
     void add(const std::string& name, const std::string& vertexShaderFilename,
              const std::string& fragmentShaderFilename);
     void add(const std::string& name, std::unique_ptr<Shader> shader);
+    void addFromSource(const std::string& name,
+                       const std::string& vertexShaderSource,
+                       const std::string& fragmentShaderSource);
 
     Shader& get(const std::string& name) const;
 

@@ -322,6 +322,15 @@ void ShaderManager::add(const std::string& name,
                           fragmentShaderFilename.c_str());
 }
 
+void ShaderManager::addFromSource(const std::string& name,
+                                  const std::string& vertexShaderSource,
+                                  const std::string& fragmentShaderSource)
+{
+    shaders[name] =
+        Shader::fromStrings(name.c_str(), vertexShaderSource.c_str(),
+                            fragmentShaderSource.c_str());
+}
+
 void ShaderManager::add(const std::string& name, std::unique_ptr<Shader> shader)
 {
     shaders[name].swap(shader);
