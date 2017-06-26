@@ -63,7 +63,7 @@ flags = [
 '-isystem',
 '../BoostParts',
 '-I',
-'./src',
+'./vvv3d',
 '-I',
 '.',
 '-isystem',
