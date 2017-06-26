@@ -6,6 +6,8 @@
 namespace vvv3d {
 
 LowLevelTexture* readFromPng(const char* filename);
+LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
+                                  uint32_t cellSize);
 Geometry* loadGeometryFrom_vvv3d(const char* filename);
 
 #if defined ENABLE_3DS

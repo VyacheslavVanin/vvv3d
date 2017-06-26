@@ -37,6 +37,31 @@ LowLevelTexture* readFromPng(const char* filename)
                                GL_UNSIGNED_BYTE);
 }
 
+static bool isWhiteCell(uint32_t x, uint32_t y, uint32_t cellSize)
+{
+    const size_t ix = (x / cellSize) % 2;
+    const size_t iy = (y / cellSize) % 2;
+    return ix == iy;
+}
+
+LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
+                                  uint32_t cellSize)
+{
+    const size_t numChannels = 4;
+    const size_t size        = width * height;
+
+    std::vector<uint32_t> data(size * numChannels);
+    for (size_t j = 0; j < height; ++j)
+        for (size_t i = 0; i < width; ++i) {
+            const size_t linear_index = j * width + i;
+            data[linear_index] =
+                (isWhiteCell(i, j, cellSize) * 0xffffffff) | 0xff000000;
+        }
+
+    return new LowLevelTexture(data.data(), width, height, GL_RGBA, GL_RGBA8,
+                               GL_UNSIGNED_BYTE);
+}
+
 struct myvertex {
     union {
         struct {
