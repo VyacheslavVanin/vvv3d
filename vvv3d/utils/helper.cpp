@@ -12,6 +12,23 @@
 
 namespace vvv3d {
 
+void writeToPng(const char* filename, LowLevelTexture* llt)
+{
+    const uint32_t width       = llt->getWidth();
+    const uint32_t height      = llt->getHeight();
+    const uint32_t numChannels = 4;
+
+    const size_t dataSize = width * height * numChannels;
+    std::vector<uint8_t> data(dataSize);
+    llt->bind();
+    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
+
+    using namespace boost::gil;
+    png_write_view(filename, interleaved_view(width, height,
+                                              (const rgba8_pixel_t*)data.data(),
+                                              numChannels * width));
+}
+
 LowLevelTexture* readFromPng(const char* filename)
 {
     using namespace boost::gil;
