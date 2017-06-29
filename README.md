@@ -12,10 +12,19 @@ vvv3d is c++ basic framework for creating 3d applications
 - frame buffer objects to render to textures
 - texture atlasses
 - input handling (keyboard, mouse)
+- simple GUI
+    - text widget
+    - image widget
+    - button
+    - editbox
+    - panel
+    - layouts
+        - vertical
+        - horizontal
 
 ## Build
 ### Dependencies
-- freeglut3
+- freetype
 - libglew
 - boost-locale (for utf8 -> utf32 conversion)
 - boost-gil    (for image loading)
@@ -23,7 +32,9 @@ vvv3d is c++ basic framework for creating 3d applications
 
 ### Build
 ```
-qmake vvv3dnew.pro
+mkdir your-build-dir
+cd your-build-dir
+cmake {path-to-CMakeLists.txt}
 make
 ```
 
