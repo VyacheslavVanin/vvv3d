@@ -48,8 +48,8 @@ public:
 
     void run();
     float getCurrentFps() const;
-    int getVieportWidth() const;
-    int getVieportHeight() const;
+    int getViewportWidth() const;
+    int getViewportHeight() const;
     static Engine& getActiveEngine();
 
 protected:

@@ -65,8 +65,8 @@ void Engine::initialSetup() {}
 void Engine::onDraw() {}
 void Engine::onResize(int x, int y) { (void)x, (void)y; }
 
-int Engine::getVieportWidth() const { return viewportWidth; }
-int Engine::getVieportHeight() const { return viewportHeight; }
+int Engine::getViewportWidth() const { return viewportWidth; }
+int Engine::getViewportHeight() const { return viewportHeight; }
 
 Engine& Engine::getActiveEngine() { return *activeEngine; }
 
