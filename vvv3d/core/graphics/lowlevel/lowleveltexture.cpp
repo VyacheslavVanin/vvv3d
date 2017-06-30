@@ -84,7 +84,7 @@ LowLevelTexture* readFromPng(const char* filename)
                                GL_UNSIGNED_BYTE);
 }
 
-void writeToPng(const char* filename, LowLevelTexture* llt)
+void writeToPng(const char* filename, const LowLevelTexture* llt)
 {
     const uint32_t width       = llt->getWidth();
     const uint32_t height      = llt->getHeight();

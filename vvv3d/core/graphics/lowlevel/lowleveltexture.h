@@ -35,7 +35,7 @@ private:
 };
 
 LowLevelTexture* readFromPng(const char* filename);
-void writeToPng(const char* filename, LowLevelTexture* llt);
+void writeToPng(const char* filename, const LowLevelTexture* llt);
 LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
                                   uint32_t cellSize);
 }
