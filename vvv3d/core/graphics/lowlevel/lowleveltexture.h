@@ -33,6 +33,11 @@ private:
     GLuint height;
     GLint internalFormat;
 };
+
+LowLevelTexture* readFromPng(const char* filename);
+void writeToPng(const char* filename, LowLevelTexture* llt);
+LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
+                                  uint32_t cellSize);
 }
 
 #endif // LOWLWVWLTEXTURE_H

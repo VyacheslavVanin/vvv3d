@@ -1,83 +1,12 @@
 #include "helper.h"
 #include <algorithm>
 #include <array>
-#include <boost/gil/gil_all.hpp>
 #include <cstdlib>
 #include <fstream>
 #include <functional>
 #include <vector>
-#define png_infopp_NULL (png_infopp) NULL
-#define int_p_NULL (int*)NULL
-#include <boost/gil/extension/io/png_io.hpp>
 
 namespace vvv3d {
-
-void writeToPng(const char* filename, LowLevelTexture* llt)
-{
-    const uint32_t width       = llt->getWidth();
-    const uint32_t height      = llt->getHeight();
-    const uint32_t numChannels = 4;
-
-    const size_t dataSize = width * height * numChannels;
-    std::vector<uint8_t> data(dataSize);
-    llt->bind();
-    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
-
-    using namespace boost::gil;
-    png_write_view(filename, interleaved_view(width, height,
-                                              (const rgba8_pixel_t*)data.data(),
-                                              numChannels * width));
-}
-
-LowLevelTexture* readFromPng(const char* filename)
-{
-    using namespace boost::gil;
-    image<rgba8_pixel_t> im;
-
-    png_read_image(filename, im);
-
-    im._view = flipped_up_down_view(im._view);
-
-    const size_t size        = im._view.size();
-    const size_t numChannels = im._view.num_channels();
-    const size_t width       = im.dimensions().x;
-    const size_t height      = im.dimensions().y;
-
-    std::vector<uint8_t> data(size * numChannels);
-    uint32_t c = 0;
-
-    for (auto p : im._view)
-        for (size_t i = 0; i < numChannels; ++i)
-            data[c++] = p[i];
-
-    return new LowLevelTexture(data.data(), width, height, GL_RGBA, GL_RGBA8,
-                               GL_UNSIGNED_BYTE);
-}
-
-static bool isWhiteCell(uint32_t x, uint32_t y, uint32_t cellSize)
-{
-    const size_t ix = (x / cellSize) % 2;
-    const size_t iy = (y / cellSize) % 2;
-    return ix == iy;
-}
-
-LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
-                                  uint32_t cellSize)
-{
-    const size_t numChannels = 4;
-    const size_t size        = width * height;
-
-    std::vector<uint32_t> data(size * numChannels);
-    for (size_t j = 0; j < height; ++j)
-        for (size_t i = 0; i < width; ++i) {
-            const size_t linear_index = j * width + i;
-            data[linear_index] =
-                (isWhiteCell(i, j, cellSize) * 0xffffffff) | 0xff000000;
-        }
-
-    return new LowLevelTexture(data.data(), width, height, GL_RGBA, GL_RGBA8,
-                               GL_UNSIGNED_BYTE);
-}
 
 struct myvertex {
     union {
