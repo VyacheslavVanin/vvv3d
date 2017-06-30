@@ -68,6 +68,9 @@ private:
     GLuint width;
     GLuint height;
 };
+
+void writeToPng(const char* filename, const Texture& t);
+
 }
 
 #endif // TEXTURE_H
