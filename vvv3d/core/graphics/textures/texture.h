@@ -57,7 +57,7 @@ public:
     /**
      * @brief getLowLevelTexture LowLevelTexture refferenced by this Texture
      */
-    LowLevelTexture& getLowLevelTexture() { return *tex; }
+    LowLevelTexture& getLowLevelTexture() const { return *tex; }
 
 private:
     friend class TextureAtlas;
