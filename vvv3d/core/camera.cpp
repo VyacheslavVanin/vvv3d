@@ -58,6 +58,11 @@ Camera& Camera::setUp(const vector3f& value)
     return *this;
 }
 
+Camera& Camera::setUp(float x, float y, float z)
+{
+    return setUp(vector3f(x, y, z));
+}
+
 const matrix44f& Camera::getProjectionMatrix() const
 {
     if (projectionChanged)

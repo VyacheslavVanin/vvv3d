@@ -20,6 +20,7 @@ public:
 
     const vvv::vector3f& getUp() const;
     Camera& setUp(const vvv::vector3f& value);
+    Camera& setUp(float x, float y, float z);
 
     const vvv::matrix44f& getProjectionMatrix() const;
 
