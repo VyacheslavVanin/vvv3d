@@ -16,6 +16,7 @@ public:
 
     const vvv::vector3f& getDirection() const;
     Camera& setDirection(const vvv::vector3f& value);
+    Camera& setDirection(float x, float y, float z);
 
     const vvv::vector3f& getUp() const;
     Camera& setUp(const vvv::vector3f& value);

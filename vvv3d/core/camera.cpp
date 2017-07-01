@@ -44,6 +44,11 @@ Camera& Camera::setDirection(const vector3f& value)
     return *this;
 }
 
+Camera& Camera::setDirection(float x, float y, float z)
+{
+    return setDirection(vector3f(x, y, z));
+}
+
 const vector3f& Camera::getUp() const { return up; }
 
 Camera& Camera::setUp(const vector3f& value)
