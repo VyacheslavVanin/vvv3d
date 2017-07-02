@@ -2,6 +2,8 @@
 #define BUTTONTEXT_H
 #include "buttonbase.h"
 
+namespace vvv3d {
+
 class TextWidget;
 class ColorRectWidget;
 class Panel;
@@ -22,5 +24,7 @@ protected:
     void onUnhover() override;
     void onPressDown() override;
 };
+
+}
 
 #endif // BUTTONTEXT_H

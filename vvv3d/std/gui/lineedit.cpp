@@ -1,6 +1,7 @@
 #include "lineedit.h"
 #include <vvv3d/vvv3d.h>
-using namespace vvv3d;
+
+namespace vvv3d {
 
 void LineEdit::adjustCursorHeight()
 {
@@ -198,4 +199,6 @@ void LineEdit::placeWidgets()
     background->setPosition(0, 0);
 
     cursor->setPosition(cursorPosition, textOffsetY);
+}
+
 }

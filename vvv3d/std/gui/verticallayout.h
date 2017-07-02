@@ -4,6 +4,8 @@
 #include "layout.h"
 #include "widget.h"
 
+namespace vvv3d {
+
 class VerticalLayout : public Layout {
 public:
     VerticalLayout();
@@ -19,5 +21,7 @@ private:
     int getChildrenHeight(const std::vector<Widget*>& children);
     HALIGN align;
 };
+
+}
 
 #endif // VERTICALLAYOUT_H

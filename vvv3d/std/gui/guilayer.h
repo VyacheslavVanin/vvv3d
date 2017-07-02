@@ -5,6 +5,8 @@
 #include <vvv3d/vvv3d.h>
 #include <vvv3d/vvvmath/vector2.h>
 
+namespace vvv3d {
+
 class Widget;
 class GuiLayer final {
 public:
@@ -56,5 +58,7 @@ private:
     GuiPointer pointer;
     bool visible;
 };
+
+}
 
 #endif // GUILAYER_H

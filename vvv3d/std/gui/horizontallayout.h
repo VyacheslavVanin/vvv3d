@@ -1,9 +1,10 @@
 #ifndef HORIZONTALLAYOUT_H
 #define HORIZONTALLAYOUT_H
-
 #include "align.h"
 #include "layout.h"
 #include "widget.h"
+
+namespace vvv3d {
 
 class HorizontalLayout : public Layout {
 public:
@@ -20,5 +21,7 @@ private:
     int getChildrenWidth(const std::vector<Widget*>& children);
     HALIGN align;
 };
+
+}
 
 #endif // HORIZONTALLAYOUT_H

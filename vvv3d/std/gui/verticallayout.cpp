@@ -1,6 +1,8 @@
 #include "verticallayout.h"
 #include <numeric>
 
+namespace vvv3d {
+
 VerticalLayout::VerticalLayout() : align(HALIGN::CENTER) {}
 
 void VerticalLayout::rearrange()
@@ -58,3 +60,5 @@ int VerticalLayout::getChildrenHeight(const std::vector<Widget*>& children)
 HALIGN VerticalLayout::getAlign() const { return align; }
 
 void VerticalLayout::setAlign(HALIGN value) { align = value; }
+
+}

@@ -2,6 +2,7 @@
 #define RECT_H
 #include <vvv3d/vvvmath/linalg.h>
 
+namespace vvv3d {
 using Rect = vvv::vector4i;
 
 inline int rectTop(const Rect& r) { return r.y; }
@@ -40,6 +41,8 @@ inline bool rectContainPoint(const Rect& r, int x, int y)
 {
     return valueInRange(x, rectLeft(r), rectRight(r)) &&
            valueInRange(y, rectTop(r), rectBottom(r));
+}
+
 }
 
 #endif // RECT_H

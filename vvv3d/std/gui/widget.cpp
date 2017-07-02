@@ -7,7 +7,7 @@
 #include <vvv3d/std/draw.h>
 #include <vvv3d/vvvmath/linalg.h>
 
-using namespace vvv3d;
+namespace vvv3d {
 class GuiLayer;
 
 Widget* Widget::focus = nullptr;
@@ -276,3 +276,4 @@ Widget::~Widget()
 
 Widget& Widget::operator=(Widget&&) noexcept = default;
 Widget::Widget(Widget&&) noexcept            = default;
+}

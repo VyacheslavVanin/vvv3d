@@ -2,6 +2,8 @@
 #define EVENTTESTWIDGET_H
 #include "textwidget.h"
 
+namespace vvv3d {
+
 /**
  * @brief The EventTestWidget class is class used to demonstrate
  *    base mouse events */
@@ -31,5 +33,7 @@ protected:
     void onResize(const vvv::vector2i& oldSize,
                   const vvv::vector2i& newSize) override;
 };
+
+}
 
 #endif // EVENTTESTWIDGET_H

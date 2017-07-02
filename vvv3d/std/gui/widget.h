@@ -6,6 +6,7 @@
 #include <vvv3d/core/camera.h>
 #include <vvv3d/vvvmath/matrices_types.h>
 
+namespace vvv3d {
 class GuiLayer;
 
 class Widget {
@@ -110,5 +111,6 @@ protected:
     bool hover;
     void updateClipArea();
 };
+}
 
 #endif // GUIOBJECT_H

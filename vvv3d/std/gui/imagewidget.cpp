@@ -2,7 +2,7 @@
 #include <mutex>
 #include <vvv3d/vvv3d.h>
 
-using namespace vvv3d;
+namespace vvv3d {
 
 static std::unique_ptr<Geometry> makeImageGeometry()
 {
@@ -113,3 +113,5 @@ void ImageWidget::onDraw()
 }
 
 ImageWidget::~ImageWidget() = default;
+
+}

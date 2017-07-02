@@ -2,6 +2,8 @@
 #define LAYOUT_H
 #include "widget.h"
 
+namespace vvv3d {
+
 class Layout : public Widget {
 public:
     Layout();
@@ -36,5 +38,7 @@ private:
     int padding;
     bool expandToFit = true;
 };
+
+}
 
 #endif // LAYOUT_H

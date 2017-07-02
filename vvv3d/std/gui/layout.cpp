@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <vvv3d/vvvmath/linalg.h>
 
+namespace vvv3d {
+
 Layout::Layout() : border(1), padding(1) {}
 
 void Layout::onResize(const vvv::vector2i& oldSize,
@@ -84,4 +86,6 @@ void Layout::setBorder(int value)
 {
     border = value;
     rearrange();
+}
+
 }

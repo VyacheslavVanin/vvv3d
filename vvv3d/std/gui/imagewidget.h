@@ -4,6 +4,8 @@
 #include <memory>
 #include <vvv3d/core/graphics/textures/texture.h>
 
+namespace vvv3d {
+
 class ImageWidget final : public Widget {
 public:
     explicit ImageWidget();
@@ -19,5 +21,7 @@ private:
 protected:
     void onDraw() override;
 };
+
+}
 
 #endif // IMAGEWIDGET_H

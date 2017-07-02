@@ -2,7 +2,7 @@
 #include "eventtestwidget.h"
 #include "vvv3d/core/graphics/color.h"
 
-using namespace vvv3d;
+namespace vvv3d {
 
 EventTestWidget::EventTestWidget()
     : TextWidget("Idle"),
@@ -54,4 +54,6 @@ void EventTestWidget::onResize(const vvv::vector2i& oldSize,
         return;
     backgroundWidget->setSize(newSize);
     (void)oldSize;
+}
+
 }

@@ -7,7 +7,7 @@
 #include <vector>
 #include <vvv3d/vvv3d.h>
 
-using namespace vvv3d;
+namespace vvv3d {
 
 GuiLayer::GuiLayer()
     : widgets(), size(), camera(), pointer(this->widgets), visible(false)
@@ -147,4 +147,6 @@ void GuiLayer::GuiPointer::processInput(const Input& input)
     detectMouseMove(mouse);
     detectMouseButtons(mouse);
     processKeyboard(kbd);
+}
+
 }

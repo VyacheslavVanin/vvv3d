@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+namespace vvv3d {
+
 /**
 Usage example:
 int main()
@@ -38,5 +40,7 @@ public:
 private:
     std::vector<std::function<T>> actions = {};
 };
+
+}
 
 #endif // ACTIONLIST_H

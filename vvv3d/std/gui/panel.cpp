@@ -1,6 +1,8 @@
 #include "panel.h"
 #include "verticallayout.h"
 
+namespace vvv3d {
+
 Panel::Panel() : Panel(new VerticalLayout(), nullptr) {}
 
 Panel::Panel(Layout* layout, Widget* background)
@@ -48,3 +50,5 @@ void Panel::addWidget(Widget* added)
 }
 
 void Panel::removeWidget(Widget* removed) { layout->removeWidget(removed); }
+
+}

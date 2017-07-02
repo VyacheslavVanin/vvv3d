@@ -9,6 +9,8 @@
 #include <chrono>
 #include <vvv3d/core/graphics/color.h>
 
+namespace vvv3d {
+
 class LineEdit : public Widget {
 public:
     LineEdit(const std::string& text = "");
@@ -56,5 +58,7 @@ private:
                         int rightMargin) const;
     void adjustCursorHeight();
 };
+
+}
 
 #endif

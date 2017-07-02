@@ -9,7 +9,6 @@
 namespace vvv3d {
 class Color;
 class Font;
-}
 
 class TextWidget : public Widget {
 public:
@@ -65,5 +64,7 @@ private:
 protected:
     void onDraw() override;
 };
+
+}
 
 #endif // TEXTWIDGET_H

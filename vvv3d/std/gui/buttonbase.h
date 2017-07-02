@@ -3,6 +3,8 @@
 #include "actionlist.h"
 #include "widget.h"
 
+namespace vvv3d {
+
 class ButtonBase : public Widget {
 public:
     ButtonBase();
@@ -31,5 +33,7 @@ protected:
     void OnPointerEnter(int x, int y) override;
     void OnPointerLeave(int x, int y) override;
 };
+
+}
 
 #endif // BUTTONBASE_H

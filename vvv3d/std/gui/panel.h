@@ -3,6 +3,8 @@
 #include "layout.h"
 #include "widget.h"
 
+namespace vvv3d {
+
 class Panel : public Widget {
 public:
     Panel();
@@ -26,5 +28,7 @@ private:
 
     void rearrange();
 };
+
+}
 
 #endif // PANEL_H

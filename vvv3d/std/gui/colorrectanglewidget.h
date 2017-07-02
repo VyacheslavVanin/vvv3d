@@ -4,6 +4,8 @@
 #include <memory>
 #include <vvv3d/vvv3d.h>
 
+namespace vvv3d {
+
 class ColorRectWidget : public Widget {
 public:
     explicit ColorRectWidget();
@@ -20,5 +22,7 @@ private:
 protected:
     void onDraw() override;
 };
+
+}
 
 #endif // COLORRECTANGLEWIDGET_H

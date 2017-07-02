@@ -1,5 +1,7 @@
 #include "buttonbase.h"
 
+namespace vvv3d {
+
 ButtonBase::ButtonBase() : actions() { setFocusable(true); }
 
 void ButtonBase::addOnClickAction(const std::function<void()>& action)
@@ -72,4 +74,6 @@ void ButtonBase::OnPointerLeave(int x, int y)
     }
     (void)x;
     (void)y;
+}
+
 }
