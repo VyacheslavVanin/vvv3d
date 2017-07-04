@@ -38,6 +38,7 @@ Engine::~Engine() {}
 void Engine::run()
 {
     initialSetup();
+    onResize(getViewportWidth(), getViewportHeight());
     hal->mainLoop();
 }
 
