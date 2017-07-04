@@ -56,7 +56,7 @@ VertexAttributes::VertexAttributes(
     for (const auto& d : attribs) {
         attributes.push_back(VertexAttribute(
             static_cast<GLuint>(d.getLocation()), d.getNumComponents(),
-            d.getComponentType(), offset, stride));
+            d.getComponentType(), d.getNormalized(), offset, stride));
         offset += d.size();
     }
 }
@@ -65,7 +65,7 @@ void VertexAttributes::enable() const
 {
     for (const auto& a : attributes) {
         glVertexAttribPointer(a.location, a.numComponents, a.componentType,
-                              GL_FALSE, a.stride, a.offset);
+                              a.normalized, a.stride, a.offset);
         glEnableVertexAttribArray(a.location);
     }
 }
