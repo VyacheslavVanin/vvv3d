@@ -1,4 +1,5 @@
 #include "vertexattribute.h"
+#include "vvvstlhelper.hpp"
 
 namespace vvv3d {
 
@@ -63,9 +64,26 @@ VertexAttributes::VertexAttributes(
 
 void VertexAttributes::enable() const
 {
+    static const auto isNeedAttribI = [](const VertexAttribute&  a) {
+        const static auto glIntTypes = {
+            GL_UNSIGNED_BYTE,
+            GL_BYTE,
+            GL_SHORT,
+            GL_UNSIGNED_SHORT,
+            GL_INT,
+            GL_UNSIGNED_INT};
+        return !a.normalized && contain(glIntTypes, a.componentType);
+    };
+
     for (const auto& a : attributes) {
-        glVertexAttribPointer(a.location, a.numComponents, a.componentType,
-                              a.normalized, a.stride, a.offset);
+        if (isNeedAttribI(a)) {
+            glVertexAttribIPointer(a.location, a.numComponents, a.componentType,
+                                   a.stride, a.offset);
+        }
+        else {
+            glVertexAttribPointer(a.location, a.numComponents, a.componentType,
+                                  a.normalized, a.stride, a.offset);
+        }
         glEnableVertexAttribArray(a.location);
     }
 }
