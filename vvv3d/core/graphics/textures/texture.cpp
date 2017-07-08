@@ -44,8 +44,8 @@ void writeToPng(const char* filename, const Texture& t)
 
     const size_t dataSize = wholeWidth * wholeHeight * numChannels;
     std::vector<uint8_t> data(dataSize);
-    llt->bind();
-    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
+
+    readImage(llt, data.data(), GL_RGBA, GL_UNSIGNED_BYTE);
 
     size_t i = 0;
     for (size_t y = offsety; y < offsety + height; ++y) {
