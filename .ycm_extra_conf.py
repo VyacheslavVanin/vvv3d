@@ -74,6 +74,8 @@ flags = [
 '/usr/include/freetype2',
 ]
 
+flags += os.popen('pkg-config --cflags-only-I sdl2').read().split()
+
 #gtk flags
 #flags+= os.popen('pkg-config --cflags-only-I gtkmm-2.4').read().split()
 
