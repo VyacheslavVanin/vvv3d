@@ -188,7 +188,9 @@ public:
         maincontext = SDL_GL_CreateContext(mainwindow);
 
         SDL_GL_SetSwapInterval(1);
+#ifdef __GLEW_H__
         glewInit();
+#endif
     }
 
     void run()
