@@ -15,7 +15,7 @@ Engine* Engine::activeEngine           = nullptr;
 Engine::Engine(int argc, char** argv, const char* windowName)
     : currentfps(0), viewportWidth(DEFAULT_SCREEN_WIDTH),
       viewportHeight(DEFAULT_SCREEN_HEIGHT),
-      hal(new sdlLayer(argc, argv, GLPROFILE::CORE, 3, 3)),
+      hal(new sdlLayer(argc, argv, GLPROFILE::ES, 3, 2)),
       resourceManager(),
       input()
 {
