@@ -1,5 +1,5 @@
 #include "sdllayer.h"
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <vvv3d/core/graphics/lowlevel/openglprovider.h>
 //#include <SDL2/SDL_opengles2.h>
 
