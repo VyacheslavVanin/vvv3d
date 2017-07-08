@@ -3,6 +3,7 @@
 #define png_infopp_NULL (png_infopp) NULL
 #define int_p_NULL (int*)NULL
 #include <boost/gil/extension/io/png_io.hpp>
+#include "vvv3d/core/graphics/framebufferobject.h"
 
 namespace vvv3d {
 
@@ -84,6 +85,19 @@ LowLevelTexture* readFromPng(const char* filename)
                                GL_UNSIGNED_BYTE);
 }
 
+void readImage(const LowLevelTexture* llt, void* out,
+               GLenum format, GLenum type)
+{
+    // Do using framebuffer object instead of glGetTexImage cause on GL ES (3.2)
+    // no such function
+    const uint32_t width  = llt->getWidth();
+    const uint32_t height = llt->getHeight();
+    FrameBufferObject fo;
+    fo.beginDrawToColorTexture(const_cast<LowLevelTexture&>(*llt));
+    glReadPixels(0, 0, width, height, format, type, out);
+    fo.endDraw();
+}
+
 void writeToPng(const char* filename, const LowLevelTexture* llt)
 {
     const uint32_t width       = llt->getWidth();
@@ -92,8 +106,8 @@ void writeToPng(const char* filename, const LowLevelTexture* llt)
 
     const size_t dataSize = width * height * numChannels;
     std::vector<uint8_t> data(dataSize);
-    llt->bind();
-    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
+
+    readImage(llt, data.data(), GL_RGBA, GL_UNSIGNED_BYTE);
 
     using namespace boost::gil;
     png_write_view(filename, interleaved_view(width, height,

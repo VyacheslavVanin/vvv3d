@@ -23,7 +23,7 @@ static std::unique_ptr<Geometry> makeRectGeometry()
 static void loadSolidRectShader()
 {
     const char* fsh = R"(
-    #version 330 core
+    #version 320 es
     precision mediump float;
     uniform vec4 color0;
 
@@ -36,7 +36,7 @@ static void loadSolidRectShader()
     )";
 
     const char* vsh = R"(
-    #version 330 core
+    #version 320 es
     in vec2 va_position;
     uniform mat4    viewProjectionMatrix;
     uniform vec4    position;

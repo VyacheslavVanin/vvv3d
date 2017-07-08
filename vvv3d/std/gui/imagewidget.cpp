@@ -23,7 +23,7 @@ static std::unique_ptr<Geometry> makeImageGeometry()
 static void loadImageShader()
 {
     const char* fsh = R"(
-    #version 330 core
+    #version 320 es
     precision mediump float;
     uniform sampler2D texture0;
     uniform float time;
@@ -38,7 +38,7 @@ static void loadImageShader()
     )";
 
     const char* vsh = R"(
-    #version 330 core
+    #version 320 es
     in vec2 va_position;
     in vec2 va_texCoord;
     uniform mat4    viewProjectionMatrix;
