@@ -33,7 +33,7 @@ static void loadImageShader()
 
     void main(void)
     {
-        color = texture2D( texture0, out_texCoord );
+        color = texture(texture0, out_texCoord);
     }
     )";
 

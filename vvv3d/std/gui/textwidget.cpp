@@ -30,7 +30,7 @@ static void loadTextShader()
 
     void main(void)
     {
-        color = color0*texture2D(texture0, out_texCoord);
+        color = color0*texture(texture0, out_texCoord);
     }
     )";
 
