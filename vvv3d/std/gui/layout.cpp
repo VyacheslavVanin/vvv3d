@@ -1,6 +1,7 @@
 #include "layout.h"
 #include <algorithm>
 #include <vvv3d/vvvmath/linalg.h>
+#include "panel.h"
 
 namespace vvv3d {
 
@@ -41,31 +42,31 @@ void Layout::OnButtonReleased(int button, int x, int y)
 void Layout::onAddWidget(Widget* added)
 {
     (void)added;
-    rearrange();
+    notifyContentChanged();
 }
 
 void Layout::onRemoveWidget(Widget* removed)
 {
     (void)removed;
-    rearrange();
+    notifyContentChanged();
 }
 
 void Layout::onContentChanged(Widget* changed)
 {
     (void)changed;
-    rearrange();
+    notifyContentChanged();
 }
 
 void Layout::addWidget(Widget* widget)
 {
     addChild(widget);
-    rearrange();
+    notifyContentChanged();
 }
 
 void Layout::removeWidget(Widget* widget)
 {
     removeChild(widget);
-    rearrange();
+    notifyContentChanged();
 }
 
 void Layout::setExpandToFitContent(bool expand) { this->expandToFit = expand; }
@@ -77,7 +78,7 @@ int Layout::getPadding() const { return padding; }
 void Layout::setPadding(int value)
 {
     padding = value;
-    rearrange();
+    notifyContentChanged();
 }
 
 int Layout::getBorder() const { return border; }
@@ -85,7 +86,25 @@ int Layout::getBorder() const { return border; }
 void Layout::setBorder(int value)
 {
     border = value;
+    notifyContentChanged();
+}
+
+void Layout::notifyContentChanged()
+{
     rearrange();
+
+    auto* parentLayout = dynamic_cast<Layout*>(getParent());
+    if (parentLayout)
+        parentLayout->notifyContentChanged();
+
+    auto* parentPanel = dynamic_cast<Panel*>(getParent());
+    if (parentPanel) {
+        const auto& myMinSize = getMinSize();
+        const auto& parentMinSize = parentPanel->getMinSize();
+        const auto& maxWidth = std::max(myMinSize.x, parentMinSize.x);
+        const auto& maxHeight = std::max(myMinSize.y, parentMinSize.y);
+        parentPanel->setMinSize(maxWidth, maxHeight);
+    }
 }
 
 }
