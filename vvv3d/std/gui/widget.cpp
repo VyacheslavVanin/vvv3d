@@ -74,6 +74,13 @@ void Widget::invokeKeyDown(uint16_t scancode) { OnKeyDown(scancode); }
 
 void Widget::invokeKeyUp(uint16_t scancode) { OnKeyUp(scancode); }
 
+void Widget::notifyContentChanged()
+{
+    OnContentChanged();
+    if (parent)
+        parent->notifyContentChanged();
+}
+
 Widget* Widget::getCurrentFocus() { return focus; }
 
 bool Widget::isFocusable() const { return focusable; }
@@ -261,6 +268,8 @@ void Widget::OnKeyDown(uint16_t scancode) {}
 void Widget::OnKeyUp(uint16_t scancode) {}
 
 void Widget::OnTextEntered(const std::string& text) {}
+
+void Widget::OnContentChanged() {}
 
 const Camera& Widget::getCamera() const { return layer->getCamera(); }
 

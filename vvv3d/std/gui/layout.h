@@ -30,10 +30,9 @@ protected:
 
     void onAddWidget(Widget* added);
     void onRemoveWidget(Widget* removed);
-    void onContentChanged(Widget* changed);
+    void OnContentChanged() override;
 
     virtual void rearrange() = 0;
-    void notifyContentChanged();
 
 private:
     int border;

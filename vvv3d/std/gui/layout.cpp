@@ -51,12 +51,6 @@ void Layout::onRemoveWidget(Widget* removed)
     notifyContentChanged();
 }
 
-void Layout::onContentChanged(Widget* changed)
-{
-    (void)changed;
-    notifyContentChanged();
-}
-
 void Layout::addWidget(Widget* widget)
 {
     addChild(widget);
@@ -89,22 +83,9 @@ void Layout::setBorder(int value)
     notifyContentChanged();
 }
 
-void Layout::notifyContentChanged()
+void Layout::OnContentChanged()
 {
     rearrange();
-
-    auto* parentLayout = dynamic_cast<Layout*>(getParent());
-    if (parentLayout)
-        parentLayout->notifyContentChanged();
-
-    auto* parentPanel = dynamic_cast<Panel*>(getParent());
-    if (parentPanel) {
-        const auto& myMinSize = getMinSize();
-        const auto& parentMinSize = parentPanel->getMinSize();
-        const auto& maxWidth = std::max(myMinSize.x, parentMinSize.x);
-        const auto& maxHeight = std::max(myMinSize.y, parentMinSize.y);
-        parentPanel->setMinSize(maxWidth, maxHeight);
-    }
 }
 
 }

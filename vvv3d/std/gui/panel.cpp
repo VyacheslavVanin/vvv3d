@@ -43,6 +43,15 @@ void Panel::OnButtonReleased(int button, int x, int y)
     layout->invokeButtonReleased(button, x, y);
 }
 
+void Panel::OnContentChanged()
+{
+    const auto& myMinSize = layout->getMinSize();
+    const auto& parentMinSize = getMinSize();
+    const auto& maxWidth = std::max(myMinSize.x, parentMinSize.x);
+    const auto& maxHeight = std::max(myMinSize.y, parentMinSize.y);
+    setMinSize(maxWidth, maxHeight);
+}
+
 void Panel::addWidget(Widget* added)
 {
     layout->addWidget(added);

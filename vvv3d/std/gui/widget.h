@@ -48,6 +48,9 @@ public:
     void invokeTextEntered(const std::string& text);
     void invokeKeyDown(uint16_t scancode);
     void invokeKeyUp(uint16_t scancode);
+    /** @brief Notify widget that its content changed (particulary: size of
+     * children widget) */
+    void notifyContentChanged();
 
     static Widget* getCurrentFocus();
     bool isFocusable() const;
@@ -93,6 +96,7 @@ protected:
     virtual void OnKeyDown(uint16_t scancode);
     virtual void OnKeyUp(uint16_t scancode);
     virtual void OnTextEntered(const std::string& text);
+    virtual void OnContentChanged();
 
     friend class GuiLayer;
     void setGuiLayer(GuiLayer* layer);
