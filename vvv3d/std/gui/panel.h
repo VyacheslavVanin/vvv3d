@@ -18,10 +18,10 @@ public:
     // Widget interface
 protected:
     void onResize(const vvv::vector2i&, const vvv::vector2i& newSize) override;
-    void OnPointerMove(int x, int y) override;
-    void OnButtonPressed(int button, int x, int y) override;
-    void OnButtonReleased(int button, int x, int y) override;
-    void OnContentChanged() override;
+    void onPointerMove(int x, int y) override;
+    void onButtonPressed(int button, int x, int y) override;
+    void onButtonReleased(int button, int x, int y) override;
+    void onContentChanged() override;
 
 private:
     Layout* layout;

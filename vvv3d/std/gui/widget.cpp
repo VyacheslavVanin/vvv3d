@@ -36,7 +36,7 @@ void Widget::setGuiLayer(GuiLayer* layer)
 
 void Widget::notifyPointerMove(int x, int y)
 {
-    OnPointerMove(x, y);
+    onPointerMove(x, y);
     const auto oldHover = hover;
     hover               = rectContainPoint(clipArea, x, y);
 
@@ -44,39 +44,39 @@ void Widget::notifyPointerMove(int x, int y)
         return;
 
     if (hover)
-        OnPointerEnter(x, y);
+        onPointerEnter(x, y);
     else
-        OnPointerLeave(x, y);
+        onPointerLeave(x, y);
 }
 
 void Widget::notifyButtonPressed(int button, int x, int y)
 {
     Widget* prevFocus = focus;
     focus             = focusable ? this : focus;
-    OnButtonPressed(button, x, y);
+    onButtonPressed(button, x, y);
     if (focus != this)
         return;
 
     if (prevFocus) {
-        prevFocus->OnLoseFocus();
+        prevFocus->onLoseFocus();
     }
-    OnGetFocus();
+    onGetFocus();
 }
 
 void Widget::notifyButtonReleased(int button, int x, int y)
 {
-    OnButtonReleased(button, x, y);
+    onButtonReleased(button, x, y);
 }
 
-void Widget::notifyTextEntered(const std::string& text) { OnTextEntered(text); }
+void Widget::notifyTextEntered(const std::string& text) { onTextEntered(text); }
 
-void Widget::notifyKeyDown(uint16_t scancode) { OnKeyDown(scancode); }
+void Widget::notifyKeyDown(uint16_t scancode) { onKeyDown(scancode); }
 
-void Widget::notifyKeyUp(uint16_t scancode) { OnKeyUp(scancode); }
+void Widget::notifyKeyUp(uint16_t scancode) { onKeyUp(scancode); }
 
 void Widget::notifyContentChanged()
 {
-    OnContentChanged();
+    onContentChanged();
     if (parent)
         parent->notifyContentChanged();
 }
@@ -94,9 +94,9 @@ void Widget::setFocus()
 
     auto oldFocus = Widget::getCurrentFocus();
     if (oldFocus)
-        oldFocus->OnLoseFocus();
+        oldFocus->onLoseFocus();
     Widget::focus = this;
-    OnGetFocus();
+    onGetFocus();
 }
 
 bool Widget::isVisible() const { return visible; }
@@ -249,27 +249,27 @@ bool Widget::removeChild(Widget* child)
     return true;
 }
 
-void Widget::OnPointerEnter(int, int) {}
+void Widget::onPointerEnter(int, int) {}
 
-void Widget::OnPointerLeave(int, int) {}
+void Widget::onPointerLeave(int, int) {}
 
-void Widget::OnPointerMove(int, int) {}
+void Widget::onPointerMove(int, int) {}
 
-void Widget::OnButtonPressed(int, int, int) {}
+void Widget::onButtonPressed(int, int, int) {}
 
-void Widget::OnButtonReleased(int, int, int) {}
+void Widget::onButtonReleased(int, int, int) {}
 
-void Widget::OnGetFocus() {}
+void Widget::onGetFocus() {}
 
-void Widget::OnLoseFocus() {}
+void Widget::onLoseFocus() {}
 
-void Widget::OnKeyDown(uint16_t scancode) {}
+void Widget::onKeyDown(uint16_t scancode) {}
 
-void Widget::OnKeyUp(uint16_t scancode) {}
+void Widget::onKeyUp(uint16_t scancode) {}
 
-void Widget::OnTextEntered(const std::string& text) {}
+void Widget::onTextEntered(const std::string& text) {}
 
-void Widget::OnContentChanged() {}
+void Widget::onContentChanged() {}
 
 const Camera& Widget::getCamera() const { return layer->getCamera(); }
 

@@ -77,12 +77,12 @@ void LineEdit::chargeBlink()
     cursor->setVisible(true);
 }
 
-void LineEdit::OnGetFocus()
+void LineEdit::onGetFocus()
 {
     chargeBlink();
 }
 
-void LineEdit::OnLoseFocus()
+void LineEdit::onLoseFocus()
 {
     using namespace std::chrono;
     toggleCursorVisibilityThresholdTime = system_clock::time_point();
@@ -102,7 +102,7 @@ void LineEdit::onDraw()
     }
 }
 
-void LineEdit::OnKeyDown(uint16_t scancode)
+void LineEdit::onKeyDown(uint16_t scancode)
 {
     chargeBlink();
     switch (scancode) {
@@ -155,7 +155,7 @@ void LineEdit::onResize(const vvv::vector2i& oldSize,
     placeWidgets();
 }
 
-void LineEdit::OnTextEntered(const std::string& text)
+void LineEdit::onTextEntered(const std::string& text)
 {
     leftpart->append(text);
     placeWidgets();

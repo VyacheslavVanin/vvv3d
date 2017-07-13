@@ -17,7 +17,7 @@ void ButtonBase::onUnhover() {}
 
 void ButtonBase::onPressDown() {}
 
-void ButtonBase::OnButtonPressed(int button, int x, int y)
+void ButtonBase::onButtonPressed(int button, int x, int y)
 {
     if (button != 1)
         return;
@@ -32,7 +32,7 @@ void ButtonBase::OnButtonPressed(int button, int x, int y)
     (void)y;
 }
 
-void ButtonBase::OnButtonReleased(int button, int x, int y)
+void ButtonBase::onButtonReleased(int button, int x, int y)
 {
     if (button != 1)
         return;
@@ -49,7 +49,7 @@ void ButtonBase::OnButtonReleased(int button, int x, int y)
     (void)y;
 }
 
-void ButtonBase::OnPointerEnter(int x, int y)
+void ButtonBase::onPointerEnter(int x, int y)
 {
     onHover();
     switch (state) {
@@ -64,7 +64,7 @@ void ButtonBase::OnPointerEnter(int x, int y)
     (void)y;
 }
 
-void ButtonBase::OnPointerLeave(int x, int y)
+void ButtonBase::onPointerLeave(int x, int y)
 {
     onUnhover();
     switch (state) {

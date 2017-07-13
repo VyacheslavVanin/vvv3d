@@ -24,13 +24,13 @@ protected:
     // Widget interface
     void onResize(const vvv::vector2i& oldSize,
                   const vvv::vector2i& newSize) override;
-    void OnPointerMove(int x, int y) override;
-    void OnButtonPressed(int button, int x, int y) override;
-    void OnButtonReleased(int button, int x, int y) override;
+    void onPointerMove(int x, int y) override;
+    void onButtonPressed(int button, int x, int y) override;
+    void onButtonReleased(int button, int x, int y) override;
 
     void onAddWidget(Widget* added);
     void onRemoveWidget(Widget* removed);
-    void OnContentChanged() override;
+    void onContentChanged() override;
 
     virtual void rearrange() = 0;
 

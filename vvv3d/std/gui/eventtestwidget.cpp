@@ -12,35 +12,35 @@ EventTestWidget::EventTestWidget()
     setSize(150, 50);
 }
 
-void EventTestWidget::OnPointerEnter(int x, int y)
+void EventTestWidget::onPointerEnter(int x, int y)
 {
     setText("Enter");
     (void)x;
     (void)y;
 }
 
-void EventTestWidget::OnPointerLeave(int x, int y)
+void EventTestWidget::onPointerLeave(int x, int y)
 {
     setText("Leave");
     (void)x;
     (void)y;
 }
 
-void EventTestWidget::OnPointerMove(int x, int y)
+void EventTestWidget::onPointerMove(int x, int y)
 {
     setText("Move");
     (void)x;
     (void)y;
 }
 
-void EventTestWidget::OnButtonPressed(int button, int x, int y)
+void EventTestWidget::onButtonPressed(int button, int x, int y)
 {
     setText(std::string("Pressed ") + std::to_string(button));
     (void)x;
     (void)y;
 }
 
-void EventTestWidget::OnButtonReleased(int button, int x, int y)
+void EventTestWidget::onButtonReleased(int button, int x, int y)
 {
     setText(std::string("Released ") + std::to_string(button));
     (void)x;

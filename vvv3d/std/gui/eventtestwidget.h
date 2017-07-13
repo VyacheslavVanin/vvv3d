@@ -15,15 +15,15 @@ public:
 
     // Widget interface
 protected:
-    void OnPointerEnter(int x, int y) override;
+    void onPointerEnter(int x, int y) override;
 
-    void OnPointerLeave(int x, int y) override;
+    void onPointerLeave(int x, int y) override;
 
-    void OnPointerMove(int x, int y) override;
+    void onPointerMove(int x, int y) override;
 
-    void OnButtonPressed(int button, int x, int y) override;
+    void onButtonPressed(int button, int x, int y) override;
 
-    void OnButtonReleased(int button, int x, int y) override;
+    void onButtonReleased(int button, int x, int y) override;
 
 private:
     Widget* backgroundWidget = nullptr;

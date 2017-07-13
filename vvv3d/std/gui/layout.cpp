@@ -14,14 +14,14 @@ void Layout::onResize(const vvv::vector2i& oldSize,
     (void)newSize;
 }
 
-void Layout::OnPointerMove(int x, int y)
+void Layout::onPointerMove(int x, int y)
 {
     const auto& children = getChildren();
     for (auto w : children)
         w->notifyPointerMove(x, y);
 }
 
-void Layout::OnButtonPressed(int button, int x, int y)
+void Layout::onButtonPressed(int button, int x, int y)
 {
     const auto& children = getChildren();
     auto w = std::find_if(children.begin(), children.end(), [&x, &y](auto w) {
@@ -32,7 +32,7 @@ void Layout::OnButtonPressed(int button, int x, int y)
     (*w)->notifyButtonPressed(button, x, y);
 }
 
-void Layout::OnButtonReleased(int button, int x, int y)
+void Layout::onButtonReleased(int button, int x, int y)
 {
     const auto& children = getChildren();
     for (auto w : children)
@@ -83,7 +83,7 @@ void Layout::setBorder(int value)
     notifyContentChanged();
 }
 
-void Layout::OnContentChanged()
+void Layout::onContentChanged()
 {
     rearrange();
 }

@@ -32,14 +32,14 @@ public:
     void chargeBlink();
 
 protected:
-    void OnGetFocus() override;
-    void OnLoseFocus() override;
-    void OnKeyDown(uint16_t scancode) override;
+    void onGetFocus() override;
+    void onLoseFocus() override;
+    void onKeyDown(uint16_t scancode) override;
 
     void onResize(const vvv::vector2i& oldSize,
                   const vvv::vector2i& newSize) override;
 
-    void OnTextEntered(const std::string& text) override;
+    void onTextEntered(const std::string& text) override;
     void onDraw() override;
 
 private:

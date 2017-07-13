@@ -86,17 +86,17 @@ protected:
     bool addChild(Widget* widget);
     bool removeChild(Widget* child);
 
-    virtual void OnPointerEnter(int x, int y);
-    virtual void OnPointerLeave(int x, int y);
-    virtual void OnPointerMove(int x, int y);
-    virtual void OnButtonPressed(int button, int x, int y);
-    virtual void OnButtonReleased(int button, int x, int y);
-    virtual void OnGetFocus();
-    virtual void OnLoseFocus();
-    virtual void OnKeyDown(uint16_t scancode);
-    virtual void OnKeyUp(uint16_t scancode);
-    virtual void OnTextEntered(const std::string& text);
-    virtual void OnContentChanged();
+    virtual void onPointerEnter(int x, int y);
+    virtual void onPointerLeave(int x, int y);
+    virtual void onPointerMove(int x, int y);
+    virtual void onButtonPressed(int button, int x, int y);
+    virtual void onButtonReleased(int button, int x, int y);
+    virtual void onGetFocus();
+    virtual void onLoseFocus();
+    virtual void onKeyDown(uint16_t scancode);
+    virtual void onKeyUp(uint16_t scancode);
+    virtual void onTextEntered(const std::string& text);
+    virtual void onContentChanged();
 
     friend class GuiLayer;
     void setGuiLayer(GuiLayer* layer);
