@@ -42,12 +42,12 @@ public:
 
     const Rect& getRect() const;
 
-    void invokePointerMove(int x, int y);
-    void invokeButtonPressed(int button, int x, int y);
-    void invokeButtonReleased(int button, int x, int y);
-    void invokeTextEntered(const std::string& text);
-    void invokeKeyDown(uint16_t scancode);
-    void invokeKeyUp(uint16_t scancode);
+    void notifyPointerMove(int x, int y);
+    void notifyButtonPressed(int button, int x, int y);
+    void notifyButtonReleased(int button, int x, int y);
+    void notifyTextEntered(const std::string& text);
+    void notifyKeyDown(uint16_t scancode);
+    void notifyKeyUp(uint16_t scancode);
     /** @brief Notify widget that its content changed (particulary: size of
      * children widget) */
     void notifyContentChanged();

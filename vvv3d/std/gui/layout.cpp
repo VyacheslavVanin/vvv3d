@@ -18,7 +18,7 @@ void Layout::OnPointerMove(int x, int y)
 {
     const auto& children = getChildren();
     for (auto w : children)
-        w->invokePointerMove(x, y);
+        w->notifyPointerMove(x, y);
 }
 
 void Layout::OnButtonPressed(int button, int x, int y)
@@ -29,14 +29,14 @@ void Layout::OnButtonPressed(int button, int x, int y)
     });
     if (w == children.end())
         return;
-    (*w)->invokeButtonPressed(button, x, y);
+    (*w)->notifyButtonPressed(button, x, y);
 }
 
 void Layout::OnButtonReleased(int button, int x, int y)
 {
     const auto& children = getChildren();
     for (auto w : children)
-        w->invokeButtonReleased(button, x, y);
+        w->notifyButtonReleased(button, x, y);
 }
 
 void Layout::onAddWidget(Widget* added)

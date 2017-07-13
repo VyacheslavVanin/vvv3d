@@ -95,7 +95,7 @@ void GuiLayer::GuiPointer::detectMouseMove(const Input::Mouse& mouse)
     const auto x = mouse.getMouseX();
     const auto y = mouse.getMouseY();
     for (auto w : *widgets)
-        w->invokePointerMove(x, y);
+        w->notifyPointerMove(x, y);
 }
 
 void GuiLayer::GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
@@ -111,11 +111,11 @@ void GuiLayer::GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
             continue;
 
         if (newState && underCursorWidget)
-            underCursorWidget->invokeButtonPressed(i, pos.x, pos.y);
+            underCursorWidget->notifyButtonPressed(i, pos.x, pos.y);
 
         if (!newState)
             for (auto w : *widgets)
-                w->invokeButtonReleased(i, pos.x, pos.y);
+                w->notifyButtonReleased(i, pos.x, pos.y);
     }
 }
 
@@ -127,15 +127,15 @@ void GuiLayer::GuiPointer::processKeyboard(const Input::Keyboard& kbd)
 
     for (const InputEvent& e : kbd.getEvents()) {
         switch (e.type) {
-        case INPUT_EVENT_TYPE::KEY_DOWN: foc->invokeKeyDown(e.scancode); break;
-        case INPUT_EVENT_TYPE::KEY_UP: foc->invokeKeyUp(e.scancode); break;
+        case INPUT_EVENT_TYPE::KEY_DOWN: foc->notifyKeyDown(e.scancode); break;
+        case INPUT_EVENT_TYPE::KEY_UP: foc->notifyKeyUp(e.scancode); break;
         default: assert("Shouldn't be here"); break;
         }
     }
 
     if (kbd.hasText()) {
         const auto& text = kbd.getText();
-        foc->invokeTextEntered(text);
+        foc->notifyTextEntered(text);
     }
 }
 

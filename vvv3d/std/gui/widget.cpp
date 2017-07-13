@@ -34,7 +34,7 @@ void Widget::setGuiLayer(GuiLayer* layer)
         w->setGuiLayer(layer);
 }
 
-void Widget::invokePointerMove(int x, int y)
+void Widget::notifyPointerMove(int x, int y)
 {
     OnPointerMove(x, y);
     const auto oldHover = hover;
@@ -49,7 +49,7 @@ void Widget::invokePointerMove(int x, int y)
         OnPointerLeave(x, y);
 }
 
-void Widget::invokeButtonPressed(int button, int x, int y)
+void Widget::notifyButtonPressed(int button, int x, int y)
 {
     Widget* prevFocus = focus;
     focus             = focusable ? this : focus;
@@ -63,16 +63,16 @@ void Widget::invokeButtonPressed(int button, int x, int y)
     OnGetFocus();
 }
 
-void Widget::invokeButtonReleased(int button, int x, int y)
+void Widget::notifyButtonReleased(int button, int x, int y)
 {
     OnButtonReleased(button, x, y);
 }
 
-void Widget::invokeTextEntered(const std::string& text) { OnTextEntered(text); }
+void Widget::notifyTextEntered(const std::string& text) { OnTextEntered(text); }
 
-void Widget::invokeKeyDown(uint16_t scancode) { OnKeyDown(scancode); }
+void Widget::notifyKeyDown(uint16_t scancode) { OnKeyDown(scancode); }
 
-void Widget::invokeKeyUp(uint16_t scancode) { OnKeyUp(scancode); }
+void Widget::notifyKeyUp(uint16_t scancode) { OnKeyUp(scancode); }
 
 void Widget::notifyContentChanged()
 {
