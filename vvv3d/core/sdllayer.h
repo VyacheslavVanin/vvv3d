@@ -39,6 +39,7 @@ public:
     int getMouseRelX() const override;
     int getMouseRelY() const override;
     bool hasText() const override;
+    void setVSync(bool vsync) override;
 
     /**
      * @brief Return string of text entered at this cycle

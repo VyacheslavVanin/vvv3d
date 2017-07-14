@@ -21,6 +21,7 @@ public:
     int getViewportWidth() const;
     int getViewportHeight() const;
     static Engine& getActiveEngine();
+    void setVSync(bool vsync);
 
 protected:
     virtual void initialSetup();

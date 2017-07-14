@@ -283,3 +283,8 @@ const std::vector<InputEvent>& sdlLayer::getEvents() const
 {
     return sdl->eventLoop.getEvents();
 }
+
+void sdlLayer::setVSync(bool vsync)
+{
+    SDL_GL_SetSwapInterval(vsync);
+}

@@ -46,6 +46,7 @@ public:
     virtual bool hasText() const                             = 0;
     virtual const std::string& getText() const               = 0;
     virtual const std::vector<InputEvent>& getEvents() const = 0;
+    virtual void setVSync(bool vsync) = 0;
     virtual ~HAL();
 };
 }

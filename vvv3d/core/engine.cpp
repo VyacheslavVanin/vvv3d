@@ -84,3 +84,7 @@ void Engine::resize(int x, int y)
 
 float Engine::getCurrentFps() const { return currentfps; }
 
+void Engine::setVSync(bool vsync)
+{
+    hal->setVSync(vsync);
+}
