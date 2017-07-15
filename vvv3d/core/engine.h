@@ -2,6 +2,7 @@
 #define ENGINE_H
 #include <memory>
 #include <vvv3d/core/input.h>
+#include <vvv3d/core/time.hpp>
 
 namespace vvv3d {
 
@@ -23,6 +24,16 @@ public:
     static Engine& getActiveEngine();
     void setVSync(bool vsync);
 
+    /**
+     * @brief Return time at the beginning of current frame.
+     * @return seconds */
+    double getFrameTime() const;
+
+    /**
+     * @brief Return time passed between brginning of last frame and current.
+     * @return seconds */
+    double getTimeSinceLastFrame() const;
+
 protected:
     virtual void initialSetup();
     virtual void onDraw();
@@ -40,6 +51,7 @@ private:
     std::unique_ptr<ResourceManager> resourceManager;
     friend class Input;
     Input input;
+    Time<> time;
 };
 }
 

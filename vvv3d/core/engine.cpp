@@ -50,6 +50,8 @@ const Input& Engine::getInput() const { return input; }
 
 void Engine::display()
 {
+    time.updateFrameTime();
+
     const auto t1 = std::chrono::system_clock::now();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -88,3 +90,15 @@ void Engine::setVSync(bool vsync)
 {
     hal->setVSync(vsync);
 }
+
+double Engine::getFrameTime() const
+{
+    return time.currentFrameTime();
+}
+
+double Engine::getTimeSinceLastFrame() const
+{
+    return time.sinceLastFrame();
+}
+
+
