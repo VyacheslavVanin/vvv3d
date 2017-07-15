@@ -27,7 +27,7 @@ public:
     std::vector<std::string> listNames() const;
 
 private:
-    mutable std::unordered_map<std::string, std::unique_ptr<Texture>> texs;
+    std::unordered_map<std::string, std::unique_ptr<Texture>> texs;
 };
 }
 
