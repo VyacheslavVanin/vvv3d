@@ -59,19 +59,19 @@ void TextureAtlas::constructorFunction(
     for (const auto& t : texsList)
         texsToPack.push_back(new Texture(t));
 
-    for (size_t i          = 0; i < texsList.size(); ++i)
+    for (size_t i = 0; i < texsList.size(); ++i)
         textures[names[i]].reset(texsToPack[i]);
 
-    auto setTextureOffset = [&](Texture* t, int32_t xoff,
-                                int32_t yoff, int32_t border) {
+    auto setTextureOffset = [&](Texture* t, int32_t xoff, int32_t yoff,
+                                int32_t border) {
         t->texturePosition.x = float(xoff + border) / width;
         t->texturePosition.y = float(yoff + border) / height;
     };
 
-    vector<Texture*> notPlaced;
-    texsToPack = pack2d(texsToPack, static_cast<ssize_t>(width),
-                        static_cast<ssize_t>(height), textureCompareHeightFirst,
-                        textureGetSize, setTextureOffset, notPlaced, border);
+    vector<Texture*> notPlaced =
+        pack2d(texsToPack, static_cast<ssize_t>(width),
+               static_cast<ssize_t>(height), textureCompareHeightFirst,
+               textureGetSize, setTextureOffset, texsToPack, border);
     if (notPlaced.size() > 0)
         throw std::logic_error("Failed to fill texture atlas."
                                " Atlas too small for images.");
@@ -88,8 +88,8 @@ void TextureAtlas::constructorFunction(
 
     // Draw all images on atlass
     for (auto& t : texsToPack) {
-        readImage(&t->getLowLevelTexture(), buff.get(),
-                  GL_RGBA, GL_UNSIGNED_BYTE);
+        readImage(&t->getLowLevelTexture(), buff.get(), GL_RGBA,
+                  GL_UNSIGNED_BYTE);
         atlas->bind();
 
         const GLuint texOffsetX = t->getTexturePosition().x * width;
