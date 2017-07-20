@@ -9,6 +9,7 @@ using namespace vvv3d;
 static const int DEFAULT_SCREEN_WIDTH  = 640;
 static const int DEFAULT_SCREEN_HEIGHT = 480;
 Engine* Engine::activeEngine           = nullptr;
+Time<> Engine::clock;
 
 Engine::Engine(int argc, char** argv, const char* windowName)
     : currentfps(0), viewportWidth(DEFAULT_SCREEN_WIDTH),
@@ -50,7 +51,7 @@ const Input& Engine::getInput() const { return input; }
 
 void Engine::display()
 {
-    time.updateFrameTime();
+    clock.updateFrameTime();
 
     const auto t1 = std::chrono::system_clock::now();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -91,14 +92,14 @@ void Engine::setVSync(bool vsync)
     hal->setVSync(vsync);
 }
 
-double Engine::getFrameTime() const
+double Engine::time()
 {
-    return time.currentFrameTime();
+    return clock.currentFrameTime();
 }
 
-double Engine::getTimeSinceLastFrame() const
+double Engine::getTimeSinceLastFrame()
 {
-    return time.sinceLastFrame();
+    return clock.sinceLastFrame();
 }
 
 

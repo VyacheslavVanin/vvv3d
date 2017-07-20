@@ -27,12 +27,12 @@ public:
     /**
      * @brief Return time at the beginning of current frame.
      * @return seconds */
-    double getFrameTime() const;
+    static double time();
 
     /**
      * @brief Return time passed between brginning of last frame and current.
      * @return seconds */
-    double getTimeSinceLastFrame() const;
+    static double getTimeSinceLastFrame();
 
 protected:
     virtual void initialSetup();
@@ -51,7 +51,7 @@ private:
     std::unique_ptr<ResourceManager> resourceManager;
     friend class Input;
     Input input;
-    Time<> time;
+    static Time<> clock;
 };
 }
 
