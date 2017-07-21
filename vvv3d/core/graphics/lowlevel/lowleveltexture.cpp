@@ -110,9 +110,10 @@ void writeToPng(const char* filename, const LowLevelTexture* llt)
     readImage(llt, data.data(), GL_RGBA, GL_UNSIGNED_BYTE);
 
     using namespace boost::gil;
-    png_write_view(filename, interleaved_view(width, height,
-                                              (const rgba8_pixel_t*)data.data(),
-                                              numChannels * width));
+    png_write_view(filename,
+                   flipped_up_down_view(interleaved_view(
+                       width, height, (const rgba8_pixel_t*)data.data(),
+                       numChannels * width)));
 }
 
 static bool isWhiteCell(uint32_t x, uint32_t y, uint32_t cellSize)
