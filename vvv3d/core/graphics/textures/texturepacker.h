@@ -112,12 +112,13 @@ template <typename T, typename SIZE_TYPE, typename GET, typename SORT,
 std::vector<T>
 pack2d(const std::vector<T>& input, SIZE_TYPE width, SIZE_TYPE height,
        const SORT& sortPred, const GET& getSizePred, const SETOFFSET& setOffset,
-       std::vector<T>& notPlaced, int border = 0)
+       std::vector<T>& ret, int border = 0)
 {
     using namespace std;
 
-    vector<T> ret;
+    std::vector<T> notPlaced;
     auto inputCopy = input;
+    ret.clear();
     sort(inputCopy.begin(), inputCopy.end(), sortPred);
     packNode<T, SIZE_TYPE, GET, SETOFFSET> rootNode(width, height, 0, 0,
                                                     border);
@@ -127,7 +128,7 @@ pack2d(const std::vector<T>& input, SIZE_TYPE width, SIZE_TYPE height,
         else
             notPlaced.push_back(current);
     });
-    return ret;
+    return notPlaced;
 }
 }
 

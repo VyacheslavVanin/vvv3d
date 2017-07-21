@@ -145,11 +145,10 @@ FontImpl::FontImpl(FT_Face f, unsigned int size, unsigned int charSize,
     FT_Set_Char_Size(face, charSize * 64, charSize * 64, dpi, dpi);
     FT_Set_Pixel_Sizes(face, 0, size);
 
-    vector<Glyph> glyphes = loadGlyphes(face, characters);
-    vector<Glyph> notPlaced;
-    glyphes = pack2d(glyphes, textureSize, textureSize,
-                     glyphSizeComparisionHeightFirst, glyphGetSize,
-                     glyphSetOffset, notPlaced, 0);
+    vector<Glyph> glyphes   = loadGlyphes(face, characters);
+    vector<Glyph> notPlaced = pack2d(glyphes, textureSize, textureSize,
+                                     glyphSizeComparisionHeightFirst,
+                                     glyphGetSize, glyphSetOffset, glyphes, 0);
 
     drawGlyphesToTexture(lltex, glyphes);
     DebugVar(notPlaced.size());

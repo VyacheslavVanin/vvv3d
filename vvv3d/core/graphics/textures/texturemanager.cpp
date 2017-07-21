@@ -31,6 +31,17 @@ void TextureManager::add(const std::string& filename)
     add(filename, filename);
 }
 
+void TextureManager::addAtlas(std::unique_ptr<TextureAtlas> atlas)
+{
+    addAtlas(std::move(*atlas));
+}
+
+void TextureManager::addAtlas(std::vector<std::unique_ptr<TextureAtlas>>&& atlases)
+{
+    for (auto& a : atlases)
+        addAtlas(std::move(a));
+}
+
 void TextureManager::addAtlas(TextureAtlas&& atlas)
 {
     for (auto i = atlas.textures.begin(); i != atlas.textures.end();) {
