@@ -3,10 +3,6 @@
 #include "animation.h"
 
 class AnimationPlayer {
-    enum class AnimationState {
-        PLAY,
-        PAUSE,
-    };
 public:
     AnimationPlayer();
 
@@ -26,7 +22,6 @@ private:
     const Animation* animation;
     double startTime;
     double speed;
-    AnimationState state;
     bool looped;
 
     double getFrameTime(double now) const;

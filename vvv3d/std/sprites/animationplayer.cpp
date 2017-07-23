@@ -2,8 +2,7 @@
 #include "vvv3d/core/engine.h"
 
 AnimationPlayer::AnimationPlayer()
-    : animation(nullptr), startTime(0.0), speed(1.0),
-      state(AnimationState::PAUSE), looped(false)
+    : animation(nullptr), startTime(0.0), speed(1.0), looped(false)
 {
 }
 
