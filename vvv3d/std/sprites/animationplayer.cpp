@@ -14,9 +14,29 @@ void AnimationPlayer::setAnimation(const Animation* animation)
 
 void AnimationPlayer::setSpeed(double speed)
 {
+    const auto newSpeed = speed;
+    const auto oldSpeed = this->speed;
+
+    if (newSpeed == oldSpeed)
+        return;
+
     const auto now = vvv3d::Engine::time();
-    const auto sinceStartOfAnimation = getFrameTime(now) / this->speed;
-    this->startTime = now - sinceStartOfAnimation * this->speed / speed;
+    // Special case to avoid division to zero
+    if (newSpeed == 0) {
+        const auto sinceStartOfAnimation = getFrameTime(now);
+        this->startTime = sinceStartOfAnimation;
+        this->speed = 0;
+        return;
+    }
+
+    if (oldSpeed == 0) {
+        this->startTime = now - this->startTime / newSpeed;
+        this->speed = newSpeed;
+        return;
+    }
+
+    const auto sinceStartOfAnimation = getFrameTime(now) / oldSpeed;
+    this->startTime = now - sinceStartOfAnimation * oldSpeed / newSpeed;
     this->speed = speed;
 }
 
@@ -37,6 +57,9 @@ bool AnimationPlayer::isLooped() const
 
 double AnimationPlayer::getFrameTime(double now) const
 {
+    if (this->speed == 0)
+        return this->startTime; // Special meaning in this case
+
     const auto sinceStartOfAnimation = (now - startTime) * speed;
     return isLooped() ? fmod(sinceStartOfAnimation, animation->duration())
                       : sinceStartOfAnimation;
