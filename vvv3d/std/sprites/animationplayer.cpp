@@ -14,6 +14,9 @@ void AnimationPlayer::setAnimation(const Animation* animation)
 
 void AnimationPlayer::setSpeed(double speed)
 {
+    const auto now = vvv3d::Engine::time();
+    const auto sinceStartOfAnimation = getFrameTime(now) / this->speed;
+    this->startTime = now - sinceStartOfAnimation * this->speed / speed;
     this->speed = speed;
 }
 
