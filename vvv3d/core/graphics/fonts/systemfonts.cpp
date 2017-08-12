@@ -70,8 +70,11 @@ static FontDescList listSystemTTFs()
                                        (const char*)format));
         }
     }
-    if (fs)
-        FcFontSetDestroy(fs);
+
+    FcFontSetDestroy(fs);
+    FcObjectSetDestroy(os);
+    FcPatternDestroy(pat);
+    FcConfigDestroy(config);
     return ret;
 }
 
