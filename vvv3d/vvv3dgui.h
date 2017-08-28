@@ -11,5 +11,8 @@
 #include <vvv3d/std/gui/lineedit.h>
 #include <vvv3d/std/gui/horizontallayout.h>
 #include <vvv3d/std/gui/verticallayout.h>
+#include <vvv3d/std/gui/activewidget.h>
+#include <vvv3d/std/gui/sliderbase.h>
+#include <vvv3d/std/gui/hslider.h>
 
 #endif
