@@ -21,6 +21,8 @@ void SliderH::onResize(const vvv::vector2i& oldSize,
     (void)oldSize;
     background->setSize(newSize);
     pointer->setSize(pointerWidth, newSize.y);
+    onValueChanged();
+    onRangeChanged();
 }
 
 int SliderH::mousePosToValue(int x, int y)
