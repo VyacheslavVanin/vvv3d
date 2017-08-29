@@ -22,7 +22,10 @@ int SliderBase::getMax() const
 
 void SliderBase::setValue(int value)
 {
-    this->value = vvv::clamp_fast(0, max, value);
+    const int newValue = vvv::clamp_fast(0, max, value);
+    if (this->value == newValue)
+        return;
+    this->value = newValue;
     onValueChanged();
     onValueChangedActions.invoke(this->value);
 }
