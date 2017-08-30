@@ -1,10 +1,12 @@
 #include "sliderbase.h"
+#include <vvv3d/vvv3d.h>
 
 namespace vvv3d {
 
 SliderBase::SliderBase()
     : ActiveWidget(), onValueChangedActions(), max(100), value(max / 2)
 {
+    setFocusable(true);
 }
 
 void SliderBase::setRange(int max)
@@ -59,6 +61,18 @@ void SliderBase::onMovePressedInside(int x, int y)
 void SliderBase::onMovePressedOutside(int x, int y)
 {
     changeValueMotion(x, y);
+}
+
+void SliderBase::onKeyDown(uint16_t scancode)
+{
+    const auto current = getValue();
+    switch (scancode) {
+        case SCANCODE_DOWN:
+        case SCANCODE_LEFT: setValue(current - 1); break;
+        case SCANCODE_UP:
+        case SCANCODE_RIGHT:setValue(current + 1); break;
+        default: break;
+    }
 }
 
 }

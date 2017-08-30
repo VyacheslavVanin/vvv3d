@@ -21,6 +21,7 @@ class SliderBase : public ActiveWidget
         void onHoverPressed(int x, int y) override;
         void onMovePressedInside(int x, int y) override;
         void onMovePressedOutside(int x, int y) override;
+        void onKeyDown(uint16_t scancode) override;
 
         /// Calculate slider value from pointer position
         virtual int mousePosToValue(int x, int y) = 0;
