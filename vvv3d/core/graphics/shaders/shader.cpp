@@ -332,6 +332,16 @@ void ShaderManager::add(const std::string& name,
                           fragmentShaderFilename.c_str());
 }
 
+void ShaderManager::add(const std::string& name,
+                        const std::string& vertexShaderFilename,
+                        const std::string& fragmentShaderFilename,
+                        const std::string& geometryShaderFilename)
+{
+    shaders[name] = Shader::fromFiles(
+        name.c_str(), vertexShaderFilename.c_str(),
+        fragmentShaderFilename.c_str(), geometryShaderFilename.c_str());
+}
+
 void ShaderManager::addFromSource(const std::string& name,
                                   const std::string& vertexShaderSource,
                                   const std::string& fragmentShaderSource)
@@ -340,6 +350,15 @@ void ShaderManager::addFromSource(const std::string& name,
         name.c_str(), vertexShaderSource.c_str(), fragmentShaderSource.c_str());
 }
 
+void ShaderManager::addFromSource(const std::string& name,
+                                  const std::string& vertexShaderSource,
+                                  const std::string& fragmentShaderSource,
+                                  const std::string& geometryShaderSource)
+{
+    shaders[name] = Shader::fromStrings(
+        name.c_str(), vertexShaderSource.c_str(), fragmentShaderSource.c_str(),
+        geometryShaderSource.c_str());
+}
 void ShaderManager::add(const std::string& name, std::unique_ptr<Shader> shader)
 {
     shaders[name].swap(shader);

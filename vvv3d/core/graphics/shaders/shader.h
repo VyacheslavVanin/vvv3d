@@ -67,8 +67,8 @@ private:
                                              const char* fragmentFileName,
                                              const char* geometryFileName = 0);
     friend class ShaderManager;
-public:
 
+public:
     void activate();
 
     void setModel(const vvv::matrix44f& m);
@@ -113,10 +113,17 @@ public:
 
     void add(const std::string& name, const std::string& vertexShaderFilename,
              const std::string& fragmentShaderFilename);
+    void add(const std::string& name, const std::string& vertexShaderFilename,
+             const std::string& fragmentShaderFilename,
+             const std::string& geometryShaderFilename);
     void add(const std::string& name, std::unique_ptr<Shader> shader);
     void addFromSource(const std::string& name,
                        const std::string& vertexShaderSource,
                        const std::string& fragmentShaderSource);
+    void addFromSource(const std::string& name,
+                       const std::string& vertexShaderSource,
+                       const std::string& fragmentShaderSource,
+                       const std::string& geometryShaderSource);
 
     Shader& get(const std::string& name) const;
 
