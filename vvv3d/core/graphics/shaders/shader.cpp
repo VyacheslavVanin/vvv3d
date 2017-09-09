@@ -10,17 +10,16 @@ std::unique_ptr<Shader> Shader::fromStrings(const std::string& name,
                                             const char* fragmentSource,
                                             const char* geometryShader)
 {
-    const auto gsh =
-        geometryShader
-            ? LowLevelShader::fromString(geometryShader, GL_GEOMETRY_SHADER)
-                  .get()
-            : 0;
     // workaround std::make_shared with private constructor
     auto ret = std::make_unique<Shader>(_private{});
     ret->program.CreateProgram(
         LowLevelShader::fromString(vertexSource, GL_VERTEX_SHADER).get(),
         LowLevelShader::fromString(fragmentSource, GL_FRAGMENT_SHADER).get(),
-        gsh, bindAttribLocations);
+        geometryShader
+            ? LowLevelShader::fromString(geometryShader, GL_GEOMETRY_SHADER)
+                  .get()
+            : 0,
+        bindAttribLocations);
     ret->fragmentSourceName = fragmentSource;
     ret->vertexSourceName   = vertexSource;
     ret->loadLocations(name);
