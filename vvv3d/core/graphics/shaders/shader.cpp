@@ -7,14 +7,20 @@ using namespace vvv3d;
 
 std::unique_ptr<Shader> Shader::fromStrings(const std::string& name,
                                             const char* vertexSource,
-                                            const char* fragmentSource)
+                                            const char* fragmentSource,
+                                            const char* geometryShader)
 {
+    const auto gsh =
+        geometryShader
+            ? LowLevelShader::fromString(geometryShader, GL_GEOMETRY_SHADER)
+                  .get()
+            : 0;
     // workaround std::make_shared with private constructor
     auto ret = std::make_unique<Shader>(_private{});
     ret->program.CreateProgram(
         LowLevelShader::fromString(vertexSource, GL_VERTEX_SHADER).get(),
         LowLevelShader::fromString(fragmentSource, GL_FRAGMENT_SHADER).get(),
-        bindAttribLocations);
+        gsh, bindAttribLocations);
     ret->fragmentSourceName = fragmentSource;
     ret->vertexSourceName   = vertexSource;
     ret->loadLocations(name);
@@ -23,13 +29,18 @@ std::unique_ptr<Shader> Shader::fromStrings(const std::string& name,
 
 std::unique_ptr<Shader> Shader::fromFiles(const std::string& name,
                                           const char* vertexFileName,
-                                          const char* fragmentFileName)
+                                          const char* fragmentFileName,
+                                          const char* geometryFileName)
 {
+    const auto gsh =
+        geometryFileName
+            ? LowLevelShader(geometryFileName, GL_GEOMETRY_SHADER).get()
+            : 0;
     // workaround std::make_shared with private constructor
     auto ret = std::make_unique<Shader>(_private{});
     ret->program.CreateProgram(
         LowLevelShader(vertexFileName, GL_VERTEX_SHADER).get(),
-        LowLevelShader(fragmentFileName, GL_FRAGMENT_SHADER).get(),
+        LowLevelShader(fragmentFileName, GL_FRAGMENT_SHADER).get(), gsh,
         bindAttribLocations);
     ret->fragmentSourceName = fragmentFileName;
     ret->vertexSourceName   = vertexFileName;
@@ -326,9 +337,8 @@ void ShaderManager::addFromSource(const std::string& name,
                                   const std::string& vertexShaderSource,
                                   const std::string& fragmentShaderSource)
 {
-    shaders[name] =
-        Shader::fromStrings(name.c_str(), vertexShaderSource.c_str(),
-                            fragmentShaderSource.c_str());
+    shaders[name] = Shader::fromStrings(
+        name.c_str(), vertexShaderSource.c_str(), fragmentShaderSource.c_str());
 }
 
 void ShaderManager::add(const std::string& name, std::unique_ptr<Shader> shader)
@@ -336,12 +346,10 @@ void ShaderManager::add(const std::string& name, std::unique_ptr<Shader> shader)
     shaders[name].swap(shader);
 }
 
-Shader& ShaderManager::get(const std::string& name) const
-try
-{
+Shader& ShaderManager::get(const std::string& name) const try {
     return *shaders.at(name);
 }
-catch(std::exception& e) {
+catch (std::exception& e) {
     std::cerr << "failed to get shader \'" << name << "\'\n";
     throw;
 }

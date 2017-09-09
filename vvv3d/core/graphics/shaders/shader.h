@@ -59,11 +59,13 @@ private:
 
     static std::unique_ptr<Shader> fromStrings(const std::string& name,
                                                const char* vertexSource,
-                                               const char* fragmentSource);
+                                               const char* fragmentSource,
+                                               const char* geometrySource = 0);
 
     static std::unique_ptr<Shader> fromFiles(const std::string& name,
                                              const char* vertexFileName,
-                                             const char* fragmentFileName);
+                                             const char* fragmentFileName,
+                                             const char* geometryFileName = 0);
     friend class ShaderManager;
 public:
 

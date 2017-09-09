@@ -23,11 +23,11 @@ static GLint ProgramStatus(GLuint program, GLenum param)
 LowLevelShaderProgram::LowLevelShaderProgram() : program(~0u) {}
 
 LowLevelShaderProgram::LowLevelShaderProgram(
-    GLuint vshader, GLuint fshader,
-    const std::function<void(GLuint)>& vertexAttributesBinder)
+        GLuint vertShader, GLuint fragShader, GLuint geomShader,
+        const std::function<void(GLuint)>& vertexAttributesBinder)
     : program(~0u)
 {
-    CreateProgram(vshader, fshader, vertexAttributesBinder);
+    CreateProgram(vertShader, fragShader, geomShader, vertexAttributesBinder);
 }
 
 LowLevelShaderProgram::LowLevelShaderProgram(
@@ -56,12 +56,14 @@ void LowLevelShaderProgram::activate() const
 }
 
 void LowLevelShaderProgram::CreateProgram(
-    GLuint vshader, GLuint fshader,
+    GLuint vertshader, GLuint fragshader, GLuint geomshader,
     const std::function<void(GLuint)>& attributeBindings)
 {
     program = glCreateProgram();
-    glAttachShader(program, vshader);
-    glAttachShader(program, fshader);
+    glAttachShader(program, vertshader);
+    glAttachShader(program, fragshader);
+    if (geomshader)
+        glAttachShader(program, geomshader);
 
     attributeBindings(program);
 
