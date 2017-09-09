@@ -16,8 +16,6 @@ public:
     GLuint get() const { return shader; }
 
     static LowLevelShader fromString(const char* source, GLenum shaderType);
-    static LowLevelShader fragmentFromString(const char* source);
-    static LowLevelShader vertexFromString(const char* source);
 
 private:
     LowLevelShader();
