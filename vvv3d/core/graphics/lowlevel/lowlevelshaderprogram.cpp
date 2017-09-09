@@ -23,10 +23,11 @@ static GLint ProgramStatus(GLuint program, GLenum param)
 LowLevelShaderProgram::LowLevelShaderProgram() : program(~0u) {}
 
 LowLevelShaderProgram::LowLevelShaderProgram(
-    GLuint vshader, GLuint fshader, const std::function<void(GLuint)>& f)
+    GLuint vshader, GLuint fshader,
+    const std::function<void(GLuint)>& vertexAttributesBinder)
     : program(~0u)
 {
-    CreateProgram(vshader, fshader, f);
+    CreateProgram(vshader, fshader, vertexAttributesBinder);
 }
 
 LowLevelShaderProgram::LowLevelShaderProgram(
