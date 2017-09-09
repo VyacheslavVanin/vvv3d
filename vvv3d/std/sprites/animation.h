@@ -21,8 +21,6 @@ private:
 
     std::vector<AnimationFrame> frames;
     double m_duration;
-
-    double countDuration() const;
 };
 
 #endif

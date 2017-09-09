@@ -3,13 +3,6 @@
 
 Animation::Animation() : frames(), m_duration(0) {}
 
-double Animation::countDuration() const
-{
-    return std::accumulate(
-        frames.begin(), frames.end(), 0.0,
-        [](auto sum, const auto& e) { return sum + e.duration; });
-}
-
 void Animation::addFrame(vvv3d::Texture* tex, double duration)
 {
     frames.push_back({tex, duration, m_duration});
