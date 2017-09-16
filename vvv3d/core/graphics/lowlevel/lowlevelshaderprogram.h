@@ -9,9 +9,11 @@ namespace vvv3d {
 class LowLevelShaderProgram {
 public:
     LowLevelShaderProgram();
-    LowLevelShaderProgram(GLuint vshader, GLuint fshader,
-                          const std::function<void(GLuint)>& f = [](GLuint) {});
-    LowLevelShaderProgram(const LowLevelShaderProgram&)        = delete;
+    LowLevelShaderProgram(
+        GLuint vertShader, GLuint fragShader, GLuint geomShader,
+        const std::function<void(GLuint)>& vertexAttributesBinder = [](GLuint) {
+        });
+    LowLevelShaderProgram(const LowLevelShaderProgram&) = delete;
     LowLevelShaderProgram& operator=(const LowLevelShaderProgram&) = delete;
     LowLevelShaderProgram(LowLevelShaderProgram&& other) noexcept;
     LowLevelShaderProgram& operator=(LowLevelShaderProgram&& other) noexcept;
@@ -73,7 +75,7 @@ public:
                            static_cast<const GLfloat*>(&m.matrix[0][0]));
     }
 
-    void CreateProgram(GLuint vsh, GLuint fsh,
+    void CreateProgram(GLuint vertsh, GLuint fragsh, GLuint geomsh,
                        const std::function<void(GLuint)>& f);
 
 private:

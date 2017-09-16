@@ -76,14 +76,4 @@ LowLevelShader LowLevelShader::fromString(const char* source, GLenum shaderType)
     return ret;
 }
 
-LowLevelShader LowLevelShader::fragmentFromString(const char* source)
-{
-    return fromString(source, GL_FRAGMENT_SHADER);
-}
-
-LowLevelShader LowLevelShader::vertexFromString(const char* source)
-{
-    return fromString(source, GL_VERTEX_SHADER);
-}
-
 LowLevelShader::LowLevelShader() : shader(0) {}
