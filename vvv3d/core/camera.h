@@ -35,6 +35,7 @@ public:
                      float zNear, float zFar);
 
     Camera& setPerspective(float fovy, float aspect, float zNear, float zFar);
+    float getAspectRatio() const;
 
 private:
     vvv::vector3f position;

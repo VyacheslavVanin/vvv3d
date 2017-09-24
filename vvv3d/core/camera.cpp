@@ -120,6 +120,16 @@ Camera& Camera::setPerspective(float fovy, float aspect, float zNear,
     return *this;
 }
 
+float Camera::getAspectRatio() const
+{
+    switch (projectionType) {
+    case PROJECTION_TYPE::PERSPECTIVE: return aspect;
+    case PROJECTION_TYPE::ORTHO:
+        return fabs((ortho_left - ortho_right) / (ortho_top - ortho_bottom));
+    }
+    return 1.0;
+}
+
 void Camera::updateProjectionMatrix() const
 {
     projectionChanged = false;
