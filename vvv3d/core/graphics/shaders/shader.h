@@ -103,6 +103,8 @@ public:
     void setLightDir(int n, const vvv::vector3f& pos);
     void setLightColor(int n, const Color& color);
 
+    const LowLevelShaderProgram& getLowLevelShader() const;
+
     // part of workaround std::make_shared with private constructor
     explicit Shader(const _private&) : Shader() {}
 };

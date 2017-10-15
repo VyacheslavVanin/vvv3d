@@ -274,6 +274,11 @@ void Shader::setLightColor(int, const Color&)
     std::cout << "Shader::setLightColor not implemented yet" << std::endl;
 }
 
+const LowLevelShaderProgram& Shader::getLowLevelShader() const
+{
+    return program;
+}
+
 Shader::Shader() : program(), vertexSourceName(), fragmentSourceName() {}
 
 GLint Shader::loadLocation(const char* name)
