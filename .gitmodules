@@ -1,0 +1,3 @@
+[submodule "vvvcfg"]
+	path = vvvcfg
+	url = git@github.com:VyacheslavVanin/vvvcfg
