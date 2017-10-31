@@ -32,6 +32,8 @@ public:
     int getHeight() const;
     void setSize(const vvv::vector2i& size);
     void setSize(int width, int height);
+    void setWidth(int width);
+    void setHeight(int height);
 
     const vvv::vector2i& getMinSize() const;
     const vvv::vector2i& getMaxSize() const;

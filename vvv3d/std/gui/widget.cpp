@@ -167,6 +167,16 @@ void Widget::setSize(int width, int height)
     onResize(oldSize, newSize);
 }
 
+void Widget::setWidth(int width)
+{
+    setSize(width, getHeight());
+}
+
+void Widget::setHeight(int height)
+{
+    setSize(getWidth(), height);
+}
+
 const vvv::vector2i& Widget::getMinSize() const { return minSize; }
 
 const vvv::vector2i& Widget::getMaxSize() const { return maxSize; }
