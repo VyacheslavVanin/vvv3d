@@ -6,8 +6,7 @@ namespace vvv3d {
 void LineEdit::adjustCursorHeight()
 {
     const auto& font = leftpart->getFont();
-    const auto fontHeight = font.getAscender() - font.getDescender();
-    cursor->setSize(3, fontHeight);
+    cursor->setSize(3, font.getHeight());
 }
 
 LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT),
@@ -35,6 +34,7 @@ LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT),
     leftpart->setColor(Color::BLACK);
     rightpart->setColor(Color::BLACK);
     cursor->setVisible(false);
+    setHeight(leftpart->getFont().getHeight());
 }
 
 void LineEdit::setText(const std::string& text)
