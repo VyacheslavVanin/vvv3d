@@ -30,6 +30,7 @@ public:
     long getAscender() const;
     long getDescender() const;
     long getMinLeftGlyphEdge() const;
+    long getHeight() const;
 
 private:
     Font();

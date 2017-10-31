@@ -171,6 +171,11 @@ long Font::getDescender() const
     return pImpl->face->size->metrics.descender / 64;
 }
 
+long Font::getHeight() const
+{
+    return getAscender() - getDescender();
+}
+
 long Font::getMinLeftGlyphEdge() const { return pImpl->face->bbox.xMin; }
 
 Font::Font() : pImpl() {}
