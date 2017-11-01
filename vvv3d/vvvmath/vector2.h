@@ -46,6 +46,8 @@ public:
 
     inline vector2<T> operator+() const;
     inline vector2<T> operator-() const;
+    inline bool operator==(const vector2& b) const;
+    inline bool operator!=(const vector2& b) const;
 
     inline T length() const;
     inline T dot(const vector2<T>& b) const;
@@ -146,6 +148,16 @@ template <typename T>
 inline vector2<T> vector2<T>::operator-() const
 {
     return vector2<T>(-x, -y);
+}
+template <typename T>
+inline bool vector2<T>::operator==(const vector2& b) const
+{
+    return x == b.x && y == b.y;
+}
+template <typename T>
+inline bool vector2<T>::operator!=(const vector2& b) const
+{
+    return x != b.x || y != b.y;
 }
 
 template <typename T>
