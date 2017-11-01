@@ -24,6 +24,7 @@ void HorizontalLayout::rearrange()
 
     int offsetX = getBorder();
     for (auto w : children) {
+        w->setHeight(contentHeight);
         int offsetY = getBorder();
         switch (getAlign()) {
         case HALIGN::LEFT: break;

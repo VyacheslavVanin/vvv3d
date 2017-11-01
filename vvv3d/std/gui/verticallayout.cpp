@@ -25,6 +25,7 @@ void VerticalLayout::rearrange()
 
     int offsetY = getBorder();
     for (auto w : children) {
+        w->setWidth(contentWidth);
         int offsetX = getBorder();
         switch (getAlign()) {
         case HALIGN::LEFT: break;
