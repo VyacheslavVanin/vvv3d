@@ -164,7 +164,10 @@ void Widget::setSize(int width, int height)
     size.y = clamp_fast(minSize.y, maxSize.y, height);
 
     const auto& newSize = getSize();
-    onResize(oldSize, newSize);
+    if (oldSize != newSize) {
+        onResize(oldSize, newSize);
+        notifyContentChanged();
+    }
 }
 
 void Widget::setWidth(int width)
