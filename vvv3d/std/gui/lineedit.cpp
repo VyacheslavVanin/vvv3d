@@ -43,6 +43,14 @@ void LineEdit::setText(const std::string& text)
     rightpart->setText("");
 }
 
+void LineEdit::setFont(const vvv3d::Font& font)
+{
+    leftpart->setFont(font);
+    rightpart->setFont(font);
+    adjustCursorHeight();
+    placeWidgets();
+}
+
 std::string LineEdit::getText() const
 {
     return toU8(leftpart->getText() + rightpart->getText());

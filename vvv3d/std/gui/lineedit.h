@@ -16,6 +16,7 @@ public:
     LineEdit(const std::string& text = "");
 
     void setText(const std::string& text);
+    void setFont(const vvv3d::Font& font);
 
     std::string getText() const;
 
