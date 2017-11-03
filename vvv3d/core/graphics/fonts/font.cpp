@@ -209,7 +209,10 @@ void FontManager::addFont(const string& name, const string& filename,
 
 const Font& FontManager::getFont(const string& name) const
 {
-    return *fonts.at(name);
+    auto it = fonts.find(name);
+    if (it == fonts.end())
+        return *fonts.at("default");
+    return *(it->second);
 }
 
 FontManager::~FontManager() = default;
