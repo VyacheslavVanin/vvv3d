@@ -58,6 +58,17 @@ void Panel::addWidget(Widget* added)
     setMinSize(layout->getSize());
 }
 
+Layout* Panel::getLayout()
+{
+    return layout;
+}
+
+Widget* Panel::getBackground()
+{
+    return background;
+}
+
+
 void Panel::removeWidget(Widget* removed) { layout->removeWidget(removed); }
 
 }

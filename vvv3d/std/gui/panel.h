@@ -15,6 +15,9 @@ public:
     void addWidget(Widget* added);
     void removeWidget(Widget* removed);
 
+    Layout* getLayout();
+    Widget* getBackground();
+
     // Widget interface
 protected:
     void onResize(const vvv::vector2i&, const vvv::vector2i& newSize) override;
