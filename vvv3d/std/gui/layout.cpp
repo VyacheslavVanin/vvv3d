@@ -53,6 +53,8 @@ void Layout::onRemoveWidget(Widget* removed)
 
 void Layout::addWidget(Widget* widget)
 {
+    if (!widget)
+        return;
     addChild(widget);
     notifyContentChanged();
 }
