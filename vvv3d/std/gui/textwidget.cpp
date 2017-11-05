@@ -55,7 +55,7 @@ static void loadTextShader()
 }
 
 TextWidget::TextWidget(const std::string& text)
-    : autosize(false), halign(HALIGN::CENTER), valign(VALIGN::CENTER),
+    : autosize(true), halign(HALIGN::CENTER), valign(VALIGN::CENTER),
       transform(), text(toU32(text)), geometry(), font(), changed(true)
 {
     static std::once_flag flag;
