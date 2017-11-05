@@ -13,6 +13,10 @@ public:
     ButtonText(const ButtonText&)         = delete;
     ButtonText& operator=(const ButtonText&) = delete;
 
+    void setText(const std::string& text);
+    const std::u32string& getText32() const;
+    std::string getText() const;
+
 private:
     TextWidget* text;
     ColorRectWidget* background;
