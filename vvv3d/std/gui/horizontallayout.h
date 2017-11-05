@@ -9,8 +9,8 @@ namespace vvv3d {
 class HorizontalLayout : public Layout {
 public:
     HorizontalLayout();
-    HALIGN getAlign() const;
-    void setAlign(HALIGN value);
+    VALIGN getAlign() const;
+    void setAlign(VALIGN value);
 
 protected:
     // Layout interface
@@ -19,7 +19,7 @@ protected:
 private:
     int getMaxChildHeight(const std::vector<Widget*>& children);
     int getChildrenWidth(const std::vector<Widget*>& children);
-    HALIGN align;
+    VALIGN align;
 };
 
 }

@@ -3,7 +3,7 @@
 
 namespace vvv3d {
 
-HorizontalLayout::HorizontalLayout() : align(HALIGN::CENTER) {}
+HorizontalLayout::HorizontalLayout() : align(VALIGN::CENTER) {}
 
 void HorizontalLayout::rearrange()
 {
@@ -27,11 +27,11 @@ void HorizontalLayout::rearrange()
         w->setHeight(contentHeight);
         int offsetY = getBorder();
         switch (getAlign()) {
-        case HALIGN::LEFT: break;
-        case HALIGN::CENTER:
+        case VALIGN::TOP: break;
+        case VALIGN::CENTER:
             offsetY += (contentHeight - w->getHeight()) / 2;
             break;
-        case HALIGN::RIGHT: offsetY += contentHeight - w->getHeight(); break;
+        case VALIGN::BOTTOM: offsetY += contentHeight - w->getHeight(); break;
         }
         w->setPosition(offsetX, offsetY);
         offsetX += w->getWidth() + getPadding();
@@ -57,8 +57,8 @@ int HorizontalLayout::getChildrenWidth(const std::vector<Widget*>& children)
         [](int sum, Widget* w) { return sum + w->getSize().x; });
 }
 
-HALIGN HorizontalLayout::getAlign() const { return align; }
+VALIGN HorizontalLayout::getAlign() const { return align; }
 
-void HorizontalLayout::setAlign(HALIGN value) { this->align = value; }
+void HorizontalLayout::setAlign(VALIGN value) { this->align = value; }
 
 }
