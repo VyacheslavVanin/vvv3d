@@ -22,6 +22,11 @@ void ButtonText::onUnhover() { background->setColor(Color(0)); }
 
 void ButtonText::onPressDown() { background->setColor(Color::ORANGE); }
 
+void ButtonText::onContentChanged()
+{
+    setSize(text->getSize());
+}
+
 void ButtonText::setText(const std::string& text) {this->text->setText(text);}
 const std::u32string& ButtonText::getText32() const {return text->getText();}
 std::string ButtonText::getText() const {return toU8(text->getText());}

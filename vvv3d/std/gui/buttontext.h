@@ -27,6 +27,7 @@ protected:
     void onHover() override;
     void onUnhover() override;
     void onPressDown() override;
+    void onContentChanged() override;
 };
 
 }
