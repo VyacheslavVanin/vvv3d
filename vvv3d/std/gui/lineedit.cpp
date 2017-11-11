@@ -54,7 +54,12 @@ void LineEdit::setFont(const vvv3d::Font& font)
 
 std::string LineEdit::getText() const
 {
-    return toU8(leftpart->getText() + rightpart->getText());
+    return toU8(leftpart->getText32() + rightpart->getText32());
+}
+
+std::u32string LineEdit::getText32() const
+{
+    return leftpart->getText32() + rightpart->getText32();
 }
 
 void LineEdit::setHAlign(HALIGN align)
@@ -116,7 +121,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
     chargeBlink();
     switch (scancode) {
     case SCANCODE_LEFT: {
-        const auto& old = leftpart->getText();
+        const auto& old = leftpart->getText32();
         if (old.empty())
             break;
         char32_t s = leftpart->popBack();
@@ -125,7 +130,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
         break;
     }
     case SCANCODE_RIGHT: {
-        const auto& old = rightpart->getText();
+        const auto& old = rightpart->getText32();
         if (old.empty())
             break;
         char32_t s = rightpart->popFront();
@@ -134,7 +139,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
         break;
     }
     case SCANCODE_BACKSPACE: {
-        const auto& old = leftpart->getText();
+        const auto& old = leftpart->getText32();
         if (old.empty())
             break;
         leftpart->popBack();
@@ -142,7 +147,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
         break;
     }
     case SCANCODE_DELETE: {
-        const auto& old = rightpart->getText();
+        const auto& old = rightpart->getText32();
         if (old.empty())
             break;
         rightpart->popFront();

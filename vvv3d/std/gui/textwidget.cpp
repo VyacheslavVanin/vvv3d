@@ -93,7 +93,7 @@ void TextWidget::setText(std::u32string&& text)
     autoresize();
 }
 
-const std::u32string& TextWidget::getText() const { return text; }
+const std::u32string& TextWidget::getText32() const { return text; }
 
 void TextWidget::append(const std::string& text) { append(toU32(text)); }
 

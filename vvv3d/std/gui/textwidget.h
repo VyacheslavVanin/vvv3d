@@ -17,7 +17,7 @@ public:
     void setText(const std::string& text);
     void setText(const std::u32string& text);
     void setText(std::u32string&& text);
-    const std::u32string& getText() const;
+    const std::u32string& getText32() const;
 
     void append(const std::string& text);
     void append(const std::u32string& text);
