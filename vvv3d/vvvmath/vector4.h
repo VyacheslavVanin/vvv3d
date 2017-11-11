@@ -48,6 +48,8 @@ public:
     inline vector4& operator+=(const vector4& b);
     inline vector4& operator-=(const vector4& b);
 
+    inline vector4 operator*(const T& b) const;
+    inline vector4 operator/(const T& b) const;
     inline vector4& operator*=(T s);
     inline vector4& operator/=(T s);
 
@@ -128,6 +130,18 @@ inline vector4<T>& vector4<T>::operator/=(T s)
     z /= s;
     w /= s;
     return *this;
+}
+
+template <typename T>
+inline vector4<T> vector4<T>::operator*(const T& b) const
+{
+    return vector4<T>(x * b, y * b, z * b, w * b);
+}
+
+template <typename T>
+inline vector4<T> vector4<T>::operator/(const T& b) const
+{
+    return vector4<T>(x / b, y / b, z / b, w / b);
 }
 
 template <typename T>

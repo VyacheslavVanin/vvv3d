@@ -4,8 +4,8 @@
 namespace vvv3d {
 
 SliderH::SliderH() : SliderBase(),
-                     background(new vvv3d::ColorRectWidget(vvv3d::Color::WHITE)),
-                     pointer(new vvv3d::ColorRectWidget(vvv3d::Color::BLUE)),
+                     background(new vvv3d::ColorRectWidget(vvv3d::WHITE)),
+                     pointer(new vvv3d::ColorRectWidget(vvv3d::BLUE)),
                      pointerWidth(20)
 {
     addChild(background);

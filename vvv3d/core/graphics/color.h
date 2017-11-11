@@ -4,34 +4,24 @@
 
 namespace vvv3d {
 
-class Color {
-public:
-    vvv::vector4f vec;
-    Color() : vec() {}
-    Color(const Color&) = default;
-    explicit Color(float f) : vec(f) {}
-    Color(float r, float g, float b, float a = 1) : vec(r, g, b, a) {}
-    explicit Color(const vvv::vector4f& v) : vec(v) {}
-    Color(const vvv::vector3f& v, float a = 1) : vec(v, a) {}
-
-    static Color WHITE;
-    static Color SILVER;
-    static Color GRAY;
-    static Color BLACK;
-    static Color RED;
-    static Color MAROON;
-    static Color YELLOW;
-    static Color OLIVE;
-    static Color LIME;
-    static Color GREEN;
-    static Color AQUA;
-    static Color TEAL;
-    static Color BLUE;
-    static Color NAVY;
-    static Color FUCHSIA;
-    static Color PURPLE;
-    static Color ORANGE;
-};
+using Color = vvv::vector4f;
+extern Color WHITE;
+extern Color SILVER;
+extern Color GRAY;
+extern Color BLACK;
+extern Color RED;
+extern Color MAROON;
+extern Color YELLOW;
+extern Color OLIVE;
+extern Color LIME;
+extern Color GREEN;
+extern Color AQUA;
+extern Color TEAL;
+extern Color BLUE;
+extern Color NAVY;
+extern Color FUCHSIA;
+extern Color PURPLE;
+extern Color ORANGE;
 }
 
 #endif // COLOR_H

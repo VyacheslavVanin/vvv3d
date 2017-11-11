@@ -1,6 +1,7 @@
 #ifndef DRAW_H
 #define DRAW_H
 #include <vvv3d/vvvmath/vector4.h>
+#include <vvv3d/core/graphics/color.h>
 
 namespace vvv3d {
 
@@ -20,7 +21,6 @@ class Shader;
 class Geometry;
 class Transform;
 class Texture;
-class Color;
 class Font;
 
 void drawTextured(const Camera& camera, Shader& shader,

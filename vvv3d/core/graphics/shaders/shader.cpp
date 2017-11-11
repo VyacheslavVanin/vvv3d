@@ -100,63 +100,63 @@ void Shader::setColor(int n, const Color& color)
 {
     const auto loc = LOC_(static_cast<size_t>(LOCATIONS::COLOR0) + n);
     CHECK_LOC()
-    program.setUniform(loc, color.vec);
+    program.setUniform(loc, color);
 }
 
 void Shader::setColor0(const Color& color)
 {
     const auto loc = LOC_(LOCATIONS::COLOR0);
     CHECK_LOC()
-    program.setUniform(loc, color.vec);
+    program.setUniform(loc, color);
 }
 
 void Shader::setColor1(const Color& color)
 {
     const auto loc = LOC_(LOCATIONS::COLOR1);
     CHECK_LOC()
-    program.setUniform(loc, color.vec);
+    program.setUniform(loc, color);
 }
 
 void Shader::setColor2(const Color& color)
 {
     const auto loc = LOC_(LOCATIONS::COLOR2);
     CHECK_LOC()
-    program.setUniform(loc, color.vec);
+    program.setUniform(loc, color);
 }
 
 void Shader::setColor3(const Color& color)
 {
     const auto loc = LOC_(LOCATIONS::COLOR3);
     CHECK_LOC()
-    program.setUniform(loc, color.vec);
+    program.setUniform(loc, color);
 }
 
 void Shader::setColor4(const Color& color)
 {
     const auto loc = LOC_(LOCATIONS::COLOR4);
     CHECK_LOC()
-    program.setUniform(loc, color.vec);
+    program.setUniform(loc, color);
 }
 
 void Shader::setColor5(const Color& color)
 {
     const auto loc = LOC_(LOCATIONS::COLOR5);
     CHECK_LOC()
-    program.setUniform(loc, color.vec);
+    program.setUniform(loc, color);
 }
 
 void Shader::setColor6(const Color& color)
 {
     const auto loc = LOC_(LOCATIONS::COLOR6);
     CHECK_LOC()
-    program.setUniform(loc, color.vec);
+    program.setUniform(loc, color);
 }
 
 void Shader::setColor7(const Color& color)
 {
     const auto loc = LOC_(LOCATIONS::COLOR7);
     CHECK_LOC()
-    program.setUniform(loc, color.vec);
+    program.setUniform(loc, color);
 }
 
 void Shader::setTexturePosition(const vvv::vector4f& pos)
@@ -249,7 +249,7 @@ void Shader::setAmbientLightColor(const Color& color)
 {
     const auto loc = LOC_(LOCATIONS::AMBIENT_COLOR);
     CHECK_LOC()
-    program.setUniform(loc, color.vec);
+    program.setUniform(loc, color);
 }
 
 void Shader::setPosition(const vvv::vector4f& pos)

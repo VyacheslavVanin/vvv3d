@@ -73,7 +73,7 @@ const Color&ColorRectWidget::getColor() const
     return this->color;
 }
 
-ColorRectWidget::ColorRectWidget() : ColorRectWidget(Color::ORANGE) {}
+ColorRectWidget::ColorRectWidget() : ColorRectWidget(ORANGE) {}
 
 void ColorRectWidget::onDraw()
 {

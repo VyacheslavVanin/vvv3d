@@ -16,11 +16,11 @@ ButtonText::ButtonText(const std::string& caption)
     setSize(text->getSize());
 }
 
-void ButtonText::onHover() { background->setColor(Color::SILVER); }
+void ButtonText::onHover() { background->setColor(SILVER); }
 
 void ButtonText::onUnhover() { background->setColor(Color(0)); }
 
-void ButtonText::onPressDown() { background->setColor(Color::ORANGE); }
+void ButtonText::onPressDown() { background->setColor(ORANGE); }
 
 void ButtonText::onContentChanged()
 {

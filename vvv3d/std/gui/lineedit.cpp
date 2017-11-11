@@ -15,8 +15,8 @@ LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT),
 {
     auto lp  = std::make_unique<TextWidget>(text);
     auto rp  = std::make_unique<TextWidget>("");
-    auto cur = std::make_unique<ColorRectWidget>(Color::BLACK);
-    auto bg  = std::make_unique<ColorRectWidget>(Color::WHITE);
+    auto cur = std::make_unique<ColorRectWidget>(BLACK);
+    auto bg  = std::make_unique<ColorRectWidget>(WHITE);
 
     leftpart   = lp.release();
     rightpart  = rp.release();
@@ -31,8 +31,8 @@ LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT),
     setFocusable(true);
 
     adjustCursorHeight();
-    leftpart->setColor(Color::BLACK);
-    rightpart->setColor(Color::BLACK);
+    leftpart->setColor(BLACK);
+    rightpart->setColor(BLACK);
     cursor->setVisible(false);
     setHeight(leftpart->getFont().getHeight());
 }

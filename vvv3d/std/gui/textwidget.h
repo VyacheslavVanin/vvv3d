@@ -7,7 +7,6 @@
 #include <vvv3d/vvv3d.h>
 
 namespace vvv3d {
-class Color;
 class Font;
 
 class TextWidget : public Widget {
@@ -48,7 +47,7 @@ private:
     std::u32string text;
     std::shared_ptr<vvv3d::Geometry> geometry;
     const vvv3d::Font* font;
-    vvv3d::Color color        = vvv3d::Color::WHITE;
+    vvv3d::Color color        = vvv3d::WHITE;
     mutable int widthInPixels = 0;
     mutable bool changed;
 
