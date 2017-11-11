@@ -41,6 +41,7 @@ void LineEdit::setText(const std::string& text)
 {
     leftpart->setText(text);
     rightpart->setText("");
+    placeWidgets();
 }
 
 void LineEdit::setFont(const vvv3d::Font& font)
