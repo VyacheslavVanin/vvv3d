@@ -28,6 +28,8 @@ void Panel::onResize(const vvv::vector2i&, const vvv::vector2i& newSize)
 {
     if (background)
         background->setSize(newSize);
+    if (layout)
+        layout->setSize(newSize);
     rearrange();
 }
 

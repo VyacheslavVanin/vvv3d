@@ -12,7 +12,7 @@ class Font;
 class TextWidget : public Widget {
 public:
     explicit TextWidget(const std::string& text = "Text");
-    ~TextWidget();
+    ~TextWidget() override;
 
     void setText(const std::string& text);
     void setText(const std::u32string& text);
