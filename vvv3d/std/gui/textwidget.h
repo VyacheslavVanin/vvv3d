@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include <vvv3d/vvv3d.h>
+#include <vvv3d/utils/utf8string.hpp>
 
 namespace vvv3d {
 class Font;
@@ -15,19 +16,14 @@ public:
     ~TextWidget() override;
 
     void setText(const std::string& text);
-    void setText(const std::u32string& text);
-    void setText(std::u32string&& text);
-    const std::u32string& getText32() const;
+    void setText(std::string&& text);
+    const std::string& getText() const;
 
     void append(const std::string& text);
-    void append(const std::u32string& text);
-    void append(char32_t character);
     void prepend(const std::string& text);
-    void prepend(const std::u32string& text);
-    void prepend(char32_t character);
 
-    char32_t popBack();
-    char32_t popFront();
+    std::string popBack();
+    std::string popFront();
 
     void setColor(const vvv3d::Color& color);
     const vvv3d::Color& getColor() const;
@@ -44,18 +40,22 @@ private:
     HALIGN halign;
     VALIGN valign;
     vvv3d::Transform transform;
-    std::u32string text;
+    std::string text;
+    mutable std::u32string text32;
     std::shared_ptr<vvv3d::Geometry> geometry;
     const vvv3d::Font* font;
     vvv3d::Color color        = vvv3d::WHITE;
     mutable int widthInPixels = 0;
-    mutable bool changed;
+    mutable bool text_changed;
+    mutable bool geometry_changed;
 
+    const std::u32string& getText32() const;
     // Widget interface
     void autoresize();
 
     int getHAlignOffset() const;
     int getVAlignOffset() const;
+    void lazyUpdateText() const;
     void lazyUpdateGeometryData() const;
     vvv3d::Geometry& getGeometry() const;
     int getWidthInPixels() const;

@@ -14,8 +14,7 @@ public:
     ButtonText& operator=(const ButtonText&) = delete;
 
     void setText(const std::string& text);
-    const std::u32string& getText32() const;
-    std::string getText() const;
+    const std::string& getText() const;
 
 private:
     TextWidget* text;

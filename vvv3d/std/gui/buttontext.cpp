@@ -28,7 +28,6 @@ void ButtonText::onContentChanged()
 }
 
 void ButtonText::setText(const std::string& text) {this->text->setText(text);}
-const std::u32string& ButtonText::getText32() const {return text->getText32();}
-std::string ButtonText::getText() const {return toU8(text->getText32());}
+const std::string& ButtonText::getText() const {return text->getText();}
 
 }

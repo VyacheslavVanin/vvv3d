@@ -19,7 +19,6 @@ public:
     void setFont(const vvv3d::Font& font);
 
     std::string getText() const;
-    std::u32string getText32() const;
 
     void setHAlign(HALIGN align);
     HALIGN getHAlign() const;

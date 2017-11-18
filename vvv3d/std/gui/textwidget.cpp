@@ -49,23 +49,24 @@ static void loadTextShader()
         out_texCoord = va_texCoord;
     }
     )";
-    auto& e  = Engine::getActiveEngine();
+    auto& e = Engine::getActiveEngine();
     auto& sm = e.getResourceManager().getShaderManager();
     sm.addFromSource("text", vsh, fsh);
 }
 
 TextWidget::TextWidget(const std::string& text)
     : autosize(true), halign(HALIGN::CENTER), valign(VALIGN::CENTER),
-      transform(), text(toU32(text)), geometry(), font(), changed(true)
+      transform(), text32(), geometry(), font(), text_changed(true),
+      geometry_changed(true)
 {
     static std::once_flag flag;
     std::call_once(flag, []() { loadTextShader(); });
 
-    auto& e       = Engine::getActiveEngine();
-    auto& resman  = e.getResourceManager();
+    auto& e = Engine::getActiveEngine();
+    auto& resman = e.getResourceManager();
     auto& fontMan = resman.getFontManager();
-    font          = &fontMan.getFont("default");
-    geometry      = createTextGeometry(*font, text);
+    font = &fontMan.getFont("default");
+    geometry = createTextGeometry(*font, text);
 
     resizeToContent();
     setMinSize(1, getHeight());
@@ -77,96 +78,69 @@ void TextWidget::autoresize()
         resizeToContent();
 }
 
-void TextWidget::setText(const std::string& text) { setText(toU32(text)); }
-
-void TextWidget::setText(const std::u32string& text)
+void TextWidget::setText(const std::string& text)
 {
     this->text = text;
-    changed    = true;
+    text_changed = true;
     autoresize();
 }
 
-void TextWidget::setText(std::u32string&& text)
+void TextWidget::setText(std::string&& text)
 {
     this->text = std::move(text);
-    changed    = true;
+    text_changed = true;
     autoresize();
 }
 
-const std::u32string& TextWidget::getText32() const { return text; }
+const std::string& TextWidget::getText() const { return text; }
 
-void TextWidget::append(const std::string& text) { append(toU32(text)); }
-
-void TextWidget::append(const std::u32string& text)
+void TextWidget::append(const std::string& text)
 {
     this->text += text;
-    changed = true;
+    text_changed = true;
     autoresize();
 }
 
-void TextWidget::append(char32_t character)
-{
-    this->text += character;
-    changed = true;
-    autoresize();
-}
-
-void TextWidget::prepend(const std::string& text) { prepend(toU32(text)); }
-
-void TextWidget::prepend(const std::u32string& text)
+void TextWidget::prepend(const std::string& text)
 {
     this->text = text + this->text;
-    changed    = true;
+    text_changed = true;
     autoresize();
 }
 
-void TextWidget::prepend(char32_t character)
+std::string TextWidget::popBack()
 {
-    text.insert(text.begin(), character);
-    changed = true;
-    autoresize();
-}
-
-char32_t TextWidget::popBack()
-{
-    auto ret = text.back();
-    text.pop_back();
-    changed = true;
+    auto ret = vvv::getLastChar(text);
+    text_changed = true;
     autoresize();
     return ret;
 }
 
-char32_t TextWidget::popFront()
+std::string TextWidget::popFront()
 {
-    auto ret = text.front();
-    text.erase(text.begin());
-    changed = true;
+    auto ret = vvv::getFirstChar(text);
+    text_changed = true;
     autoresize();
     return ret;
 }
 
 void TextWidget::setColor(const Color& color) { this->color = color; }
 
-const Color& TextWidget::getColor() const
-{
-    return this->color;
-}
+const Color& TextWidget::getColor() const { return this->color; }
 
 void TextWidget::setFont(const Font& font)
 {
     this->font = &font;
-    changed    = true;
+    geometry_changed = true;
     autoresize();
 }
 
-const Font& TextWidget::getFont() const
-{
-    return *this->font;
-}
+const Font& TextWidget::getFont() const { return *this->font; }
 
 void TextWidget::resizeToContent()
 {
-    const int lineWidth  = textLineWidth(text, *font);
+    lazyUpdateText();
+    const int lineWidth = textLineWidth(text32, *font);
     const int lineHeight = textLineHeight(*font);
     setSize(lineWidth, lineHeight);
 }
@@ -202,12 +176,28 @@ int TextWidget::getVAlignOffset() const
     throw std::logic_error("Shouldn't be here");
 }
 
+const std::u32string& TextWidget::getText32() const
+{
+    lazyUpdateText();
+    return text32;
+}
+
+void TextWidget::lazyUpdateText() const
+{
+    if (text_changed) {
+        text32 = toU32(text);
+        text_changed = false;
+        geometry_changed = true;
+    }
+}
+
 void TextWidget::lazyUpdateGeometryData() const
 {
-    if (changed) {
-        updateTextGeometry(geometry, *font, text);
-        widthInPixels = textLineWidth(text, *font);
-        changed       = false;
+    lazyUpdateText();
+    if (geometry_changed) {
+        updateTextGeometry(geometry, *font, text32);
+        widthInPixels = textLineWidth(text32, *font);
+        geometry_changed = false;
     }
 }
 
@@ -226,20 +216,20 @@ int TextWidget::getWidthInPixels() const
 void TextWidget::onDraw()
 {
     const auto& camera = getCamera();
-    auto& e            = Engine::getActiveEngine();
-    auto& resman       = e.getResourceManager();
-    auto& shaderMan    = resman.getShaderManager();
-    auto& sh           = shaderMan.get("text");
+    auto& e = Engine::getActiveEngine();
+    auto& resman = e.getResourceManager();
+    auto& shaderMan = resman.getShaderManager();
+    auto& sh = shaderMan.get("text");
 
     const auto& geometry = getGeometry();
-    const auto& font     = *this->font;
-    const auto& texture  = font.getTexture();
-    auto& transform      = this->transform;
+    const auto& font = *this->font;
+    const auto& texture = font.getTexture();
+    auto& transform = this->transform;
 
     const auto& pos = getAbsolutePosition();
 
     const auto hAlignOffset = getHAlignOffset();
-    const int vAlignOffset  = getVAlignOffset();
+    const int vAlignOffset = getVAlignOffset();
 
     const auto posx = pos.x + hAlignOffset;
     const auto posy = -pos.y - font.getAscender() + vAlignOffset;
@@ -250,4 +240,4 @@ void TextWidget::onDraw()
 
 TextWidget::~TextWidget() = default;
 
-}
+} // namespace vvv3d
