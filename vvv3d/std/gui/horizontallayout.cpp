@@ -18,13 +18,14 @@ void HorizontalLayout::rearrange()
 
     const auto contentHeight = getMaxChildHeight(children);
     const auto allHeight     = contentHeight + borders;
+    const auto preferedHeight = std::max(contentHeight, allHeight - borders);
 
     if (isExpandToFitContent())
         setMinSize(allWidth, allHeight);
 
     int offsetX = getBorder();
     for (auto w : children) {
-        w->setHeight(contentHeight);
+        w->setHeight(preferedHeight);
         int offsetY = getBorder();
         switch (getAlign()) {
         case VALIGN::TOP: break;

@@ -19,13 +19,14 @@ void VerticalLayout::rearrange()
 
     const auto contentWidth = getMaxChildWidth(children);
     const auto allWidth     = contentWidth + borders;
+    const auto preferedWidth = std::max(contentWidth, getWidth() - borders);
 
     if (isExpandToFitContent())
         setMinSize(allWidth, allHeight);
 
     int offsetY = getBorder();
     for (auto w : children) {
-        w->setWidth(contentWidth);
+        w->setWidth(preferedWidth);
         int offsetX = getBorder();
         switch (getAlign()) {
         case HALIGN::LEFT: break;
