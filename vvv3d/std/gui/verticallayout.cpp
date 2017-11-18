@@ -3,7 +3,7 @@
 
 namespace vvv3d {
 
-VerticalLayout::VerticalLayout() : align(HALIGN::CENTER) {}
+VerticalLayout::VerticalLayout() : align(HALIGN::FILL) {}
 
 void VerticalLayout::rearrange()
 {
@@ -26,7 +26,6 @@ void VerticalLayout::rearrange()
 
     int offsetY = getBorder();
     for (auto w : children) {
-        w->setWidth(preferedWidth);
         int offsetX = getBorder();
 
         switch (getAlign()) {
@@ -35,6 +34,7 @@ void VerticalLayout::rearrange()
             offsetX += (contentWidth - w->getWidth()) / 2;
             break;
         case HALIGN::RIGHT: offsetX += contentWidth - w->getWidth(); break;
+        case HALIGN::FILL: w->setWidth(preferedWidth); break;
         }
         w->setPosition(offsetX, offsetY);
         offsetY += w->getHeight() + getPadding();

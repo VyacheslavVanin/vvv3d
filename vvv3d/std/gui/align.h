@@ -3,9 +3,9 @@
 
 namespace vvv3d {
 
-enum class HALIGN { LEFT, CENTER, RIGHT };
+enum class HALIGN { LEFT, CENTER, RIGHT, FILL };
 
-enum class VALIGN { TOP, CENTER, BOTTOM };
+enum class VALIGN { TOP, CENTER, BOTTOM, FILL };
 
 }
 
