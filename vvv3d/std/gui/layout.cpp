@@ -1,7 +1,7 @@
 #include "layout.h"
+#include "panel.h"
 #include <algorithm>
 #include <vvv3d/vvvmath/linalg.h>
-#include "panel.h"
 
 namespace vvv3d {
 
@@ -85,9 +85,6 @@ void Layout::setBorder(int value)
     notifyContentChanged();
 }
 
-void Layout::onContentChanged()
-{
-    rearrange();
-}
+void Layout::onContentChanged() { rearrange(); }
 
-}
+} // namespace vvv3d

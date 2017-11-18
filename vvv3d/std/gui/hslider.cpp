@@ -3,10 +3,9 @@
 
 namespace vvv3d {
 
-SliderH::SliderH() : SliderBase(),
-                     background(new vvv3d::ColorRectWidget(vvv3d::WHITE)),
-                     pointer(new vvv3d::ColorRectWidget(vvv3d::BLUE)),
-                     pointerWidth(20)
+SliderH::SliderH()
+    : SliderBase(), background(new vvv3d::ColorRectWidget(vvv3d::WHITE)),
+      pointer(new vvv3d::ColorRectWidget(vvv3d::BLUE)), pointerWidth(20)
 {
     addChild(background);
     addChild(pointer);
@@ -36,16 +35,17 @@ int SliderH::mousePosToValue(int x, int y)
 
 void SliderH::onValueChanged()
 {
-    const auto pos = float(getValue()) / getMax() * (getWidth() - pointer->getWidth());
+    const auto pos =
+        float(getValue()) / getMax() * (getWidth() - pointer->getWidth());
     pointer->setPosition(pos, 0);
 }
 
 void SliderH::onRangeChanged()
 {
     pointer->setSize(pointerWidth, getSize().y);
-    const auto pos = float(getValue()) / getMax() * (getWidth() - pointer->getWidth());
+    const auto pos =
+        float(getValue()) / getMax() * (getWidth() - pointer->getWidth());
     pointer->setPosition(pos, 0);
 }
 
-}
-
+} // namespace vvv3d

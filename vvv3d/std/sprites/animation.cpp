@@ -34,4 +34,3 @@ const vvv3d::Texture* Animation::getFrame(double t) const
                    1;
     return l->frame;
 }
-

@@ -89,14 +89,14 @@ private:
     void onKeyDown(const SDL_Event& e)
     {
         const auto scancode = e.key.keysym.scancode;
-        keys[scancode]      = 1;
+        keys[scancode] = 1;
         events.emplace_back(INPUT_EVENT_TYPE::KEY_DOWN, scancode);
     }
 
     void onKeyUp(const SDL_Event& e)
     {
         const auto scancode = e.key.keysym.scancode;
-        keys[scancode]      = 0;
+        keys[scancode] = 0;
         events.emplace_back(INPUT_EVENT_TYPE::KEY_UP, scancode);
     }
 
@@ -160,12 +160,12 @@ public:
         if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
             throw std::logic_error("SDL initialization failed...");
 
-        int profile     = SDL_GL_CONTEXT_PROFILE_CORE;
-        GLPROFILE p     = this->profile;
+        int profile = SDL_GL_CONTEXT_PROFILE_CORE;
+        GLPROFILE p = this->profile;
         const int major = major_ver;
         const int minor = minor_ver;
         switch (p) {
-        case GLPROFILE::ES: profile   = SDL_GL_CONTEXT_PROFILE_ES; break;
+        case GLPROFILE::ES: profile = SDL_GL_CONTEXT_PROFILE_ES; break;
         case GLPROFILE::CORE: profile = SDL_GL_CONTEXT_PROFILE_CORE; break;
         }
 
@@ -284,7 +284,4 @@ const std::vector<InputEvent>& sdlLayer::getEvents() const
     return sdl->eventLoop.getEvents();
 }
 
-void sdlLayer::setVSync(bool vsync)
-{
-    SDL_GL_SetSwapInterval(vsync);
-}
+void sdlLayer::setVSync(bool vsync) { SDL_GL_SetSwapInterval(vsync); }

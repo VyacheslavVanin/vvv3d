@@ -9,19 +9,19 @@ void LineEdit::adjustCursorHeight()
     cursor->setSize(3, font.getHeight());
 }
 
-LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT),
-    toggleCursorVisibilityThresholdTime(),
-    toggleCursorVisiblityPeriod(std::chrono::milliseconds(750)), text(),
-    text_changed(true)
+LineEdit::LineEdit(const std::string& text)
+    : Widget(), hAlign(HALIGN::LEFT), toggleCursorVisibilityThresholdTime(),
+      toggleCursorVisiblityPeriod(std::chrono::milliseconds(750)), text(),
+      text_changed(true)
 {
-    auto lp  = std::make_unique<TextWidget>(text);
-    auto rp  = std::make_unique<TextWidget>("");
+    auto lp = std::make_unique<TextWidget>(text);
+    auto rp = std::make_unique<TextWidget>("");
     auto cur = std::make_unique<ColorRectWidget>(BLACK);
-    auto bg  = std::make_unique<ColorRectWidget>(WHITE);
+    auto bg = std::make_unique<ColorRectWidget>(WHITE);
 
-    leftpart   = lp.release();
-    rightpart  = rp.release();
-    cursor     = cur.release();
+    leftpart = lp.release();
+    rightpart = rp.release();
+    cursor = cur.release();
     background = bg.release();
     leftpart->setAutoSize(true);
     rightpart->setAutoSize(true);
@@ -84,15 +84,12 @@ void LineEdit::addOnPressEnterAction(
 void LineEdit::chargeBlink()
 {
     using namespace std::chrono;
-    toggleCursorVisibilityThresholdTime = system_clock::now() +
-                                          toggleCursorVisiblityPeriod;
+    toggleCursorVisibilityThresholdTime =
+        system_clock::now() + toggleCursorVisiblityPeriod;
     cursor->setVisible(true);
 }
 
-void LineEdit::onGetFocus()
-{
-    chargeBlink();
-}
+void LineEdit::onGetFocus() { chargeBlink(); }
 
 void LineEdit::onLoseFocus()
 {
@@ -192,13 +189,13 @@ int LineEdit::roughLeftOffset(int leftMargin, int width, int fullTextWidth,
 
 void LineEdit::placeWidgets()
 {
-    const auto leftWidth  = leftpart->getWidth();
+    const auto leftWidth = leftpart->getWidth();
     const auto rightWidth = rightpart->getWidth();
-    const auto width      = getWidth();
+    const auto width = getWidth();
 
-    const auto cursorWidth  = cursor->getWidth();
-    const auto leftMargin   = cursorWidth;
-    const auto rightMargin  = width - cursorWidth;
+    const auto cursorWidth = cursor->getWidth();
+    const auto leftMargin = cursorWidth;
+    const auto rightMargin = width - cursorWidth;
     const int fullTextWidth = leftWidth + rightWidth;
 
     const int roughOffset =
@@ -206,7 +203,7 @@ void LineEdit::placeWidgets()
 
     const int cursorPosition =
         vvv::clamp(leftMargin, rightMargin, roughOffset + leftWidth);
-    const int leftOffset  = cursorPosition - leftWidth;
+    const int leftOffset = cursorPosition - leftWidth;
     const int textOffsetY = (getHeight() - leftpart->getHeight()) / 2;
 
     rightpart->setPosition(cursorPosition, textOffsetY);
@@ -224,4 +221,4 @@ void LineEdit::lazyUpdateText() const
     }
 }
 
-}
+} // namespace vvv3d

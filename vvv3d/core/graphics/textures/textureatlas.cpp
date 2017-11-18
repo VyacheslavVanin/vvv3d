@@ -56,9 +56,9 @@ TextureAtlas::pack(size_t width, size_t height,
     std::vector<std::unique_ptr<TextureAtlas>> ret;
     vector<std::pair<std::string, Texture*>> notPlaced;
     for (size_t i = 0; i < texsList.size(); ++i) {
-        const auto& t    = texsList[i];
+        const auto& t = texsList[i];
         const auto& name = names[i];
-        auto tex         = new Texture(t);
+        auto tex = new Texture(t);
         notPlaced.push_back(std::make_pair(name, tex));
     }
 
@@ -86,14 +86,14 @@ TextureAtlas::pack(size_t width, size_t height,
         std::unique_ptr<TextureAtlas> newAtlas =
             std::make_unique<_PrivConstrWorkaround>(width, height);
         for (const auto& t : texsToPack) {
-            const auto& name         = t.first;
+            const auto& name = t.first;
             newAtlas->textures[name] = std::unique_ptr<Texture>(t.second);
         }
 
-        auto& atlas            = newAtlas->atlas;
+        auto& atlas = newAtlas->atlas;
         const size_t MAX_BYTES = width * height * 4;
-        auto buff              = make_unique<GLubyte[]>(MAX_BYTES);
-        for (size_t i     = 0; i < MAX_BYTES; ++i)
+        auto buff = make_unique<GLubyte[]>(MAX_BYTES);
+        for (size_t i = 0; i < MAX_BYTES; ++i)
             buff.get()[i] = 0;
 
         // Clear atlass
@@ -114,10 +114,10 @@ TextureAtlas::pack(size_t width, size_t height,
                             t->height, GL_RGBA, GL_UNSIGNED_BYTE, buff.get());
             t->tex = atlas;
 
-            const float widthUnit  = 1.0f / width;
+            const float widthUnit = 1.0f / width;
             const float heightUnit = 1.0f / height;
-            t->texturePosition.z   = widthUnit * (t->width - 1);
-            t->texturePosition.w   = heightUnit * (t->height - 1);
+            t->texturePosition.z = widthUnit * (t->width - 1);
+            t->texturePosition.w = heightUnit * (t->height - 1);
             t->texturePosition.x += 0.5 * widthUnit;
             t->texturePosition.y += 0.5 * heightUnit;
         }

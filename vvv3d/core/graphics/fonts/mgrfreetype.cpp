@@ -35,4 +35,4 @@ FT_Face MgrFreetype::getFont(const std::string& fontNameOrPath) const
 {
     return fonts.at(fontNameOrPath);
 }
-}
+} // namespace vvv3d

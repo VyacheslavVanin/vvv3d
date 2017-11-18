@@ -100,11 +100,11 @@ void GuiLayer::GuiPointer::detectMouseMove(const Input::Mouse& mouse)
 
 void GuiLayer::GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
 {
-    const auto& pos           = mouse.getMousePos();
+    const auto& pos = mouse.getMousePos();
     Widget* underCursorWidget = getWidgetAtPoint(pos);
     for (uint16_t i = 0; i < NUM_MOUSE_BUTTONS; ++i) {
-        const auto oldState   = mouseButtonsStates[i];
-        const auto newState   = mouse.buttonDown(i);
+        const auto oldState = mouseButtonsStates[i];
+        const auto newState = mouse.buttonDown(i);
         mouseButtonsStates[i] = newState;
 
         if (newState == oldState)
@@ -142,11 +142,11 @@ void GuiLayer::GuiPointer::processKeyboard(const Input::Keyboard& kbd)
 void GuiLayer::GuiPointer::processInput(const Input& input)
 {
     const auto& mouse = input.getMouse();
-    const auto& kbd   = input.getKeyboard();
+    const auto& kbd = input.getKeyboard();
 
     detectMouseMove(mouse);
     detectMouseButtons(mouse);
     processKeyboard(kbd);
 }
 
-}
+} // namespace vvv3d

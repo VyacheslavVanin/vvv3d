@@ -11,4 +11,4 @@ void ButtonBase::addOnClickAction(const std::function<void()>& action)
 
 void ButtonBase::onHoverReleased(int, int) { actions.invoke(); }
 
-}
+} // namespace vvv3d

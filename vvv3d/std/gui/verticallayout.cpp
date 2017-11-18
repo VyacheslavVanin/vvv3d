@@ -11,14 +11,14 @@ void VerticalLayout::rearrange()
 
     const auto& children = getChildren();
 
-    const auto numPaddings    = children.size() - 1;
+    const auto numPaddings = children.size() - 1;
     const int childrenPadding = numPaddings * getPadding();
-    const int childrenHeight  = getChildrenHeight(children);
-    const int contentHeight   = childrenHeight + childrenPadding;
-    const int allHeight       = contentHeight + borders;
+    const int childrenHeight = getChildrenHeight(children);
+    const int contentHeight = childrenHeight + childrenPadding;
+    const int allHeight = contentHeight + borders;
 
     const auto contentWidth = getMaxChildWidth(children);
-    const auto allWidth     = contentWidth + borders;
+    const auto allWidth = contentWidth + borders;
     const auto preferedWidth = std::max(contentWidth, getWidth() - borders);
 
     if (isExpandToFitContent())
@@ -28,6 +28,7 @@ void VerticalLayout::rearrange()
     for (auto w : children) {
         w->setWidth(preferedWidth);
         int offsetX = getBorder();
+
         switch (getAlign()) {
         case HALIGN::LEFT: break;
         case HALIGN::CENTER:
@@ -45,10 +46,10 @@ int VerticalLayout::getMaxChildWidth(const std::vector<Widget*>& children)
     if (children.empty())
         return 0;
 
-    const auto max = max_element(children.begin(), children.end(),
-                                 [](auto w1, auto w2) {
-                                     return w1->getSize().x < w2->getSize().x;
-                                 });
+    const auto max =
+        max_element(children.begin(), children.end(), [](auto w1, auto w2) {
+            return w1->getSize().x < w2->getSize().x;
+        });
     return (*max)->getSize().x;
 }
 
@@ -63,4 +64,4 @@ HALIGN VerticalLayout::getAlign() const { return align; }
 
 void VerticalLayout::setAlign(HALIGN value) { align = value; }
 
-}
+} // namespace vvv3d

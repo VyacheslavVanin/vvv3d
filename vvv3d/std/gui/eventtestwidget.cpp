@@ -1,5 +1,5 @@
-#include "colorrectanglewidget.h"
 #include "eventtestwidget.h"
+#include "colorrectanglewidget.h"
 #include "vvv3d/core/graphics/color.h"
 
 namespace vvv3d {
@@ -56,4 +56,4 @@ void EventTestWidget::onResize(const vvv::vector2i& oldSize,
     (void)oldSize;
 }
 
-}
+} // namespace vvv3d

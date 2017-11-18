@@ -109,4 +109,4 @@ vvv::vector4<int> getScissor()
 }
 
 void scissorDisable() { glDisable(GL_SCISSOR_TEST); }
-}
+} // namespace vvv3d

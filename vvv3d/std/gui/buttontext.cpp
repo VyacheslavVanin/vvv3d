@@ -22,12 +22,9 @@ void ButtonText::onUnhover() { background->setColor(Color(0)); }
 
 void ButtonText::onHoverPressed(int, int) { background->setColor(ORANGE); }
 
-void ButtonText::onContentChanged()
-{
-    setSize(text->getSize());
-}
+void ButtonText::onContentChanged() { setSize(text->getSize()); }
 
-void ButtonText::setText(const std::string& text) {this->text->setText(text);}
-const std::string& ButtonText::getText() const {return text->getText();}
+void ButtonText::setText(const std::string& text) { this->text->setText(text); }
+const std::string& ButtonText::getText() const { return text->getText(); }
 
-}
+} // namespace vvv3d

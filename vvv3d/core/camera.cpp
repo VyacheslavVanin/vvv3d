@@ -14,7 +14,7 @@ const vector3f& Camera::getPosition() const { return position; }
 Camera& Camera::setPosition(const vector3f& value)
 {
     viewChanged = true;
-    position    = value;
+    position = value;
     return *this;
 }
 
@@ -40,7 +40,7 @@ const vector3f& Camera::getDirection() const { return forward; }
 Camera& Camera::setDirection(const vector3f& value)
 {
     viewChanged = true;
-    forward     = value;
+    forward = value;
     return *this;
 }
 
@@ -54,7 +54,7 @@ const vector3f& Camera::getUp() const { return up; }
 Camera& Camera::setUp(const vector3f& value)
 {
     viewChanged = true;
-    up          = value;
+    up = value;
     return *this;
 }
 
@@ -88,22 +88,22 @@ Camera& Camera::lookAt(const vector3f& position, const vector3f& target,
                        const vector3f& up)
 {
     this->position = position;
-    this->forward  = (target - position).normalize();
-    this->up       = up.normalized();
-    viewChanged    = true;
+    this->forward = (target - position).normalize();
+    this->up = up.normalized();
+    viewChanged = true;
     return *this;
 }
 
 Camera& Camera::setOrtho(float left, float right, float bottom, float top,
                          float zNear, float zFar)
 {
-    projectionType    = PROJECTION_TYPE::ORTHO;
-    ortho_left        = left;
-    ortho_right       = right;
-    ortho_bottom      = bottom;
-    ortho_top         = top;
-    this->zNear       = zNear;
-    this->zFar        = zFar;
+    projectionType = PROJECTION_TYPE::ORTHO;
+    ortho_left = left;
+    ortho_right = right;
+    ortho_bottom = bottom;
+    ortho_top = top;
+    this->zNear = zNear;
+    this->zFar = zFar;
     projectionChanged = true;
     return *this;
 }
@@ -111,11 +111,11 @@ Camera& Camera::setOrtho(float left, float right, float bottom, float top,
 Camera& Camera::setPerspective(float fovy, float aspect, float zNear,
                                float zFar)
 {
-    projectionType    = PROJECTION_TYPE::PERSPECTIVE;
-    this->fovy        = fovy;
-    this->aspect      = aspect;
-    this->zNear       = zNear;
-    this->zFar        = zFar;
+    projectionType = PROJECTION_TYPE::PERSPECTIVE;
+    this->fovy = fovy;
+    this->aspect = aspect;
+    this->zNear = zNear;
+    this->zFar = zFar;
     projectionChanged = true;
     return *this;
 }

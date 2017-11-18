@@ -40,20 +40,11 @@ void AnimationPlayer::setSpeed(double speed)
     this->speed = speed;
 }
 
-double AnimationPlayer::getSpeed() const
-{
-    return speed;
-}
+double AnimationPlayer::getSpeed() const { return speed; }
 
-void AnimationPlayer::setLooped(bool loop)
-{
-    this->looped = loop;
-}
+void AnimationPlayer::setLooped(bool loop) { this->looped = loop; }
 
-bool AnimationPlayer::isLooped() const
-{
-    return looped;
-}
+bool AnimationPlayer::isLooped() const { return looped; }
 
 double AnimationPlayer::getFrameTime(double now) const
 {
@@ -70,7 +61,7 @@ const vvv3d::Texture* AnimationPlayer::getFrame(double time) const
     if (animation == nullptr)
         return nullptr;
 
-    const auto now       = vvv3d::Engine::time();
+    const auto now = vvv3d::Engine::time();
     const auto frameTime = getFrameTime(now);
     return animation->getFrame(frameTime);
 }

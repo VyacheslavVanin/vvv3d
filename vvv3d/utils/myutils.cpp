@@ -28,4 +28,4 @@ void loadFileToString(const char* filename, std::string& out)
     f.seekg(0, std::ios::beg);
     out.assign(istreambuf_iterator<char>(f), std::istreambuf_iterator<char>());
 }
-}
+} // namespace vvv3d

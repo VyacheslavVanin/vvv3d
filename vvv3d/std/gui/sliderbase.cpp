@@ -17,10 +17,7 @@ void SliderBase::setRange(int max)
     onRangeChanged();
 }
 
-int SliderBase::getMax() const
-{
-    return max;
-}
+int SliderBase::getMax() const { return max; }
 
 void SliderBase::setValue(int value)
 {
@@ -32,10 +29,7 @@ void SliderBase::setValue(int value)
     onValueChangedActions.invoke(this->value);
 }
 
-int SliderBase::getValue() const
-{
-    return value;
-}
+int SliderBase::getValue() const { return value; }
 
 void SliderBase::addOnValueChangedAction(const std::function<void(int)>& action)
 {
@@ -48,32 +42,22 @@ void SliderBase::changeValueMotion(int x, int y)
     setValue(v);
 }
 
-void SliderBase::onHoverPressed(int x, int y)
-{
-    changeValueMotion(x, y);
-}
+void SliderBase::onHoverPressed(int x, int y) { changeValueMotion(x, y); }
 
-void SliderBase::onMovePressedInside(int x, int y)
-{
-    changeValueMotion(x, y);
-}
+void SliderBase::onMovePressedInside(int x, int y) { changeValueMotion(x, y); }
 
-void SliderBase::onMovePressedOutside(int x, int y)
-{
-    changeValueMotion(x, y);
-}
+void SliderBase::onMovePressedOutside(int x, int y) { changeValueMotion(x, y); }
 
 void SliderBase::onKeyDown(uint16_t scancode)
 {
     const auto current = getValue();
     switch (scancode) {
-        case SCANCODE_DOWN:
-        case SCANCODE_LEFT: setValue(current - 1); break;
-        case SCANCODE_UP:
-        case SCANCODE_RIGHT:setValue(current + 1); break;
-        default: break;
+    case SCANCODE_DOWN:
+    case SCANCODE_LEFT: setValue(current - 1); break;
+    case SCANCODE_UP:
+    case SCANCODE_RIGHT: setValue(current + 1); break;
+    default: break;
     }
 }
 
-}
-
+} // namespace vvv3d

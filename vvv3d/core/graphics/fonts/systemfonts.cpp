@@ -6,7 +6,7 @@
 
 namespace vvv3d {
 
-using FontDescList         = std::vector<FontDesc>;
+using FontDescList = std::vector<FontDesc>;
 using FontDescListIterator = FontDescList::const_iterator;
 
 FontDesc::FontDesc(const std::string& filename, const std::string& family,
@@ -51,7 +51,7 @@ static FontDescList listSystemTTFs()
 {
     FontDescList ret;
     auto config = FcInitLoadConfigAndFonts();
-    auto pat    = FcPatternCreate();
+    auto pat = FcPatternCreate();
     auto os =
         FcObjectSetBuild(FC_FONTFORMAT, FC_FILE, FC_STYLE, FC_FAMILY, (char*)0);
     auto fs = FcFontList(config, pat, os);
@@ -80,26 +80,25 @@ static FontDescList listSystemTTFs()
 
 SystemFonts::SystemFonts()
     : allFonts(listSystemTTFs()),
-      defaultRegular(loadFirstOflist({
-            {"DejaVu Sans", "Book"},
-            {"Droid Sans", "Regular"},
-            {"Liberation", "Regular"}})),
-      defaultBold(loadFirstOflist({
-            {"DejaVu Sans", "Bold"},
-            {"Droid Sans", "Bold"},
-            {"Liberation Sans", "Bold"}})),
-      defaultItalic(loadFirstOflist({
-            {"DejaVu Sans", "Oblique"},
-            {"Droid Serif", "Italic"},
-            {"Liberation Sans", "Italic"}})),
-      defaultMono(loadFirstOflist({
-            {"DejaVu Sans Mono", "Book"},
-            {"Droid Sans Mono", "Regular"},
-            {"Liberation Mono", "Regular"}}))
+      defaultRegular(loadFirstOflist({{"DejaVu Sans", "Book"},
+                                      {"Droid Sans", "Regular"},
+                                      {"Liberation", "Regular"}})),
+      defaultBold(loadFirstOflist({{"DejaVu Sans", "Bold"},
+                                   {"Droid Sans", "Bold"},
+                                   {"Liberation Sans", "Bold"}})),
+      defaultItalic(loadFirstOflist({{"DejaVu Sans", "Oblique"},
+                                     {"Droid Serif", "Italic"},
+                                     {"Liberation Sans", "Italic"}})),
+      defaultMono(loadFirstOflist({{"DejaVu Sans Mono", "Book"},
+                                   {"Droid Sans Mono", "Regular"},
+                                   {"Liberation Mono", "Regular"}}))
 {
 }
 
-const FontDesc* SystemFonts::getDefaultRegular() const { return defaultRegular; }
+const FontDesc* SystemFonts::getDefaultRegular() const
+{
+    return defaultRegular;
+}
 const FontDesc* SystemFonts::getDefaultBold() const { return defaultBold; }
 const FontDesc* SystemFonts::getDefaultItalic() const { return defaultItalic; }
 const FontDesc* SystemFonts::getDefaultMono() const { return defaultMono; }
@@ -132,8 +131,5 @@ const SystemFonts& SystemFonts::instance()
     return mgr;
 }
 
-const SystemFonts& systemFonts()
-{
-    return SystemFonts::instance();
-}
-}
+const SystemFonts& systemFonts() { return SystemFonts::instance(); }
+} // namespace vvv3d

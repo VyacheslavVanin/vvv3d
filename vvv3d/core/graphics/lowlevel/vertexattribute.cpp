@@ -64,14 +64,10 @@ VertexAttributes::VertexAttributes(
 
 void VertexAttributes::enable() const
 {
-    static const auto isNeedAttribI = [](const VertexAttribute&  a) {
-        const static auto glIntTypes = {
-            GL_UNSIGNED_BYTE,
-            GL_BYTE,
-            GL_SHORT,
-            GL_UNSIGNED_SHORT,
-            GL_INT,
-            GL_UNSIGNED_INT};
+    static const auto isNeedAttribI = [](const VertexAttribute& a) {
+        const static auto glIntTypes = {GL_UNSIGNED_BYTE, GL_BYTE,
+                                        GL_SHORT,         GL_UNSIGNED_SHORT,
+                                        GL_INT,           GL_UNSIGNED_INT};
         return !a.normalized && contain(glIntTypes, a.componentType);
     };
 
@@ -87,4 +83,4 @@ void VertexAttributes::enable() const
         glEnableVertexAttribArray(a.location);
     }
 }
-}
+} // namespace vvv3d

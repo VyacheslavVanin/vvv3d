@@ -7,17 +7,17 @@ HorizontalLayout::HorizontalLayout() : align(VALIGN::CENTER) {}
 
 void HorizontalLayout::rearrange()
 {
-    const int borders    = 2 * getBorder();
+    const int borders = 2 * getBorder();
     const auto& children = getChildren();
 
-    const auto numPaddings     = children.size() - 1;
+    const auto numPaddings = children.size() - 1;
     const auto childrenPadding = numPaddings * getPadding();
-    const auto childrenWidth   = getChildrenWidth(children);
-    const auto contentWidth    = childrenWidth + childrenPadding;
-    const auto allWidth        = contentWidth + borders;
+    const auto childrenWidth = getChildrenWidth(children);
+    const auto contentWidth = childrenWidth + childrenPadding;
+    const auto allWidth = contentWidth + borders;
 
     const auto contentHeight = getMaxChildHeight(children);
-    const auto allHeight     = contentHeight + borders;
+    const auto allHeight = contentHeight + borders;
     const auto preferedHeight = std::max(contentHeight, allHeight - borders);
 
     if (isExpandToFitContent())
@@ -27,6 +27,7 @@ void HorizontalLayout::rearrange()
     for (auto w : children) {
         w->setHeight(preferedHeight);
         int offsetY = getBorder();
+
         switch (getAlign()) {
         case VALIGN::TOP: break;
         case VALIGN::CENTER:
@@ -62,4 +63,4 @@ VALIGN HorizontalLayout::getAlign() const { return align; }
 
 void HorizontalLayout::setAlign(VALIGN value) { this->align = value; }
 
-}
+} // namespace vvv3d

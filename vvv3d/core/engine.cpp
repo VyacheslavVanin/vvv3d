@@ -6,9 +6,9 @@
 
 using namespace vvv3d;
 
-static const int DEFAULT_SCREEN_WIDTH  = 640;
+static const int DEFAULT_SCREEN_WIDTH = 640;
 static const int DEFAULT_SCREEN_HEIGHT = 480;
-Engine* Engine::activeEngine           = nullptr;
+Engine* Engine::activeEngine = nullptr;
 Time<> Engine::clock;
 
 Engine::Engine(int argc, char** argv, const char* windowName)
@@ -19,8 +19,7 @@ Engine::Engine(int argc, char** argv, const char* windowName)
 #else
       hal(new sdlLayer(argc, argv, GLPROFILE::ES, 3, 2)),
 #endif
-      resourceManager(),
-      input()
+      resourceManager(), input()
 {
     hal->initContext(argc, argv);
     hal->createWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, windowName);
@@ -63,7 +62,8 @@ void Engine::display()
     const auto dt = t2 - t1;
     const auto milis =
         (float)(std::chrono::duration_cast<std::chrono::microseconds>(dt)
-                    .count()) / 1000;
+                    .count()) /
+        1000;
     currentfps = 1000.0f / milis;
 }
 
@@ -78,28 +78,17 @@ Engine& Engine::getActiveEngine() { return *activeEngine; }
 
 void Engine::resize(int x, int y)
 {
-    y              = (y != 0) ? y : 1;
+    y = (y != 0) ? y : 1;
     viewportHeight = y;
-    viewportWidth  = x;
+    viewportWidth = x;
     glViewport(0, 0, viewportWidth, viewportHeight);
     onResize(viewportWidth, viewportHeight);
 }
 
 float Engine::getCurrentFps() const { return currentfps; }
 
-void Engine::setVSync(bool vsync)
-{
-    hal->setVSync(vsync);
-}
+void Engine::setVSync(bool vsync) { hal->setVSync(vsync); }
 
-double Engine::time()
-{
-    return clock.currentFrameTime();
-}
+double Engine::time() { return clock.currentFrameTime(); }
 
-double Engine::getTimeSinceLastFrame()
-{
-    return clock.sinceLastFrame();
-}
-
-
+double Engine::getTimeSinceLastFrame() { return clock.sinceLastFrame(); }

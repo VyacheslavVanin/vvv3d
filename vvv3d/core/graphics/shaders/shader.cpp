@@ -21,7 +21,7 @@ std::unique_ptr<Shader> Shader::fromStrings(const std::string& name,
             : 0,
         bindAttribLocations);
     ret->fragmentSourceName = fragmentSource;
-    ret->vertexSourceName   = vertexSource;
+    ret->vertexSourceName = vertexSource;
     ret->loadLocations(name);
     return ret;
 }
@@ -42,7 +42,7 @@ std::unique_ptr<Shader> Shader::fromFiles(const std::string& name,
         LowLevelShader(fragmentFileName, GL_FRAGMENT_SHADER).get(), gsh,
         bindAttribLocations);
     ret->fragmentSourceName = fragmentFileName;
-    ret->vertexSourceName   = vertexFileName;
+    ret->vertexSourceName = vertexFileName;
     ret->loadLocations(name);
     return ret;
 }
@@ -295,7 +295,7 @@ void Shader::loadLocations(const std::string& name)
     activate();
     std::cout << "Searching uniforms in \"" << name << "\""
               << "and \"" << fragmentSourceName << "\": ..." << std::endl;
-    for (size_t i    = 0; i < count; ++i)
+    for (size_t i = 0; i < count; ++i)
         locations[i] = loadLocation(locations_names[i]);
 }
 

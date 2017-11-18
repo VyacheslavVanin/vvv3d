@@ -65,13 +65,13 @@ Geometry* loadGeometryFrom_vvv3d(const char* filename)
     doNTimes(num_vertices, readVertex);
 
     const size_t num_indices = getFromStream<size_t>(f);
-    auto readIndex           = [&indices, &f]() {
+    auto readIndex = [&indices, &f]() {
         indices.push_back(getFromStream<GLuint>(f));
     };
     doNTimes(num_indices, readIndex);
 
     const auto vertices_size = vertices.size() * sizeof(myvertex);
-    auto ret                 = new Geometry(
+    auto ret = new Geometry(
         vertices.data(), vertices_size, indices.data(), indices.size(),
         VertexAttributes({
             VertexAttribDesc(ATTRIB_LOCATION::POSITION, 3, GL_FLOAT),
@@ -97,16 +97,16 @@ static void assembleBuffers(Lib3dsMesh* mesh, std::vector<myvertex>& vertices,
 
     for (size_t f = 0; f < numFaces; ++f)
         for (size_t v = 0; v < 3; ++v) {
-            const size_t cindex    = mesh->faceL[f].points[v];
-            const Lib3dsPoint& p   = mesh->pointL[cindex];
-            const Lib3dsVector& n  = normals[3 * f + v];
-            const Lib3dsTexel& t   = mesh->texelL[cindex];
+            const size_t cindex = mesh->faceL[f].points[v];
+            const Lib3dsPoint& p = mesh->pointL[cindex];
+            const Lib3dsVector& n = normals[3 * f + v];
+            const Lib3dsTexel& t = mesh->texelL[cindex];
             const myvertex cvertex = {
                 p.pos[0], p.pos[1], p.pos[2], n[0], n[1], n[2], t[0], t[1],
             };
             const auto vbegin = vertices.begin();
-            const auto vend   = vertices.end();
-            const auto pos    = find(vbegin, vend, cvertex);
+            const auto vend = vertices.end();
+            const auto pos = find(vbegin, vend, cvertex);
             if (pos != vend) { // allready in vertices
                 // index of element in vertices
                 const GLuint i = distance(vbegin, pos);
@@ -124,7 +124,7 @@ static void assembleBuffers(Lib3dsMesh* mesh, std::vector<myvertex>& vertices,
 
 SimpleGeometry* loadGeometryFrom3ds(const char* filename)
 {
-    Lib3dsFile* model  = lib3ds_file_load(filename);
+    Lib3dsFile* model = lib3ds_file_load(filename);
     Lib3dsMesh* meshes = model->meshes;
     std::vector<myvertex> vertices;
     std::vector<GLuint> indices;
@@ -142,4 +142,4 @@ SimpleGeometry* loadGeometryFrom3ds(const char* filename)
     return ret;
 }
 #endif
-}
+} // namespace vvv3d

@@ -24,7 +24,7 @@ static GLint ShaderStatus(GLuint shader, GLenum param)
 
 static GLuint createFromString(const char* source, GLenum shaderType)
 {
-    GLuint shader        = glCreateShader(shaderType);
+    GLuint shader = glCreateShader(shaderType);
     const int sourceSize = static_cast<int>(strlen(source));
     glShaderSource(shader, 1, &source, &sourceSize);
     glCompileShader(shader);
@@ -62,7 +62,7 @@ LowLevelShader::LowLevelShader(LowLevelShader&& other) noexcept
 LowLevelShader& LowLevelShader::operator=(LowLevelShader&& other) noexcept
 {
     glDeleteShader(shader);
-    shader       = other.shader;
+    shader = other.shader;
     other.shader = 0;
     return *this;
 }

@@ -1,6 +1,6 @@
+#include "widget.h"
 #include "guilayer.h"
 #include "rect.h"
-#include "widget.h"
 #include <algorithm>
 #include <memory>
 #include <vector>
@@ -38,7 +38,7 @@ void Widget::notifyPointerMove(int x, int y)
 {
     onPointerMove(x, y);
     const auto oldHover = hover;
-    hover               = rectContainPoint(clipArea, x, y);
+    hover = rectContainPoint(clipArea, x, y);
 
     if (hover == oldHover)
         return;
@@ -52,7 +52,7 @@ void Widget::notifyPointerMove(int x, int y)
 void Widget::notifyButtonPressed(int button, int x, int y)
 {
     Widget* prevFocus = focus;
-    focus             = focusable ? this : focus;
+    focus = focusable ? this : focus;
     onButtonPressed(button, x, y);
     if (focus != this)
         return;
@@ -103,10 +103,7 @@ bool Widget::isVisible() const { return visible; }
 
 void Widget::setVisible(bool visible) { this->visible = visible; }
 
-void Widget::toggleVisibility()
-{
-    setVisible(!isVisible());
-}
+void Widget::toggleVisibility() { setVisible(!isVisible()); }
 
 static Rect RectToScissor(const Rect& r, const vvv::vector2i& layerSize)
 {
@@ -170,15 +167,9 @@ void Widget::setSize(int width, int height)
     }
 }
 
-void Widget::setWidth(int width)
-{
-    setSize(width, getHeight());
-}
+void Widget::setWidth(int width) { setSize(width, getHeight()); }
 
-void Widget::setHeight(int height)
-{
-    setSize(getWidth(), height);
-}
+void Widget::setHeight(int height) { setSize(getWidth(), height); }
 
 const vvv::vector2i& Widget::getMinSize() const { return minSize; }
 
@@ -217,7 +208,7 @@ const Rect& Widget::getRect() const { return clipArea; }
 
 const vvv::vector2i Widget::getAbsolutePosition() const
 {
-    auto ret    = getPosition();
+    auto ret = getPosition();
     auto parent = getParent();
     while (parent) {
         ret += parent->getPosition();
@@ -241,7 +232,7 @@ bool Widget::addChild(Widget* child)
     if (p)
         p->removeChild(child);
     child->parent = this;
-    child->layer  = this->layer;
+    child->layer = this->layer;
 
     const auto it = std::find(children.begin(), children.end(), child);
     if (it != children.end())
@@ -296,4 +287,4 @@ Widget::~Widget()
         delete c;
 }
 
-}
+} // namespace vvv3d

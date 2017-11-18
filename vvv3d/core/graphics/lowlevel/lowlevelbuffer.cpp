@@ -23,11 +23,11 @@ LowLevelBuffer::LowLevelBuffer(LowLevelBuffer&& other) noexcept
 LowLevelBuffer& LowLevelBuffer::operator=(LowLevelBuffer&& other) noexcept
 {
     glDeleteBuffers(1, &buffer);
-    this->target  = other.target;
-    this->buffer  = other.buffer;
-    this->size    = other.size;
+    this->target = other.target;
+    this->buffer = other.buffer;
+    this->size = other.size;
     this->sizemax = other.sizemax;
-    other.buffer  = ~0u;
+    other.buffer = ~0u;
     return *this;
 }
 
@@ -63,6 +63,6 @@ void LowLevelBuffer::updateData(size_t offset, void* data, size_t size)
 
 void LowLevelBuffer::reset()
 {
-    size    = 0;
+    size = 0;
     sizemax = 0;
 }

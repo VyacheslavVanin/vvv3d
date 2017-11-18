@@ -1,7 +1,7 @@
 #include "textline.h"
+#include <boost/locale/encoding_utf.hpp>
 #include <vvv3d/core/engine.h>
 #include <vvv3d/vvvmath/linalg.h>
-#include <boost/locale/encoding_utf.hpp>
 
 namespace vvv3d {
 
@@ -37,23 +37,23 @@ void updateTextGeometry(const std::shared_ptr<Geometry>& in, const Font& font,
     std::vector<GlyphQuad> vertices(numChars);
     std::vector<GLsizei> indices(numChars * 6);
 
-    float advance       = 0;
-    size_t iVerts       = 0;
-    size_t iInds        = 0;
+    float advance = 0;
+    size_t iVerts = 0;
+    size_t iInds = 0;
     const auto& texture = font.getTexture();
     for (auto c : text) {
-        const auto& g           = font.getGlyph(c);
-        GlyphQuad& currentQuad  = vertices[iVerts];
-        const GLsizei nVerts    = static_cast<GLsizei>(iVerts) * 4;
-        const float x           = advance + g.xoffset;
-        const float rightx      = x + g.width;
-        const float y           = g.yoffset;
-        const float top_y       = y + g.height;
+        const auto& g = font.getGlyph(c);
+        GlyphQuad& currentQuad = vertices[iVerts];
+        const GLsizei nVerts = static_cast<GLsizei>(iVerts) * 4;
+        const float x = advance + g.xoffset;
+        const float rightx = x + g.width;
+        const float y = g.yoffset;
+        const float top_y = y + g.height;
         const float tmultiplyer = 1.0f / texture.getWidth();
-        const float left_tx     = g.textureOffsetX * tmultiplyer;
-        const float bottom_ty   = g.textureOffsetY * tmultiplyer;
-        const float right_tx    = left_tx + g.width * tmultiplyer;
-        const float top_ty      = bottom_ty + g.height * tmultiplyer;
+        const float left_tx = g.textureOffsetX * tmultiplyer;
+        const float bottom_ty = g.textureOffsetY * tmultiplyer;
+        const float right_tx = left_tx + g.width * tmultiplyer;
+        const float top_ty = bottom_ty + g.height * tmultiplyer;
 
         currentQuad.bottomLeft.pos.set(x, y);
         currentQuad.bottomLeft.texcoord.set(left_tx, bottom_ty);
@@ -110,4 +110,4 @@ void updateTextGeometry(const std::shared_ptr<Geometry>& in, const Font& font,
 {
     updateTextGeometry(in, font, toU32(text));
 }
-}
+} // namespace vvv3d

@@ -1,9 +1,9 @@
 #include "input.h"
-#include <vvv3d/core/engine.h>
 #include <core/resourcemanager.h>
 #include <core/sdllayer.h>
+#include <vvv3d/core/engine.h>
 
-namespace vvv3d  {
+namespace vvv3d {
 
 const Input::Keyboard& Input::getKeyboard() const { return keyboard; }
 
@@ -68,4 +68,4 @@ bool Input::Mouse::isMoved() const
 {
     return Engine::getActiveEngine().hal->isMouseMoved();
 }
-}
+} // namespace vvv3d

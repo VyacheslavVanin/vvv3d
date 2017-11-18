@@ -2,9 +2,7 @@
 
 namespace vvv3d {
 
-ActiveWidget::ActiveWidget() : Widget()
-{
-}
+ActiveWidget::ActiveWidget() : Widget() {}
 
 void ActiveWidget::onButtonPressed(int button, int x, int y)
 {
@@ -54,7 +52,7 @@ void ActiveWidget::onPointerLeave(int x, int y)
 {
     onUnhover();
     switch (state) {
-    case STATE::HOVER: state         = STATE::START; break;
+    case STATE::HOVER: state = STATE::START; break;
     case STATE::HOVER_PRESSED: state = STATE::PRESSED_MOVED_OUTSIDE; break;
     default: break;
     }
@@ -78,5 +76,4 @@ void ActiveWidget::onMovePressedInside(int, int) {}
 void ActiveWidget::onMovePressedOutside(int, int) {}
 void ActiveWidget::onHoverReleased(int, int) {}
 
-}
-
+} // namespace vvv3d

@@ -16,10 +16,10 @@ Panel::Panel(Layout* layout, Widget* background)
 
 void Panel::rearrange()
 {
-    const auto widgetSize   = getSize();
-    const auto layoutSize   = layout->getSize();
+    const auto widgetSize = getSize();
+    const auto layoutSize = layout->getSize();
     const auto layoutHeight = layoutSize.y;
-    const auto layoutWidth  = layoutSize.x;
+    const auto layoutWidth = layoutSize.x;
     layout->setPosition((widgetSize.x - layoutWidth) / 2,
                         (widgetSize.y - layoutHeight) / 2);
 }
@@ -60,25 +60,13 @@ void Panel::addWidget(Widget* added)
     setMinSize(layout->getSize());
 }
 
-Layout* Panel::getLayout()
-{
-    return layout;
-}
+Layout* Panel::getLayout() { return layout; }
 
-Widget* Panel::getBackground()
-{
-    return background;
-}
+Widget* Panel::getBackground() { return background; }
 
-const Layout* Panel::getLayout() const
-{
-    return layout;
-}
+const Layout* Panel::getLayout() const { return layout; }
 
-const Widget* Panel::getBackground() const
-{
-    return background;
-}
+const Widget* Panel::getBackground() const { return background; }
 
 void Panel::setColor(const Color& color)
 {
@@ -99,4 +87,4 @@ const Color& Panel::getColor() const
 
 void Panel::removeWidget(Widget* removed) { layout->removeWidget(removed); }
 
-}
+} // namespace vvv3d

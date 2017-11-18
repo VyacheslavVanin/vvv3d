@@ -24,7 +24,7 @@ LowLevelGeometry& LowLevelGeometry::operator=(LowLevelGeometry&& other) noexcept
     vb = std::move(other.vb);
     ib = std::move(other.ib);
     freeResources();
-    vao       = other.vao;
+    vao = other.vao;
     other.vao = 0;
     return *this;
 }
@@ -66,7 +66,4 @@ void LowLevelGeometry::setBuffersData(const void* vdata, GLsizei vsize,
 
 void LowLevelGeometry::bindVAO() const { glBindVertexArray(vao); }
 
-void LowLevelGeometry::freeResources()
-{
-    glDeleteVertexArrays(1, &vao);
-}
+void LowLevelGeometry::freeResources() { glDeleteVertexArrays(1, &vao); }

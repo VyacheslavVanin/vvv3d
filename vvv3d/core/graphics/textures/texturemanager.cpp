@@ -10,8 +10,7 @@ Texture& TextureManager::get(const std::string& name) const
     return *texs.at(name).get();
 }
 
-void TextureManager::add(LowLevelTexture* texture,
-                         const std::string& name)
+void TextureManager::add(LowLevelTexture* texture, const std::string& name)
 {
     if (texs.count(name) > 0)
         return;
@@ -36,7 +35,8 @@ void TextureManager::addAtlas(std::unique_ptr<TextureAtlas> atlas)
     addAtlas(std::move(*atlas));
 }
 
-void TextureManager::addAtlas(std::vector<std::unique_ptr<TextureAtlas>>&& atlases)
+void TextureManager::addAtlas(
+    std::vector<std::unique_ptr<TextureAtlas>>&& atlases)
 {
     for (auto& a : atlases)
         addAtlas(std::move(a));
