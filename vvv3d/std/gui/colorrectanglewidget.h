@@ -3,17 +3,18 @@
 #include "widget.h"
 #include <memory>
 #include <vvv3d/vvv3d.h>
+#include <vvv3d/std/gui/properties/icolor.h>
 
 namespace vvv3d {
 
-class ColorRectWidget : public Widget {
+class ColorRectWidget : public IColorProperty {
 public:
     explicit ColorRectWidget();
     explicit ColorRectWidget(const vvv3d::Color& colour);
     ~ColorRectWidget();
 
-    void setColor(const vvv3d::Color& colour);
-    const vvv3d::Color& getColor() const;
+    void setColor(const vvv3d::Color& colour) override;
+    const vvv3d::Color& getColor() const override;
 
 private:
     vvv3d::Color color;

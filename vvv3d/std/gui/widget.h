@@ -12,8 +12,8 @@ class GuiLayer;
 class Widget {
 public:
     explicit Widget();
-    Widget(Widget&&) noexcept;
-    Widget& operator=(Widget&&) noexcept;
+    Widget(Widget&&) noexcept = delete;
+    Widget& operator=(Widget&&) noexcept = delete;
 
     Widget(const Widget&) = delete;
     Widget& operator=(const Widget&) = delete;

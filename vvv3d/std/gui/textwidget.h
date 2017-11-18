@@ -2,6 +2,8 @@
 #define TEXTWIDGET_H
 #include "align.h"
 #include "widget.h"
+#include "properties/icolor.h"
+#include "properties/itext.h"
 #include <memory>
 #include <string>
 #include <vvv3d/vvv3d.h>
@@ -10,14 +12,14 @@
 namespace vvv3d {
 class Font;
 
-class TextWidget : public Widget {
+class TextWidget : public ITextProperty, public IColorProperty {
 public:
     explicit TextWidget(const std::string& text = "Text");
     ~TextWidget() override;
 
-    void setText(const std::string& text);
+    void setText(const std::string& text) override;
+    const std::string& getText() const override;
     void setText(std::string&& text);
-    const std::string& getText() const;
 
     void append(const std::string& text);
     void prepend(const std::string& text);
@@ -25,8 +27,8 @@ public:
     std::string popBack();
     std::string popFront();
 
-    void setColor(const vvv3d::Color& color);
-    const vvv3d::Color& getColor() const;
+    void setColor(const vvv3d::Color& color) override;
+    const vvv3d::Color& getColor() const override;
     void setFont(const vvv3d::Font& font);
     const vvv3d::Font& getFont() const;
     void resizeToContent();

@@ -2,10 +2,11 @@
 #define PANEL_H
 #include "layout.h"
 #include "widget.h"
+#include "properties/icolor.h"
 
 namespace vvv3d {
 
-class Panel : public Widget {
+class Panel : public IColorProperty {
 public:
     Panel();
     Panel(Layout* layout, Widget* background);
@@ -15,8 +16,13 @@ public:
     void addWidget(Widget* added);
     void removeWidget(Widget* removed);
 
+    void setColor(const Color& color) override;
+    const Color& getColor() const override;
+
     Layout* getLayout();
     Widget* getBackground();
+    const Layout* getLayout() const;
+    const Widget* getBackground() const;
 
     // Widget interface
 protected:

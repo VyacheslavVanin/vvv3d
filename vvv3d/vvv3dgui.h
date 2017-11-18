@@ -14,5 +14,7 @@
 #include <vvv3d/std/gui/activewidget.h>
 #include <vvv3d/std/gui/sliderbase.h>
 #include <vvv3d/std/gui/hslider.h>
+#include <vvv3d/std/gui/properties/itext.h>
+#include <vvv3d/std/gui/properties/icolor.h>
 
 #endif

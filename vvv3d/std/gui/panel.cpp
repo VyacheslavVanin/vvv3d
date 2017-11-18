@@ -70,6 +70,32 @@ Widget* Panel::getBackground()
     return background;
 }
 
+const Layout* Panel::getLayout() const
+{
+    return layout;
+}
+
+const Widget* Panel::getBackground() const
+{
+    return background;
+}
+
+void Panel::setColor(const Color& color)
+{
+    auto background = dynamic_cast<IColorProperty*>(getBackground());
+    if (background)
+        background->setColor(color);
+}
+
+const Color& Panel::getColor() const
+{
+    static const Color default_color = WHITE;
+    auto background = dynamic_cast<const IColorProperty*>(getBackground());
+    if (background)
+        return background->getColor();
+    else
+        return default_color;
+}
 
 void Panel::removeWidget(Widget* removed) { layout->removeWidget(removed); }
 

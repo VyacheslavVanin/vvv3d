@@ -296,6 +296,4 @@ Widget::~Widget()
         delete c;
 }
 
-Widget& Widget::operator=(Widget&&) noexcept = default;
-Widget::Widget(Widget&&) noexcept            = default;
 }

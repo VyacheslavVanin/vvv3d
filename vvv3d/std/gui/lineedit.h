@@ -8,15 +8,16 @@
 #include <string>
 #include <chrono>
 #include <vvv3d/core/graphics/color.h>
+#include "properties/itext.h"
 
 namespace vvv3d {
 
-class LineEdit : public Widget {
+class LineEdit : public ITextProperty {
 public:
     LineEdit(const std::string& text = "");
 
-    void setText(const std::string& text);
-    const std::string& getText() const;
+    void setText(const std::string& text) override;
+    const std::string& getText() const override;
 
     void setFont(const vvv3d::Font& font);
 
