@@ -1,10 +1,11 @@
 #ifndef LAYOUT_H
 #define LAYOUT_H
 #include "widget.h"
+#include "properties/icontainer.h"
 
 namespace vvv3d {
 
-class Layout : public Widget {
+class Layout : public IContainer {
 public:
     Layout();
 
@@ -14,8 +15,8 @@ public:
     int getPadding() const;
     void setPadding(int value);
 
-    void addWidget(Widget* widget);
-    void removeWidget(Widget* widget);
+    void addWidget(Widget* widget) override;
+    void removeWidget(Widget* widget) override;
 
     void setExpandToFitContent(bool expand);
     bool isExpandToFitContent() const;

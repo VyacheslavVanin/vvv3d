@@ -3,18 +3,19 @@
 #include "layout.h"
 #include "widget.h"
 #include "properties/icolor.h"
+#include "properties/icontainer.h"
 
 namespace vvv3d {
 
-class Panel : public IColorProperty {
+class Panel : public IColorProperty, public IContainer {
 public:
     Panel();
     Panel(Layout* layout, Widget* background);
     Panel(const Panel&) = delete;
     Panel& operator=(const Panel&) = delete;
 
-    void addWidget(Widget* added);
-    void removeWidget(Widget* removed);
+    void addWidget(Widget* added) override;
+    void removeWidget(Widget* removed) override;
 
     void setColor(const Color& color) override;
     const Color& getColor() const override;

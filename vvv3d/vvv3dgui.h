@@ -16,5 +16,6 @@
 #include <vvv3d/std/gui/hslider.h>
 #include <vvv3d/std/gui/properties/itext.h>
 #include <vvv3d/std/gui/properties/icolor.h>
+#include <vvv3d/std/gui/properties/icontainer.h>
 
 #endif

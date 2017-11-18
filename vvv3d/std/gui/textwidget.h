@@ -2,8 +2,8 @@
 #define TEXTWIDGET_H
 #include "align.h"
 #include "widget.h"
-#include "properties/icolor.h"
 #include "properties/itext.h"
+#include "properties/icolor.h"
 #include <memory>
 #include <string>
 #include <vvv3d/vvv3d.h>
