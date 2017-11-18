@@ -20,7 +20,7 @@ void ButtonText::onHover() { background->setColor(SILVER); }
 
 void ButtonText::onUnhover() { background->setColor(Color(0)); }
 
-void ButtonText::onPressDown() { background->setColor(ORANGE); }
+void ButtonText::onHoverPressed(int, int) { background->setColor(ORANGE); }
 
 void ButtonText::onContentChanged()
 {

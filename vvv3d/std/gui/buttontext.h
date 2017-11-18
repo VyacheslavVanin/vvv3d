@@ -25,7 +25,7 @@ private:
 protected:
     void onHover() override;
     void onUnhover() override;
-    void onPressDown() override;
+    void onHoverPressed(int x, int y) override;
     void onContentChanged() override;
 };
 
