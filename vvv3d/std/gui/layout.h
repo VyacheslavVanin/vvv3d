@@ -5,7 +5,7 @@
 
 namespace vvv3d {
 
-class Layout : public IContainer {
+class Layout : public Widget, public IContainer {
 public:
     Layout();
 

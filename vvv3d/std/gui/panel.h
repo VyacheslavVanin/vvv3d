@@ -7,7 +7,7 @@
 
 namespace vvv3d {
 
-class Panel : public IColorProperty, public IContainer {
+class Panel : public Widget, public IColorProperty, public IContainer {
 public:
     Panel();
     Panel(Layout* layout, Widget* background);

@@ -12,7 +12,7 @@
 namespace vvv3d {
 class Font;
 
-class TextWidget : public ITextProperty, public IColorProperty {
+class TextWidget : public Widget, public ITextProperty, public IColorProperty {
 public:
     explicit TextWidget(const std::string& text = "Text");
     ~TextWidget() override;

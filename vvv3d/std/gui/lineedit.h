@@ -12,7 +12,7 @@
 
 namespace vvv3d {
 
-class LineEdit : public ITextProperty {
+class LineEdit : public Widget, public ITextProperty {
 public:
     LineEdit(const std::string& text = "");
 

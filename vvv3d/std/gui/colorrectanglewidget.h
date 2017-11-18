@@ -7,7 +7,7 @@
 
 namespace vvv3d {
 
-class ColorRectWidget : public IColorProperty {
+class ColorRectWidget : public Widget, public IColorProperty {
 public:
     explicit ColorRectWidget();
     explicit ColorRectWidget(const vvv3d::Color& colour);
