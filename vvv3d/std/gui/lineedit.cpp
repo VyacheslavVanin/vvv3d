@@ -11,7 +11,8 @@ void LineEdit::adjustCursorHeight()
 
 LineEdit::LineEdit(const std::string& text) : Widget(), hAlign(HALIGN::LEFT),
     toggleCursorVisibilityThresholdTime(),
-    toggleCursorVisiblityPeriod(std::chrono::milliseconds(750))
+    toggleCursorVisiblityPeriod(std::chrono::milliseconds(750)), text(),
+    text_changed(true)
 {
     auto lp  = std::make_unique<TextWidget>(text);
     auto rp  = std::make_unique<TextWidget>("");
@@ -42,6 +43,7 @@ void LineEdit::setText(const std::string& text)
     leftpart->setText(text);
     rightpart->setText("");
     placeWidgets();
+    text_changed = true;
 }
 
 void LineEdit::setFont(const vvv3d::Font& font)
@@ -52,9 +54,10 @@ void LineEdit::setFont(const vvv3d::Font& font)
     placeWidgets();
 }
 
-std::string LineEdit::getText() const
+const std::string& LineEdit::getText() const
 {
-    return leftpart->getText() + rightpart->getText();
+    lazyUpdateText();
+    return text;
 }
 
 void LineEdit::setHAlign(HALIGN align)
@@ -154,7 +157,9 @@ void LineEdit::onKeyDown(uint16_t scancode)
         onEnterPressedActions.invoke(t);
         break;
     }
+    default: return;
     }
+    text_changed = true;
 }
 
 void LineEdit::onResize(const vvv::vector2i& oldSize,
@@ -168,6 +173,7 @@ void LineEdit::onTextEntered(const std::string& text)
 {
     leftpart->append(text);
     placeWidgets();
+    text_changed = true;
 }
 
 int LineEdit::roughLeftOffset(int leftMargin, int width, int fullTextWidth,
@@ -208,6 +214,14 @@ void LineEdit::placeWidgets()
     background->setPosition(0, 0);
 
     cursor->setPosition(cursorPosition, textOffsetY);
+}
+
+void LineEdit::lazyUpdateText() const
+{
+    if (text_changed) {
+        text = leftpart->getText() + rightpart->getText();
+        text_changed = false;
+    }
 }
 
 }

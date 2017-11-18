@@ -16,9 +16,9 @@ public:
     LineEdit(const std::string& text = "");
 
     void setText(const std::string& text);
-    void setFont(const vvv3d::Font& font);
+    const std::string& getText() const;
 
-    std::string getText() const;
+    void setFont(const vvv3d::Font& font);
 
     void setHAlign(HALIGN align);
     HALIGN getHAlign() const;
@@ -53,11 +53,15 @@ private:
     HALIGN hAlign;
     std::chrono::system_clock::time_point toggleCursorVisibilityThresholdTime;
     std::chrono::system_clock::duration toggleCursorVisiblityPeriod;
+    mutable std::string text;
+    mutable bool text_changed;
 
     void placeWidgets();
     int roughLeftOffset(int leftMargin, int width, int fullTextWidth,
                         int rightMargin) const;
     void adjustCursorHeight();
+
+    void lazyUpdateText() const;
 };
 
 }
