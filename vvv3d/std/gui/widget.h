@@ -41,6 +41,14 @@ public:
     void setMinSize(const vvv::vector2i& size);
     void setMaxSize(int width, int height);
     void setMaxSize(const vvv::vector2i& size);
+    void setMaxWidth(int width);
+    void setMaxHeight(int height);
+    int getMaxWidth() const;
+    int getMaxHeight() const;
+    void setMinWidth(int width);
+    void setMinHeight(int height);
+    int getMinWidth() const;
+    int getMinHeight() const;
 
     const Rect& getRect() const;
 

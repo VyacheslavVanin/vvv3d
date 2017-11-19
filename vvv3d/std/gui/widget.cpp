@@ -171,6 +171,15 @@ void Widget::setWidth(int width) { setSize(width, getHeight()); }
 
 void Widget::setHeight(int height) { setSize(getWidth(), height); }
 
+int Widget::getMaxWidth() const { return getMaxSize().x; }
+int Widget::getMaxHeight() const { return getMinSize().y; };
+void Widget::setMaxWidth(int width) { setMaxSize(width, getMaxHeight()); }
+void Widget::setMaxHeight(int height) { setMaxSize(getMaxWidth(), height); }
+int Widget::getMinWidth() const { return getMinSize().x; }
+int Widget::getMinHeight() const { return getMinSize().y; };
+void Widget::setMinWidth(int width) { setMinSize(width, getMinHeight()); }
+void Widget::setMinHeight(int height) { setMinSize(getMinWidth(), height); }
+
 const vvv::vector2i& Widget::getMinSize() const { return minSize; }
 
 const vvv::vector2i& Widget::getMaxSize() const { return maxSize; }
