@@ -3,14 +3,15 @@
 #include "align.h"
 #include "layout.h"
 #include "widget.h"
+#include "properties/ihalign.h"
 
 namespace vvv3d {
 
-class VerticalLayout : public Layout {
+class VerticalLayout : public Layout, public IHAlignProperty {
 public:
     VerticalLayout();
-    HALIGN getAlign() const;
-    void setAlign(HALIGN value);
+    HALIGN getHAlign() const override;
+    void setHAlign(HALIGN value) override;
 
 protected:
     // Layout interface

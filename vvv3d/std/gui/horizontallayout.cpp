@@ -27,7 +27,7 @@ void HorizontalLayout::rearrange()
     for (auto w : children) {
         int offsetY = getBorder();
 
-        switch (getAlign()) {
+        switch (getVAlign()) {
         case VALIGN::TOP: break;
         case VALIGN::CENTER:
             offsetY += (contentHeight - w->getHeight()) / 2;
@@ -59,8 +59,8 @@ int HorizontalLayout::getChildrenWidth(const std::vector<Widget*>& children)
         [](int sum, Widget* w) { return sum + w->getSize().x; });
 }
 
-VALIGN HorizontalLayout::getAlign() const { return align; }
+VALIGN HorizontalLayout::getVAlign() const { return align; }
 
-void HorizontalLayout::setAlign(VALIGN value) { this->align = value; }
+void HorizontalLayout::setVAlign(VALIGN value) { this->align = value; }
 
 } // namespace vvv3d

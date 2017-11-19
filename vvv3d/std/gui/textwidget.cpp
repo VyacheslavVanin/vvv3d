@@ -152,13 +152,16 @@ void TextWidget::setAutoSize(bool value)
 }
 
 void TextWidget::setHAlign(HALIGN value) { this->halign = value; }
+HALIGN TextWidget::getHAlign() const { return halign; }
 
 void TextWidget::setVAlign(VALIGN value) { this->valign = value; }
+VALIGN TextWidget::getVAlign() const { return valign; }
 
 int TextWidget::getHAlignOffset() const
 {
     const auto& size = getSize();
     switch (halign) {
+    case HALIGN::FILL:
     case HALIGN::LEFT: return 0;
     case HALIGN::RIGHT: return size.x - getWidthInPixels();
     case HALIGN::CENTER: return (size.x - getWidthInPixels()) / 2;
@@ -170,6 +173,7 @@ int TextWidget::getVAlignOffset() const
 {
     switch (valign) {
     case VALIGN::CENTER: return -(size.y - textLineHeight(*font)) / 2;
+    case VALIGN::FILL:
     case VALIGN::TOP: return 0;
     case VALIGN::BOTTOM: return -(size.y - textLineHeight(*font));
     }
