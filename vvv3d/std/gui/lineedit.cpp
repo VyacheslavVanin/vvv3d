@@ -70,12 +70,24 @@ void LineEdit::setHAlign(HALIGN align)
 
 HALIGN LineEdit::getHAlign() const { return this->hAlign; }
 
-void LineEdit::setBackgroundColor(const Color& color)
+void LineEdit::setBGColor(const Color& color) { background->setColor(color); }
+
+const Color& LineEdit::getBGColor() const { return background->getColor(); }
+
+void LineEdit::setColor(const vvv3d::Color& color)
 {
-    background->setColor(color);
+    leftpart->setColor(color);
+    rightpart->setColor(color);
 }
 
+const Color& LineEdit::getColor() const { return leftpart->getColor(); }
+
 void LineEdit::setCursorColor(const Color& color) { cursor->setColor(color); }
+
+const vvv3d::Color& LineEdit::getCursorColor() const
+{
+    return cursor->getColor();
+}
 
 void LineEdit::addOnPressEnterAction(
     const std::function<void(const std::string&)>& f)

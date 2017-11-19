@@ -3,17 +3,24 @@
 #include "actionlist.h"
 #include "align.h"
 #include "colorrectanglewidget.h"
+#include "properties/ibgcolor.h"
+#include "properties/icursorcolor.h"
+#include "properties/ifont.h"
+#include "properties/itext.h"
 #include "textwidget.h"
 #include "widget.h"
-#include <string>
 #include <chrono>
+#include <string>
 #include <vvv3d/core/graphics/color.h>
-#include "properties/itext.h"
-#include "properties/ifont.h"
 
 namespace vvv3d {
 
-class LineEdit : public Widget, public ITextProperty, public IFontProperty {
+class LineEdit : public Widget,
+                 public ITextProperty,
+                 public IFontProperty,
+                 public IBGColorProperty,
+                 public ICursorColorProperty,
+                 public IColorProperty {
 public:
     LineEdit(const std::string& text = "");
 
@@ -26,8 +33,14 @@ public:
     void setHAlign(HALIGN align);
     HALIGN getHAlign() const;
 
-    void setBackgroundColor(const vvv3d::Color& color);
-    void setCursorColor(const vvv3d::Color& color);
+    void setBGColor(const vvv3d::Color& color) override;
+    const Color& getBGColor() const override;
+
+    void setColor(const vvv3d::Color& color) override;
+    const Color& getColor() const override;
+
+    void setCursorColor(const vvv3d::Color& color) override;
+    const vvv3d::Color& getCursorColor() const override;
 
     void
     addOnPressEnterAction(const std::function<void(const std::string&)>& f);
@@ -49,9 +62,9 @@ protected:
 private:
     ActionList<void(const std::string&)> onEnterPressedActions;
 
-    TextWidget* leftpart        = nullptr;
-    TextWidget* rightpart       = nullptr;
-    ColorRectWidget* cursor     = nullptr;
+    TextWidget* leftpart = nullptr;
+    TextWidget* rightpart = nullptr;
+    ColorRectWidget* cursor = nullptr;
     ColorRectWidget* background = nullptr;
     HALIGN hAlign;
     std::chrono::system_clock::time_point toggleCursorVisibilityThresholdTime;
@@ -67,6 +80,6 @@ private:
     void lazyUpdateText() const;
 };
 
-}
+} // namespace vvv3d
 
 #endif
