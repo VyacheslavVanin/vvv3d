@@ -4,10 +4,12 @@
 #include "widget.h"
 #include "properties/icolor.h"
 #include "properties/icontainer.h"
+#include "properties/ilayout_props.h"
 
 namespace vvv3d {
 
-class Panel : public Widget, public IColorProperty, public IContainer {
+class Panel : public Widget, public IColorProperty, public IContainer,
+              public ILayoutProperties {
 public:
     Panel();
     Panel(Layout* layout, Widget* background);
@@ -19,6 +21,15 @@ public:
 
     void setColor(const Color& color) override;
     const Color& getColor() const override;
+
+    void setPadding(int padding) override;
+    int getPadding() const override;
+
+    void setBorder(int border) override;
+    int getBorder() const override;
+
+    void setExpandToContent(bool expand) override;
+    bool isExpandToContent() const override;
 
     Layout* getLayout();
     Widget* getBackground();

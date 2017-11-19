@@ -65,9 +65,9 @@ void Layout::removeWidget(Widget* widget)
     notifyContentChanged();
 }
 
-void Layout::setExpandToFitContent(bool expand) { this->expandToFit = expand; }
+void Layout::setExpandToContent(bool expand) { this->expandToFit = expand; }
 
-bool Layout::isExpandToFitContent() const { return expandToFit; }
+bool Layout::isExpandToContent() const { return expandToFit; }
 
 int Layout::getPadding() const { return padding; }
 

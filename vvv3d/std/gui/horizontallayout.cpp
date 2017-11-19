@@ -20,7 +20,7 @@ void HorizontalLayout::rearrange()
     const auto allHeight = contentHeight + borders;
     const auto preferedHeight = std::max(contentHeight, allHeight - borders);
 
-    if (isExpandToFitContent())
+    if (isExpandToContent())
         setMinSize(allWidth, allHeight);
 
     int offsetX = getBorder();

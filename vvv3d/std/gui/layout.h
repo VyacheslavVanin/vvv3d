@@ -1,25 +1,26 @@
 #ifndef LAYOUT_H
 #define LAYOUT_H
-#include "widget.h"
 #include "properties/icontainer.h"
+#include "properties/ilayout_props.h"
+#include "widget.h"
 
 namespace vvv3d {
 
-class Layout : public Widget, public IContainer {
+class Layout : public Widget, public IContainer, public ILayoutProperties {
 public:
     Layout();
 
-    int getBorder() const;
-    void setBorder(int value);
+    int getBorder() const override;
+    void setBorder(int value) override;
 
-    int getPadding() const;
-    void setPadding(int value);
+    void setPadding(int value) override;
+    int getPadding() const override;
 
     void addWidget(Widget* widget) override;
     void removeWidget(Widget* widget) override;
 
-    void setExpandToFitContent(bool expand);
-    bool isExpandToFitContent() const;
+    void setExpandToContent(bool expand) override;
+    bool isExpandToContent() const override;
 
 protected:
     // Widget interface
@@ -41,6 +42,6 @@ private:
     bool expandToFit = true;
 };
 
-}
+} // namespace vvv3d
 
 #endif // LAYOUT_H

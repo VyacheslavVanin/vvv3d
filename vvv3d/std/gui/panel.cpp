@@ -87,4 +87,22 @@ const Color& Panel::getColor() const
 
 void Panel::removeWidget(Widget* removed) { layout->removeWidget(removed); }
 
+void Panel::setPadding(int padding) { getLayout()->setPadding(padding); }
+
+int Panel::getPadding() const { return getLayout()->getPadding(); }
+
+void Panel::setBorder(int border) { getLayout()->setBorder(border); }
+
+int Panel::getBorder() const { return getLayout()->getBorder(); }
+
+void Panel::setExpandToContent(bool expand)
+{
+    getLayout()->setExpandToContent(expand);
+}
+
+bool Panel::isExpandToContent() const
+{
+    return getLayout()->isExpandToContent();
+}
+
 } // namespace vvv3d

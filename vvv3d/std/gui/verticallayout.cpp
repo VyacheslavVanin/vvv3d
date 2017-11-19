@@ -21,7 +21,7 @@ void VerticalLayout::rearrange()
     const auto allWidth = contentWidth + borders;
     const auto preferedWidth = std::max(contentWidth, getWidth() - borders);
 
-    if (isExpandToFitContent())
+    if (isExpandToContent())
         setMinSize(allWidth, allHeight);
 
     int offsetY = getBorder();
