@@ -145,10 +145,15 @@ void TextWidget::resizeToContent()
     setSize(lineWidth, lineHeight);
 }
 
-void TextWidget::setAutoSize(bool value)
+void TextWidget::setAutoResize(bool value)
 {
     this->autosize = value;
     autoresize();
+}
+
+bool TextWidget::isAutoResize() const
+{
+    return autosize;
 }
 
 void TextWidget::setHAlign(HALIGN value) { this->halign = value; }

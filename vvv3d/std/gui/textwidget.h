@@ -6,6 +6,7 @@
 #include "properties/icolor.h"
 #include "properties/ivalign.h"
 #include "properties/ihalign.h"
+#include "properties/iautoresize.h"
 #include <memory>
 #include <string>
 #include <vvv3d/vvv3d.h>
@@ -15,7 +16,7 @@ namespace vvv3d {
 class Font;
 
 class TextWidget : public Widget, public ITextProperty, public IColorProperty,
-    public IVAlignProperty, public IHAlignProperty {
+    public IVAlignProperty, public IHAlignProperty, public IAutoResizeProperty {
 public:
     explicit TextWidget(const std::string& text = "Text");
     ~TextWidget() override;
@@ -35,7 +36,9 @@ public:
     void setFont(const vvv3d::Font& font);
     const vvv3d::Font& getFont() const;
     void resizeToContent();
-    void setAutoSize(bool value);
+
+    void setAutoResize(bool value) override;
+    bool isAutoResize() const override;
 
     void setHAlign(HALIGN value) override;
     HALIGN getHAlign() const override;

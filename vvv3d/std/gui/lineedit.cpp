@@ -23,8 +23,8 @@ LineEdit::LineEdit(const std::string& text)
     rightpart = rp.release();
     cursor = cur.release();
     background = bg.release();
-    leftpart->setAutoSize(true);
-    rightpart->setAutoSize(true);
+    leftpart->setAutoResize(true);
+    rightpart->setAutoResize(true);
     addChild(background);
     addChild(leftpart);
     addChild(rightpart);
