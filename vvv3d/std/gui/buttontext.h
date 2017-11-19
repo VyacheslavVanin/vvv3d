@@ -1,20 +1,21 @@
 #ifndef BUTTONTEXT_H
 #define BUTTONTEXT_H
 #include "buttonbase.h"
+#include "properties/itext.h"
 
 namespace vvv3d {
 
 class TextWidget;
 class ColorRectWidget;
 class Panel;
-class ButtonText : public ButtonBase {
+class ButtonText : public ButtonBase, public ITextProperty {
 public:
     ButtonText(const std::string& caption = "Button");
     ButtonText(const ButtonText&)         = delete;
     ButtonText& operator=(const ButtonText&) = delete;
 
-    void setText(const std::string& text);
-    const std::string& getText() const;
+    void setText(const std::string& text) override;
+    const std::string& getText() const override;
 
 private:
     TextWidget* text;
