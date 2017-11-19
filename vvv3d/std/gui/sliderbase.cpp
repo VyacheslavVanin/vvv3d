@@ -11,13 +11,16 @@ SliderBase::SliderBase()
 
 void SliderBase::setRange(int max)
 {
+    const auto old = this->max;
+    if (old == max)
+        return;
     this->max = std::max(max, 1);
     if (this->max < getValue())
         setValue(max);
     onRangeChanged();
 }
 
-int SliderBase::getMax() const { return max; }
+int SliderBase::getRange() const { return max; }
 
 void SliderBase::setValue(int value)
 {

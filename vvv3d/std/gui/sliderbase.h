@@ -2,18 +2,20 @@
 #define SLIDERBASE_H
 #include <vvv3d/std/gui/activewidget.h>
 #include <vvv3d/std/gui/actionlist.h>
+#include <vvv3d/std/gui/properties/irange.h>
+#include <vvv3d/std/gui/properties/ivalue.h>
 
 namespace vvv3d {
 
-class SliderBase : public ActiveWidget
+class SliderBase : public ActiveWidget, public IValueProperty, public IRangeProperty
 {
     public:
         SliderBase();
-        void setRange(int max);
-        int getMax() const;
+        void setRange(int max) override;
+        int getRange() const override;
 
-        void setValue(int value);
-        int getValue() const;
+        void setValue(int value) override;
+        int getValue() const override;
 
         void addOnValueChangedAction(const std::function<void(int)>& action);
 

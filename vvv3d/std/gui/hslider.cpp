@@ -30,13 +30,13 @@ int SliderH::mousePosToValue(int x, int y)
     const float posInActiveArea =
         x - getAbsolutePosition().x - pointer->getWidth() / 2;
     const float activeAreaWidth = getWidth() - pointer->getWidth();
-    return getMax() * posInActiveArea / activeAreaWidth;
+    return getRange() * posInActiveArea / activeAreaWidth;
 }
 
 void SliderH::onValueChanged()
 {
     const auto pos =
-        float(getValue()) / getMax() * (getWidth() - pointer->getWidth());
+        float(getValue()) / getRange() * (getWidth() - pointer->getWidth());
     pointer->setPosition(pos, 0);
 }
 
@@ -44,7 +44,7 @@ void SliderH::onRangeChanged()
 {
     pointer->setSize(pointerWidth, getSize().y);
     const auto pos =
-        float(getValue()) / getMax() * (getWidth() - pointer->getWidth());
+        float(getValue()) / getRange() * (getWidth() - pointer->getWidth());
     pointer->setPosition(pos, 0);
 }
 
