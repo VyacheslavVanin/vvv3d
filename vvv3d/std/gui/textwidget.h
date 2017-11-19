@@ -1,22 +1,28 @@
 #ifndef TEXTWIDGET_H
 #define TEXTWIDGET_H
 #include "align.h"
-#include "widget.h"
-#include "properties/itext.h"
-#include "properties/icolor.h"
-#include "properties/ivalign.h"
-#include "properties/ihalign.h"
 #include "properties/iautoresize.h"
+#include "properties/icolor.h"
+#include "properties/ifont.h"
+#include "properties/ihalign.h"
+#include "properties/itext.h"
+#include "properties/ivalign.h"
+#include "widget.h"
 #include <memory>
 #include <string>
-#include <vvv3d/vvv3d.h>
 #include <vvv3d/utils/utf8string.hpp>
+#include <vvv3d/vvv3d.h>
 
 namespace vvv3d {
 class Font;
 
-class TextWidget : public Widget, public ITextProperty, public IColorProperty,
-    public IVAlignProperty, public IHAlignProperty, public IAutoResizeProperty {
+class TextWidget : public Widget,
+                   public ITextProperty,
+                   public IColorProperty,
+                   public IVAlignProperty,
+                   public IHAlignProperty,
+                   public IAutoResizeProperty,
+                   public IFontProperty {
 public:
     explicit TextWidget(const std::string& text = "Text");
     ~TextWidget() override;
@@ -33,8 +39,8 @@ public:
 
     void setColor(const vvv3d::Color& color) override;
     const vvv3d::Color& getColor() const override;
-    void setFont(const vvv3d::Font& font);
-    const vvv3d::Font& getFont() const;
+    void setFont(const vvv3d::Font& font) override;
+    const vvv3d::Font& getFont() const override;
     void resizeToContent();
 
     void setAutoResize(bool value) override;
@@ -55,7 +61,7 @@ private:
     mutable std::u32string text32;
     std::shared_ptr<vvv3d::Geometry> geometry;
     const vvv3d::Font* font;
-    vvv3d::Color color        = vvv3d::WHITE;
+    vvv3d::Color color = vvv3d::WHITE;
     mutable int widthInPixels = 0;
     mutable bool text_changed;
     mutable bool geometry_changed;
@@ -75,6 +81,6 @@ protected:
     void onDraw() override;
 };
 
-}
+} // namespace vvv3d
 
 #endif // TEXTWIDGET_H

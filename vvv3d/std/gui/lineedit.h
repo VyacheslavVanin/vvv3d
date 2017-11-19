@@ -9,17 +9,19 @@
 #include <chrono>
 #include <vvv3d/core/graphics/color.h>
 #include "properties/itext.h"
+#include "properties/ifont.h"
 
 namespace vvv3d {
 
-class LineEdit : public Widget, public ITextProperty {
+class LineEdit : public Widget, public ITextProperty, public IFontProperty {
 public:
     LineEdit(const std::string& text = "");
 
     void setText(const std::string& text) override;
     const std::string& getText() const override;
 
-    void setFont(const vvv3d::Font& font);
+    void setFont(const vvv3d::Font& font) override;
+    const vvv3d::Font& getFont() const override;
 
     void setHAlign(HALIGN align);
     HALIGN getHAlign() const;

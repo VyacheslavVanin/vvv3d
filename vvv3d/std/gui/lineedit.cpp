@@ -54,6 +54,8 @@ void LineEdit::setFont(const vvv3d::Font& font)
     placeWidgets();
 }
 
+const vvv3d::Font& LineEdit::getFont() const { return leftpart->getFont(); }
+
 const std::string& LineEdit::getText() const
 {
     lazyUpdateText();
@@ -180,6 +182,7 @@ int LineEdit::roughLeftOffset(int leftMargin, int width, int fullTextWidth,
         switch (hAlign) {
         case HALIGN::LEFT: return leftMargin;
         case HALIGN::RIGHT: return rightMargin - fullTextWidth;
+        case HALIGN::FILL:
         case HALIGN::CENTER: return (width - fullTextWidth) / 2;
         }
     }
