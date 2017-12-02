@@ -27,6 +27,8 @@ protected:
     void onUnhover() override;
     void onHoverPressed(int x, int y) override;
     void onContentChanged() override;
+    void onResize(const vvv::vector2i& oldsize,
+                  const vvv::vector2i& newsize) override;
 };
 
 } // namespace vvv3d
