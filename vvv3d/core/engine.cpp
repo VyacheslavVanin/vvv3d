@@ -19,7 +19,7 @@ Engine::Engine(int argc, char** argv, const char* windowName)
 #else
       hal(new sdlLayer(argc, argv, GLPROFILE::ES, 3, 2)),
 #endif
-      resourceManager(), input()
+      resourceManager(), input(), gui_layer()
 {
     hal->initContext(argc, argv);
     hal->createWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, windowName);
@@ -33,6 +33,7 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     glEnable(GL_DEPTH_TEST);
 
     activeEngine = this;
+    gui_layer.setVisible(true);
 }
 
 Engine::~Engine() {}
@@ -56,6 +57,8 @@ void Engine::display()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     onDraw();
+    gui().draw();
+    gui().processInputEvents(getInput());
 
     hal->swap();
     const auto t2 = std::chrono::system_clock::now();
@@ -82,12 +85,14 @@ void Engine::resize(int x, int y)
     viewportHeight = y;
     viewportWidth = x;
     glViewport(0, 0, viewportWidth, viewportHeight);
+    gui().resize(x, y);
     onResize(viewportWidth, viewportHeight);
 }
 
 float Engine::getCurrentFps() const { return currentfps; }
 
 void Engine::setVSync(bool vsync) { hal->setVSync(vsync); }
+GuiLayer& Engine::gui() { return gui_layer; }
 
 double Engine::time() { return clock.currentFrameTime(); }
 

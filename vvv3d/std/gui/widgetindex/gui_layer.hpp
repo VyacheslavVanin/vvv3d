@@ -1,7 +1,9 @@
 #pragma once
 #include <vvv3d/std/gui/gui_layer_base.hpp>
 #include <vvvcfg/vvvcfg.hpp>
+#include <vvv3d/core/graphics/color.hpp>
 
+#include <functional>
 #include <unordered_map>
 
 namespace vvv3d {

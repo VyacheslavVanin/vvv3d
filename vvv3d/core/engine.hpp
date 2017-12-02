@@ -2,6 +2,7 @@
 #include <memory>
 #include <vvv3d/core/input.hpp>
 #include <vvv3d/core/time.hpp>
+#include <vvv3d/std/gui/widgetindex/gui_layer.hpp>
 
 namespace vvv3d {
 
@@ -23,6 +24,7 @@ public:
     static Engine& getActiveEngine();
     void setVSync(bool vsync);
 
+    GuiLayer& gui();
     /**
      * @brief Return time at the beginning of current frame.
      * @return seconds */
@@ -51,6 +53,6 @@ private:
     friend class Input;
     Input input;
     static Time<> clock;
+    vvv3d::GuiLayer gui_layer;
 };
-}
-
+} // namespace vvv3d
