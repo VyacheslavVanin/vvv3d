@@ -1,5 +1,4 @@
-#ifndef FREETYPECONTAINER
-#define FREETYPECONTAINER
+#pragma once
 #include <freetype2/ft2build.h>
 #include <map>
 #include <string>
@@ -25,4 +24,3 @@ private:
 };
 }
 
-#endif // FREETYPECONTAINER

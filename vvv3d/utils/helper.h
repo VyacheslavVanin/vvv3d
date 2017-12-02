@@ -1,5 +1,4 @@
-#ifndef HELPER_H
-#define HELPER_H
+#pragma once
 #include <vvv3d/core/graphics/geometry.h>
 
 namespace vvv3d {
@@ -11,4 +10,3 @@ Geometry* loadGeometryFrom3ds(const char* filename);
 #endif
 }
 
-#endif // HELPER_H

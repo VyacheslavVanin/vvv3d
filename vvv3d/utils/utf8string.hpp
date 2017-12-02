@@ -1,5 +1,4 @@
-#ifndef VVV_UTF8STRING_HPP
-#define VVV_UTF8STRING_HPP
+#pragma once
 #include <algorithm>
 #include <iostream>
 #include <string>
@@ -46,4 +45,3 @@ inline std::string getLastChar(std::string& str)
 }
 } // namespace vvv
 
-#endif

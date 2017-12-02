@@ -1,5 +1,4 @@
-#ifndef TEXTUREMANAGER_H
-#define TEXTUREMANAGER_H
+#pragma once
 #include "texture.h"
 #include "textureatlas.h"
 #include <memory>
@@ -33,4 +32,3 @@ private:
 };
 }
 
-#endif // TEXTUREMANAGER_H

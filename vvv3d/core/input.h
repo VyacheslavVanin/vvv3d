@@ -1,5 +1,4 @@
-#ifndef VVV3D_INPUT_H
-#define VVV3D_INPUT_H
+#pragma once
 #include <vvv3d/core/inputevent.h>
 #include <vector>
 #include <string>
@@ -36,4 +35,3 @@ private:
 
 }
 
-#endif

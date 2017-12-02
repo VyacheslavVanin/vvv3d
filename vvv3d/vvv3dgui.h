@@ -1,5 +1,4 @@
-#ifndef VVV3DGUI_H
-#define VVV3DGUI_H
+#pragma once
 #include <vvv3d/vvv3d.h>
 #include <vvv3d/std/gui/widgetindex/gui_layer.hpp>
 #include <vvv3d/std/gui/widget.h>
@@ -17,5 +16,3 @@
 #include <vvv3d/std/gui/properties/itext.h>
 #include <vvv3d/std/gui/properties/icolor.h>
 #include <vvv3d/std/gui/properties/icontainer.h>
-
-#endif

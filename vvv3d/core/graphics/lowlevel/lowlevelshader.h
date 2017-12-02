@@ -1,5 +1,4 @@
-#ifndef LOWLEVELSHADER_H
-#define LOWLEVELSHADER_H
+#pragma once
 #include "openglprovider.h"
 
 namespace vvv3d {
@@ -23,4 +22,3 @@ private:
 };
 }
 
-#endif // LOWLEVELSHADER_H

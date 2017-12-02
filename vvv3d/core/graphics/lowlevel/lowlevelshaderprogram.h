@@ -1,5 +1,4 @@
-#ifndef LOWLEVELSHADERPROGRAM_H
-#define LOWLEVELSHADERPROGRAM_H
+#pragma once
 #include "openglprovider.h"
 #include <functional>
 #include <vvv3d/vvvmath/linalg.h>
@@ -83,4 +82,3 @@ private:
 };
 }
 
-#endif // LOWLEVELSHADERPROGRAM_H

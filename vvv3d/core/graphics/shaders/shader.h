@@ -1,5 +1,4 @@
-#ifndef SHADER_H
-#define SHADER_H
+#pragma once
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -136,4 +135,3 @@ private:
 };
 }
 
-#endif // SHADER_H

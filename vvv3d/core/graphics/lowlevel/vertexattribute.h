@@ -1,5 +1,4 @@
-#ifndef VERTEXATTRIBUTE_H
-#define VERTEXATTRIBUTE_H
+#pragma once
 #include "openglprovider.h"
 #include <algorithm>
 #include <functional>
@@ -78,4 +77,3 @@ private:
 };
 }
 
-#endif // VERTEXATTRIBUTE_H

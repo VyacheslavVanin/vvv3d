@@ -1,5 +1,4 @@
-#ifndef INPUTEVENT_H
-#define INPUTEVENT_H
+#pragma once
 #include <stdint.h>
 
 namespace vvv3d {
@@ -34,4 +33,3 @@ struct InputEvent {
 };
 }
 
-#endif

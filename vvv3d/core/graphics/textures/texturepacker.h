@@ -1,5 +1,4 @@
-#ifndef TEXTUREPACKER_H
-#define TEXTUREPACKER_H
+#pragma once
 #include <algorithm>
 #include <inttypes.h>
 #include <map>
@@ -132,4 +131,3 @@ pack2d(const std::vector<T>& input, SIZE_TYPE width, SIZE_TYPE height,
 }
 }
 
-#endif // TEXTUREPACKER_H

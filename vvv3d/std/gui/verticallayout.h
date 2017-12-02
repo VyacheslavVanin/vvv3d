@@ -1,5 +1,4 @@
-#ifndef VERTICALLAYOUT_H
-#define VERTICALLAYOUT_H
+#pragma once
 #include "align.h"
 #include "layout.h"
 #include "widget.h"
@@ -25,4 +24,3 @@ private:
 
 }
 
-#endif // VERTICALLAYOUT_H

@@ -1,5 +1,4 @@
-#ifndef LOWLEVELBUFFER_H
-#define LOWLEVELBUFFER_H
+#pragma once
 #include "openglprovider.h"
 
 namespace vvv3d {
@@ -26,4 +25,3 @@ private:
 };
 }
 
-#endif // LOWLEVELBUFFER_H

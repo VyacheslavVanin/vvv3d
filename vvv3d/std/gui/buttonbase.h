@@ -1,5 +1,4 @@
-#ifndef BUTTONBASE_H
-#define BUTTONBASE_H
+#pragma once
 #include "actionlist.h"
 #include "activewidget.h"
 
@@ -20,4 +19,3 @@ protected:
 
 }
 
-#endif // BUTTONBASE_H

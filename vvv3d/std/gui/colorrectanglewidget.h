@@ -1,5 +1,4 @@
-#ifndef COLORRECTANGLEWIDGET_H
-#define COLORRECTANGLEWIDGET_H
+#pragma once
 #include "widget.h"
 #include <memory>
 #include <vvv3d/vvv3d.h>
@@ -26,4 +25,3 @@ protected:
 
 }
 
-#endif // COLORRECTANGLEWIDGET_H

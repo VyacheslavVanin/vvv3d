@@ -1,5 +1,4 @@
-#ifndef GUILAYERBASE_H
-#define GUILAYERBASE_H
+#pragma once
 #include <memory>
 #include <vector>
 #include <vvv3d/vvv3d.h>
@@ -61,4 +60,3 @@ private:
 
 }
 
-#endif // GUILAYER_H

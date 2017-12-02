@@ -1,5 +1,4 @@
-#ifndef MYUTILS_H
-#define MYUTILS_H
+#pragma once
 #include <iostream>
 #include <string>
 #include <vvv3d/core/graphics/lowlevel/openglprovider.h>
@@ -15,4 +14,3 @@ void loadFileToString(const char* filename, std::string& out);
 std::string loadFileToString(const char* filename);
 }
 
-#endif // MYUTILS_H

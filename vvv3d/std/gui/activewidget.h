@@ -1,5 +1,4 @@
-#ifndef ACTIVEWIDGET_H
-#define ACTIVEWIDGET_H
+#pragma once
 #include <vvv3d/std/gui/widget.h>
 
 namespace vvv3d {
@@ -33,6 +32,3 @@ private:
 };
 
 }
-
-#endif
-

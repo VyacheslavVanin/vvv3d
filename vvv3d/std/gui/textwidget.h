@@ -1,5 +1,4 @@
-#ifndef TEXTWIDGET_H
-#define TEXTWIDGET_H
+#pragma once
 #include "align.h"
 #include "properties/iautoresize.h"
 #include "properties/icolor.h"
@@ -83,4 +82,3 @@ protected:
 
 } // namespace vvv3d
 
-#endif // TEXTWIDGET_H

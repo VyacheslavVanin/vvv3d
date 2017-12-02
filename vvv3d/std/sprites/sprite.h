@@ -1,5 +1,4 @@
-#ifndef SPRITE_H
-#define SPRITE_H
+#pragma once
 #include <memory>
 #include <vvv3d/vvv3d.h>
 
@@ -45,4 +44,3 @@ inline void drawSprites(const vvv3d::Camera& camera, const C<Sprite, A>& sprs)
 }
 }
 
-#endif

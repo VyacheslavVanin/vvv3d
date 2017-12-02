@@ -1,5 +1,4 @@
-#ifndef PANEL_H
-#define PANEL_H
+#pragma once
 #include "layout.h"
 #include "widget.h"
 #include "properties/icolor.h"
@@ -53,4 +52,3 @@ private:
 
 }
 
-#endif // PANEL_H

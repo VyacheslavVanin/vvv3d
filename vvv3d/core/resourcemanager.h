@@ -1,5 +1,4 @@
-#ifndef RESOURCEMANAGER_H
-#define RESOURCEMANAGER_H
+#pragma once
 #include <vvv3d/core/graphics/fonts/font.h>
 #include <vvv3d/core/graphics/geometry.h>
 #include <vvv3d/core/graphics/shaders/shader.h>
@@ -27,4 +26,3 @@ private:
 };
 }
 
-#endif // RESOURCEMANAGER_H

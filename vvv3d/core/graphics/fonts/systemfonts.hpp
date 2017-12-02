@@ -1,5 +1,4 @@
-#ifndef SYSTEMFONTS_HPP
-#define SYSTEMFONTS_HPP
+#pragma once
 #include <string>
 #include <vector>
 
@@ -51,4 +50,3 @@ private:
 const SystemFonts& systemFonts();
 } // namespace vvv3d
 
-#endif

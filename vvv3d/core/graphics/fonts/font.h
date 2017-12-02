@@ -1,5 +1,4 @@
-#ifndef FONT_H
-#define FONT_H
+#pragma once
 #include <map>
 #include <memory>
 #include <vector>
@@ -57,4 +56,3 @@ private:
 };
 }
 
-#endif // FONT_H

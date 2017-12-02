@@ -1,5 +1,4 @@
-#ifndef BUTTONTEXT_H
-#define BUTTONTEXT_H
+#pragma once
 #include "buttonbase.h"
 #include "properties/itext.h"
 
@@ -32,4 +31,3 @@ protected:
 
 }
 
-#endif // BUTTONTEXT_H

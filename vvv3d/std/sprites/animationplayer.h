@@ -1,5 +1,4 @@
-#ifndef ANIMATION_PLAYER_H
-#define ANIMATION_PLAYER_H
+#pragma once
 #include "animation.h"
 
 class AnimationPlayer {
@@ -26,6 +25,4 @@ private:
 
     double getFrameTime(double now) const;
 };
-
-#endif
 

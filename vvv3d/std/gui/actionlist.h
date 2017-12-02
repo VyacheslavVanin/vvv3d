@@ -1,5 +1,4 @@
-#ifndef ACTIONLIST_H
-#define ACTIONLIST_H
+#pragma once
 #include <functional>
 #include <iostream>
 #include <vector>
@@ -43,4 +42,3 @@ private:
 
 }
 
-#endif // ACTIONLIST_H

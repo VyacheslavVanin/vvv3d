@@ -1,5 +1,4 @@
-#ifndef TEXTURE_H
-#define TEXTURE_H
+#pragma once
 #include <memory>
 #include <string>
 #include <vvv3d/core/graphics/lowlevel/lowleveltexture.h>
@@ -73,4 +72,3 @@ void writeToPng(const char* filename, const Texture& t);
 
 }
 
-#endif // TEXTURE_H

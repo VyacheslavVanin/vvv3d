@@ -1,5 +1,4 @@
-#ifndef SIMPLEGEOMETRY_H
-#define SIMPLEGEOMETRY_H
+#pragma once
 #include "lowlevel/lowlevelgeometry.h"
 #include <memory>
 #include <unordered_map>
@@ -40,4 +39,3 @@ private:
 };
 }
 
-#endif // SIMPLEGEOMETRY_H

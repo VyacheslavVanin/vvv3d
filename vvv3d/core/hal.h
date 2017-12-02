@@ -1,5 +1,4 @@
-#ifndef HAL_H
-#define HAL_H
+#pragma once
 #include "inputevent.h"
 #include <functional>
 #include <string>
@@ -51,4 +50,3 @@ public:
 };
 }
 
-#endif // HAL_H

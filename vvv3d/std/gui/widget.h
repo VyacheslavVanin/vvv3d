@@ -1,5 +1,4 @@
-#ifndef GUIOBJECT_H
-#define GUIOBJECT_H
+#pragma once
 #include "rect.h"
 #include <memory>
 #include <vector>
@@ -127,4 +126,3 @@ protected:
 };
 }
 
-#endif // GUIOBJECT_H

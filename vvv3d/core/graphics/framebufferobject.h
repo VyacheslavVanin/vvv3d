@@ -1,5 +1,4 @@
-#ifndef FRAMEBUFFEROBJECT_H
-#define FRAMEBUFFEROBJECT_H
+#pragma once
 #include "textures/texture.h"
 
 namespace vvv3d {
@@ -34,4 +33,3 @@ private:
 };
 }
 
-#endif // FRAMEBUFFEROBJECT_H

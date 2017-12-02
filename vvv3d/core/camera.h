@@ -1,5 +1,4 @@
-#ifndef CAMERA_H
-#define CAMERA_H
+#pragma once
 #include <vvv3d/vvvmath/linalg.h>
 
 namespace vvv3d {
@@ -68,4 +67,3 @@ private:
 };
 }
 
-#endif // CAMERA_H

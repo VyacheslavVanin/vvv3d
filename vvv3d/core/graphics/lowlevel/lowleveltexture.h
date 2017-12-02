@@ -1,5 +1,4 @@
-#ifndef LOWLEVELTEXTURE_H
-#define LOWLEVELTEXTURE_H
+#pragma once
 #include "openglprovider.h"
 
 namespace vvv3d {
@@ -42,4 +41,3 @@ LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
                                   uint32_t cellSize);
 }
 
-#endif // LOWLWVWLTEXTURE_H

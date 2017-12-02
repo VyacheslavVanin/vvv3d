@@ -1,5 +1,4 @@
-#ifndef EVENTTESTWIDGET_H
-#define EVENTTESTWIDGET_H
+#pragma once
 #include "textwidget.h"
 
 namespace vvv3d {
@@ -36,4 +35,3 @@ protected:
 
 }
 
-#endif // EVENTTESTWIDGET_H

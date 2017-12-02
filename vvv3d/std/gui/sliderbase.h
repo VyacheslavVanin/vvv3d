@@ -1,5 +1,4 @@
-#ifndef SLIDERBASE_H
-#define SLIDERBASE_H
+#pragma once
 #include <vvv3d/std/gui/activewidget.h>
 #include <vvv3d/std/gui/actionlist.h>
 #include <vvv3d/std/gui/properties/irange.h>
@@ -42,4 +41,3 @@ class SliderBase : public ActiveWidget, public IValueProperty, public IRangeProp
 
 }
 
-#endif

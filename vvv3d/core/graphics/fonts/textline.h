@@ -1,5 +1,4 @@
-#ifndef TEXTLINE_H
-#define TEXTLINE_H
+#pragma once
 #include <memory>
 #include <string>
 #include <vvv3d/core/graphics/color.h>
@@ -24,4 +23,3 @@ void updateTextGeometry(const std::shared_ptr<Geometry>& in, const Font& font,
                         const std::string& text);
 }
 
-#endif // TEXTLINE_H

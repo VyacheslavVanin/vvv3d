@@ -1,5 +1,4 @@
-#ifndef ANIMATION_H
-#define ANIMATION_H
+#pragma once
 #include <vector>
 #include "vvv3d/core/graphics/textures/texture.h"
 
@@ -23,4 +22,3 @@ private:
     double m_duration;
 };
 
-#endif

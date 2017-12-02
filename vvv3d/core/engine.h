@@ -1,5 +1,4 @@
-#ifndef ENGINE_H
-#define ENGINE_H
+#pragma once
 #include <memory>
 #include <vvv3d/core/input.h>
 #include <vvv3d/core/time.hpp>
@@ -55,4 +54,3 @@ private:
 };
 }
 
-#endif // ENGINE

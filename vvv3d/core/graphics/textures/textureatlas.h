@@ -1,5 +1,4 @@
-#ifndef TEXTUREATLAS_H
-#define TEXTUREATLAS_H
+#pragma once
 #include "texture.h"
 #include <initializer_list>
 #include <memory>
@@ -43,4 +42,3 @@ private:
 
 }
 
-#endif // TEXTUREATLAS_H

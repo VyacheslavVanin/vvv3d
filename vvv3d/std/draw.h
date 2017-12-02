@@ -1,5 +1,4 @@
-#ifndef DRAW_H
-#define DRAW_H
+#pragma once
 #include <vvv3d/vvvmath/vector4.h>
 #include <vvv3d/core/graphics/color.h>
 
@@ -56,4 +55,3 @@ void scissorDisable();
 vvv::vector4<int> getScissor();
 }
 
-#endif // DRAW_H

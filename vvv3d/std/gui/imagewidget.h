@@ -1,5 +1,4 @@
-#ifndef IMAGEWIDGET_H
-#define IMAGEWIDGET_H
+#pragma once
 #include "widget.h"
 #include <memory>
 #include <vvv3d/core/graphics/textures/texture.h>
@@ -24,4 +23,3 @@ protected:
 
 }
 
-#endif // IMAGEWIDGET_H

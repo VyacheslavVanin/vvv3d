@@ -1,5 +1,4 @@
-#ifndef ALIGN_H
-#define ALIGN_H
+#pragma once
 
 namespace vvv3d {
 
@@ -9,4 +8,3 @@ enum class VALIGN { TOP, CENTER, BOTTOM, FILL };
 
 }
 
-#endif // ALIGN_H

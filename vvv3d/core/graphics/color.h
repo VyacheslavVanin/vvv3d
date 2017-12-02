@@ -1,5 +1,4 @@
-#ifndef COLOR_H
-#define COLOR_H
+#pragma once
 #include <vvv3d/vvvmath/vector4.h>
 
 namespace vvv3d {
@@ -24,4 +23,3 @@ extern Color PURPLE;
 extern Color ORANGE;
 }
 
-#endif // COLOR_H

@@ -1,5 +1,4 @@
-#ifndef LOWLEVELGEOMETRY_H
-#define LOWLEVELGEOMETRY_H
+#pragma once
 #include "lowlevelbuffer.h"
 #include "openglprovider.h"
 #include "vertexattribute.h"
@@ -39,4 +38,3 @@ private:
 };
 }
 
-#endif // LOWLEVELGEOMETRY_H

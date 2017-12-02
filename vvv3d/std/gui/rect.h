@@ -1,5 +1,4 @@
-#ifndef RECT_H
-#define RECT_H
+#pragma once
 #include <vvv3d/vvvmath/linalg.h>
 
 namespace vvv3d {
@@ -45,4 +44,3 @@ inline bool rectContainPoint(const Rect& r, int x, int y)
 
 }
 
-#endif // RECT_H

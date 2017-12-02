@@ -1,5 +1,4 @@
-#ifndef LINEEDIT_H
-#define LINEEDIT_H
+#pragma once
 #include "actionlist.h"
 #include "align.h"
 #include "colorrectanglewidget.h"
@@ -82,4 +81,3 @@ private:
 
 } // namespace vvv3d
 
-#endif

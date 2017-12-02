@@ -1,5 +1,4 @@
-#ifndef VVV3D_TIME_HPP
-#define VVV3D_TIME_HPP
+#pragma once
 #include <chrono>
 
 template <typename defaultTimeUnit = std::chrono::duration<double>,
@@ -59,5 +58,3 @@ void Time<defaultTimeUnit, clock>::updateFrameTime()
     lastFrameTime = currFrameTime;
     currFrameTime = clock::now().time_since_epoch();
 }
-
-#endif

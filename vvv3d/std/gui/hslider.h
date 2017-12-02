@@ -1,5 +1,4 @@
-#ifndef HSLIDER_H
-#define HSLIDER_H
+#pragma once
 #include "sliderbase.h"
 
 namespace vvv3d { 
@@ -24,4 +23,3 @@ private:
 
 }
 
-#endif

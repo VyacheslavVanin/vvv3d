@@ -1,5 +1,4 @@
-#ifndef TRANSFORM_H
-#define TRANSFORM_H
+#pragma once
 #include <vvv3d/vvvmath/linalg.h>
 
 namespace vvv3d {
@@ -179,5 +178,3 @@ inline void Transform::scale(const vvv::vector3f& s) { m_scale *= s; }
 
 inline void Transform::scale(float s) { m_scale *= s; }
 }
-
-#endif // TRANSFORM_H

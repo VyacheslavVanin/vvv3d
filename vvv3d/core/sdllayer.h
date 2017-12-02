@@ -1,5 +1,4 @@
-#ifndef SDLLAYER_H
-#define SDLLAYER_H
+#pragma once
 #include "hal.h"
 #include <memory>
 
@@ -53,4 +52,3 @@ public:
 };
 }
 
-#endif // SDLLAYER_H

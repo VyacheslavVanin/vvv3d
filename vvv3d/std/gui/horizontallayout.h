@@ -1,5 +1,4 @@
-#ifndef HORIZONTALLAYOUT_H
-#define HORIZONTALLAYOUT_H
+#pragma once
 #include "align.h"
 #include "layout.h"
 #include "widget.h"
@@ -25,4 +24,3 @@ private:
 
 }
 
-#endif // HORIZONTALLAYOUT_H

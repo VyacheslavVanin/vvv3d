@@ -1,5 +1,4 @@
-#ifndef LAYOUT_H
-#define LAYOUT_H
+#pragma once
 #include "properties/icontainer.h"
 #include "properties/ilayout_props.h"
 #include "widget.h"
@@ -44,4 +43,3 @@ private:
 
 } // namespace vvv3d
 
-#endif // LAYOUT_H
