@@ -1,6 +1,6 @@
-#include "eventtestwidget.h"
-#include "colorrectanglewidget.h"
-#include "vvv3d/core/graphics/color.h"
+#include "eventtestwidget.hpp"
+#include "colorrectanglewidget.hpp"
+#include "vvv3d/core/graphics/color.hpp"
 
 namespace vvv3d {
 

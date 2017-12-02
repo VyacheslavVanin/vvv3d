@@ -1,6 +1,6 @@
-#include "geometry.h"
-#include "lowlevel/lowlevelbuffer.h"
-#include "lowlevel/vertexattribute.h"
+#include "geometry.hpp"
+#include "lowlevel/lowlevelbuffer.hpp"
+#include "lowlevel/vertexattribute.hpp"
 #include <memory>
 using namespace std;
 

@@ -1,5 +1,5 @@
-#include "hal.h"
-#include <vvv3d/vvvmath/linalg.h>
+#include "hal.hpp"
+#include <vvv3d/vvvmath/linalg.hpp>
 
 using namespace vvv3d;
 

@@ -1,7 +1,7 @@
-#include "input.h"
-#include <core/resourcemanager.h>
-#include <core/sdllayer.h>
-#include <vvv3d/core/engine.h>
+#include "input.hpp"
+#include <core/resourcemanager.hpp>
+#include <core/sdllayer.hpp>
+#include <vvv3d/core/engine.hpp>
 
 namespace vvv3d {
 

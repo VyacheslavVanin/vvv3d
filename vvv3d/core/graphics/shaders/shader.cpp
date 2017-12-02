@@ -1,6 +1,6 @@
-#include "shader.h"
-#include <core/graphics/lowlevel/lowlevelshader.h>
-#include <core/graphics/lowlevel/vertexattribute.h>
+#include "shader.hpp"
+#include <core/graphics/lowlevel/lowlevelshader.hpp>
+#include <core/graphics/lowlevel/vertexattribute.hpp>
 #include <memory>
 
 using namespace vvv3d;

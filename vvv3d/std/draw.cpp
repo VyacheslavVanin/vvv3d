@@ -1,10 +1,10 @@
-#include "draw.h"
-#include <core/camera.h>
-#include <core/graphics/fonts/textline.h>
-#include <core/graphics/geometry.h>
-#include <core/graphics/shaders/shader.h>
-#include <core/graphics/textures/texture.h>
-#include <core/transform.h>
+#include "draw.hpp"
+#include <core/camera.hpp>
+#include <core/graphics/fonts/textline.hpp>
+#include <core/graphics/geometry.hpp>
+#include <core/graphics/shaders/shader.hpp>
+#include <core/graphics/textures/texture.hpp>
+#include <core/transform.hpp>
 
 namespace vvv3d {
 

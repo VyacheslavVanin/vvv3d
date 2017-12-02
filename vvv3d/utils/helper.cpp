@@ -1,4 +1,4 @@
-#include "helper.h"
+#include "helper.hpp"
 #include <algorithm>
 #include <array>
 #include <cstdlib>
@@ -83,9 +83,9 @@ Geometry* loadGeometryFrom_vvv3d(const char* filename)
 }
 
 #if defined ENABLE_3DS
-#include <lib3ds/file.h>
-#include <lib3ds/material.h>
-#include <lib3ds/mesh.h>
+#include <lib3ds/file.hpp>
+#include <lib3ds/material.hpp>
+#include <lib3ds/mesh.hpp>
 
 static void assembleBuffers(Lib3dsMesh* mesh, std::vector<myvertex>& vertices,
                             std::vector<GLuint>& indices)

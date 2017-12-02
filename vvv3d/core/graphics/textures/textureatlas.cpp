@@ -1,6 +1,6 @@
-#include "textureatlas.h"
-#include "texturepacker.h"
-#include <utils/helper.h>
+#include "textureatlas.hpp"
+#include "texturepacker.hpp"
+#include <utils/helper.hpp>
 
 using namespace vvv3d;
 using namespace std;

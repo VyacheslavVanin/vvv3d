@@ -1,4 +1,4 @@
-#include "sprite.h"
+#include "sprite.hpp"
 #include <mutex>
 
 namespace vvv3d {

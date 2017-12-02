@@ -1,4 +1,4 @@
-#include "mgrfreetype.h"
+#include "mgrfreetype.hpp"
 
 namespace vvv3d {
 

@@ -1,8 +1,8 @@
-#include "lowleveltexture.h"
+#include "lowleveltexture.hpp"
 #include <boost/gil/gil_all.hpp>
 #define png_infopp_NULL (png_infopp) NULL
 #define int_p_NULL (int*)NULL
-#include "vvv3d/core/graphics/framebufferobject.h"
+#include "vvv3d/core/graphics/framebufferobject.hpp"
 #include <boost/gil/extension/io/png_io.hpp>
 
 namespace vvv3d {

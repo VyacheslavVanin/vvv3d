@@ -1,4 +1,4 @@
-#include "camera.h"
+#include "camera.hpp"
 
 using namespace vvv;
 using namespace vvv3d;

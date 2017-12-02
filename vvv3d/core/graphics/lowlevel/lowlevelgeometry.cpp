@@ -1,4 +1,4 @@
-#include "lowlevelgeometry.h"
+#include "lowlevelgeometry.hpp"
 
 using namespace vvv3d;
 

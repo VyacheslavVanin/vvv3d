@@ -1,9 +1,9 @@
-#include "buttontext.h"
-#include "colorrectanglewidget.h"
-#include "panel.h"
-#include "textwidget.h"
-#include "verticallayout.h"
-#include "vvv3d/core/graphics/color.h"
+#include "buttontext.hpp"
+#include "colorrectanglewidget.hpp"
+#include "panel.hpp"
+#include "textwidget.hpp"
+#include "verticallayout.hpp"
+#include "vvv3d/core/graphics/color.hpp"
 
 namespace vvv3d {
 

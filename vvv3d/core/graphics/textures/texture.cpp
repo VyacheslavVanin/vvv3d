@@ -1,9 +1,9 @@
-#include "texture.h"
+#include "texture.hpp"
 #include <boost/gil/gil_all.hpp>
 #include <vector>
 #define png_infopp_NULL (png_infopp) NULL
 #define int_p_NULL (int*)NULL
-#include "vvv3d/core/graphics/lowlevel/lowleveltexture.h"
+#include "vvv3d/core/graphics/lowlevel/lowleveltexture.hpp"
 #include "vvvstlhelper.hpp"
 #include <boost/gil/extension/io/png_io.hpp>
 #include <iostream>

@@ -1,5 +1,5 @@
-#include "panel.h"
-#include "verticallayout.h"
+#include "panel.hpp"
+#include "verticallayout.hpp"
 
 namespace vvv3d {
 

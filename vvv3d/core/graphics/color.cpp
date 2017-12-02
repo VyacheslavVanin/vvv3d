@@ -1,4 +1,4 @@
-#include "color.h"
+#include "color.hpp"
 namespace vvv3d {
 Color ORANGE = Color(1, 0.5, 0);
 Color WHITE = Color(1);

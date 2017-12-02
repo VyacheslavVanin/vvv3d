@@ -1,5 +1,5 @@
-#include "lowlevelbuffer.h"
-#include <core/graphics/lowlevel/openglprovider.h>
+#include "lowlevelbuffer.hpp"
+#include <core/graphics/lowlevel/openglprovider.hpp>
 #include <stdexcept>
 
 using namespace vvv3d;

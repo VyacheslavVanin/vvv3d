@@ -1,4 +1,4 @@
-#include "animation.h"
+#include "animation.hpp"
 #include <numeric>
 
 Animation::Animation() : frames(), m_duration(0) {}

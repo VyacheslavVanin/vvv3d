@@ -1,5 +1,5 @@
-#include "animationplayer.h"
-#include "vvv3d/core/engine.h"
+#include "animationplayer.hpp"
+#include "vvv3d/core/engine.hpp"
 
 AnimationPlayer::AnimationPlayer()
     : animation(nullptr), startTime(0.0), speed(1.0), looped(false)

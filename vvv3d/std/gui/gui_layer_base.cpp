@@ -1,11 +1,11 @@
-#include "gui_layer_base.h"
+#include "gui_layer_base.hpp"
 #include "vvvstlhelper.hpp"
-#include "widget.h"
+#include "widget.hpp"
 #include <algorithm>
 #include <assert.h>
 #include <queue>
 #include <vector>
-#include <vvv3d/vvv3d.h>
+#include <vvv3d/vvv3d.hpp>
 
 namespace vvv3d {
 

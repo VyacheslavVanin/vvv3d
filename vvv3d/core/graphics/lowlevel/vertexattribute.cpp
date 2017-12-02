@@ -1,4 +1,4 @@
-#include "vertexattribute.h"
+#include "vertexattribute.hpp"
 #include "vvvstlhelper.hpp"
 
 namespace vvv3d {

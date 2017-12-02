@@ -1,12 +1,12 @@
 #include <freetype2/ft2build.h>
 #include FT_FREETYPE_H
-#include "font.h"
-#include "mgrfreetype.h"
+#include "font.hpp"
+#include "mgrfreetype.hpp"
 #include <map>
 #include <vector>
 #include <vvv3d/core/graphics/fonts/systemfonts.hpp>
-#include <vvv3d/core/graphics/textures/texturepacker.h>
-#include <vvv3d/utils/myutils.h>
+#include <vvv3d/core/graphics/textures/texturepacker.hpp>
+#include <vvv3d/utils/myutils.hpp>
 
 namespace vvv3d {
 

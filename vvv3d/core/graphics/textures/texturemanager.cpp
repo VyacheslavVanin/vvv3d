@@ -1,5 +1,5 @@
-#include "texturemanager.h"
-#include "utils/helper.h"
+#include "texturemanager.hpp"
+#include "utils/helper.hpp"
 
 using namespace vvv3d;
 

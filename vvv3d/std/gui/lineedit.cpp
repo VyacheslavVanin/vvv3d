@@ -1,5 +1,5 @@
-#include "lineedit.h"
-#include <vvv3d/vvv3d.h>
+#include "lineedit.hpp"
+#include <vvv3d/vvv3d.hpp>
 
 namespace vvv3d {
 

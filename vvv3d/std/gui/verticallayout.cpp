@@ -1,4 +1,4 @@
-#include "verticallayout.h"
+#include "verticallayout.hpp"
 #include <numeric>
 
 namespace vvv3d {

@@ -1,11 +1,11 @@
-#include "lowlevelshader.h"
-#include "utils/myutils.h"
-#include <core/graphics/lowlevel/openglprovider.h>
+#include "lowlevelshader.hpp"
+#include "utils/myutils.hpp"
+#include <core/graphics/lowlevel/openglprovider.hpp>
 #include <cstdint>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
-#include <string.h>
+#include <cstring>
 #include <string>
 
 using namespace vvv3d;

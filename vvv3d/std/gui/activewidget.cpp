@@ -1,4 +1,4 @@
-#include "activewidget.h"
+#include "activewidget.hpp"
 
 namespace vvv3d {
 

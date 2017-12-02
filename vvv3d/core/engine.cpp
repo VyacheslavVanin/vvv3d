@@ -1,8 +1,8 @@
-#include "engine.h"
+#include "engine.hpp"
 #include <chrono>
-#include <core/graphics/lowlevel/openglprovider.h>
-#include <core/resourcemanager.h>
-#include <core/sdllayer.h>
+#include <core/graphics/lowlevel/openglprovider.hpp>
+#include <core/resourcemanager.hpp>
+#include <core/sdllayer.hpp>
 
 using namespace vvv3d;
 

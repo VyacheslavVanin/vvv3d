@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 
-#include <vvv3d/std/gui/widget.h>
+#include <vvv3d/std/gui/widget.hpp>
 
 namespace vvv3d {
 class PropertyMapper {

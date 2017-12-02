@@ -1,5 +1,5 @@
-#include "hslider.h"
-#include <vvv3d/vvv3dgui.h>
+#include "hslider.hpp"
+#include <vvv3d/vvv3dgui.hpp>
 
 namespace vvv3d {
 

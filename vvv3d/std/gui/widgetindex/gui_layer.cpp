@@ -1,8 +1,8 @@
 #include "gui_layer.hpp"
 
 #include <unordered_map>
-#include <vvv3d/vvv3d.h>
-#include <vvv3d/vvv3dgui.h>
+#include <vvv3d/vvv3d.hpp>
+#include <vvv3d/vvv3dgui.hpp>
 #include <vvvcfg/vvvcfg.hpp>
 
 #include "property_mapper.hpp"

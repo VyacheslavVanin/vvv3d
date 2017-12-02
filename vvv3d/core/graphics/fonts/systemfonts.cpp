@@ -1,7 +1,7 @@
 #include "systemfonts.hpp"
 #include <algorithm>
 #include <fontconfig/fontconfig.h>
-#include <string.h>
+#include <cstring>
 #include <vector>
 
 namespace vvv3d {

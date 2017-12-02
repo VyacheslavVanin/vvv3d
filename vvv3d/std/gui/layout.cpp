@@ -1,7 +1,7 @@
-#include "layout.h"
-#include "panel.h"
+#include "layout.hpp"
+#include "panel.hpp"
 #include <algorithm>
-#include <vvv3d/vvvmath/linalg.h>
+#include <vvv3d/vvvmath/linalg.hpp>
 
 namespace vvv3d {
 

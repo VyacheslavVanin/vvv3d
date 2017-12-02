@@ -1,7 +1,7 @@
-#include "sdllayer.h"
+#include "sdllayer.hpp"
 #include <SDL.h>
-#include <vvv3d/core/graphics/lowlevel/openglprovider.h>
-//#include <SDL2/SDL_opengles2.h>
+#include <vvv3d/core/graphics/lowlevel/openglprovider.hpp>
+//#include <SDL2/SDL_opengles2.hpp>
 
 using namespace vvv3d;
 

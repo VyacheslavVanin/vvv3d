@@ -1,5 +1,5 @@
-#include "sliderbase.h"
-#include <vvv3d/vvv3d.h>
+#include "sliderbase.hpp"
+#include <vvv3d/vvv3d.hpp>
 
 namespace vvv3d {
 

@@ -1,6 +1,6 @@
-#include "colorrectanglewidget.h"
+#include "colorrectanglewidget.hpp"
 #include <mutex>
-#include <vvv3d/vvv3d.h>
+#include <vvv3d/vvv3d.hpp>
 
 namespace vvv3d {
 

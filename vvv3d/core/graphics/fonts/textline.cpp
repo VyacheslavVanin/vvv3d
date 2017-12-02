@@ -1,7 +1,7 @@
-#include "textline.h"
+#include "textline.hpp"
 #include <boost/locale/encoding_utf.hpp>
-#include <vvv3d/core/engine.h>
-#include <vvv3d/vvvmath/linalg.h>
+#include <vvv3d/core/engine.hpp>
+#include <vvv3d/vvvmath/linalg.hpp>
 
 namespace vvv3d {
 

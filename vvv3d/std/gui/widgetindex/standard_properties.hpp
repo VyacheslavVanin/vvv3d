@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-#include <vvv3d/vvv3dgui.h>
+#include <vvv3d/vvv3dgui.hpp>
 
 namespace vvv3d {
 

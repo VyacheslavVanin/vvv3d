@@ -1,4 +1,4 @@
-#include "framebufferobject.h"
+#include "framebufferobject.hpp"
 
 using namespace vvv3d;
 

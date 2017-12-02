@@ -1,5 +1,5 @@
-#include "lowlevelshaderprogram.h"
-#include <core/graphics/lowlevel/openglprovider.h>
+#include "lowlevelshaderprogram.hpp"
+#include <core/graphics/lowlevel/openglprovider.hpp>
 #include <functional>
 #include <iostream>
 #include <stdexcept>
