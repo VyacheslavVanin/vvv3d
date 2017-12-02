@@ -1,7 +1,7 @@
 #ifndef VVV3DGUI_H
 #define VVV3DGUI_H
 #include <vvv3d/vvv3d.h>
-#include <vvv3d/std/gui/guilayer.h>
+#include <vvv3d/std/gui/widgetindex/gui_layer.hpp>
 #include <vvv3d/std/gui/widget.h>
 #include <vvv3d/std/gui/panel.h>
 #include <vvv3d/std/gui/textwidget.h>

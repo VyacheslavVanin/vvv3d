@@ -1,5 +1,5 @@
 #include "widget.h"
-#include "guilayer.h"
+#include "gui_layer_base.h"
 #include "rect.h"
 #include <algorithm>
 #include <memory>
@@ -8,7 +8,7 @@
 #include <vvv3d/vvvmath/linalg.h>
 
 namespace vvv3d {
-class GuiLayer;
+class GuiLayerBase;
 
 Widget* Widget::focus = nullptr;
 
@@ -27,7 +27,7 @@ void Widget::onResize(const vvv::vector2i& oldSize,
     (void)newSize;
 }
 
-void Widget::setGuiLayer(GuiLayer* layer)
+void Widget::setGuiLayer(GuiLayerBase* layer)
 {
     this->layer = layer;
     for (auto w : children)

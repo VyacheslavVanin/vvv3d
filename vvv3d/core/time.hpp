@@ -3,7 +3,7 @@
 #include <chrono>
 
 template <typename defaultTimeUnit = std::chrono::duration<double>,
-          typename clock           = std::chrono::system_clock>
+          typename clock = std::chrono::system_clock>
 class Time {
 public:
     Time();

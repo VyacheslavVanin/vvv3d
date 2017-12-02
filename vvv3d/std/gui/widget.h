@@ -7,7 +7,7 @@
 #include <vvv3d/vvvmath/matrices_types.h>
 
 namespace vvv3d {
-class GuiLayer;
+class GuiLayerBase;
 
 class Widget {
 public:
@@ -108,8 +108,8 @@ protected:
     virtual void onTextEntered(const std::string& text);
     virtual void onContentChanged();
 
-    friend class GuiLayer;
-    void setGuiLayer(GuiLayer* layer);
+    friend class GuiLayerBase;
+    void setGuiLayer(GuiLayerBase* layer);
     friend class GuiPointer;
 
     vvv::vector2i pos;
@@ -120,7 +120,7 @@ protected:
     Rect clipArea;
     Widget* obj;
     Widget* parent;
-    GuiLayer* layer;
+    GuiLayerBase* layer;
     std::vector<Widget*> children;
     bool hover;
     void updateClipArea();

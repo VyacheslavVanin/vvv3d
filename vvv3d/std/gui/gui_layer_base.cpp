@@ -1,4 +1,4 @@
-#include "guilayer.h"
+#include "gui_layer_base.h"
 #include "vvvstlhelper.hpp"
 #include "widget.h"
 #include <algorithm>
@@ -9,12 +9,12 @@
 
 namespace vvv3d {
 
-GuiLayer::GuiLayer()
+GuiLayerBase::GuiLayerBase()
     : widgets(), size(), camera(), pointer(this->widgets), visible(false)
 {
 }
 
-void GuiLayer::draw()
+void GuiLayerBase::draw()
 {
     if (!visible)
         return;
@@ -24,7 +24,7 @@ void GuiLayer::draw()
         w->Draw();
 }
 
-void GuiLayer::addWidget(Widget* widget)
+void GuiLayerBase::addWidget(Widget* widget)
 {
     const auto it = std::find(widgets.begin(), widgets.end(), widget);
     if (it == widgets.end())
@@ -32,42 +32,42 @@ void GuiLayer::addWidget(Widget* widget)
     widget->setGuiLayer(this);
 }
 
-void GuiLayer::removeWidget(Widget* widget)
+void GuiLayerBase::removeWidget(Widget* widget)
 {
     const auto it = std::find(widgets.begin(), widgets.end(), widget);
     if (it != widgets.end())
         widgets.erase(it);
 }
 
-void GuiLayer::resize(int width, int height)
+void GuiLayerBase::resize(int width, int height)
 {
     camera.setOrtho(0, width, -height, 0, 1, -1);
     size.set(width, height);
 }
 
-const vvv::vector2<int>& GuiLayer::getSize() const { return size; }
+const vvv::vector2<int>& GuiLayerBase::getSize() const { return size; }
 
-const Camera& GuiLayer::getCamera() const { return camera; }
+const Camera& GuiLayerBase::getCamera() const { return camera; }
 
-void GuiLayer::processInputEvents(const Input& input)
+void GuiLayerBase::processInputEvents(const Input& input)
 {
     if (!getVisible())
         return;
     pointer.processInput(input);
 }
 
-void GuiLayer::setVisible(bool visible) { this->visible = visible; }
+void GuiLayerBase::setVisible(bool visible) { this->visible = visible; }
 
-bool GuiLayer::getVisible() const { return visible; }
+bool GuiLayerBase::getVisible() const { return visible; }
 
-GuiLayer::~GuiLayer()
+GuiLayerBase::~GuiLayerBase()
 {
     for (auto w : widgets)
         delete w;
 }
 
-GuiLayer::GuiLayer(GuiLayer&&) noexcept = default;
-GuiLayer& GuiLayer::operator=(GuiLayer&&) noexcept = default;
+GuiLayerBase::GuiLayerBase(GuiLayerBase&&) noexcept = default;
+GuiLayerBase& GuiLayerBase::operator=(GuiLayerBase&&) noexcept = default;
 
 static bool isPointInWidget(const Widget* w, const vvv::vector2i& point)
 {
@@ -78,7 +78,7 @@ static bool isPointInWidget(const Widget* w, const vvv::vector2i& point)
  * @brief Return pointer to widget that contain pos
  * @param pos point to test
  * @return Widget or nullptr if no widgets under point */
-Widget* GuiLayer::GuiPointer::getWidgetAtPoint(const vvv::vector2i& pos)
+Widget* GuiLayerBase::GuiPointer::getWidgetAtPoint(const vvv::vector2i& pos)
 {
     auto w =
         std::find_if(widgets->rbegin(), widgets->rend(),
@@ -88,7 +88,7 @@ Widget* GuiLayer::GuiPointer::getWidgetAtPoint(const vvv::vector2i& pos)
     return *w;
 }
 
-void GuiLayer::GuiPointer::detectMouseMove(const Input::Mouse& mouse)
+void GuiLayerBase::GuiPointer::detectMouseMove(const Input::Mouse& mouse)
 {
     if (!mouse.isMoved())
         return;
@@ -98,7 +98,7 @@ void GuiLayer::GuiPointer::detectMouseMove(const Input::Mouse& mouse)
         w->notifyPointerMove(x, y);
 }
 
-void GuiLayer::GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
+void GuiLayerBase::GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
 {
     const auto& pos = mouse.getMousePos();
     Widget* underCursorWidget = getWidgetAtPoint(pos);
@@ -119,7 +119,7 @@ void GuiLayer::GuiPointer::detectMouseButtons(const Input::Mouse& mouse)
     }
 }
 
-void GuiLayer::GuiPointer::processKeyboard(const Input::Keyboard& kbd)
+void GuiLayerBase::GuiPointer::processKeyboard(const Input::Keyboard& kbd)
 {
     const auto foc = Widget::getCurrentFocus();
     if (!foc)
@@ -139,7 +139,7 @@ void GuiLayer::GuiPointer::processKeyboard(const Input::Keyboard& kbd)
     }
 }
 
-void GuiLayer::GuiPointer::processInput(const Input& input)
+void GuiLayerBase::GuiPointer::processInput(const Input& input)
 {
     const auto& mouse = input.getMouse();
     const auto& kbd = input.getKeyboard();

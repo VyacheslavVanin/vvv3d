@@ -1,5 +1,5 @@
-#ifndef GUILAYER_H
-#define GUILAYER_H
+#ifndef GUILAYERBASE_H
+#define GUILAYERBASE_H
 #include <memory>
 #include <vector>
 #include <vvv3d/vvv3d.h>
@@ -8,12 +8,12 @@
 namespace vvv3d {
 
 class Widget;
-class GuiLayer final {
+class GuiLayerBase {
 public:
-    GuiLayer();
-    ~GuiLayer();
-    GuiLayer(GuiLayer&&) noexcept;
-    GuiLayer& operator=(GuiLayer&&) noexcept;
+    GuiLayerBase();
+    ~GuiLayerBase();
+    GuiLayerBase(GuiLayerBase&&) noexcept;
+    GuiLayerBase& operator=(GuiLayerBase&&) noexcept;
 
     void draw();
     void addWidget(Widget* widget);

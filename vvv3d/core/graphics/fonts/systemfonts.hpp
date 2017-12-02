@@ -22,7 +22,6 @@ private:
     std::string format;
 };
 
-
 class SystemFonts {
 public:
     static const SystemFonts& instance();
@@ -50,6 +49,6 @@ private:
 };
 
 const SystemFonts& systemFonts();
-}
+} // namespace vvv3d
 
 #endif
