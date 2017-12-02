@@ -89,8 +89,8 @@ inline void matrix33<T>::transform(const vector3<T>& in, vector3<T>& out) const
 template <typename T>
 inline matrix33<T>& matrix33<T>::loadRotation(T angle, T ax, T ay, T az)
 {
-    const T c  = cos(angle);
-    const T s  = sin(angle);
+    const T c = cos(angle);
+    const T s = sin(angle);
     const T al = vector3<T>::length(ax, ay, az);
 
     if (al != 0) {
@@ -428,10 +428,10 @@ inline matrix44<T>& matrix44<T>::invert()
     }
     else {
         const T invdet = 1.0 / det;
-        matrix[0][0]   = inv00 * invdet;
-        matrix[0][1]   = -(v01 * sf00 - v02 * sf04 + v03 * sf08) * invdet;
-        matrix[0][2]   = (v01 * sf02 - v02 * sf06 + v03 * sf10) * invdet;
-        matrix[0][3]   = -(v01 * sf03 - v02 * sf07 + v03 * sf11) * invdet;
+        matrix[0][0] = inv00 * invdet;
+        matrix[0][1] = -(v01 * sf00 - v02 * sf04 + v03 * sf08) * invdet;
+        matrix[0][2] = (v01 * sf02 - v02 * sf06 + v03 * sf10) * invdet;
+        matrix[0][3] = -(v01 * sf03 - v02 * sf07 + v03 * sf11) * invdet;
 
         matrix[1][0] = inv10 * invdet;
         matrix[1][1] = (v00 * sf00 - v02 * sf12 + v03 * sf16) * invdet;
@@ -548,8 +548,8 @@ inline void matrix44<T>::mul(const matrix44& lhs, const matrix44& rhs,
 template <typename T>
 inline matrix44<T>& matrix44<T>::loadRotation(T angle, T ax, T ay, T az)
 {
-    const T c          = cos(angle);
-    const T s          = sin(angle);
+    const T c = cos(angle);
+    const T s = sin(angle);
     const T axisLength = vector3<T>::length(ax, ay, az);
 
     if (axisLength != 0) {
@@ -794,7 +794,7 @@ inline matrix33<T> matrix44<T>::getRotationPart() const
 {
     matrix33<T> ret;
     for (size_t i = 0; i < 3; ++i)
-        for (size_t j        = 0; j < 3; ++j)
+        for (size_t j = 0; j < 3; ++j)
             ret.matrix[i][j] = this->matrix[i][j];
     return ret;
 }
@@ -921,6 +921,6 @@ T clamp_fast(const T& min, const T& max, const T& val)
 {
     return std::max(std::min(max, val), min);
 }
-}
+} // namespace vvv
 
 #endif // LINALG_H

@@ -1,6 +1,6 @@
 #pragma once
-#include <vector>
 #include "vvv3d/core/graphics/textures/texture.hpp"
+#include <vector>
 
 class Animation {
 public:
@@ -21,4 +21,3 @@ private:
     std::vector<AnimationFrame> frames;
     double m_duration;
 };
-

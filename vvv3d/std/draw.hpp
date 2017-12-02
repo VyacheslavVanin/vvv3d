@@ -1,6 +1,6 @@
 #pragma once
-#include <vvv3d/vvvmath/vector4.hpp>
 #include <vvv3d/core/graphics/color.hpp>
+#include <vvv3d/vvvmath/vector4.hpp>
 
 namespace vvv3d {
 
@@ -54,4 +54,3 @@ void scissor(int x, int y, int width, int height);
 void scissorDisable();
 vvv::vector4<int> getScissor();
 }
-

@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   mathconstants.h
  * Author: vvv
  *
@@ -6,22 +6,16 @@
  */
 
 #ifndef MATHCONSTANTS_H
-#define	MATHCONSTANTS_H
+#define MATHCONSTANTS_H
 
 #define VVV_EPSILON 0.5e-15
 
-
-#ifdef	__cplusplus
-extern "C"
-{
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-
-
-
-#ifdef	__cplusplus
+#ifdef __cplusplus
 }
 #endif
 
-#endif	/* MATHCONSTANTS_H */
-
+#endif /* MATHCONSTANTS_H */

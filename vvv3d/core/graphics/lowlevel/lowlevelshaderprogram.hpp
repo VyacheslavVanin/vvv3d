@@ -80,5 +80,4 @@ public:
 private:
     GLuint program;
 };
-}
-
+} // namespace vvv3d

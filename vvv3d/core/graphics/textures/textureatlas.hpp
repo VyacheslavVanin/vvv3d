@@ -16,13 +16,11 @@ public:
          const std::vector<std::string>& names, unsigned int border = 0);
 
     static std::vector<std::unique_ptr<TextureAtlas>>
-    pack(size_t width, size_t height,
-         const std::vector<std::string>& filenames,
+    pack(size_t width, size_t height, const std::vector<std::string>& filenames,
          const std::vector<std::string>& names, unsigned int border = 0);
 
     static std::vector<std::unique_ptr<TextureAtlas>>
-    pack(size_t width, size_t height,
-         const std::vector<std::string>& filenames,
+    pack(size_t width, size_t height, const std::vector<std::string>& filenames,
          unsigned int border = 0);
 
     const Texture& get(const std::string& name) const;
@@ -39,6 +37,4 @@ private:
     size_t height;
 };
 
-
-}
-
+} // namespace vvv3d

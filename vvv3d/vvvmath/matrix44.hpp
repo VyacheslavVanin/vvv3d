@@ -10,8 +10,8 @@
 #include "mathconstants.hpp"
 #include "matrices_types.hpp"
 #include <algorithm>
-#include <iomanip>
 #include <cmath>
+#include <iomanip>
 #include <ostream>
 #include <stdexcept>
 
@@ -99,9 +99,9 @@ public:
 
     matrix44<T>& loadPerspective(T fovy, T aspect, T zNear, T zFar)
     {
-        const T f    = 1 / tan(fovy * M_PI / 360);
-        const T A    = (zFar + zNear) / (zNear - zFar);
-        const T B    = (2 * zFar * zNear) / (zNear - zFar);
+        const T f = 1 / tan(fovy * M_PI / 360);
+        const T A = (zFar + zNear) / (zNear - zFar);
+        const T B = (2 * zFar * zNear) / (zNear - zFar);
         matrix[0][0] = f / aspect;
         matrix[0][1] = 0;
         matrix[0][2] = 0;
@@ -221,7 +221,7 @@ public:
 
 typedef matrix44<double> matrix44d;
 typedef matrix44<float> matrix44f;
-}
+} // namespace vvv
 
 template <typename T>
 inline std::ostream& operator<<(std::ostream& stream, const vvv::matrix44<T>& m)

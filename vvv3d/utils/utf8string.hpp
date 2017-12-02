@@ -44,4 +44,3 @@ inline std::string getLastChar(std::string& str)
     return ret;
 }
 } // namespace vvv
-

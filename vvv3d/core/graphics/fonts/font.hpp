@@ -8,15 +8,15 @@
 namespace vvv3d {
 
 struct Glyph {
-    uint32_t character          = {0};
-    int32_t width               = {0};
-    int32_t height              = {0};
-    int32_t xoffset             = {0};
-    int32_t yoffset             = {0};
-    int32_t advance             = {0};
+    uint32_t character = {0};
+    int32_t width = {0};
+    int32_t height = {0};
+    int32_t xoffset = {0};
+    int32_t yoffset = {0};
+    int32_t advance = {0};
     std::vector<uint8_t> buffer = {};
-    int textureOffsetX          = {0};
-    int textureOffsetY          = {0};
+    int textureOffsetX = {0};
+    int textureOffsetY = {0};
 };
 
 class MgrFreetype;
@@ -42,7 +42,7 @@ public:
     FontManager();
     FontManager(const FontManager&) = delete;
     FontManager& operator=(const FontManager&) = delete;
-    FontManager(FontManager&&)                 = default;
+    FontManager(FontManager&&) = default;
     FontManager& operator=(FontManager&&) = default;
     ~FontManager();
 
@@ -54,5 +54,4 @@ private:
     std::map<std::string, std::unique_ptr<Font>> fonts;
     std::unique_ptr<MgrFreetype> freetypeMgr;
 };
-}
-
+} // namespace vvv3d

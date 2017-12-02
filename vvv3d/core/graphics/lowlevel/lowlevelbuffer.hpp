@@ -23,5 +23,4 @@ private:
     size_t size;
     size_t sizemax;
 };
-}
-
+} // namespace vvv3d

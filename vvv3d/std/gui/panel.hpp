@@ -1,13 +1,15 @@
 #pragma once
 #include "layout.hpp"
-#include "widget.hpp"
 #include "properties/icolor.hpp"
 #include "properties/icontainer.hpp"
 #include "properties/ilayout_props.hpp"
+#include "widget.hpp"
 
 namespace vvv3d {
 
-class Panel : public Widget, public IColorProperty, public IContainer,
+class Panel : public Widget,
+              public IColorProperty,
+              public IContainer,
               public ILayoutProperties {
 public:
     Panel();
@@ -50,5 +52,4 @@ private:
     void rearrange();
 };
 
-}
-
+} // namespace vvv3d

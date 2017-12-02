@@ -9,7 +9,7 @@ public:
     Sprite();
     Sprite(const Sprite&) = default;
     Sprite& operator=(const Sprite&) = default;
-    ~Sprite()                        = default;
+    ~Sprite() = default;
 
     void setTexture(const vvv3d::Texture& texture) { this->texture = &texture; }
     const vvv3d::Texture& getTexture() const { return *texture; }
@@ -25,12 +25,12 @@ void drawSprite(const vvv3d::Camera& camera, const Sprite& spr);
 template <typename A, template <typename, typename> class C>
 inline void drawSprites(const vvv3d::Camera& camera, const C<Sprite, A>& sprs)
 {
-    auto& engine    = vvv3d::Engine::getActiveEngine();
-    auto& resman    = engine.getResourceManager();
+    auto& engine = vvv3d::Engine::getActiveEngine();
+    auto& resman = engine.getResourceManager();
     auto& shaderman = resman.getShaderManager();
-    auto& geomman   = resman.getGeometryManager();
-    auto& sh        = shaderman.get("sprite");
-    const auto& g   = geomman.get("sprite");
+    auto& geomman = resman.getGeometryManager();
+    auto& sh = shaderman.get("sprite");
+    const auto& g = geomman.get("sprite");
 
     sh.activate();
     sh.setViewProjection(camera.getViewProjection());
@@ -42,5 +42,4 @@ inline void drawSprites(const vvv3d::Camera& camera, const C<Sprite, A>& sprs)
         g.draw();
     }
 }
-}
-
+} // namespace vvv3d

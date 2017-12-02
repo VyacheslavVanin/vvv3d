@@ -37,5 +37,4 @@ public:
 private:
     std::unordered_map<std::string, std::unique_ptr<Geometry>> geometries;
 };
-}
-
+} // namespace vvv3d

@@ -255,7 +255,7 @@ inline vector4<T> vector4<T>::rotatedZ(T angle) const
     ret.rotateZ(angle);
     return ret;
 }
-}
+} // namespace vvv
 
 template <typename T>
 inline std::ostream& operator<<(std::ostream& stream, const vvv::vector4<T>& v)

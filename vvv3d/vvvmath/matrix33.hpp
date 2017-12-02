@@ -119,6 +119,6 @@ public:
 
 typedef matrix33<double> matrix33d;
 typedef matrix33<float> matrix33f;
-}
+} // namespace vvv
 
 #endif /* MATRIX33_H */

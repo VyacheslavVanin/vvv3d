@@ -17,5 +17,4 @@ protected:
     void onHoverReleased(int x, int y) override;
 };
 
-}
-
+} // namespace vvv3d

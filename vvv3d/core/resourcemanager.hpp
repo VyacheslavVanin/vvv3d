@@ -24,5 +24,4 @@ private:
     ShaderManager shaderManger;
     GeometryManager geometryManager;
 };
-}
-
+} // namespace vvv3d

@@ -10,7 +10,7 @@ class Panel;
 class ButtonText : public ButtonBase, public ITextProperty {
 public:
     ButtonText(const std::string& caption = "Button");
-    ButtonText(const ButtonText&)         = delete;
+    ButtonText(const ButtonText&) = delete;
     ButtonText& operator=(const ButtonText&) = delete;
 
     void setText(const std::string& text) override;
@@ -29,5 +29,4 @@ protected:
     void onContentChanged() override;
 };
 
-}
-
+} // namespace vvv3d

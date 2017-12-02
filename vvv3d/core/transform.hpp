@@ -106,7 +106,7 @@ void Transform::updateRotationMatrix() const
 
 inline void Transform::setPosition(const vvv::vector3f& value)
 {
-    position        = value;
+    position = value;
     positionChanged = true;
 }
 
@@ -140,7 +140,7 @@ void Transform::setScale(float x, float y, float z)
 
 void Transform::setScale(const vvv::vector3f& s)
 {
-    m_scale      = s;
+    m_scale = s;
     scaleChanged = true;
 }
 
@@ -177,4 +177,4 @@ inline void Transform::scale(float x, float y, float z)
 inline void Transform::scale(const vvv::vector3f& s) { m_scale *= s; }
 
 inline void Transform::scale(float s) { m_scale *= s; }
-}
+} // namespace vvv3d

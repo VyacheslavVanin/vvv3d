@@ -1,7 +1,7 @@
 #pragma once
-#include <vvv3d/core/inputevent.hpp>
-#include <vector>
 #include <string>
+#include <vector>
+#include <vvv3d/core/inputevent.hpp>
 #include <vvv3d/vvvmath/matrices_types.hpp>
 
 namespace vvv3d {
@@ -33,5 +33,4 @@ private:
     Mouse mouse;
 };
 
-}
-
+} // namespace vvv3d

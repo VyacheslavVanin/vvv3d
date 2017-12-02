@@ -9,8 +9,7 @@ namespace vvv3d {
 
 class LowLevelGeometry {
 public:
-    LowLevelGeometry(LowLevelBuffer&& vb,
-                     LowLevelBuffer&& ib,
+    LowLevelGeometry(LowLevelBuffer&& vb, LowLevelBuffer&& ib,
                      const VertexAttributes& attrib) noexcept;
     LowLevelGeometry(const LowLevelGeometry&) = delete;
     LowLevelGeometry& operator=(const LowLevelGeometry&) = delete;
@@ -36,5 +35,4 @@ private:
     LowLevelBuffer ib;
     GLuint vao;
 };
-}
-
+} // namespace vvv3d

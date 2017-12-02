@@ -185,6 +185,6 @@ T quaternion<T>::getAngle() const
 {
     return 2 * std::acos(q.w);
 }
-}
+} // namespace vvv
 
 #endif // QUATERNION_H

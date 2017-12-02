@@ -33,22 +33,22 @@ public:
                 placed = image;
                 setOffsetPred(*placed, xoff, yoff, border);
 
-                const auto placedSize  = getSizePred(*placed);
+                const auto placedSize = getSizePred(*placed);
                 const auto placedWidth = placedSize.first + 2 * border;
                 const auto placedHight = placedSize.second + 2 * border;
                 {
-                    const auto newWidth  = width - placedWidth;
+                    const auto newWidth = width - placedWidth;
                     const auto newHeight = placedHight;
-                    const auto newXOff   = xoff + placedWidth;
-                    const auto newYOff   = yoff;
+                    const auto newXOff = xoff + placedWidth;
+                    const auto newYOff = yoff;
                     right.reset(new packNode(newWidth, newHeight, newXOff,
                                              newYOff, border));
                 }
                 {
-                    const auto newWidth  = width;
+                    const auto newWidth = width;
                     const auto newHeight = height - placedHight;
-                    const auto newXOff   = xoff;
-                    const auto newYOff   = yoff + placedHight;
+                    const auto newXOff = xoff;
+                    const auto newYOff = yoff + placedHight;
                     bottom.reset(new packNode(newWidth, newHeight, newXOff,
                                               newYOff, border));
                 }
@@ -69,7 +69,7 @@ public:
     bool isFit(const T& a, const GET& p)
     {
         const auto border2 = border * 2;
-        const auto& tsize  = p(a);
+        const auto& tsize = p(a);
         return (tsize.first <= width - border2) &&
                (tsize.second <= height - border2);
     }
@@ -108,10 +108,10 @@ template <typename T, typename SIZE_TYPE, typename GET, typename SORT,
  * @param width Widht of rectangle.
  * @param height Height of rectangle.
  * @return Vector of positions in rectangle related to input sequence.  */
-std::vector<T>
-pack2d(const std::vector<T>& input, SIZE_TYPE width, SIZE_TYPE height,
-       const SORT& sortPred, const GET& getSizePred, const SETOFFSET& setOffset,
-       std::vector<T>& ret, int border = 0)
+std::vector<T> pack2d(const std::vector<T>& input, SIZE_TYPE width,
+                      SIZE_TYPE height, const SORT& sortPred,
+                      const GET& getSizePred, const SETOFFSET& setOffset,
+                      std::vector<T>& ret, int border = 0)
 {
     using namespace std;
 
@@ -129,5 +129,4 @@ pack2d(const std::vector<T>& input, SIZE_TYPE width, SIZE_TYPE height,
     });
     return notPlaced;
 }
-}
-
+} // namespace vvv3d

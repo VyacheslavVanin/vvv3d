@@ -20,5 +20,4 @@ private:
     LowLevelShader();
     GLuint shader;
 };
-}
-
+} // namespace vvv3d

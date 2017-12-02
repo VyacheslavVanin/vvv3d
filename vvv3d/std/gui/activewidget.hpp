@@ -31,4 +31,4 @@ private:
     STATE state = STATE::START;
 };
 
-}
+} // namespace vvv3d

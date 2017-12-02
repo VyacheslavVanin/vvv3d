@@ -12,5 +12,4 @@
 namespace vvv3d {
 void loadFileToString(const char* filename, std::string& out);
 std::string loadFileToString(const char* filename);
-}
-
+} // namespace vvv3d

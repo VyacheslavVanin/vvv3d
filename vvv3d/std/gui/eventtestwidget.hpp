@@ -33,5 +33,4 @@ protected:
                   const vvv::vector2i& newSize) override;
 };
 
-}
-
+} // namespace vvv3d

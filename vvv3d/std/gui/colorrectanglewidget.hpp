@@ -1,8 +1,8 @@
 #pragma once
 #include "widget.hpp"
 #include <memory>
-#include <vvv3d/vvv3d.hpp>
 #include <vvv3d/std/gui/properties/icolor.hpp>
+#include <vvv3d/vvv3d.hpp>
 
 namespace vvv3d {
 
@@ -23,5 +23,4 @@ protected:
     void onDraw() override;
 };
 
-}
-
+} // namespace vvv3d

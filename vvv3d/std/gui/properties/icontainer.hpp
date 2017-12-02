@@ -14,4 +14,3 @@ public:
 } // namespace vvv3d
 
 #endif
-

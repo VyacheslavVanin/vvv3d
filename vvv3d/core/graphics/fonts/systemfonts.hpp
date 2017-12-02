@@ -49,4 +49,3 @@ private:
 
 const SystemFonts& systemFonts();
 } // namespace vvv3d
-

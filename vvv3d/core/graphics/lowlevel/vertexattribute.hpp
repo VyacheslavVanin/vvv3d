@@ -35,7 +35,7 @@ public:
         return numComponents * sizeOfComponent(componentType);
     }
 
-    bool getNormalized() const {return normalized;}
+    bool getNormalized() const { return normalized; }
 
 private:
     ATTRIB_LOCATION location;
@@ -48,11 +48,10 @@ class VertexAttributes {
 private:
     struct VertexAttribute {
         VertexAttribute(GLuint location, GLint numComponents,
-                        GLenum componentType, bool normalized,
-                        size_t offset, GLsizei stride)
+                        GLenum componentType, bool normalized, size_t offset,
+                        GLsizei stride)
             : location(location), numComponents(numComponents),
-              componentType(componentType),
-              normalized(normalized),
+              componentType(componentType), normalized(normalized),
               offset((const void*)offset), stride(stride)
         {
         }
@@ -75,5 +74,4 @@ private:
     std::vector<VertexAttribute> attributes;
     GLsizei stride;
 };
-}
-
+} // namespace vvv3d

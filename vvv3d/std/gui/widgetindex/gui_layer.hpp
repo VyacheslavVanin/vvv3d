@@ -1,7 +1,7 @@
 #pragma once
+#include <vvv3d/core/graphics/color.hpp>
 #include <vvv3d/std/gui/gui_layer_base.hpp>
 #include <vvvcfg/vvvcfg.hpp>
-#include <vvv3d/core/graphics/color.hpp>
 
 #include <functional>
 #include <unordered_map>
@@ -52,4 +52,3 @@ T* GuiLayer::get(const std::string& name) const
 }
 
 } // namespace vvv3d
-

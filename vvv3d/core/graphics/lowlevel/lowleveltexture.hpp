@@ -8,8 +8,8 @@ public:
     LowLevelTexture() = default;
     LowLevelTexture(const void* src, GLuint imageWidth, GLuint imageHeight,
                     GLint format, GLint internalFormat,
-                    GLenum type             = GL_UNSIGNED_BYTE,
-                    GLenum target           = GL_TEXTURE_2D);
+                    GLenum type = GL_UNSIGNED_BYTE,
+                    GLenum target = GL_TEXTURE_2D);
     LowLevelTexture(const LowLevelTexture&) = delete;
     LowLevelTexture& operator=(const LowLevelTexture&) = delete;
     LowLevelTexture(LowLevelTexture&& other) noexcept;
@@ -33,11 +33,10 @@ private:
     GLint internalFormat;
 };
 
-void readImage(const LowLevelTexture* llt, void* out,
-               GLenum format, GLenum type);
+void readImage(const LowLevelTexture* llt, void* out, GLenum format,
+               GLenum type);
 LowLevelTexture* readFromPng(const char* filename);
 void writeToPng(const char* filename, const LowLevelTexture* llt);
 LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
                                   uint32_t cellSize);
-}
-
+} // namespace vvv3d

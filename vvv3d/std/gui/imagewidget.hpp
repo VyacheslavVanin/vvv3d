@@ -21,5 +21,4 @@ protected:
     void onDraw() override;
 };
 
-}
-
+} // namespace vvv3d

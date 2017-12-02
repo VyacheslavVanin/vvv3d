@@ -27,5 +27,5 @@ typedef vector3<int> vector3i;
 typedef vector4<double> vector4d;
 typedef vector4<float> vector4f;
 typedef vector4<int> vector4i;
-}
+} // namespace vvv
 #endif // MATRICES_H

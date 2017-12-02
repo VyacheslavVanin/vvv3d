@@ -1,8 +1,8 @@
 #pragma once
 #include "align.hpp"
 #include "layout.hpp"
-#include "widget.hpp"
 #include "properties/ihalign.hpp"
+#include "widget.hpp"
 
 namespace vvv3d {
 
@@ -22,5 +22,4 @@ private:
     HALIGN align;
 };
 
-}
-
+} // namespace vvv3d

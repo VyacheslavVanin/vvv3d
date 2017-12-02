@@ -22,5 +22,4 @@ private:
     FT_Library library;
     std::map<std::string, FT_Face> fonts;
 };
-}
-
+} // namespace vvv3d

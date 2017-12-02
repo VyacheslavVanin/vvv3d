@@ -260,7 +260,7 @@ inline T vector3<T>::angle(const vvv::vector3<T>& a, const vvv::vector3<T>& b)
 {
     return acos(a.dot(b) / (a.length() * b.length()));
 }
-}
+} // namespace vvv
 
 template <typename T>
 inline vvv::vector3<T> operator*(const vvv::vector3<T>& a, const T& s)

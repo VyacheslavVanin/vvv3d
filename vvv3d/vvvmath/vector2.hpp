@@ -211,7 +211,7 @@ inline vector2<T>& vector2<T>::normalize()
     }
     return *this;
 }
-}
+} // namespace vvv
 
 template <typename T>
 inline std::ostream& operator<<(std::ostream& stream, const vvv::vector2<T>& v)

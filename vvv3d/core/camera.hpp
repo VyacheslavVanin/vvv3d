@@ -44,14 +44,14 @@ private:
     enum class PROJECTION_TYPE { ORTHO, PERSPECTIVE };
 
     PROJECTION_TYPE projectionType = PROJECTION_TYPE::ORTHO;
-    float zNear                    = 0.1f;
-    float zFar                     = 100.0f;
-    float aspect                   = 1.0f;
-    float fovy                     = 90.0f;
-    float ortho_left               = -1.0f;
-    float ortho_right              = 1.0f;
-    float ortho_bottom             = -1.0f;
-    float ortho_top                = 1.0f;
+    float zNear = 0.1f;
+    float zFar = 100.0f;
+    float aspect = 1.0f;
+    float fovy = 90.0f;
+    float ortho_left = -1.0f;
+    float ortho_right = 1.0f;
+    float ortho_bottom = -1.0f;
+    float ortho_top = 1.0f;
 
     mutable vvv::matrix44f projectionMatrix;
     mutable bool projectionChanged;
@@ -65,5 +65,4 @@ private:
     void updateViewMatrix() const;
     void updateViewProjectionMatrix() const;
 };
-}
-
+} // namespace vvv3d

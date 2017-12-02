@@ -31,5 +31,4 @@ public:
 private:
     GLuint framebuffer;
 };
-}
-
+} // namespace vvv3d

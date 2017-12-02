@@ -40,5 +40,4 @@ private:
     std::vector<std::function<T>> actions = {};
 };
 
-}
-
+} // namespace vvv3d

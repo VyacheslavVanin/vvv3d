@@ -50,5 +50,4 @@ public:
      * @return  */
     const std::vector<InputEvent>& getEvents() const override;
 };
-}
-
+} // namespace vvv3d

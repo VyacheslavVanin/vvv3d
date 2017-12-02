@@ -240,12 +240,12 @@ inline poly<N, T> operator/(T v, const poly<N>& p)
 template <typename T>
 inline poly<3, T> poly3fit(const double* x, const T* y)
 {
-    const double x00    = x[0] * x[0];
-    const double x01    = x[0] * x[1];
-    const double x02    = x[0] * x[2];
-    const double x11    = x[1] * x[1];
-    const double x12    = x[1] * x[2];
-    const double x22    = x[2] * x[2];
+    const double x00 = x[0] * x[0];
+    const double x01 = x[0] * x[1];
+    const double x02 = x[0] * x[2];
+    const double x11 = x[1] * x[1];
+    const double x12 = x[1] * x[2];
+    const double x22 = x[2] * x[2];
     const double x00mmp = x00 - x01 - x02 + x12;
     const double x11mpm = x11 - x01 + x02 - x12;
     const double x22pmm = x22 + x01 - x02 - x12;
@@ -270,11 +270,11 @@ inline poly<3, T> poly3fit(const double* x, const T* y)
 template <typename T>
 inline poly<5, T> poly5fit(const double* x, const T* y)
 {
-    const double x0      = x[0];
-    const double x1      = x[1];
-    const double x2      = x[2];
-    const double x3      = x[3];
-    const double x4      = x[4];
+    const double x0 = x[0];
+    const double x1 = x[1];
+    const double x2 = x[2];
+    const double x3 = x[3];
+    const double x4 = x[4];
     const double sx01234 = x0 + x1 + x2 + x3 + x4;
     const T y0 = y[0] / ((x0 - x1) * (x0 - x2) * (x0 - x3) * (x0 - x4));
     const T y1 = y[1] / ((x1 - x0) * (x1 - x2) * (x1 - x3) * (x1 - x4));

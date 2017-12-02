@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include <vvv3d/core/input.hpp>
 #include <vvv3d/core/camera.hpp>
+#include <vvv3d/core/input.hpp>
 #include <vvv3d/vvvmath/vector2.hpp>
 
 namespace vvv3d {
@@ -59,5 +59,4 @@ private:
     bool visible;
 };
 
-}
-
+} // namespace vvv3d

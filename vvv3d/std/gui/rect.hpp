@@ -15,11 +15,11 @@ inline int rectRight(const Rect& r) { return r.x + r.z; }
 inline Rect rectIntersection(const Rect& r1, const Rect& r2)
 {
     using namespace std;
-    const auto left   = max(rectLeft(r1), rectLeft(r2));
-    const auto right  = min(rectRight(r1), rectRight(r2));
-    const auto top    = max(rectTop(r1), rectTop(r2));
+    const auto left = max(rectLeft(r1), rectLeft(r2));
+    const auto right = min(rectRight(r1), rectRight(r2));
+    const auto top = max(rectTop(r1), rectTop(r2));
     const auto bottom = min(rectBottom(r1), rectBottom(r2));
-    const auto width  = max(right - left, 0);
+    const auto width = max(right - left, 0);
     const auto height = max(bottom - top, 0);
     return Rect(left, top, width, height);
 }
@@ -42,5 +42,4 @@ inline bool rectContainPoint(const Rect& r, int x, int y)
            valueInRange(y, rectTop(r), rectBottom(r));
 }
 
-}
-
+} // namespace vvv3d

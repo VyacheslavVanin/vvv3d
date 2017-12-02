@@ -25,4 +25,3 @@ private:
 
     double getFrameTime(double now) const;
 };
-

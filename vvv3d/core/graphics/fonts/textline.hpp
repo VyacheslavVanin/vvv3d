@@ -21,5 +21,4 @@ std::shared_ptr<Geometry> createTextGeometry(const Font& f,
 
 void updateTextGeometry(const std::shared_ptr<Geometry>& in, const Font& font,
                         const std::string& text);
-}
-
+} // namespace vvv3d

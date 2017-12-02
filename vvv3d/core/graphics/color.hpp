@@ -21,5 +21,4 @@ extern Color NAVY;
 extern Color FUCHSIA;
 extern Color PURPLE;
 extern Color ORANGE;
-}
-
+} // namespace vvv3d

@@ -1,7 +1,7 @@
 #pragma once
 #include "sliderbase.hpp"
 
-namespace vvv3d { 
+namespace vvv3d {
 
 class SliderH : public SliderBase {
 public:
@@ -21,5 +21,4 @@ private:
     int pointerWidth;
 };
 
-}
-
+} // namespace vvv3d

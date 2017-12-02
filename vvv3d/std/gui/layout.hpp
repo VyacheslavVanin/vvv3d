@@ -42,4 +42,3 @@ private:
 };
 
 } // namespace vvv3d
-

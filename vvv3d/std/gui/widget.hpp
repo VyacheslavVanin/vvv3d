@@ -73,7 +73,7 @@ public:
 private:
     static Widget* focus;
     bool focusable = false;
-    bool visible   = true;
+    bool visible = true;
 
 protected:
     const vvv3d::Camera& getCamera() const;
@@ -124,5 +124,4 @@ protected:
     bool hover;
     void updateClipArea();
 };
-}
-
+} // namespace vvv3d
