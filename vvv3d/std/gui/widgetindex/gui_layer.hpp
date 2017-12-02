@@ -13,6 +13,7 @@ public:
 
     void load(const std::string& config);
     void load(std::istream& stream);
+    void clear();
 
     template <typename T>
     T* get(const std::string& name) const;

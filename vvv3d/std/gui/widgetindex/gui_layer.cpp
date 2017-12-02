@@ -84,6 +84,15 @@ void GuiLayer::load(std::istream& stream)
         addWidget(w);
 }
 
+void GuiLayer::clear()
+{
+    for (auto w: topWidgets()) {
+        removeWidget(w);
+        delete w;
+    }
+    top_widgets.clear();
+}
+
 GuiLayer::widget_type
 GuiLayer::getByShortName(const std::string& name) const
 {
