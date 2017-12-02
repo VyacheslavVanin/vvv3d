@@ -163,7 +163,8 @@ void Widget::setSize(int width, int height)
     const auto& newSize = getSize();
     if (oldSize != newSize) {
         onResize(oldSize, newSize);
-        notifyContentChanged();
+        if (parent)
+            parent->notifyContentChanged();
     }
 }
 
