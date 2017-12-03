@@ -199,6 +199,10 @@ int LineEdit::roughLeftOffset(int leftMargin, int width, int fullTextWidth,
         }
     }
 
+    // Case after setText with long text
+    if (rightpart->getText().empty())
+        return rightMargin;
+
     return leftpart->getPosition().x;
 }
 
