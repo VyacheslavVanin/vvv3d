@@ -75,7 +75,6 @@ vvv3d::Widget* GuiLayer::addWidgetNode(const vvv::CfgNode& node)
 void GuiLayer::load(std::istream& stream)
 {
     const auto& cfg = vvv::make_cfg(stream);
-    std::cout << cfg << "\n";
     for (const auto& c : cfg.getChild("forms").getChildren()) {
         auto w = addWidgetNode(c);
         top_widgets.push_back(w);

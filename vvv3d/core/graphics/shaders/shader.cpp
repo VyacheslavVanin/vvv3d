@@ -285,7 +285,7 @@ GLint Shader::loadLocation(const char* name)
 {
     GLint ret = program.getUniformLocation(name);
     if (ret != -1)
-        std::cout << "\tuniform \"" << name << "\" ..." << std::endl;
+        std::cout << "\tuniform \"" << name << "\" found ..." << std::endl;
     return ret;
 }
 
@@ -293,8 +293,7 @@ void Shader::loadLocations(const std::string& name)
 {
     const size_t count = static_cast<size_t>(LOCATIONS::COUNT);
     activate();
-    std::cout << "Searching uniforms in \"" << name << "\""
-              << "and \"" << fragmentSourceName << "\": ..." << std::endl;
+    std::cout << "Searching uniforms in shader \"" << name << "\"\n";
     for (size_t i = 0; i < count; ++i)
         locations[i] = loadLocation(locations_names[i]);
 }

@@ -151,7 +151,8 @@ FontImpl::FontImpl(FT_Face f, unsigned int size, unsigned int charSize,
                                      glyphGetSize, glyphSetOffset, glyphes, 0);
 
     drawGlyphesToTexture(lltex, glyphes);
-    DebugVar(notPlaced.size());
+    if (notPlaced.size())
+        DebugVar(notPlaced.size());
 
     for (const auto& g : glyphes)
         mapCharToGlyph[g.character] = g;
