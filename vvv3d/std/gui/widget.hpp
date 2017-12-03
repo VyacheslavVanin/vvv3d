@@ -68,7 +68,7 @@ public:
 
     bool isVisible() const;
     void setVisible(bool visible);
-    void toggleVisibility();
+    void toggleVisible();
 
 private:
     static Widget* focus;

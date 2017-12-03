@@ -26,7 +26,8 @@ public:
     void processInputEvents(const vvv3d::Input& input);
 
     void setVisible(bool visible);
-    bool getVisible() const;
+    bool isVisible() const;
+    void toggleVisible();
 
 private:
     using WidgetsContainer = std::vector<Widget*>;

@@ -121,7 +121,7 @@ void LineEdit::onDraw()
     system_clock::time_point now = system_clock::now();
     if (now >= toggleCursorVisibilityThresholdTime) {
         toggleCursorVisibilityThresholdTime = now + toggleCursorVisiblityPeriod;
-        cursor->toggleVisibility();
+        cursor->toggleVisible();
     }
 }
 

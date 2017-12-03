@@ -51,14 +51,16 @@ const Camera& GuiLayerBase::getCamera() const { return camera; }
 
 void GuiLayerBase::processInputEvents(const Input& input)
 {
-    if (!getVisible())
+    if (!isVisible())
         return;
     pointer.processInput(input);
 }
 
 void GuiLayerBase::setVisible(bool visible) { this->visible = visible; }
 
-bool GuiLayerBase::getVisible() const { return visible; }
+bool GuiLayerBase::isVisible() const { return visible; }
+
+void GuiLayerBase::toggleVisible() { setVisible(!isVisible()); }
 
 GuiLayerBase::~GuiLayerBase()
 {

@@ -103,7 +103,7 @@ bool Widget::isVisible() const { return visible; }
 
 void Widget::setVisible(bool visible) { this->visible = visible; }
 
-void Widget::toggleVisibility() { setVisible(!isVisible()); }
+void Widget::toggleVisible() { setVisible(!isVisible()); }
 
 static Rect RectToScissor(const Rect& r, const vvv::vector2i& layerSize)
 {
