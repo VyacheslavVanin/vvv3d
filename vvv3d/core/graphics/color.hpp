@@ -21,4 +21,7 @@ extern Color NAVY;
 extern Color FUCHSIA;
 extern Color PURPLE;
 extern Color ORANGE;
+
+Color to_color(const std::string& color_name);
+
 } // namespace vvv3d

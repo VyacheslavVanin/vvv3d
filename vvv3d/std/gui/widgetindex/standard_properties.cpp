@@ -1,7 +1,13 @@
 #include "standard_properties.hpp"
-#include <boost/endian/conversion.hpp>
+#include <iostream>
 
 namespace vvv3d {
+
+namespace {
+void log(const std::string& text) { std::cerr << text << "\n"; }
+
+auto DEFAULT_COLOR = vvv3d::WHITE;
+}; // namespace
 
 bool str_to_bool(const std::string& value)
 {
@@ -12,8 +18,8 @@ bool str_to_bool(const std::string& value)
         return true;
     if (std::find(f.begin(), f.end(), value) != f.end())
         return false;
-    throw std::invalid_argument("String \"" + value +
-                                "\" is not convertable to bool");
+    log("String \"" + value + "\" is not convertable to bool");
+    return false;
 }
 
 vvv3d::HALIGN str_to_halign(const std::string& value)
@@ -26,8 +32,8 @@ vvv3d::HALIGN str_to_halign(const std::string& value)
         return vvv3d::HALIGN::LEFT;
     if (value == "right")
         return vvv3d::HALIGN::RIGHT;
-    throw std::invalid_argument("String \"" + value +
-                                "\" can't be converted to HALIGN");
+    log("String \"" + value + "\" can't be converted to HALIGN");
+    return vvv3d::HALIGN::CENTER;
 }
 
 vvv3d::VALIGN str_to_valign(const std::string& value)
@@ -40,33 +46,8 @@ vvv3d::VALIGN str_to_valign(const std::string& value)
         return vvv3d::VALIGN::TOP;
     if (value == "bottom")
         return vvv3d::VALIGN::BOTTOM;
-    throw std::invalid_argument("String \"" + value +
-                                "\" can't be converted to VALIGN");
-}
-
-vvv3d::Color str_to_color(const std::string& value)
-{
-    static const float unit16 = 1.0f / 0xFF;
-    const auto prefix_0x = (value.find("0x") == 0);
-    const auto& len = value.size() - prefix_0x * 2;
-    if (len != 6 && len != 8)
-        throw std::invalid_argument("String \"" + value + "\" of len " +
-                                    std::to_string(len) +
-                                    "can't be cast to Color");
-    size_t pos = 0;
-    const auto int_value = std::stoi(value, &pos, 16);
-    const auto with_alpha = (len == 8) ? int_value : int_value << 8 | 0xff;
-
-    using boost::endian::native_to_big;
-    const auto color = native_to_big(with_alpha);
-    if (pos != value.size())
-        throw std::invalid_argument(
-            "String \"" + value +
-            "\" contain invalid symbols, so it can't be cast to Color");
-
-    const uint8_t* bytes = reinterpret_cast<const uint8_t*>(&color);
-    return vvv3d::Color(bytes[0] * unit16, bytes[1] * unit16, bytes[2] * unit16,
-                        bytes[3] * unit16);
+    log("String \"" + value + "\" can't be converted to VALIGN");
+    return vvv3d::VALIGN::CENTER;
 }
 
 namespace properties {
@@ -81,21 +62,21 @@ void setColor(vvv3d::Widget* property, const std::string& value)
 {
     auto w = dynamic_cast<vvv3d::IColorProperty*>(property);
     if (w)
-        w->setColor(str_to_color(value));
+        w->setColor(to_color(value));
 }
 
 void setBGColor(vvv3d::Widget* property, const std::string& value)
 {
     auto w = dynamic_cast<vvv3d::IBGColorProperty*>(property);
     if (w)
-        w->setBGColor(str_to_color(value));
+        w->setBGColor(to_color(value));
 }
 
 void setCursorColor(vvv3d::Widget* property, const std::string& value)
 {
     auto w = dynamic_cast<vvv3d::ICursorColorProperty*>(property);
     if (w)
-        w->setCursorColor(str_to_color(value));
+        w->setCursorColor(to_color(value));
 }
 
 void setWidth(vvv3d::Widget* property, const std::string& value)
