@@ -15,6 +15,7 @@ public:
     inline void setRotation(float angle, const vvv::vector3f& axis);
     inline void setScale(float x, float y, float z);
     inline void setScale(const vvv::vector3f& s);
+    inline void setScale(float scale);
 
     inline void move(const vvv::vector3f& v);
     inline void move(float x, float y, float z);
@@ -142,6 +143,11 @@ void Transform::setScale(const vvv::vector3f& s)
 {
     m_scale = s;
     scaleChanged = true;
+}
+
+void Transform::setScale(float scale)
+{
+    setScale(scale, scale, scale);
 }
 
 inline void Transform::move(const vvv::vector3f& v)
