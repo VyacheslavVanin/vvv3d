@@ -17,6 +17,7 @@ namespace vvv3d {
 class LineEdit : public Widget,
                  public ITextProperty,
                  public IFontProperty,
+                 public IHAlignProperty,
                  public IBGColorProperty,
                  public ICursorColorProperty,
                  public IColorProperty {
@@ -29,8 +30,8 @@ public:
     void setFont(const vvv3d::Font& font) override;
     const vvv3d::Font& getFont() const override;
 
-    void setHAlign(HALIGN align);
-    HALIGN getHAlign() const;
+    void setHAlign(HALIGN align) override;
+    HALIGN getHAlign() const override;
 
     void setBGColor(const vvv3d::Color& color) override;
     const Color& getBGColor() const override;
