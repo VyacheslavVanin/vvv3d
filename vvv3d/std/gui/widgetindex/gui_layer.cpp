@@ -24,11 +24,11 @@ vvv3d::Widget* makeWidget(const vvv::CfgNode& node)
         log("Type of \"" + node.getName() + "\" not specified");
         return nullptr;
     }
-    const auto& type = type_it->second;
+    const auto& type = type_it->second.asString();
     auto ret = vvv3d::WidgetFabric::instance().create(type);
     for (const auto& prop : node.getProperties()) {
         const auto& name = prop.first;
-        const auto& value = prop.second;
+        const auto& value = prop.second.asString();
         PropertyMapper::instance().applyProperty(ret, name, value);
     }
     return ret;
