@@ -21,7 +21,7 @@ endif(WITH_DEPENDENCIES)
 # Set include path
 include_directories(${FREETYPE_INCLUDE_DIRS}
                     ${SDL2_INCLUDE_DIRS}
-                    vvv3d .)
+                    vvv3d . vvvcfg)
 
 # Set Source files
 file(GLOB_RECURSE SRCS vvv3d/*.cpp)
