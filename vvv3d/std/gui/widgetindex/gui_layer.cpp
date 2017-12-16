@@ -28,7 +28,7 @@ vvv3d::Widget* makeWidget(const vvv::CfgNode& node)
     auto ret = vvv3d::WidgetFabric::instance().create(type);
     for (const auto& prop : node.getProperties()) {
         const auto& name = prop.first;
-        const auto& value = prop.second.asString();
+        const auto& value = prop.second;
         PropertyMapper::instance().applyProperty(ret, name, value);
     }
     return ret;

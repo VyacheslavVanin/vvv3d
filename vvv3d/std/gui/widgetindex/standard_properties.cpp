@@ -89,6 +89,28 @@ void setHeight(vvv3d::Widget* property, const std::string& value)
     property->setHeight(std::stoi(value));
 }
 
+void setSize(vvv3d::Widget* property, const std::vector<std::string>& value)
+{
+    if (value.size() != 2)
+        return;
+    property->setSize(std::stoi(value[0]), std::stoi(value[1]));
+}
+
+void setMinSize(vvv3d::Widget* property, const std::vector<std::string>& value)
+{
+    if (value.size() != 2)
+        return;
+    property->setMinSize(std::stoi(value[0]), std::stoi(value[1]));
+}
+
+void setMaxSize(vvv3d::Widget* property, const std::vector<std::string>& value)
+{
+    if (value.size() != 2)
+        return;
+    property->setMaxSize(std::stoi(value[0]), std::stoi(value[1]));
+}
+
+
 void setMaxWidth(vvv3d::Widget* property, const std::string& value)
 {
     property->setMaxWidth(std::stoi(value));
@@ -122,6 +144,13 @@ void setPosX(vvv3d::Widget* property, const std::string& value)
 void setPosY(vvv3d::Widget* property, const std::string& value)
 {
     property->setPosition(property->getPosition().x, std::stoi(value));
+}
+
+void setPosition(vvv3d::Widget* property, const std::vector<std::string>& value)
+{
+    if (value.size() != 2)
+        return;
+    property->setPosition(std::stoi(value[0]), std::stoi(value[1]));
 }
 
 void setPadding(vvv3d::Widget* property, const std::string& value)

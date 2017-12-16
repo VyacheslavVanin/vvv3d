@@ -34,7 +34,13 @@ PropertyMapper::PropertyMapper() : standard_mapping
         {"cursor_color", setCursorColor},
         {"range", setRange},
         {"value", setValue},
-    }, custom_mapping()
+    }, custom_mapping(), standard_vector_mapping{
+        {"size", setSize},
+        {"max_size", setMaxSize},
+        {"min_size", setMinSize},
+        {"pos", setPosition},
+        {"position", setPosition},
+    }, custom_vector_mapping()
 {
 }
 
@@ -45,9 +51,25 @@ void PropertyMapper::addProperty(
     custom_mapping[property_name] = func;
 }
 
+void PropertyMapper::addProperty(const std::string& property_name,
+                                 const func_vector_t& func)
+{
+    custom_vector_mapping[property_name] = func;
+}
+
 namespace {
 bool apply(const PropertyMapper::mapping& mapping, vvv3d::Widget* w,
            const std::string& property, const std::string& value)
+{
+    auto it = mapping.find(property);
+    if (it == mapping.end())
+        return false;
+    it->second(w, value);
+    return true;
+}
+
+bool apply(const PropertyMapper::mapping_vector& mapping, vvv3d::Widget* w,
+           const std::string& property, const std::vector<std::string>& value)
 {
     auto it = mapping.find(property);
     if (it == mapping.end())
@@ -65,10 +87,28 @@ void PropertyMapper::applyProperty(vvv3d::Widget* w,
         apply(custom_mapping, w, property_name, value);
 }
 
+void PropertyMapper::applyProperty(vvv3d::Widget* w,
+                                   const std::string& property_name,
+                                   const std::vector<std::string>& value) const
+{
+    apply(standard_vector_mapping, w, property_name, value) ||
+        apply(custom_vector_mapping, w, property_name, value);
+}
+
+void PropertyMapper::applyProperty(vvv3d::Widget* w,
+                                   const std::string& property_name,
+                                   const vvv::CfgNode::value_type& value) const
+{
+    if (value.isString())
+        applyProperty(w, property_name, value.asString());
+    else if (value.isList())
+        applyProperty(w, property_name, value.asList());
+}
+
 PropertyMapper& PropertyMapper::instance()
 {
     static PropertyMapper mapper;
     return mapper;
 }
 
-}
+} // namespace vvv3d

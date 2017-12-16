@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 
 #include <vvv3d/vvv3dgui.hpp>
 
@@ -15,15 +16,26 @@ void setText(vvv3d::Widget* property, const std::string& value);
 void setColor(vvv3d::Widget* property, const std::string& value);
 void setBGColor(vvv3d::Widget* property, const std::string& value);
 void setCursorColor(vvv3d::Widget* property, const std::string& value);
+
 void setWidth(vvv3d::Widget* property, const std::string& value);
 void setHeight(vvv3d::Widget* property, const std::string& value);
+void setSize(vvv3d::Widget* property, const std::vector<std::string>& value);
+
 void setMaxWidth(vvv3d::Widget* property, const std::string& value);
 void setMaxHeight(vvv3d::Widget* property, const std::string& value);
+void setMaxSize(vvv3d::Widget* property, const std::vector<std::string>& value);
+
 void setMinWidth(vvv3d::Widget* property, const std::string& value);
 void setMinHeight(vvv3d::Widget* property, const std::string& value);
+void setMinSize(vvv3d::Widget* property, const std::vector<std::string>& value);
+
 void setVisible(vvv3d::Widget* property, const std::string& value);
+
 void setPosX(vvv3d::Widget* property, const std::string& value);
 void setPosY(vvv3d::Widget* property, const std::string& value);
+void setPosition(vvv3d::Widget* property,
+                 const std::vector<std::string>& value);
+
 void setPadding(vvv3d::Widget* property, const std::string& value);
 void setBorder(vvv3d::Widget* property, const std::string& value);
 void setExpand(vvv3d::Widget* property, const std::string& value);
