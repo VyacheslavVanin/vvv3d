@@ -44,6 +44,7 @@ flags = [
 '-Wno-unused-parameter',
 '-fexceptions',
 '-DNDEBUG',
+'-stdlib=libc++',
 # You 100% do NOT need -DUSE_CLANG_COMPLETER in your flags; only the YCM
 # source code needs it.
 '-DUSE_CLANG_COMPLETER',
@@ -61,7 +62,7 @@ flags = [
 '-x',
 'c++',
 '-isystem',
-'/usr/include/c++/7.2.0',
+'/usr/include/c++/7.2.1',
 '-isystem',
 '/usr/include',
 '-isystem',

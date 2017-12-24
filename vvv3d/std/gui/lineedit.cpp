@@ -165,7 +165,8 @@ void LineEdit::onKeyDown(uint16_t scancode)
     }
     case SCANCODE_ENTER: {
         auto t = getText();
-        onEnterPressedActions.invoke(t);
+        onEnterPressedActions(t);
+        Actions<void(const std::string&)>::invoke(onEnterActionNames, t);
         break;
     }
     default: return;
@@ -238,6 +239,11 @@ void LineEdit::lazyUpdateText() const
         text = leftpart->getText() + rightpart->getText();
         text_changed = false;
     }
+}
+
+void LineEdit::setOnEnterAction(const std::string& action_name)
+{
+    onEnterActionNames.push_back(action_name);
 }
 
 } // namespace vvv3d

@@ -1,6 +1,9 @@
 #pragma once
+#include <string>
+#include <vector>
 #include <vvv3d/std/gui/actionlist.hpp>
 #include <vvv3d/std/gui/activewidget.hpp>
+#include <vvv3d/std/gui/properties/iaction.hpp>
 #include <vvv3d/std/gui/properties/irange.hpp>
 #include <vvv3d/std/gui/properties/ivalue.hpp>
 
@@ -8,7 +11,8 @@ namespace vvv3d {
 
 class SliderBase : public ActiveWidget,
                    public IValueProperty,
-                   public IRangeProperty {
+                   public IRangeProperty,
+                   public IOnValueChangeProperty {
 public:
     SliderBase();
     void setRange(int max) override;
@@ -18,6 +22,8 @@ public:
     int getValue() const override;
 
     void addOnValueChangedAction(const std::function<void(int)>& action);
+
+    void setOnValueChangedAction(const std::string& action_name) override;
 
 protected:
     void onHoverPressed(int x, int y) override;
@@ -34,6 +40,7 @@ protected:
 
 private:
     vvv3d::ActionList<void(int)> onValueChangedActions;
+    std::vector<std::string> onValueChangeActionNames;
     int max;
     int value;
 

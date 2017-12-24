@@ -1,5 +1,4 @@
-#ifndef VVV_IHALIGN_H
-#define VVV_IHALIGN_H
+#pragma once
 #include <vvv3d/std/gui/align.hpp>
 
 namespace vvv3d {
@@ -12,5 +11,3 @@ public:
 };
 
 } // namespace vvv3d
-
-#endif

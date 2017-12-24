@@ -11,7 +11,7 @@ auto DEFAULT_COLOR = vvv3d::WHITE;
 
 bool str_to_bool(const std::string& value)
 {
-    using list = std::initializer_list<std::string>;
+    using list          = std::initializer_list<std::string>;
     static const list t = {"", "true", "True", "yes", "Yes"};
     static const list f = {"false", "False", "no", "No"};
     if (std::find(t.begin(), t.end(), value) != t.end())
@@ -110,7 +110,6 @@ void setMaxSize(vvv3d::Widget* property, const std::vector<std::string>& value)
     property->setMaxSize(std::stoi(value[0]), std::stoi(value[1]));
 }
 
-
 void setMaxWidth(vvv3d::Widget* property, const std::string& value)
 {
     property->setMaxWidth(std::stoi(value));
@@ -200,7 +199,7 @@ void setFont(vvv3d::Widget* property, const std::string& value)
     auto w = dynamic_cast<vvv3d::IFontProperty*>(property);
     if (!w)
         return;
-    auto& rm = vvv3d::Engine::getActiveEngine().getResourceManager();
+    auto& rm         = vvv3d::Engine::getActiveEngine().getResourceManager();
     const auto& font = rm.getFontManager().getFont(value);
     w->setFont(font);
 }
@@ -218,5 +217,56 @@ void setValue(vvv3d::Widget* property, const std::string& value)
     if (w)
         w->setValue(std::stoi(value));
 }
+
+void setAction(vvv3d::Widget* property, const std::string& action_name)
+{
+    auto w = dynamic_cast<vvv3d::IActionProperty*>(property);
+    if (w)
+        w->setAction(action_name);
+}
+
+void setActions(vvv3d::Widget* property,
+               const std::vector<std::string>& action_names)
+{
+    auto w = dynamic_cast<vvv3d::IActionProperty*>(property);
+    if (!w)
+        return;
+    for (const auto& name : action_names)
+        w->setAction(name);
+}
+
+void setOnEnterAction(vvv3d::Widget* property, const std::string& action_name)
+{
+    auto w = dynamic_cast<vvv3d::IOnEnterProperty*>(property);
+    if (w)
+        w->setOnEnterAction(action_name);
+}
+void setOnEnterActions(vvv3d::Widget* property,
+                       const std::vector<std::string>& action_names)
+{
+    auto w = dynamic_cast<vvv3d::IOnEnterProperty*>(property);
+    if (!w)
+        return;
+    for (const auto& name : action_names)
+        w->setOnEnterAction(name);
+}
+
+void setOnValueChangedAction(vvv3d::Widget* property, const std::string& action_name)
+{
+    auto w = dynamic_cast<vvv3d::IOnValueChangeProperty*>(property);
+    if (w)
+        w->setOnValueChangedAction(action_name);
+}
+
+void setOnValueChangedActions(vvv3d::Widget* property,
+                             const std::vector<std::string>& action_names)
+{
+    auto w = dynamic_cast<vvv3d::IOnValueChangeProperty*>(property);
+    if (!w)
+        return;
+    for (const auto& name : action_names)
+        w->setOnValueChangedAction(name);
+}
+
 } // namespace properties
 } // namespace vvv3d

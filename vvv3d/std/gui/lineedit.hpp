@@ -2,6 +2,7 @@
 #include "actionlist.hpp"
 #include "align.hpp"
 #include "colorrectanglewidget.hpp"
+#include "properties/iaction.hpp"
 #include "properties/ibgcolor.hpp"
 #include "properties/icursorcolor.hpp"
 #include "properties/ifont.hpp"
@@ -10,6 +11,7 @@
 #include "widget.hpp"
 #include <chrono>
 #include <string>
+#include <vector>
 #include <vvv3d/core/graphics/color.hpp>
 
 namespace vvv3d {
@@ -20,7 +22,8 @@ class LineEdit : public Widget,
                  public IHAlignProperty,
                  public IBGColorProperty,
                  public ICursorColorProperty,
-                 public IColorProperty {
+                 public IColorProperty,
+                 public IOnEnterProperty {
 public:
     LineEdit(const std::string& text = "");
 
@@ -42,6 +45,8 @@ public:
     void setCursorColor(const vvv3d::Color& color) override;
     const vvv3d::Color& getCursorColor() const override;
 
+    void setOnEnterAction(const std::string& action_name) override;
+
     void
     addOnPressEnterAction(const std::function<void(const std::string&)>& f);
 
@@ -61,6 +66,7 @@ protected:
 
 private:
     ActionList<void(const std::string&)> onEnterPressedActions;
+    std::vector<std::string> onEnterActionNames;
 
     TextWidget* leftpart = nullptr;
     TextWidget* rightpart = nullptr;

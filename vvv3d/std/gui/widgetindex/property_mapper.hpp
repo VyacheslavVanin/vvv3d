@@ -3,8 +3,8 @@
 #include <string>
 #include <unordered_map>
 
-#include <vvvcfg/cfg_node.hpp>
 #include <vvv3d/std/gui/widget.hpp>
+#include <vvvcfg/cfg_node.hpp>
 
 namespace vvv3d {
 class PropertyMapper {
@@ -12,7 +12,7 @@ public:
     using func_t = std::function<void(vvv3d::Widget*, const std::string&)>;
     using func_vector_t =
         std::function<void(vvv3d::Widget*, const std::vector<std::string>&)>;
-    using mapping        = std::unordered_map<std::string, func_t>;
+    using mapping = std::unordered_map<std::string, func_t>;
     using mapping_vector = std::unordered_map<std::string, func_vector_t>;
 
     static PropertyMapper& instance();
@@ -30,7 +30,7 @@ public:
 private:
     PropertyMapper();
     PropertyMapper(const PropertyMapper&) = delete;
-    PropertyMapper(PropertyMapper&&)      = delete;
+    PropertyMapper(PropertyMapper&&) = delete;
     PropertyMapper& operator=(const PropertyMapper&) = delete;
     PropertyMapper& operator=(PropertyMapper&&) = delete;
 

@@ -45,5 +45,16 @@ void setAutoResize(vvv3d::Widget* property, const std::string& value);
 void setFont(vvv3d::Widget* property, const std::string& value);
 void setRange(vvv3d::Widget* property, const std::string& value);
 void setValue(vvv3d::Widget* property, const std::string& value);
+
+void setAction(vvv3d::Widget* property, const std::string& action_name);
+void setActions(vvv3d::Widget* property,
+                const std::vector<std::string>& action_names);
+void setOnEnterAction(vvv3d::Widget* property, const std::string& action_name);
+void setOnEnterActions(vvv3d::Widget* property,
+                       const std::vector<std::string>& action_names);
+void setOnValueChangedAction(vvv3d::Widget* property,
+                             const std::string& action_name);
+void setOnValueChangedActions(vvv3d::Widget* property,
+                              const std::vector<std::string>& action_names);
 } // namespace properties
 } // namespace vvv3d

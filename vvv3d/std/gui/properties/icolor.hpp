@@ -1,5 +1,4 @@
-#ifndef VVV_ICOLOR_H
-#define VVV_ICOLOR_H
+#pragma once
 #include <vvv3d/core/graphics/color.hpp>
 
 namespace vvv3d {
@@ -12,5 +11,3 @@ public:
 };
 
 } // namespace vvv3d
-
-#endif

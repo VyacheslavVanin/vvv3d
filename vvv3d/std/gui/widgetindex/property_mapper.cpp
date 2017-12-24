@@ -34,12 +34,21 @@ PropertyMapper::PropertyMapper() : standard_mapping
         {"cursor_color", setCursorColor},
         {"range", setRange},
         {"value", setValue},
+        {"value", setValue},
+        {"action", setAction},
+        {"actions", setAction},
+        {"on_enter", setOnEnterAction},
+        {"on_change", setOnValueChangedAction},
     }, custom_mapping(), standard_vector_mapping{
         {"size", setSize},
         {"max_size", setMaxSize},
         {"min_size", setMinSize},
         {"pos", setPosition},
         {"position", setPosition},
+        {"action", setActions},
+        {"actions", setActions},
+        {"on_enter", setOnEnterActions},
+        {"on_change", setOnValueChangedActions},
     }, custom_vector_mapping()
 {
 }

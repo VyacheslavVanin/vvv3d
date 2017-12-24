@@ -1,5 +1,4 @@
-#ifndef VVV_ILAYOUT_PROPS_H
-#define VVV_ILAYOUT_PROPS_H
+#pragma once
 #include "iborder.hpp"
 #include "iexpand.hpp"
 #include "ipadding.hpp"
@@ -12,5 +11,3 @@ class ILayoutProperties : public IBorderProperty,
 };
 
 } // namespace vvv3d
-
-#endif

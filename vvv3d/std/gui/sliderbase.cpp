@@ -29,7 +29,8 @@ void SliderBase::setValue(int value)
         return;
     this->value = newValue;
     onValueChanged();
-    onValueChangedActions.invoke(this->value);
+    onValueChangedActions(this->value);
+    Actions<void(int)>::invoke(onValueChangeActionNames, this->value);
 }
 
 int SliderBase::getValue() const { return value; }
@@ -37,6 +38,11 @@ int SliderBase::getValue() const { return value; }
 void SliderBase::addOnValueChangedAction(const std::function<void(int)>& action)
 {
     onValueChangedActions.addAction(action);
+}
+
+void SliderBase::setOnValueChangedAction(const std::string& action_name)
+{
+    onValueChangeActionNames.push_back(action_name);
 }
 
 void SliderBase::changeValueMotion(int x, int y)

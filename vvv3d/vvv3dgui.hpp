@@ -7,6 +7,7 @@
 #include <vvv3d/std/gui/imagewidget.hpp>
 #include <vvv3d/std/gui/lineedit.hpp>
 #include <vvv3d/std/gui/panel.hpp>
+#include <vvv3d/std/gui/properties/iaction.hpp>
 #include <vvv3d/std/gui/properties/icolor.hpp>
 #include <vvv3d/std/gui/properties/icontainer.hpp>
 #include <vvv3d/std/gui/properties/itext.hpp>

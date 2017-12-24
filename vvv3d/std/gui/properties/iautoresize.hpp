@@ -1,5 +1,4 @@
-#ifndef VVV_IAUTORESIZE_H
-#define VVV_IAUTORESIZE_H
+#pragma once
 
 namespace vvv3d {
 
@@ -11,5 +10,3 @@ public:
 };
 
 } // namespace vvv3d
-
-#endif

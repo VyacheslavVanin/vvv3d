@@ -1,5 +1,4 @@
-#ifndef VVV_ICONTAINER_H
-#define VVV_ICONTAINER_H
+#pragma once
 #include <vvv3d/std/gui/widget.hpp>
 
 namespace vvv3d {
@@ -12,5 +11,3 @@ public:
 };
 
 } // namespace vvv3d
-
-#endif

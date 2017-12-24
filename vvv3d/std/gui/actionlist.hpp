@@ -14,13 +14,13 @@ int main()
     vv.addAction([](){std::cout << "action1\n";});
     vv.addAction([](){std::cout << "action2\n";});
     vv.addAction([](){std::cout << "action3\n";});
-    vv.invoke();
+    vv();
 
     actionList<void(const char*)> vcc;
     vcc.addAction([](const char* s) { cout << "params passed: " << s << "\n";});
     vcc.addAction([](const char* s) { cout << "Hello, " << s << "!!!\n";});
-    vcc.invoke("World");
-    vcc.invoke("Man");
+    vcc("World");
+    vcc("Man");
 }
 */
 
@@ -30,7 +30,7 @@ public:
     void addAction(const std::function<T>& f) { actions.push_back(f); }
 
     template <typename... Args>
-    void invoke(Args&... args)
+    void operator()(Args&... args) const
     {
         for (const auto& a : actions)
             a(args...);

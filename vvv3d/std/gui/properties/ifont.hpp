@@ -1,5 +1,4 @@
-#ifndef VVV_IFONT_H
-#define VVV_IFONT_H
+#pragma once
 #include <vvv3d/core/graphics/fonts/font.hpp>
 
 namespace vvv3d {
@@ -12,5 +11,3 @@ public:
 };
 
 } // namespace vvv3d
-
-#endif

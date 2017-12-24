@@ -145,10 +145,7 @@ void Transform::setScale(const vvv::vector3f& s)
     scaleChanged = true;
 }
 
-void Transform::setScale(float scale)
-{
-    setScale(scale, scale, scale);
-}
+void Transform::setScale(float scale) { setScale(scale, scale, scale); }
 
 inline void Transform::move(const vvv::vector3f& v)
 {

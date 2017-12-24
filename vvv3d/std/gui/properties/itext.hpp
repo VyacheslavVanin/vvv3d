@@ -1,5 +1,4 @@
-#ifndef VVV_ITEXT_H
-#define VVV_ITEXT_H
+#pragma once
 #include <string>
 
 namespace vvv3d {
@@ -12,5 +11,3 @@ public:
 };
 
 } // namespace vvv3d
-
-#endif
