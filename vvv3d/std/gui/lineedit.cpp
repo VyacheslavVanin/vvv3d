@@ -153,6 +153,8 @@ void LineEdit::onKeyDown(uint16_t scancode)
             break;
         leftpart->popBack();
         placeWidgets();
+        Actions<void(const std::string&)>::invoke(onValueChangedActionNames,
+                                                  getText());
         break;
     }
     case SCANCODE_DELETE: {
@@ -161,6 +163,8 @@ void LineEdit::onKeyDown(uint16_t scancode)
             break;
         rightpart->popFront();
         placeWidgets();
+        Actions<void(const std::string&)>::invoke(onValueChangedActionNames,
+                                                  getText());
         break;
     }
     case SCANCODE_ENTER: {
@@ -186,6 +190,8 @@ void LineEdit::onTextEntered(const std::string& text)
     leftpart->append(text);
     placeWidgets();
     text_changed = true;
+    Actions<void(const std::string&)>::invoke(onValueChangedActionNames,
+                                              getText());
 }
 
 int LineEdit::roughLeftOffset(int leftMargin, int width, int fullTextWidth,
@@ -244,6 +250,11 @@ void LineEdit::lazyUpdateText() const
 void LineEdit::setOnEnterAction(const std::string& action_name)
 {
     onEnterActionNames.push_back(action_name);
+}
+
+void LineEdit::setOnValueChangedAction(const std::string& action_name)
+{
+    onValueChangedActionNames.push_back(action_name);
 }
 
 } // namespace vvv3d

@@ -23,7 +23,8 @@ class LineEdit : public Widget,
                  public IBGColorProperty,
                  public ICursorColorProperty,
                  public IColorProperty,
-                 public IOnEnterProperty {
+                 public IOnEnterProperty,
+                 public IOnValueChangeProperty {
 public:
     LineEdit(const std::string& text = "");
 
@@ -46,6 +47,7 @@ public:
     const vvv3d::Color& getCursorColor() const override;
 
     void setOnEnterAction(const std::string& action_name) override;
+    void setOnValueChangedAction(const std::string& action_name) override;
 
     void
     addOnPressEnterAction(const std::function<void(const std::string&)>& f);
@@ -67,6 +69,7 @@ protected:
 private:
     ActionList<void(const std::string&)> onEnterPressedActions;
     std::vector<std::string> onEnterActionNames;
+    std::vector<std::string> onValueChangedActionNames;
 
     TextWidget* leftpart = nullptr;
     TextWidget* rightpart = nullptr;
