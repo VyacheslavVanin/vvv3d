@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.1)
 project(vvv3d)
 set (CMAKE_CXX_STANDARD 14)
 
+enable_testing()
+
 # Check packeages
 find_package(Freetype REQUIRED)
 find_package(PNG REQUIRED)
