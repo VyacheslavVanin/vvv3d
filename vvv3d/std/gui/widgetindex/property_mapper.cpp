@@ -111,7 +111,7 @@ void PropertyMapper::applyProperty(vvv3d::Widget* w,
     if (value.isString())
         applyProperty(w, property_name, value.asString());
     else if (value.isList())
-        applyProperty(w, property_name, value.asList());
+        applyProperty(w, property_name, value.asStringList());
 }
 
 PropertyMapper& PropertyMapper::instance()
