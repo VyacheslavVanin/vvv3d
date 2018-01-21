@@ -153,6 +153,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
             break;
         leftpart->popBack();
         placeWidgets();
+        text_changed = true;
         Actions<void(const std::string&)>::invoke(onValueChangedActionNames,
                                                   getText());
         break;
@@ -163,6 +164,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
             break;
         rightpart->popFront();
         placeWidgets();
+        text_changed = true;
         Actions<void(const std::string&)>::invoke(onValueChangedActionNames,
                                                   getText());
         break;
@@ -175,7 +177,6 @@ void LineEdit::onKeyDown(uint16_t scancode)
     }
     default: return;
     }
-    text_changed = true;
 }
 
 void LineEdit::onResize(const vvv::vector2i& oldSize,
