@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <vvv3d/vvvmath/vector4.hpp>
 
 namespace vvv3d {

@@ -11,7 +11,7 @@ auto DEFAULT_COLOR = vvv3d::WHITE;
 
 bool str_to_bool(const std::string& value)
 {
-    using list          = std::initializer_list<std::string>;
+    using list = std::initializer_list<std::string>;
     static const list t = {"", "true", "True", "yes", "Yes"};
     static const list f = {"false", "False", "no", "No"};
     if (std::find(t.begin(), t.end(), value) != t.end())
@@ -65,7 +65,45 @@ void setColor(vvv3d::Widget* property, const std::string& value)
         w->setColor(to_color(value));
 }
 
+namespace {
+vvv3d::Color to_color(const std::vector<std::string>& xs)
+{
+    const auto len = xs.size();
+    if (len != 3 && len != 4 && len != 1)
+        return DEFAULT_COLOR;
+
+    size_t pos = 0;
+    size_t i = 0;
+    vvv::vector4f converted;
+    for (const auto& x : xs) {
+        converted.vector[i++] = std::stof(x, &pos);
+        if (pos != x.size())
+            return DEFAULT_COLOR;
+    }
+    switch (len) {
+    case 4: return converted;
+    case 3: return vvv3d::Color(converted.x, converted.y, converted.z);
+    case 1: return vvv3d::Color(converted.x);
+    default: throw std::logic_error("Shouldn't be here");
+    }
+}
+} // namespace
+
+void setColorv(vvv3d::Widget* property, const std::vector<std::string>& value)
+{
+    auto w = dynamic_cast<vvv3d::IColorProperty*>(property);
+    if (w)
+        w->setColor(to_color(value));
+}
+
 void setBGColor(vvv3d::Widget* property, const std::string& value)
+{
+    auto w = dynamic_cast<vvv3d::IBGColorProperty*>(property);
+    if (w)
+        w->setBGColor(vvv3d::to_color(value));
+}
+
+void setBGColorv(vvv3d::Widget* property, const std::vector<std::string>& value)
 {
     auto w = dynamic_cast<vvv3d::IBGColorProperty*>(property);
     if (w)
@@ -73,6 +111,14 @@ void setBGColor(vvv3d::Widget* property, const std::string& value)
 }
 
 void setCursorColor(vvv3d::Widget* property, const std::string& value)
+{
+    auto w = dynamic_cast<vvv3d::ICursorColorProperty*>(property);
+    if (w)
+        w->setCursorColor(vvv3d::to_color(value));
+}
+
+void setCursorColorv(vvv3d::Widget* property,
+                     const std::vector<std::string>& value)
 {
     auto w = dynamic_cast<vvv3d::ICursorColorProperty*>(property);
     if (w)
@@ -199,7 +245,7 @@ void setFont(vvv3d::Widget* property, const std::string& value)
     auto w = dynamic_cast<vvv3d::IFontProperty*>(property);
     if (!w)
         return;
-    auto& rm         = vvv3d::Engine::getActiveEngine().getResourceManager();
+    auto& rm = vvv3d::Engine::getActiveEngine().getResourceManager();
     const auto& font = rm.getFontManager().getFont(value);
     w->setFont(font);
 }
@@ -226,7 +272,7 @@ void setAction(vvv3d::Widget* property, const std::string& action_name)
 }
 
 void setActions(vvv3d::Widget* property,
-               const std::vector<std::string>& action_names)
+                const std::vector<std::string>& action_names)
 {
     auto w = dynamic_cast<vvv3d::IActionProperty*>(property);
     if (!w)
@@ -251,7 +297,8 @@ void setOnEnterActions(vvv3d::Widget* property,
         w->setOnEnterAction(name);
 }
 
-void setOnValueChangedAction(vvv3d::Widget* property, const std::string& action_name)
+void setOnValueChangedAction(vvv3d::Widget* property,
+                             const std::string& action_name)
 {
     auto w = dynamic_cast<vvv3d::IOnValueChangeProperty*>(property);
     if (w)
@@ -259,7 +306,7 @@ void setOnValueChangedAction(vvv3d::Widget* property, const std::string& action_
 }
 
 void setOnValueChangedActions(vvv3d::Widget* property,
-                             const std::vector<std::string>& action_names)
+                              const std::vector<std::string>& action_names)
 {
     auto w = dynamic_cast<vvv3d::IOnValueChangeProperty*>(property);
     if (!w)
