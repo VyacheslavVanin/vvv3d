@@ -23,4 +23,12 @@ vvv3d::TextWidget* makeLabel() { return new vvv3d::TextWidget("Label"); }
 vvv3d::LineEdit* makeLineEdit() { return new vvv3d::LineEdit(); }
 
 vvv3d::SliderH* makeSliderH() { return new vvv3d::SliderH(); }
+
+vvv3d::ImageWidget* makeImage() {
+    auto& rm = vvv3d::Engine::getActiveEngine().getResourceManager();
+    auto& tm = rm.getTextureManager();
+    auto ret = new vvv3d::ImageWidget();
+    ret->setTexture(tm.get("default"));
+    return ret;
+}
 }

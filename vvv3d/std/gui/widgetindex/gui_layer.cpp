@@ -1,6 +1,8 @@
 #include "gui_layer.hpp"
 
 #include <unordered_map>
+#include <string>
+#include <iostream>
 #include <vvv3d/vvv3d.hpp>
 #include <vvv3d/vvv3dgui.hpp>
 #include <vvvcfg/vvvcfg.hpp>
@@ -26,6 +28,10 @@ vvv3d::Widget* makeWidget(const vvv::CfgNode& node)
     }
     const auto& type = type_it->second.asString();
     auto ret = vvv3d::WidgetFabric::instance().create(type);
+    if (!ret) {
+        log("Unknown widget type \"" + type + "\"");
+        return ret;
+    }
     for (const auto& prop : node.getProperties()) {
         const auto& name = prop.first;
         const auto& value = prop.second;

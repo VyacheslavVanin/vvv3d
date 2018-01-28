@@ -3,7 +3,9 @@
 
 using namespace vvv3d;
 
-TextureManager::TextureManager() : texs() {}
+TextureManager::TextureManager() : texs() {
+    add(vvv3d::makeDummyTexture(256, 256, 32), "default");
+}
 
 Texture& TextureManager::get(const std::string& name) const
 {

@@ -9,4 +9,5 @@ vvv3d::ButtonText* makeTextButton();
 vvv3d::TextWidget* makeLabel();
 vvv3d::LineEdit* makeLineEdit();
 vvv3d::SliderH* makeSliderH();
+vvv3d::ImageWidget* makeImage();
 } // namespace vvv3d

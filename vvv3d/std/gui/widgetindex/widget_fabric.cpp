@@ -34,13 +34,14 @@ vvv3d::Widget* WidgetFabric::create(const std::string& name) const
 
 WidgetFabric::WidgetFabric()
     : standard_map{
-          {"panel", [] { return makePanel(); }},
-          {"hlayout", [] { return makeHLayout(); }},
-          {"vlayout", [] { return makeVLayout(); }},
-          {"button", [] { return makeTextButton(); }},
-          {"label", [] { return makeLabel(); }},
-          {"lineedit", [] { return makeLineEdit(); }},
-          {"sliderh", [] { return makeSliderH(); }},
+          {"panel", makePanel},
+          {"hlayout", makeHLayout},
+          {"vlayout", makeVLayout},
+          {"button", makeTextButton},
+          {"label", makeLabel},
+          {"lineedit", makeLineEdit},
+          {"sliderh", makeSliderH},
+          {"image", makeImage },
       }
 {
 }
