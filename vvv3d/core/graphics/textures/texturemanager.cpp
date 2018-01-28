@@ -3,6 +3,22 @@
 
 using namespace vvv3d;
 
+namespace {
+    std::string getExtension(const std::string& filename) {
+        const auto pos = filename.rfind('.');
+        if (pos == std::string::npos)
+            return {};
+        return filename.substr(pos + 1);
+    }
+
+    LowLevelTexture* MakeLLTexture(const std::string& filename) {
+        const auto& ext = getExtension(filename);
+        if (ext == "png")
+            return readFromPng(filename.c_str());
+        throw std::invalid_argument("Unsuported image format");
+    }
+}
+
 TextureManager::TextureManager() : texs() {
     add(vvv3d::makeDummyTexture(256, 256, 32), "default");
 }
@@ -14,16 +30,16 @@ Texture& TextureManager::get(const std::string& name) const
 
 void TextureManager::add(LowLevelTexture* texture, const std::string& name)
 {
-    if (texs.count(name) > 0)
+    if (contain(name))
         return;
     texs[name].reset(new Texture(texture));
 }
 
 void TextureManager::add(const std::string& filename, const std::string& name)
 {
-    if (texs.count(name) > 0)
+    if (contain(name))
         return;
-    std::shared_ptr<LowLevelTexture> im(readFromPng(filename.c_str()));
+    std::shared_ptr<LowLevelTexture> im(MakeLLTexture(filename));
     texs[name].reset(new Texture(im));
 }
 

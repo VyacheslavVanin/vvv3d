@@ -65,7 +65,7 @@ LowLevelTexture* readFromPng(const char* filename)
     using namespace boost::gil;
     image<rgba8_pixel_t> im;
 
-    png_read_image(filename, im);
+    png_read_and_convert_image(filename, im);
 
     im._view = flipped_up_down_view(im._view);
 
