@@ -36,7 +36,7 @@ TextureAtlas::pack(size_t width, size_t height,
 {
     std::vector<LowLevelTexture*> lltexs;
     std::transform(filenames.begin(), filenames.end(), back_inserter(lltexs),
-                   [](auto& name) { return readFromPng(name.c_str()); });
+                   [](auto& name) { return makeLLTexture(name.c_str()); });
     return pack(width, height, lltexs, names, border);
 }
 

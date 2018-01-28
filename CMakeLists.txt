@@ -7,6 +7,7 @@ enable_testing()
 # Check packeages
 find_package(Freetype REQUIRED)
 find_package(PNG REQUIRED)
+find_package(JPEG REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(Boost REQUIRED)
 
@@ -33,7 +34,7 @@ add_library(vvv3d SHARED ${SRCS} ${HDRS})
 target_link_libraries(vvv3d
                       ${GLEW_LIBRARIES}
                       ${OPENGL_LIBRARIES}
-                      ${PNG_LIBRARIES} ${FREETYPE_LIBRARIES}
+                      ${PNG_LIBRARIES} ${JPEG_LIBRARIES} ${FREETYPE_LIBRARIES}
                       ${FONTCONFIG_LIBRARIES}
                       ${SDL2_LIBRARIES})
 

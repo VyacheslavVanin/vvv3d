@@ -4,6 +4,7 @@
 #define int_p_NULL (int*)NULL
 #include "vvv3d/core/graphics/framebufferobject.hpp"
 #include <boost/gil/extension/io/png_io.hpp>
+#include <boost/gil/extension/io/jpeg_io.hpp>
 
 namespace vvv3d {
 
@@ -60,15 +61,9 @@ void LowLevelTexture::setParameter(GLenum paramName, GLint param)
     glTexParameteri(target, paramName, param);
 }
 
-LowLevelTexture* readFromPng(const char* filename)
+LowLevelTexture*
+toLowLevelTexture(const boost::gil::image<boost::gil::rgba8_pixel_t>& im)
 {
-    using namespace boost::gil;
-    image<rgba8_pixel_t> im;
-
-    png_read_and_convert_image(filename, im);
-
-    im._view = flipped_up_down_view(im._view);
-
     const size_t size = im._view.size();
     const size_t numChannels = im._view.num_channels();
     const size_t width = im.dimensions().x;
@@ -83,6 +78,46 @@ LowLevelTexture* readFromPng(const char* filename)
 
     return new LowLevelTexture(data.data(), width, height, GL_RGBA, GL_RGBA8,
                                GL_UNSIGNED_BYTE);
+}
+
+LowLevelTexture* readFromPng(const char* filename)
+{
+    using namespace boost::gil;
+    image<rgba8_pixel_t> im;
+
+    png_read_and_convert_image(filename, im);
+
+    im._view = flipped_up_down_view(im._view);
+    return toLowLevelTexture(im);
+}
+
+LowLevelTexture* readFromJpeg(const char* filename)
+{
+    using namespace boost::gil;
+    image<rgba8_pixel_t> im;
+
+    jpeg_read_and_convert_image(filename, im);
+
+    im._view = flipped_up_down_view(im._view);
+    return toLowLevelTexture(im);
+}
+
+namespace {
+    std::string getExtension(const std::string& filename) {
+        const auto pos = filename.rfind('.');
+        if (pos == std::string::npos)
+            return {};
+        return filename.substr(pos + 1);
+    }
+}
+
+LowLevelTexture* makeLLTexture(const std::string& filename) {
+    const auto& ext = getExtension(filename);
+    if (ext == "png")
+        return readFromPng(filename.c_str());
+    if (ext == "jpeg" || ext == "jpg")
+        return readFromJpeg(filename.c_str());
+    throw std::invalid_argument("Unsuported image format");
 }
 
 void readImage(const LowLevelTexture* llt, void* out, GLenum format,
