@@ -41,7 +41,10 @@ Engine::~Engine() {}
 void Engine::run()
 {
     initialSetup();
-    onResize(getViewportWidth(), getViewportHeight());
+    const auto width = getViewportWidth();
+    const auto height = getViewportHeight();
+    onResize(width, height);
+    gui().resize(width, height);
     hal->mainLoop();
 }
 
