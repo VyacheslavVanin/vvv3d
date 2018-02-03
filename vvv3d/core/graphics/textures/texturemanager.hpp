@@ -21,7 +21,14 @@ public:
 
     void add(LowLevelTexture* texture, const std::string& name);
     void add(const std::string& filename, const std::string& name);
+
+    /** @brief Add texture. Throws on fail
+     * @param filename */
     void add(const std::string& filename);
+
+    /** @brief Add texture. Try load from file. Fail silently.
+     * @param filename */
+    void safe_add(const std::string& filename);
 
     void addAtlas(TextureAtlas&& atlas);
     void addAtlas(std::unique_ptr<TextureAtlas> atlas);

@@ -264,6 +264,17 @@ void setValue(vvv3d::Widget* property, const std::string& value)
         w->setValue(std::stoi(value));
 }
 
+void setImage(vvv3d::Widget* property, const std::string& value)
+{
+    auto w = dynamic_cast<vvv3d::IImageProperty*>(property);
+    if (!w)
+        return;
+
+    auto& rm = vvv3d::Engine::getActiveEngine().getResourceManager();
+    auto& tm = rm.getTextureManager();
+    w->setTexture(tm.get(value));
+}
+
 void setAction(vvv3d::Widget* property, const std::string& action_name)
 {
     auto w = dynamic_cast<vvv3d::IActionProperty*>(property);

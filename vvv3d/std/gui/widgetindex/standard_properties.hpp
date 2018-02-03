@@ -50,6 +50,8 @@ void setFont(vvv3d::Widget* property, const std::string& value);
 void setRange(vvv3d::Widget* property, const std::string& value);
 void setValue(vvv3d::Widget* property, const std::string& value);
 
+void setImage(vvv3d::Widget* property, const std::string& value);
+
 void setAction(vvv3d::Widget* property, const std::string& action_name);
 void setActions(vvv3d::Widget* property,
                 const std::vector<std::string>& action_names);

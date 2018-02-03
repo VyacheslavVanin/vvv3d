@@ -13,14 +13,19 @@ Texture& TextureManager::get(const std::string& name)
     if (i != texs.end())
         return *i->second;
 
-    add(name);
+    safe_add(name);
+
     const auto* cthis = this;
     return cthis->get(name);
 }
 
 Texture& TextureManager::get(const std::string& name) const
 {
-    return *texs.at(name).get();
+    auto i = texs.find(name);
+    if (i != texs.end())
+        return *i->second;
+
+    return get("default");
 }
 
 void TextureManager::add(LowLevelTexture* texture, const std::string& name)
@@ -41,6 +46,14 @@ void TextureManager::add(const std::string& filename, const std::string& name)
 void TextureManager::add(const std::string& filename)
 {
     add(filename, filename);
+}
+
+void TextureManager::safe_add(const std::string& filename)
+try
+{
+    add(filename);
+} catch (...) {
+    std::cerr << "TextureManager: Failed to load \"" << filename << "\"\n";
 }
 
 void TextureManager::addAtlas(std::unique_ptr<TextureAtlas> atlas)

@@ -82,6 +82,15 @@ void ImageWidget::setTexture(const Texture& texture)
     this->texture = &texture;
 }
 
+const Texture& ImageWidget::getTexture() const
+{
+    if (texture)
+        return *texture;
+    auto& rm = Engine::getActiveEngine().getResourceManager();
+    const auto& tm = rm.getTextureManager();
+    return tm.get("default");
+}
+
 void ImageWidget::onDraw()
 {
     if (texture == nullptr) {

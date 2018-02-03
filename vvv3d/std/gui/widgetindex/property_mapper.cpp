@@ -35,6 +35,7 @@ PropertyMapper::PropertyMapper() : standard_mapping
         {"range", setRange},
         {"value", setValue},
         {"value", setValue},
+        {"image", setImage},
         {"action", setAction},
         {"actions", setAction},
         {"on_enter", setOnEnterAction},
