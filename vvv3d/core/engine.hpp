@@ -7,6 +7,10 @@
 namespace vvv3d {
 
 class ResourceManager;
+class TextureManager;
+class FontManager;
+class GeometryManager;
+class ShaderManager;
 class HAL;
 
 class Engine {
@@ -55,4 +59,10 @@ private:
     static Time<> clock;
     vvv3d::GuiLayer gui_layer;
 };
+
+TextureManager& getTextureManager();
+FontManager& getFontManager();
+GeometryManager& getGeometryManager();
+ShaderManager& getShaderManager();
+
 } // namespace vvv3d

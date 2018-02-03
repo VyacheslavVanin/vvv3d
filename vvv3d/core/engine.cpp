@@ -4,7 +4,7 @@
 #include <core/resourcemanager.hpp>
 #include <core/sdllayer.hpp>
 
-using namespace vvv3d;
+namespace vvv3d {
 
 static const int DEFAULT_SCREEN_WIDTH = 640;
 static const int DEFAULT_SCREEN_HEIGHT = 480;
@@ -100,3 +100,24 @@ GuiLayer& Engine::gui() { return gui_layer; }
 double Engine::time() { return clock.currentFrameTime(); }
 
 double Engine::getTimeSinceLastFrame() { return clock.sinceLastFrame(); }
+
+TextureManager& getTextureManager()
+{
+    return Engine::getActiveEngine().getResourceManager().getTextureManager();
+}
+
+FontManager& getFontManager()
+{
+    return Engine::getActiveEngine().getResourceManager().getFontManager();
+}
+
+GeometryManager& getGeometryManager()
+{
+    return Engine::getActiveEngine().getResourceManager().getGeometryManager();
+}
+
+ShaderManager& getShaderManager()
+{
+    return Engine::getActiveEngine().getResourceManager().getShaderManager();
+}
+}

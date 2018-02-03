@@ -53,8 +53,7 @@ static void loadImageShader()
         out_texCoord = texturePosition.xy + va_texCoord*texturePosition.zw;
     }
     )";
-    auto& e = Engine::getActiveEngine();
-    auto& sm = e.getResourceManager().getShaderManager();
+    auto& sm = getShaderManager();
     sm.addFromSource("ImageWidget", vsh, fsh);
 }
 
@@ -64,9 +63,7 @@ ImageWidget::ImageWidget() : texture(nullptr)
     std::call_once(flag, []() {
         loadImageShader();
 
-        auto& e = Engine::getActiveEngine();
-        auto& resman = e.getResourceManager();
-        auto& geomMan = resman.getGeometryManager();
+        auto& geomMan = getGeometryManager();
         geomMan.add("ImageWidget", makeImageGeometry());
     });
 }
@@ -86,8 +83,7 @@ const Texture& ImageWidget::getTexture() const
 {
     if (texture)
         return *texture;
-    auto& rm = Engine::getActiveEngine().getResourceManager();
-    const auto& tm = rm.getTextureManager();
+    const auto& tm = getTextureManager();
     return tm.get("default");
 }
 
@@ -98,10 +94,8 @@ void ImageWidget::onDraw()
         return;
     }
 
-    auto& e = Engine::getActiveEngine();
-    auto& resman = e.getResourceManager();
-    auto& shaderMan = resman.getShaderManager();
-    auto& geomMan = resman.getGeometryManager();
+    auto& shaderMan = getShaderManager();
+    auto& geomMan = getGeometryManager();
     const auto& camera = getCamera();
     auto& sh = shaderMan.get("ImageWidget");
     const auto& geom = geomMan.get("ImageWidget");

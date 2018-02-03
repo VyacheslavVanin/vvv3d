@@ -48,8 +48,7 @@ static void loadSolidRectShader()
         gl_Position  = viewProjectionMatrix*vec4(fullPosition, 0 ,1 ) ;
     }
     )";
-    auto& e = Engine::getActiveEngine();
-    auto& sm = e.getResourceManager().getShaderManager();
+    auto& sm = getShaderManager();
     sm.addFromSource("SolidRect", vsh, fsh);
 }
 
@@ -57,9 +56,7 @@ ColorRectWidget::ColorRectWidget(const Color& color) : color(color)
 {
     static std::once_flag flag;
     std::call_once(flag, []() {
-        auto& e = Engine::getActiveEngine();
-        auto& resman = e.getResourceManager();
-        auto& geomMan = resman.getGeometryManager();
+        auto& geomMan = getGeometryManager();
         geomMan.add("SolidRect", makeRectGeometry());
         loadSolidRectShader();
     });
@@ -74,10 +71,8 @@ ColorRectWidget::ColorRectWidget() : ColorRectWidget(ORANGE) {}
 
 void ColorRectWidget::onDraw()
 {
-    auto& e = Engine::getActiveEngine();
-    auto& resman = e.getResourceManager();
-    auto& shaderMan = resman.getShaderManager();
-    auto& geomMan = resman.getGeometryManager();
+    auto& shaderMan = getShaderManager();
+    auto& geomMan = getGeometryManager();
     const auto& camera = getCamera();
     auto& sh = shaderMan.get("SolidRect");
     const auto& geom = geomMan.get("SolidRect");

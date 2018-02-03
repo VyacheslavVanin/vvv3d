@@ -245,8 +245,7 @@ void setFont(vvv3d::Widget* property, const std::string& value)
     auto w = dynamic_cast<vvv3d::IFontProperty*>(property);
     if (!w)
         return;
-    auto& rm = vvv3d::Engine::getActiveEngine().getResourceManager();
-    const auto& font = rm.getFontManager().getFont(value);
+    const auto& font = getFontManager().getFont(value);
     w->setFont(font);
 }
 
@@ -270,8 +269,7 @@ void setImage(vvv3d::Widget* property, const std::string& value)
     if (!w)
         return;
 
-    auto& rm = vvv3d::Engine::getActiveEngine().getResourceManager();
-    auto& tm = rm.getTextureManager();
+    auto& tm = getTextureManager();
     w->setTexture(tm.get(value));
 }
 

@@ -49,8 +49,7 @@ static void loadTextShader()
         out_texCoord = va_texCoord;
     }
     )";
-    auto& e = Engine::getActiveEngine();
-    auto& sm = e.getResourceManager().getShaderManager();
+    auto& sm = getShaderManager();
     sm.addFromSource("text", vsh, fsh);
 }
 
@@ -62,9 +61,7 @@ TextWidget::TextWidget(const std::string& text)
     static std::once_flag flag;
     std::call_once(flag, []() { loadTextShader(); });
 
-    auto& e = Engine::getActiveEngine();
-    auto& resman = e.getResourceManager();
-    auto& fontMan = resman.getFontManager();
+    auto& fontMan = getFontManager();
     font = &fontMan.getFont("default");
     geometry = createTextGeometry(*font, text);
 
@@ -225,9 +222,7 @@ int TextWidget::getWidthInPixels() const
 void TextWidget::onDraw()
 {
     const auto& camera = getCamera();
-    auto& e = Engine::getActiveEngine();
-    auto& resman = e.getResourceManager();
-    auto& shaderMan = resman.getShaderManager();
+    auto& shaderMan = getShaderManager();
     auto& sh = shaderMan.get("text");
 
     const auto& geometry = getGeometry();

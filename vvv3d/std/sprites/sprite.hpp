@@ -25,10 +25,8 @@ void drawSprite(const vvv3d::Camera& camera, const Sprite& spr);
 template <typename A, template <typename, typename> class C>
 inline void drawSprites(const vvv3d::Camera& camera, const C<Sprite, A>& sprs)
 {
-    auto& engine = vvv3d::Engine::getActiveEngine();
-    auto& resman = engine.getResourceManager();
-    auto& shaderman = resman.getShaderManager();
-    auto& geomman = resman.getGeometryManager();
+    auto& shaderman = getShaderManager();
+    auto& geomman = getGeometryManager();
     auto& sh = shaderman.get("sprite");
     const auto& g = geomman.get("sprite");
 

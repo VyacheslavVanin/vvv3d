@@ -52,8 +52,7 @@ static void loadSpriteShader()
         out_texCoord = texturePosition.xy + va_texCoord*texturePosition.zw;
     }
     )";
-    auto& e = Engine::getActiveEngine();
-    auto& sm = e.getResourceManager().getShaderManager();
+    auto& sm = getShaderManager();
     sm.addFromSource("sprite", vsh, fsh);
 }
 
@@ -61,8 +60,7 @@ Sprite::Sprite() : transform(), texture(nullptr)
 {
     static std::once_flag flag;
     std::call_once(flag, []() {
-        auto& resMan = Engine::getActiveEngine().getResourceManager();
-        auto& geomMan = resMan.getGeometryManager();
+        auto& geomMan = getGeometryManager();
         geomMan.add("sprite", makeSpriteGeometry());
         loadSpriteShader();
     });
@@ -70,10 +68,8 @@ Sprite::Sprite() : transform(), texture(nullptr)
 
 void drawSprite(const Camera& camera, const Sprite& spr)
 {
-    auto& engine = vvv3d::Engine::getActiveEngine();
-    auto& resman = engine.getResourceManager();
-    auto& shaderman = resman.getShaderManager();
-    auto& geomman = resman.getGeometryManager();
+    auto& shaderman = getShaderManager();
+    auto& geomman = getGeometryManager();
     auto& sh = shaderman.get("sprite");
     const auto& g = geomman.get("sprite");
 
