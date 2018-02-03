@@ -12,7 +12,12 @@ class TextureManager {
 public:
     TextureManager();
 
+    /** @brief Get texture by name. If not found throw std::out_of_range */
     Texture& get(const std::string& name) const;
+
+    /** @brief Get texture by name. If not found try to load texture as if name
+     *  is uri */
+    Texture& get(const std::string& name);
 
     void add(LowLevelTexture* texture, const std::string& name);
     void add(const std::string& filename, const std::string& name);

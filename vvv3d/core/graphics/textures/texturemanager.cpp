@@ -7,6 +7,17 @@ TextureManager::TextureManager() : texs() {
     add(vvv3d::makeDummyTexture(256, 256, 32), "default");
 }
 
+Texture& TextureManager::get(const std::string& name)
+{
+    auto i = texs.find(name);
+    if (i != texs.end())
+        return *i->second;
+
+    add(name);
+    const auto* cthis = this;
+    return cthis->get(name);
+}
+
 Texture& TextureManager::get(const std::string& name) const
 {
     return *texs.at(name).get();
