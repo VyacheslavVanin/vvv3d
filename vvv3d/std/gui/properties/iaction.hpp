@@ -34,6 +34,24 @@ private:
     }
 };
 
+inline void addAction(const std::string& name,
+                      const std::function<void(void)>& f)
+{
+    vvv3d::Actions<void(void)>::add(name, f);
+}
+
+inline void addAction(const std::string& name,
+                      const std::function<void(const std::string&)>& f)
+{
+    vvv3d::Actions<void(const std::string&)>::add(name, f);
+}
+
+inline void addAction(const std::string& name,
+                      const std::function<void(int)>& f)
+{
+    vvv3d::Actions<void(int)>::add(name, f);
+}
+
 class IActionProperty {
 public:
     virtual void setAction(const std::string& name) = 0;
