@@ -12,6 +12,7 @@ void Layout::onResize(const vvv::vector2i& oldSize,
 {
     (void)oldSize;
     (void)newSize;
+    rearrange();
 }
 
 void Layout::onPointerMove(int x, int y)
