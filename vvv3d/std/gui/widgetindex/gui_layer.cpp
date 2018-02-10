@@ -98,7 +98,7 @@ void GuiLayer::clear()
     top_widgets.clear();
 }
 
-GuiLayer::widget_type
+GuiLayer::widget_ptr_type
 GuiLayer::getByShortName(const std::string& name) const
 {
     auto it = short_name_map.find(name);
@@ -107,7 +107,7 @@ GuiLayer::getByShortName(const std::string& name) const
     return nullptr;
 }
 
-GuiLayer::widget_type
+GuiLayer::widget_ptr_type
 GuiLayer::getByFullName(const std::string& name) const
 {
     auto it = full_name_map.find(name);
@@ -116,13 +116,12 @@ GuiLayer::getByFullName(const std::string& name) const
     return nullptr;
 }
 
-const std::vector<GuiLayer::widget_type>& GuiLayer::topWidgets() const
+const std::vector<GuiLayer::widget_ptr_type>& GuiLayer::topWidgets() const
 {
     return top_widgets;
 }
 
-void GuiLayer::setText(const std::string& widget_name,
-                          const std::string& text)
+void GuiLayer::setText(const std::string& widget_name, const std::string& text)
 {
     auto w = get<vvv3d::ITextProperty>(widget_name);
     if (w)

@@ -10,18 +10,19 @@ namespace vvv3d {
 
 class GuiLayer : public GuiLayerBase {
 public:
-    using widget_type = vvv3d::Widget*;
+    using widget_type = vvv3d::Widget;
+    using widget_ptr_type = widget_type*;
 
     void load(const std::string& config);
     void load(std::istream& stream);
     void clear();
 
-    template <typename T>
+    template <typename T=widget_type>
     T* get(const std::string& name) const;
-    widget_type getByShortName(const std::string& name) const;
-    widget_type getByFullName(const std::string& name) const;
+    widget_ptr_type getByShortName(const std::string& name) const;
+    widget_ptr_type getByFullName(const std::string& name) const;
 
-    const std::vector<widget_type>& topWidgets() const;
+    const std::vector<widget_ptr_type>& topWidgets() const;
 
     void setText(const std::string& widget_name, const std::string& text);
     std::string getText(const std::string& widget_name) const;
@@ -33,13 +34,13 @@ public:
         const std::function<void(vvv3d::Widget*, const std::string&)>&);
 
 private:
-    std::unordered_map<std::string, widget_type> short_name_map;
-    std::unordered_map<std::string, widget_type> full_name_map;
-    std::vector<widget_type> top_widgets;
+    std::unordered_map<std::string, widget_ptr_type> short_name_map;
+    std::unordered_map<std::string, widget_ptr_type> full_name_map;
+    std::vector<widget_ptr_type> top_widgets;
 
     void makeSubWidgets(vvv3d::Widget* w, const vvv::CfgNode& node);
 
-    widget_type addWidgetNode(const vvv::CfgNode& node);
+    widget_ptr_type addWidgetNode(const vvv::CfgNode& node);
 };
 
 template <typename T>
