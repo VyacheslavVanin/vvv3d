@@ -22,6 +22,7 @@ public:
     const Input& getInput() const;
 
     void run();
+    void stop();
     float getCurrentFps() const;
     int getViewportWidth() const;
     int getViewportHeight() const;

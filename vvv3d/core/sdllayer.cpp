@@ -13,6 +13,13 @@ public:
     {
     }
 
+    void pushQuitEvent()
+    {
+        SDL_Event e;
+        e.type = SDL_QUIT;
+        SDL_PushEvent(&e);
+    }
+
     bool pollEvent()
     {
         SDL_Event e;
@@ -201,6 +208,8 @@ public:
             displayFunction();
         }
     }
+
+    void stop() { eventLoop.pushQuitEvent(); }
     sdl_input eventLoop;
     SDL_Window* mainwindow;    /* Our window handle */
     SDL_GLContext maincontext; /* Our opengl context handle */
@@ -231,6 +240,7 @@ void sdlLayer::createWindow(int width, int height, const char* name)
 }
 
 void sdlLayer::mainLoop() { sdl->run(); }
+void sdlLayer::stopMainLoop() { sdl->stop(); }
 
 void sdlLayer::swap() { sdl->swap(); }
 

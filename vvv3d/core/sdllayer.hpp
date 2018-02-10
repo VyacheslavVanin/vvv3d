@@ -12,6 +12,7 @@ public:
     void initContext(int argc, char** argv) override;
     void createWindow(int width, int height, const char* name) override;
     void mainLoop() override;
+    void stopMainLoop() override;
     void swap() override;
 
     void setResizeFunction(

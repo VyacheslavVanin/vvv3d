@@ -48,6 +48,11 @@ void Engine::run()
     hal->mainLoop();
 }
 
+void Engine::stop()
+{
+    hal->stopMainLoop();
+}
+
 ResourceManager& Engine::getResourceManager() { return *resourceManager; }
 
 const Input& Engine::getInput() const { return input; }

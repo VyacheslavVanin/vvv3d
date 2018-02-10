@@ -28,6 +28,7 @@ public:
     setDisplayFunction(const std::function<void()>& displayFunction) = 0;
     virtual void setIdleFunction(const std::function<void()>& idleFunction) = 0;
     virtual void mainLoop() = 0;
+    virtual void stopMainLoop() = 0;
     virtual void swap() = 0;
 
     virtual size_t getNumScanCodes() const = 0;
