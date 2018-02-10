@@ -242,7 +242,7 @@ bool Widget::addChild(Widget* child)
     if (p)
         p->removeChild(child);
     child->parent = this;
-    child->layer = this->layer;
+    child->setGuiLayer(this->layer);
 
     const auto it = std::find(children.begin(), children.end(), child);
     if (it != children.end())
