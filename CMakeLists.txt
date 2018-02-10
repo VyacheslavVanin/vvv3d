@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.1)
 project(vvv3d)
 set (CMAKE_CXX_STANDARD 14)
 
-enable_testing()
-
 # Check packeages
 find_package(Freetype REQUIRED)
 find_package(PNG REQUIRED)
@@ -37,6 +35,9 @@ target_link_libraries(vvv3d
                       ${PNG_LIBRARIES} ${JPEG_LIBRARIES} ${FREETYPE_LIBRARIES}
                       ${FONTCONFIG_LIBRARIES}
                       ${SDL2_LIBRARIES})
+
+enable_testing()
+add_subdirectory(tests)
 
 # Installation
 set(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "..." FORCE)
