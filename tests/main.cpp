@@ -69,6 +69,8 @@ forms
     auto le = gui.get("le");
     auto sl = gui.get("sl");
     auto im = gui.get("im");
+
+    // Check elements has correct sizes
     EXPECT_EQ(panel->getSize(), vvv::vector2i(150, 250));
     EXPECT_EQ(panel->getBorder(), 15);
     EXPECT_EQ(panel->getPadding(), 16);
@@ -79,10 +81,12 @@ forms
     EXPECT_EQ(sl->getSize(), vvv::vector2i(120, 20));
     EXPECT_EQ(im->getSize(), vvv::vector2i(120, 64));
 
+    // Check panel expands to store new widget
     auto l = new vvv3d::ButtonText("Button2");
     panel->addWidget(l);
     EXPECT_EQ(panel->getSize(), vvv::vector2i(150, 290));
 
+    // Check panel stretch its content
     panel->setWidth(300);
     EXPECT_EQ(panel->getSize(), vvv::vector2i(300, 290));
     EXPECT_EQ(panel->getBorder(), 15);
@@ -93,6 +97,25 @@ forms
     EXPECT_EQ(le->getSize(), vvv::vector2i(270, 24));
     EXPECT_EQ(sl->getSize(), vvv::vector2i(270, 20));
     EXPECT_EQ(im->getSize(), vvv::vector2i(270, 64));
+
+    // Check nested layout
+    auto hl = gui.get("hl");
+    auto button2 = gui.get("button2");
+    auto button3 = gui.get("button3");
+    EXPECT_EQ(hl->getWidth(), 180);
+    EXPECT_EQ(hl->getHeight(), 26);
+    EXPECT_EQ(button2->getWidth(), 81);
+    EXPECT_EQ(button2->getHeight(), 24);
+    EXPECT_EQ(button3->getWidth(), 81);
+    EXPECT_EQ(button3->getHeight(), 24);
+    EXPECT_TRUE(button2->getPosition().x < button3->getPosition().x);
+    EXPECT_TRUE(button2->getPosition().y == button3->getPosition().y);
+    EXPECT_EQ(button2->getPosition().x, 1);
+    EXPECT_EQ(button2->getPosition().y, 1);
+    EXPECT_EQ(button3->getPosition().x, 98);
+    EXPECT_EQ(button3->getPosition().y, 1);
+
+    // Check render without segfaults
     e->run();
 }
 
