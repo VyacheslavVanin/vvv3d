@@ -74,6 +74,7 @@ private:
     static Widget* focus;
     bool focusable = false;
     bool visible = true;
+    bool ignore_content_changed = false;
 
 protected:
     const vvv3d::Camera& getCamera() const;
@@ -123,5 +124,8 @@ protected:
     std::vector<Widget*> children;
     bool hover;
     void updateClipArea();
+    bool isIgnoreContentChanged() const;
+    void setIgnoreContentChanged(bool ignore);
+
 };
 } // namespace vvv3d

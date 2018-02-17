@@ -76,6 +76,9 @@ void Widget::notifyKeyUp(uint16_t scancode) { onKeyUp(scancode); }
 
 void Widget::notifyContentChanged()
 {
+    if (ignore_content_changed)
+        return;
+
     onContentChanged();
     if (parent)
         parent->notifyContentChanged();
@@ -104,6 +107,16 @@ bool Widget::isVisible() const { return visible; }
 void Widget::setVisible(bool visible) { this->visible = visible; }
 
 void Widget::toggleVisible() { setVisible(!isVisible()); }
+
+bool Widget::isIgnoreContentChanged() const
+{
+    return ignore_content_changed;
+}
+
+void Widget::setIgnoreContentChanged(bool ignore)
+{
+    ignore_content_changed = ignore;
+}
 
 static Rect RectToScissor(const Rect& r, const vvv::vector2i& layerSize)
 {
