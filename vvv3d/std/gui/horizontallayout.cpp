@@ -9,8 +9,10 @@ void HorizontalLayout::rearrange()
 {
     const int borders = 2 * getBorder();
     const auto& children = getChildren();
+    if (children.empty())
+        return;
 
-    const auto numPaddings = children.size() - 1;
+    const auto numPaddings = static_cast<int>(children.size()) - 1;
     const auto childrenPadding = numPaddings * getPadding();
     const auto childrenWidth = getChildrenWidth(children);
     const auto contentWidth = childrenWidth + childrenPadding;
@@ -20,8 +22,15 @@ void HorizontalLayout::rearrange()
     const auto allHeight = contentHeight + borders;
     const auto preferedHeight = std::max(contentHeight, allHeight - borders);
 
+    setIgnoreContentChanged(true);
     if (isExpandToContent())
         setMinSize(allWidth, allHeight);
+
+    const auto width_availible = getWidth() - borders;
+    const auto possible_content_width = std::max(contentWidth, width_availible);
+    const auto additional_width =
+        std::max(possible_content_width - contentWidth, 0);
+    const auto additional_width_for_each = additional_width / children.size();
 
     int offsetX = getBorder();
     for (auto w : children) {
@@ -35,9 +44,14 @@ void HorizontalLayout::rearrange()
         case VALIGN::BOTTOM: offsetY += contentHeight - w->getHeight(); break;
         case VALIGN::FILL: w->setHeight(preferedHeight); break;
         }
+
+        const auto currentWidth = w->getWidth();
+        w->setWidth(currentWidth + additional_width_for_each);
+
         w->setPosition(offsetX, offsetY);
         offsetX += w->getWidth() + getPadding();
     }
+    setIgnoreContentChanged(false);
 }
 
 int HorizontalLayout::getMaxChildHeight(const std::vector<Widget*>& children)

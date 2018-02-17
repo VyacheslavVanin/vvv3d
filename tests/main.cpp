@@ -115,6 +115,19 @@ forms
     EXPECT_EQ(button3->getPosition().x, 98);
     EXPECT_EQ(button3->getPosition().y, 1);
 
+    auto panel2 = gui.get("panel2");
+    panel2->setWidth(400);
+    EXPECT_EQ(button2->getWidth(), 176);
+    EXPECT_EQ(button2->getHeight(), 24);
+    EXPECT_EQ(button3->getWidth(), 176);
+    EXPECT_EQ(button3->getHeight(), 24);
+    EXPECT_TRUE(button2->getPosition().x < button3->getPosition().x);
+    EXPECT_TRUE(button2->getPosition().y == button3->getPosition().y);
+    EXPECT_EQ(button2->getPosition().x, 1);
+    EXPECT_EQ(button2->getPosition().y, 1);
+    EXPECT_EQ(button3->getPosition().x, 193);
+    EXPECT_EQ(button3->getPosition().y, 1);
+
     // Check render without segfaults
     e->run();
 }
