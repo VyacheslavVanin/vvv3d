@@ -9,8 +9,6 @@ public:
     const vvv3d::Texture* getFrame(double time) const;
     const vvv3d::Texture* getFrame() const;
 
-    void play();
-
     void setSpeed(double speed);
     double getSpeed() const;
 

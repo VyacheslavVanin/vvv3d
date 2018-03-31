@@ -34,6 +34,7 @@ TextureAtlas::pack(size_t width, size_t height,
                    const std::vector<std::string>& filenames,
                    const std::vector<std::string>& names, unsigned int border)
 {
+    bench timings("make atlas from files");
     std::vector<LowLevelTexture*> lltexs;
     std::transform(filenames.begin(), filenames.end(), back_inserter(lltexs),
                    [](auto& name) { return makeLLTexture(name.c_str()); });
@@ -53,6 +54,7 @@ TextureAtlas::pack(size_t width, size_t height,
                    const std::vector<LowLevelTexture*>& texsList,
                    const vector<string>& names, unsigned int border)
 {
+    bench timings("make atlas");
     std::vector<std::unique_ptr<TextureAtlas>> ret;
     vector<std::pair<std::string, Texture*>> notPlaced;
     for (size_t i = 0; i < texsList.size(); ++i) {

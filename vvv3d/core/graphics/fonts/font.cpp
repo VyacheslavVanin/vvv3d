@@ -205,7 +205,7 @@ void FontManager::addFont(const string& name, const string& filename,
                           unsigned int fontsize)
 {
     bench timings("load font " + filename + " of size " +
-                  std::to_string(fontsize) + " as " + "name");
+                  std::to_string(fontsize) + " as " + name);
     FT_Face face = freetypeMgr->addFont(name, filename);
     auto f = new Font();
     f->pImpl.reset(new FontImpl(face, fontsize, 16, 96, 256));
