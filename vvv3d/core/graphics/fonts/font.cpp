@@ -2,6 +2,7 @@
 #include FT_FREETYPE_H
 #include "font.hpp"
 #include "mgrfreetype.hpp"
+#include "utils/helper.hpp"
 #include <map>
 #include <vector>
 #include <vvv3d/core/graphics/fonts/systemfonts.hpp>
@@ -188,7 +189,8 @@ const Glyph& Font::getGlyph(uint32_t c) const
 
 FontManager::FontManager() : fonts(), freetypeMgr(new MgrFreetype())
 {
-    const auto& sysfonts = systemFonts();
+    bench timings("initializing font manager");
+    const auto& sysfonts = (bench("search fonts"), systemFonts());
     const auto& defaultFont = sysfonts.getDefaultRegular()->getFileName();
     const auto& defaultBold = sysfonts.getDefaultBold()->getFileName();
     const auto& defaultItalic = sysfonts.getDefaultItalic()->getFileName();
@@ -202,6 +204,8 @@ FontManager::FontManager() : fonts(), freetypeMgr(new MgrFreetype())
 void FontManager::addFont(const string& name, const string& filename,
                           unsigned int fontsize)
 {
+    bench timings("load font " + filename + " of size " +
+                  std::to_string(fontsize) + " as " + "name");
     FT_Face face = freetypeMgr->addFont(name, filename);
     auto f = new Font();
     f->pImpl.reset(new FontImpl(face, fontsize, 16, 96, 256));

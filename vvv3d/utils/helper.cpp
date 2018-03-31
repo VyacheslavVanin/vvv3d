@@ -82,6 +82,23 @@ Geometry* loadGeometryFrom_vvv3d(const char* filename)
     return ret;
 }
 
+thread_local int bench::depth = 0;
+
+bench::bench(const std::string& msg)
+    : msg(msg), start(std::chrono::system_clock::now())
+{
+    ++depth;
+}
+
+bench::~bench()
+{
+    --depth;
+    const auto now = std::chrono::system_clock::now();
+    const auto us =
+        std::chrono::duration_cast<std::chrono::microseconds>(now - start);
+    std::cout << std::string(2*depth, ' ') << msg << ": " << us.count() << " us\n";
+}
+
 #if defined ENABLE_3DS
 #include <lib3ds/file.hpp>
 #include <lib3ds/material.hpp>

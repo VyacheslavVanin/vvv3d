@@ -126,6 +126,5 @@ protected:
     void updateClipArea();
     bool isIgnoreContentChanged() const;
     void setIgnoreContentChanged(bool ignore);
-
 };
 } // namespace vvv3d

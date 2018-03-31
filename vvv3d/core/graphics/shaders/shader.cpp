@@ -2,6 +2,7 @@
 #include <core/graphics/lowlevel/lowlevelshader.hpp>
 #include <core/graphics/lowlevel/vertexattribute.hpp>
 #include <memory>
+#include "utils/helper.hpp"
 
 using namespace vvv3d;
 
@@ -10,6 +11,7 @@ std::unique_ptr<Shader> Shader::fromStrings(const std::string& name,
                                             const char* fragmentSource,
                                             const char* geometryShader)
 {
+    bench timings(std::string("making shader ") + name);
     // workaround std::make_shared with private constructor
     auto ret = std::make_unique<Shader>(_private{});
     ret->program.CreateProgram(
@@ -31,6 +33,7 @@ std::unique_ptr<Shader> Shader::fromFiles(const std::string& name,
                                           const char* fragmentFileName,
                                           const char* geometryFileName)
 {
+    bench timings("loading shader " + name);
     const auto gsh =
         geometryFileName
             ? LowLevelShader(geometryFileName, GL_GEOMETRY_SHADER).get()

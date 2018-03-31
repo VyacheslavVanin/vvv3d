@@ -1,4 +1,5 @@
 #include "engine.hpp"
+#include "utils/helper.hpp"
 #include <chrono>
 #include <core/graphics/lowlevel/openglprovider.hpp>
 #include <core/resourcemanager.hpp>
@@ -21,13 +22,17 @@ Engine::Engine(int argc, char** argv, const char* windowName)
 #endif
       resourceManager(), input(), gui_layer()
 {
-    hal->initContext(argc, argv);
-    hal->createWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, windowName);
+    bench timings("Engine base initialization");
+    bench("init hal context"), hal->initContext(argc, argv);
+    bench("create window"),
+        hal->createWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
+                          windowName);
     hal->setDisplayFunction([]() { activeEngine->display(); });
     hal->setIdleFunction([]() {});
     hal->setResizeFunction([](int x, int y) { activeEngine->resize(x, y); });
 
-    resourceManager.reset(new ResourceManager());
+    bench("init resource manager"),
+        resourceManager.reset(new ResourceManager());
 
     glClearColor(0.05f, 0.1f, 0.2f, 0);
     glEnable(GL_DEPTH_TEST);
@@ -40,7 +45,7 @@ Engine::~Engine() {}
 
 void Engine::run()
 {
-    initialSetup();
+    bench("initial setup"), initialSetup();
     const auto width = getViewportWidth();
     const auto height = getViewportHeight();
     onResize(width, height);
@@ -48,10 +53,7 @@ void Engine::run()
     hal->mainLoop();
 }
 
-void Engine::stop()
-{
-    hal->stopMainLoop();
-}
+void Engine::stop() { hal->stopMainLoop(); }
 
 ResourceManager& Engine::getResourceManager() { return *resourceManager; }
 
@@ -125,4 +127,4 @@ ShaderManager& getShaderManager()
 {
     return Engine::getActiveEngine().getResourceManager().getShaderManager();
 }
-}
+} // namespace vvv3d

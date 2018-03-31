@@ -17,7 +17,7 @@ public:
     void load(std::istream& stream);
     void clear();
 
-    template <typename T=widget_type>
+    template <typename T = widget_type>
     T* get(const std::string& name) const;
     widget_ptr_type getByShortName(const std::string& name) const;
     widget_ptr_type getByFullName(const std::string& name) const;

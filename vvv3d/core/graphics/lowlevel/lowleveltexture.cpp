@@ -2,9 +2,10 @@
 #include <boost/gil/gil_all.hpp>
 #define png_infopp_NULL (png_infopp) NULL
 #define int_p_NULL (int*)NULL
+#include "utils/helper.hpp"
 #include "vvv3d/core/graphics/framebufferobject.hpp"
-#include <boost/gil/extension/io/png_io.hpp>
 #include <boost/gil/extension/io/jpeg_io.hpp>
+#include <boost/gil/extension/io/png_io.hpp>
 
 namespace vvv3d {
 
@@ -103,15 +104,19 @@ LowLevelTexture* readFromJpeg(const char* filename)
 }
 
 namespace {
-    std::string getExtension(const std::string& filename) {
-        const auto pos = filename.rfind('.');
-        if (pos == std::string::npos)
-            return {};
-        return filename.substr(pos + 1);
-    }
+std::string getExtension(const std::string& filename)
+{
+    const auto pos = filename.rfind('.');
+    if (pos == std::string::npos)
+        return {};
+    return filename.substr(pos + 1);
 }
+} // namespace
 
-LowLevelTexture* makeLLTexture(const std::string& filename) {
+LowLevelTexture* makeLLTexture(const std::string& filename)
+{
+    bench timing(std::string("loading ") + filename);
+
     const auto& ext = getExtension(filename);
     if (ext == "png")
         return readFromPng(filename.c_str());
@@ -161,6 +166,8 @@ static bool isWhiteCell(uint32_t x, uint32_t y, uint32_t cellSize)
 LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
                                   uint32_t cellSize)
 {
+    bench timing(std::string("make dummy texture ") + std::to_string(width) +
+                 "x" + std::to_string(height));
     const size_t numChannels = 4;
     const size_t size = width * height;
 

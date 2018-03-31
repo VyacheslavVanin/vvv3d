@@ -6,12 +6,12 @@ namespace vvv3d {
 
 #define DRAW_TRANSPARENT                                                       \
     for (auto trenable =                                                       \
-                  []() {                                                       \
-                      glDisable(GL_DEPTH_TEST);                                \
-                      glEnable(GL_BLEND);                                      \
-                      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);       \
-                      return true;                                             \
-                  }();                                                         \
+             []() {                                                            \
+                 glDisable(GL_DEPTH_TEST);                                     \
+                 glEnable(GL_BLEND);                                           \
+                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);            \
+                 return true;                                                  \
+             }();                                                              \
          trenable;                                                             \
          glEnable(GL_DEPTH_TEST), glDisable(GL_BLEND), trenable = false)
 
@@ -53,4 +53,4 @@ void drawText(const Camera& camera, Shader& shader, const Geometry& geometry,
 void scissor(int x, int y, int width, int height);
 void scissorDisable();
 vvv::vector4<int> getScissor();
-}
+} // namespace vvv3d
