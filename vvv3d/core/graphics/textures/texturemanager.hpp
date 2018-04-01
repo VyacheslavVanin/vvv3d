@@ -18,6 +18,7 @@ public:
     /** @brief Get texture by name. If not found try to load texture as if name
      *  is uri */
     Texture& get(const std::string& name);
+    Texture& getDefault() const;
 
     void add(LowLevelTexture* texture, const std::string& name);
     void add(const std::string& filename, const std::string& name);

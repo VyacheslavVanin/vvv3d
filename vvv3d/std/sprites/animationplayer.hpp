@@ -1,11 +1,14 @@
 #pragma once
 #include "animation.hpp"
 
+namespace vvv3d {
+
 class AnimationPlayer {
 public:
     AnimationPlayer();
 
     void setAnimation(const Animation* animation);
+    void setAnimation(const Animation& animation);
     const vvv3d::Texture* getFrame(double time) const;
     const vvv3d::Texture* getFrame() const;
 
@@ -23,3 +26,4 @@ private:
 
     double getFrameTime(double now) const;
 };
+}

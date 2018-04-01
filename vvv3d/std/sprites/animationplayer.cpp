@@ -1,6 +1,8 @@
 #include "animationplayer.hpp"
 #include "vvv3d/core/engine.hpp"
 
+namespace vvv3d {
+
 AnimationPlayer::AnimationPlayer()
     : animation(nullptr), startTime(0.0), speed(1.0), looped(false)
 {
@@ -10,6 +12,11 @@ void AnimationPlayer::setAnimation(const Animation* animation)
 {
     this->animation = animation;
     this->startTime = vvv3d::Engine::time();
+}
+
+void AnimationPlayer::setAnimation(const Animation& animation)
+{
+    setAnimation(&animation);
 }
 
 void AnimationPlayer::setSpeed(double speed)
@@ -70,4 +77,5 @@ const vvv3d::Texture* AnimationPlayer::getFrame() const
 {
     const auto& now = vvv3d::Engine::time();
     return getFrame(now);
+}
 }

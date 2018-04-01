@@ -38,6 +38,7 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     glEnable(GL_DEPTH_TEST);
 
     activeEngine = this;
+    resourceManager->getAnimationManager().init();
     gui_layer.setVisible(true);
 }
 
@@ -127,4 +128,10 @@ ShaderManager& getShaderManager()
 {
     return Engine::getActiveEngine().getResourceManager().getShaderManager();
 }
+
+AnimationManager& getAnimationManager()
+{
+    return Engine::getActiveEngine().getResourceManager().getAnimationManager();
+}
+
 } // namespace vvv3d

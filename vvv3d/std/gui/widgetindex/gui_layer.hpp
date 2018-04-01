@@ -15,6 +15,7 @@ public:
 
     void load(const std::string& config);
     void load(std::istream& stream);
+    void load(const vvv::CfgNode& config);
     void clear();
 
     template <typename T = widget_type>

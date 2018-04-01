@@ -25,7 +25,7 @@ Texture& TextureManager::get(const std::string& name) const
     if (i != texs.end())
         return *i->second;
 
-    return get("default");
+    return getDefault();
 }
 
 void TextureManager::add(LowLevelTexture* texture, const std::string& name)
@@ -96,4 +96,9 @@ std::vector<std::string> TextureManager::listNames() const
     for (auto& kv : texs)
         ret.push_back(kv.first);
     return ret;
+}
+
+Texture& TextureManager::getDefault() const
+{
+    return get("default");
 }
