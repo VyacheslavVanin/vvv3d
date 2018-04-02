@@ -41,6 +41,6 @@ public:
     std::vector<std::string> listNames() const;
 
 private:
-    std::unordered_map<std::string, std::unique_ptr<Texture>> texs;
+    std::unordered_map<std::string, std::shared_ptr<Texture>> texs;
 };
 } // namespace vvv3d

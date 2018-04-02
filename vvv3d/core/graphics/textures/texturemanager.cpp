@@ -40,7 +40,9 @@ void TextureManager::add(const std::string& filename, const std::string& name)
     if (contain(name))
         return;
     std::shared_ptr<LowLevelTexture> im(makeLLTexture(filename));
-    texs[name].reset(new Texture(im));
+    auto texture = std::make_shared<Texture>(im);
+    texs[name] = texture;
+    texs[filename] = texture;
 }
 
 void TextureManager::add(const std::string& filename)
