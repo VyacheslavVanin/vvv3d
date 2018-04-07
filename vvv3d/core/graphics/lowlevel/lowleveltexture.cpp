@@ -168,10 +168,9 @@ LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
 {
     bench timing(std::string("make dummy texture ") + std::to_string(width) +
                  "x" + std::to_string(height));
-    const size_t numChannels = 4;
     const size_t size = width * height;
 
-    std::vector<uint32_t> data(size * numChannels);
+    std::vector<uint32_t> data(size);
     for (size_t j = 0; j < height; ++j)
         for (size_t i = 0; i < width; ++i) {
             const size_t linear_index = j * width + i;

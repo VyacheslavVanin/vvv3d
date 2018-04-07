@@ -14,7 +14,7 @@ public:
      * @param texturePosition
      *        xy - position offset of bootom left corner (0.0 ... 1.0f),
      *        zw - width and height (0.0 ... 1.0f) */
-    Texture(const std::shared_ptr<LowLevelTexture>& tex,
+    Texture(std::shared_ptr<LowLevelTexture> tex,
             const vvv::vector4f& texturePosition = vvv::vector4f(0, 0, 1, 1));
     /**
      * @brief
