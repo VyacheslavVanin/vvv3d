@@ -12,7 +12,7 @@ public:
     ~Sprite() = default;
 
     void setTexture(const vvv3d::Texture& texture) { this->texture = &texture; }
-    const vvv3d::Texture& getTexture() const { return *texture; }
+    const vvv3d::Texture& getTexture() const;
 
     vvv3d::Transform transform;
 

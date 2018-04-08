@@ -1,8 +1,8 @@
 #pragma once
 #include "widget.hpp"
 #include <memory>
-#include <vvv3d/core/graphics/textures/texture.hpp>
 #include <vvv3d/std/gui/properties/iimage.hpp>
+#include <vvv3d/std/sprites/sprite.hpp>
 
 namespace vvv3d {
 
@@ -16,7 +16,7 @@ public:
     const Texture& getTexture() const override;
 
 private:
-    const vvv3d::Texture* texture = nullptr;
+    Sprite sprite;
 
     // Widget interface
 protected:

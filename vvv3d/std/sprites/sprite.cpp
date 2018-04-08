@@ -66,6 +66,12 @@ Sprite::Sprite() : transform(), texture(nullptr)
     });
 }
 
+const vvv3d::Texture& Sprite::getTexture() const {
+    if (!texture)
+        return getTextureManager().getDefault();
+    return *texture;
+}
+
 void drawSprite(const Camera& camera, const Sprite& spr)
 {
     auto& shaderman = getShaderManager();
