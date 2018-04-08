@@ -35,6 +35,9 @@ public:
     inline vector2<T>& operator*=(T s);
     inline vector2<T>& operator/=(T s);
 
+    inline vector2<T> operator*(T s) const;
+    inline vector2<T> operator/(T s) const;
+
     inline vector2<T>& operator*=(const vector2<T>& b);
     inline vector2<T>& operator/=(const vector2<T>& b);
 
@@ -104,6 +107,18 @@ inline vector2<T>& vector2<T>::operator*=(T s)
     x *= s;
     y *= s;
     return *this;
+}
+
+template <typename T>
+inline vector2<T> vector2<T>::operator*(T s) const
+{
+    return vector2<T>(x * s, y * s);
+}
+
+template <typename T>
+inline vector2<T> vector2<T>::operator/(T s) const
+{
+    return vector2<T>(x / s, y / s);
 }
 
 template <typename T>
