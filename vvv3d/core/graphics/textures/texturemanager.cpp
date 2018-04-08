@@ -134,6 +134,26 @@ void loadAtlassesFromDict(vvv3d::TextureManager& tm, const vvv::Value& images,
     tm.addAtlas(std::move(atlases));
 }
 
+void loadAtlassesFromList(vvv3d::TextureManager& tm, const vvv::Value& images,
+                          long size, long border)
+{
+    std::vector<std::string> names;
+    const auto& dict = images.asList();
+
+    for (const auto& name : dict) {
+        if (!name.isString()) {
+            std::cerr << "Skip load \"" << name
+                      << "\" cause uri is not string\n";
+            continue;
+        }
+
+        names.push_back(name.asString());
+    }
+    auto atlases =
+        vvv3d::TextureAtlas::pack(size, size, names, border);
+    tm.addAtlas(std::move(atlases));
+}
+
 void loadAtlasesSection(vvv3d::TextureManager& tm, const vvv::CfgNode& cfg)
 {
     vvv3d::bench timing("loading atlases section");
@@ -157,7 +177,8 @@ void loadAtlasesSection(vvv3d::TextureManager& tm, const vvv::CfgNode& cfg)
         case vvv::Value::DATA_TYPE::DICT:
             loadAtlassesFromDict(tm, images, size, border);
             break;
-        case vvv::Value::DATA_TYPE::LIST: break;
+        case vvv::Value::DATA_TYPE::LIST:
+            loadAtlassesFromList(tm, images, size, border); break;
         default:
             std::cerr << "Skip \"" << atlas.getName()
                       << "\" record of atlasses cause \"images\" property has "
