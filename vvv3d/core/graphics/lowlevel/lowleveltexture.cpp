@@ -73,7 +73,7 @@ toLowLevelTexture(const boost::gil::image<boost::gil::rgba8_pixel_t>& im)
     std::vector<uint8_t> data(size * numChannels);
     uint32_t c = 0;
 
-    for (auto p : im._view)
+    for (const auto& p : im._view)
         for (size_t i = 0; i < numChannels; ++i)
             data[c++] = p[i];
 
@@ -175,7 +175,7 @@ LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
         for (size_t i = 0; i < width; ++i) {
             const size_t linear_index = j * width + i;
             data[linear_index] =
-                (isWhiteCell(i, j, cellSize) * 0xffffffff) | 0xff000000;
+                isWhiteCell(i, j, cellSize) ? 0xffffffff : 0xff000000;
         }
 
     return new LowLevelTexture(data.data(), width, height, GL_RGBA, GL_RGBA8,

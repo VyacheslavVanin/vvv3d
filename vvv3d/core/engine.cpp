@@ -134,4 +134,23 @@ AnimationManager& getAnimationManager()
     return Engine::getActiveEngine().getResourceManager().getAnimationManager();
 }
 
+void Engine::load(const vvv::CfgNode& node) {
+    getTextureManager().load(node);
+    getAnimationManager().load(node);
+    gui().load(node);
+}
+
+void Engine::load(std::istream& stream)
+{
+    const auto& cfg = vvv::make_cfg(stream);
+    load(cfg);
+}
+
+void Engine::load(const std::string& string)
+{
+    std::stringstream ss;
+    ss << string;
+    load(ss);
+}
+
 } // namespace vvv3d

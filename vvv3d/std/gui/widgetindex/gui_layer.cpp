@@ -86,7 +86,10 @@ void GuiLayer::load(std::istream& stream)
 
 void GuiLayer::load(const vvv::CfgNode& cfg)
 {
-    for (const auto& c : cfg.getChild("forms").getChildren()) {
+    if (!cfg.hasChild("gui"))
+        return;
+
+    for (const auto& c : cfg.getChild("gui").getChildren()) {
         auto w = addWidgetNode(c);
         top_widgets.push_back(w);
     }

@@ -1,6 +1,7 @@
 #include "textureatlas.hpp"
 #include "texturepacker.hpp"
 #include <utils/helper.hpp>
+#include <string.h>
 
 using namespace vvv3d;
 using namespace std;
@@ -95,8 +96,7 @@ TextureAtlas::pack(size_t width, size_t height,
         auto& atlas = newAtlas->atlas;
         const size_t MAX_BYTES = width * height * 4;
         auto buff = make_unique<GLubyte[]>(MAX_BYTES);
-        for (size_t i = 0; i < MAX_BYTES; ++i)
-            buff.get()[i] = 0;
+        memset(buff.get(), 0, MAX_BYTES);
 
         // Clear atlass
         atlas->bind();

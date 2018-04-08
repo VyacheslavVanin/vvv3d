@@ -46,7 +46,7 @@ public:
 TEST_F(vvv3dFixture, gui)
 {
     e->gui().load(R"(
-forms
+gui
     panel type=panel pos=[30, 30]
         text type=label text="Hello World"
         button type=button text="Button"
@@ -69,6 +69,12 @@ forms
     auto le = gui.get("le");
     auto sl = gui.get("sl");
     auto im = gui.get("im");
+    ASSERT_TRUE(panel != nullptr);
+    ASSERT_TRUE(text != nullptr);
+    ASSERT_TRUE(button != nullptr);
+    ASSERT_TRUE(le != nullptr);
+    ASSERT_TRUE(sl != nullptr);
+    ASSERT_TRUE(im != nullptr);
 
     // Check elements has correct sizes
     EXPECT_EQ(panel->getSize(), vvv::vector2i(150, 250));

@@ -31,6 +31,14 @@ public:
     void setVSync(bool vsync);
 
     GuiLayer& gui();
+
+    /**
+     * @brief Load config
+     * @param node */
+    void load(const vvv::CfgNode& node);
+    void load(std::istream& stream);
+    void load(const std::string& string);
+
     /**
      * @brief Return time at the beginning of current frame.
      * @return seconds */
