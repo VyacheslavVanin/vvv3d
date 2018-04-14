@@ -1,7 +1,7 @@
 #include "textureatlas.hpp"
 #include "texturepacker.hpp"
-#include <utils/helper.hpp>
 #include <string.h>
+#include <utils/helper.hpp>
 
 using namespace vvv3d;
 using namespace std;
@@ -112,14 +112,15 @@ TextureAtlas::pack(size_t width, size_t height,
 
             const GLuint texOffsetX = t->getTexturePosition().x * width;
             const GLuint texOffsetY = t->getTexturePosition().y * height;
-            glTexSubImage2D(GL_TEXTURE_2D, 0, texOffsetX, texOffsetY, t->width,
-                            t->height, GL_RGBA, GL_UNSIGNED_BYTE, buff.get());
+            glTexSubImage2D(GL_TEXTURE_2D, 0, texOffsetX, texOffsetY,
+                            t->getWidth(), t->getHeight(), GL_RGBA,
+                            GL_UNSIGNED_BYTE, buff.get());
             t->tex = atlas;
 
             const float widthUnit = 1.0f / width;
             const float heightUnit = 1.0f / height;
-            t->texturePosition.z = widthUnit * (t->width - 1);
-            t->texturePosition.w = heightUnit * (t->height - 1);
+            t->texturePosition.z = widthUnit * (t->getWidth() - 1);
+            t->texturePosition.w = heightUnit * (t->getHeight() - 1);
             t->texturePosition.x += 0.5 * widthUnit;
             t->texturePosition.y += 0.5 * heightUnit;
         }

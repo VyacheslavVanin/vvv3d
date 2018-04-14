@@ -17,15 +17,15 @@ void Texture::bind() const { tex->bind(); }
 Texture::Texture(std::shared_ptr<LowLevelTexture> tex,
                  const vvv::vector4f& texturePosition)
     : tex(tex), texturePosition(texturePosition),
-      width(tex->getWidth() * texturePosition.z),
-      height(tex->getHeight() * texturePosition.w)
+      size(tex->getWidth() * texturePosition.z,
+           tex->getHeight() * texturePosition.w)
 {
 }
 
 Texture::Texture(LowLevelTexture* tex, const vvv::vector4f& texturePosition)
     : tex(tex), texturePosition(texturePosition),
-      width(tex->getWidth() * texturePosition.z),
-      height(tex->getHeight() * texturePosition.w)
+      size(tex->getWidth() * texturePosition.z,
+           tex->getHeight() * texturePosition.w)
 {
 }
 

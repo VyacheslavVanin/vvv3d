@@ -36,12 +36,13 @@ public:
     /**
      * @brief getHeight get height of texture in pixels
      * @return  */
-    GLuint getHeight() const { return height; }
+    GLuint getHeight() const { return size.y; }
 
     /**
      * @brief getWidth get width of texture in pixels
      * @return  */
-    GLuint getWidth() const { return width; }
+    GLuint getWidth() const { return size.x; }
+    const vvv::vector2i& getSize() const {return size;}
 
     /**
      * @brief getFormat get OpenGL texture format ( GL_RGBA)
@@ -64,8 +65,7 @@ private:
 
     // store position in real texture (x,y)-offset, (z,w)-width,height
     vvv::vector4f texturePosition;
-    GLuint width;
-    GLuint height;
+    vvv::vector2i size;
 };
 
 void writeToPng(const char* filename, const Texture& t);

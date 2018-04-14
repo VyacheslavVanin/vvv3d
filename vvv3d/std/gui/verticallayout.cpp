@@ -21,6 +21,7 @@ void VerticalLayout::rearrange()
     const auto allWidth = contentWidth + borders;
     const auto preferedWidth = std::max(contentWidth, getWidth() - borders);
 
+    setIgnoreContentChanged(true);
     if (isExpandToContent())
         setMinSize(allWidth, allHeight);
 
@@ -39,6 +40,7 @@ void VerticalLayout::rearrange()
         w->setPosition(offsetX, offsetY);
         offsetY += w->getHeight() + getPadding();
     }
+    setIgnoreContentChanged(false);
 }
 
 int VerticalLayout::getMaxChildWidth(const std::vector<Widget*>& children)
