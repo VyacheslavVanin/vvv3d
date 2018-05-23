@@ -19,7 +19,7 @@ int textLineHeight(const Font& f) { return f.getAscender() - f.getDescender(); }
 static void loadTextShader()
 {
     const char* fsh = R"(
-    #version 320 es
+    #version 300 es
     precision mediump float;
     uniform sampler2D texture0;
     uniform vec4 color0;
@@ -35,7 +35,7 @@ static void loadTextShader()
     )";
 
     const char* vsh = R"(
-    #version 320 es
+    #version 300 es
     uniform mat4    modelMatrix;
     uniform mat4    viewProjectionMatrix;
 

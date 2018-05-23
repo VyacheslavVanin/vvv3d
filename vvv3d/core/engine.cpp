@@ -18,7 +18,7 @@ Engine::Engine(int argc, char** argv, const char* windowName)
 #ifdef VVV3D_USE_OPENGL_CORE
       hal(new sdlLayer(argc, argv, GLPROFILE::CORE, 3, 3)),
 #else
-      hal(new sdlLayer(argc, argv, GLPROFILE::ES, 3, 2)),
+      hal(new sdlLayer(argc, argv, GLPROFILE::ES, 3, 0)),
 #endif
       resourceManager(), input(), gui_layer()
 {

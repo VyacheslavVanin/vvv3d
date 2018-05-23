@@ -22,7 +22,7 @@ std::unique_ptr<Geometry> makeSpriteGeometry()
 static void loadSpriteShader()
 {
     const char* fsh = R"(
-    #version 320 es
+    #version 300 es
     precision mediump float;
     uniform sampler2D texture0;
     uniform float time;
@@ -38,7 +38,7 @@ static void loadSpriteShader()
     )";
 
     const char* vsh = R"(
-    #version 320 es
+    #version 300 es
     in vec2 va_position;
     in vec2 va_texCoord;
     uniform mat4    modelMatrix;
