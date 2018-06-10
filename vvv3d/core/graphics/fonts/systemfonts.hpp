@@ -39,7 +39,8 @@ public:
 private:
     SystemFonts();
     const FontDesc* loadFirstOflist(
-        const std::vector<std::pair<const char*, const char*>>& list) const;
+        const std::vector<std::pair<const char*, const char*>>& list,
+	const FontDesc* fallback=nullptr) const;
     std::vector<FontDesc> allFonts;
     const FontDesc* defaultRegular;
     const FontDesc* defaultBold;

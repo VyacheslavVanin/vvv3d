@@ -85,13 +85,16 @@ SystemFonts::SystemFonts()
                                       {"Liberation", "Regular"}})),
       defaultBold(loadFirstOflist({{"DejaVu Sans", "Bold"},
                                    {"Droid Sans", "Bold"},
-                                   {"Liberation Sans", "Bold"}})),
+                                   {"Liberation Sans", "Bold"}},
+				   defaultRegular)),
       defaultItalic(loadFirstOflist({{"DejaVu Sans", "Oblique"},
                                      {"Droid Serif", "Italic"},
-                                     {"Liberation Sans", "Italic"}})),
+                                     {"Liberation Sans", "Italic"}},
+				     defaultBold)),
       defaultMono(loadFirstOflist({{"DejaVu Sans Mono", "Book"},
                                    {"Droid Sans Mono", "Regular"},
-                                   {"Liberation Mono", "Regular"}}))
+                                   {"Liberation Mono", "Regular"}},
+				   defaultBold))
 {
 }
 
@@ -104,14 +107,15 @@ const FontDesc* SystemFonts::getDefaultItalic() const { return defaultItalic; }
 const FontDesc* SystemFonts::getDefaultMono() const { return defaultMono; }
 
 const FontDesc* SystemFonts::loadFirstOflist(
-    const std::vector<std::pair<const char*, const char*>>& list) const
+    const std::vector<std::pair<const char*, const char*>>& list,
+    const FontDesc* fallback) const
 {
     for (const auto& desc : list) {
         const auto* ret = getDesc(desc.first, desc.second);
         if (ret)
             return ret;
     }
-    return nullptr;
+    return fallback;
 }
 
 const FontDescList& SystemFonts::getFontDescList() const { return allFonts; }
