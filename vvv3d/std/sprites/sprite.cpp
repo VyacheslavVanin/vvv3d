@@ -1,23 +1,9 @@
 #include "sprite.hpp"
 #include <mutex>
 
-namespace vvv3d {
+#include "vvv3d/std/geometries/quad.hpp"
 
-std::unique_ptr<Geometry> makeSpriteGeometry()
-{
-    static const GLfloat spriteVertices[] = {-0.5, -0.5, 0, 0, 0.5, 0.5,  1, 1,
-                                             -0.5, 0.5,  0, 1, 0.5, -0.5, 1, 0};
-    static const size_t sizeOfVertices = sizeof(spriteVertices);
-    static const GLuint spriteIndices[] = {0, 1, 2, 0, 1, 3};
-    static const size_t numIndices =
-        sizeof(spriteIndices) / sizeof(spriteIndices[0]);
-    return std::make_unique<Geometry>(
-        spriteVertices, sizeOfVertices, spriteIndices, numIndices,
-        VertexAttributes(
-            {VertexAttribDesc(ATTRIB_LOCATION::POSITION, 2, GL_FLOAT),
-             VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT)}),
-        GL_TRIANGLES);
-}
+namespace vvv3d {
 
 static void loadSpriteShader()
 {
@@ -61,12 +47,13 @@ Sprite::Sprite() : transform(), texture(nullptr)
     static std::once_flag flag;
     std::call_once(flag, []() {
         auto& geomMan = getGeometryManager();
-        geomMan.add("sprite", makeSpriteGeometry());
+        geomMan.add("sprite", makeQuadGeometry2d());
         loadSpriteShader();
     });
 }
 
-const vvv3d::Texture& Sprite::getTexture() const {
+const vvv3d::Texture& Sprite::getTexture() const
+{
     if (!texture)
         return getTextureManager().getDefault();
     return *texture;
