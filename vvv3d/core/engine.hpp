@@ -3,6 +3,7 @@
 #include <vvv3d/core/input.hpp>
 #include <vvv3d/core/time.hpp>
 #include <vvv3d/std/gui/widgetindex/gui_layer.hpp>
+#include <vvv3d/core/viewport.hpp>
 
 namespace vvv3d {
 
@@ -25,8 +26,7 @@ public:
     void run();
     void stop();
     float getCurrentFps() const;
-    int getViewportWidth() const;
-    int getViewportHeight() const;
+    const Viewport& getViewport() const;
     static Engine& getActiveEngine();
     void setVSync(bool vsync);
 
@@ -60,8 +60,7 @@ private:
     void display();
     void resize(int x, int y);
     float currentfps;
-    int viewportWidth;
-    int viewportHeight;
+    Viewport viewport;
     std::unique_ptr<HAL> hal;
     std::unique_ptr<ResourceManager> resourceManager;
     friend class Input;

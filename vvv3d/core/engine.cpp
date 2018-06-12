@@ -13,8 +13,7 @@ Engine* Engine::activeEngine = nullptr;
 Time<> Engine::clock;
 
 Engine::Engine(int argc, char** argv, const char* windowName)
-    : currentfps(0), viewportWidth(DEFAULT_SCREEN_WIDTH),
-      viewportHeight(DEFAULT_SCREEN_HEIGHT),
+    : currentfps(0), viewport(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT),
 #ifdef VVV3D_USE_OPENGL_CORE
       hal(new sdlLayer(argc, argv, GLPROFILE::CORE, 3, 3)),
 #else
@@ -47,8 +46,8 @@ Engine::~Engine() {}
 void Engine::run()
 {
     bench("initial setup"), initialSetup();
-    const auto width = getViewportWidth();
-    const auto height = getViewportHeight();
+    const auto width = getViewport().getWidth();
+    const auto height = getViewport().getHeight();
     onResize(width, height);
     gui().resize(width, height);
     hal->mainLoop();
@@ -85,19 +84,17 @@ void Engine::initialSetup() {}
 void Engine::onDraw() {}
 void Engine::onResize(int x, int y) { (void)x, (void)y; }
 
-int Engine::getViewportWidth() const { return viewportWidth; }
-int Engine::getViewportHeight() const { return viewportHeight; }
+const Viewport& Engine::getViewport() const { return viewport; }
 
 Engine& Engine::getActiveEngine() { return *activeEngine; }
 
 void Engine::resize(int x, int y)
 {
     y = (y != 0) ? y : 1;
-    viewportHeight = y;
-    viewportWidth = x;
-    glViewport(0, 0, viewportWidth, viewportHeight);
+    viewport.set(x, y);
+    glViewport(0, 0, x, y);
     gui().resize(x, y);
-    onResize(viewportWidth, viewportHeight);
+    onResize(x, y);
 }
 
 float Engine::getCurrentFps() const { return currentfps; }
