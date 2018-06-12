@@ -108,6 +108,29 @@ Camera& Camera::setOrtho(float left, float right, float bottom, float top,
     return *this;
 }
 
+Camera& Camera::setOrtho(const Viewport& viewport, float zNear, float zFar)
+{
+    const auto& w = viewport.getWidth() / 2.0f;
+    const auto& h = viewport.getHeight() / 2.0f;
+    return setOrtho(-w, w, -h, h, zNear, zFar);
+}
+
+Camera& Camera::setOrthoHeight(const Viewport& viewport, float height,
+                               float zNear, float zFar)
+{
+    const auto& h = height / 2;
+    const auto& w = h * viewport.getAspect();
+    return setOrtho(-w, w, -h, h, zNear, zFar);
+}
+
+Camera& Camera::setOrthoWidth(const Viewport& viewport, float width,
+                              float zNear, float zFar)
+{
+    const auto& w = width / 2;
+    const auto& h = w / viewport.getAspect();
+    return setOrtho(-w, w, -h, h, zNear, zFar);
+}
+
 Camera& Camera::setPerspective(float fovy, float aspect, float zNear,
                                float zFar)
 {

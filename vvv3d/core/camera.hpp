@@ -1,5 +1,6 @@
 #pragma once
 #include <vvv3d/vvvmath/linalg.hpp>
+#include <vvv3d/core/viewport.hpp>
 
 namespace vvv3d {
 
@@ -32,6 +33,22 @@ public:
 
     Camera& setOrtho(float left, float right, float bottom, float top,
                      float zNear, float zFar);
+    Camera& setOrtho(const Viewport& viewport, float zNear=-1, float zFar=1);
+
+    /**
+     * @brief Set ortho projection. Preserve aspect ratio and height.
+     * h = height / 2;
+     * w = h * viewport.getAspect();
+     * same as setOrtho(-w, w, -h, h, zNear, zFar)*/
+    Camera& setOrthoHeight(const Viewport& viewport, float height,
+                           float zNear=-1, float zFar=1);
+    /**
+     * @brief Set ortho projection. Preserve aspect ratio and height.
+     * w = width / 2;
+     * h = w / aspectRatio;
+     * same as setOrtho(-w, w, -h, h, zNear, zFar)*/
+    Camera& setOrthoWidth(const Viewport& viewport, float width,
+                           float zNear=-1, float zFar=1);
 
     Camera& setPerspective(float fovy, float aspect, float zNear, float zFar);
     float getAspectRatio() const;
