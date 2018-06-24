@@ -30,7 +30,7 @@ public:
     void addAction(const std::function<T>& f) { actions.push_back(f); }
 
     template <typename... Args>
-    void operator()(Args&... args) const
+    void operator()(const Args&... args) const
     {
         for (const auto& a : actions)
             a(args...);
