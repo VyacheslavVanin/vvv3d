@@ -85,7 +85,7 @@ void TextureManager::addAtlas(TextureAtlas&& atlas)
     }
 }
 
-bool TextureManager::contain(const std::string& name)
+bool TextureManager::contain(const std::string& name) const
 {
     return texs.find(name) != texs.end();
 }
@@ -149,8 +149,7 @@ void loadAtlassesFromList(vvv3d::TextureManager& tm, const vvv::Value& images,
 
         names.push_back(name.asString());
     }
-    auto atlases =
-        vvv3d::TextureAtlas::pack(size, size, names, border);
+    auto atlases = vvv3d::TextureAtlas::pack(size, size, names, border);
     tm.addAtlas(std::move(atlases));
 }
 
@@ -178,7 +177,8 @@ void loadAtlasesSection(vvv3d::TextureManager& tm, const vvv::CfgNode& cfg)
             loadAtlassesFromDict(tm, images, size, border);
             break;
         case vvv::Value::DATA_TYPE::LIST:
-            loadAtlassesFromList(tm, images, size, border); break;
+            loadAtlassesFromList(tm, images, size, border);
+            break;
         default:
             std::cerr << "Skip \"" << atlas.getName()
                       << "\" record of atlasses cause \"images\" property has "

@@ -33,6 +33,7 @@ public:
     const Geometry& get(const std::string& name);
     std::vector<std::string> listNames() const;
     void clear();
+    bool contain(const std::string& name) const;
 
 private:
     std::unordered_map<std::string, std::unique_ptr<Geometry>> geometries;

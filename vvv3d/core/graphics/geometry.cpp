@@ -52,12 +52,20 @@ GeometryManager::GeometryManager() : geometries() {}
 
 void GeometryManager::add(const string& name, std::unique_ptr<Geometry> geom)
 {
+    if (contain(name))
+        return;
+
     geometries[name].swap(geom);
 }
 
 const Geometry& GeometryManager::get(const string& name)
 {
     return *geometries.at(name);
+}
+
+bool GeometryManager::contain(const std::string& name) const
+{
+    return geometries.find(name) != geometries.end();
 }
 
 void GeometryManager::clear() { geometries.clear(); }

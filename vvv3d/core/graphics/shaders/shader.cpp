@@ -1,8 +1,8 @@
 #include "shader.hpp"
+#include "utils/helper.hpp"
 #include <core/graphics/lowlevel/lowlevelshader.hpp>
 #include <core/graphics/lowlevel/vertexattribute.hpp>
 #include <memory>
-#include "utils/helper.hpp"
 
 using namespace vvv3d;
 
@@ -334,6 +334,9 @@ void ShaderManager::add(const std::string& name,
                         const std::string& vertexShaderFilename,
                         const std::string& fragmentShaderFilename)
 {
+    if (contain(name))
+        return;
+
     shaders[name] =
         Shader::fromFiles(name.c_str(), vertexShaderFilename.c_str(),
                           fragmentShaderFilename.c_str());
@@ -344,6 +347,9 @@ void ShaderManager::add(const std::string& name,
                         const std::string& fragmentShaderFilename,
                         const std::string& geometryShaderFilename)
 {
+    if (contain(name))
+        return;
+
     shaders[name] = Shader::fromFiles(
         name.c_str(), vertexShaderFilename.c_str(),
         fragmentShaderFilename.c_str(), geometryShaderFilename.c_str());
@@ -353,6 +359,9 @@ void ShaderManager::addFromSource(const std::string& name,
                                   const std::string& vertexShaderSource,
                                   const std::string& fragmentShaderSource)
 {
+    if (contain(name))
+        return;
+
     shaders[name] = Shader::fromStrings(
         name.c_str(), vertexShaderSource.c_str(), fragmentShaderSource.c_str());
 }
@@ -362,12 +371,19 @@ void ShaderManager::addFromSource(const std::string& name,
                                   const std::string& fragmentShaderSource,
                                   const std::string& geometryShaderSource)
 {
+    if (contain(name))
+        return;
+
     shaders[name] = Shader::fromStrings(
         name.c_str(), vertexShaderSource.c_str(), fragmentShaderSource.c_str(),
         geometryShaderSource.c_str());
 }
+
 void ShaderManager::add(const std::string& name, std::unique_ptr<Shader> shader)
 {
+    if (contain(name))
+        return;
+
     shaders[name].swap(shader);
 }
 
@@ -377,6 +393,11 @@ Shader& ShaderManager::get(const std::string& name) const try {
 catch (std::exception& e) {
     std::cerr << "failed to get shader \'" << name << "\'\n";
     throw;
+}
+
+bool ShaderManager::contain(const std::string& name) const
+{
+    return shaders.find(name) != shaders.end();
 }
 
 std::vector<std::string> ShaderManager::listNames() const

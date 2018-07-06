@@ -127,6 +127,7 @@ public:
                        const std::string& geometryShaderSource);
 
     Shader& get(const std::string& name) const;
+    bool contain(const std::string& name) const;
 
     std::vector<std::string> listNames() const;
 

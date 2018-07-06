@@ -36,7 +36,7 @@ public:
     void addAtlas(TextureAtlas&& atlas);
     void addAtlas(std::unique_ptr<TextureAtlas> atlas);
     void addAtlas(std::vector<std::unique_ptr<TextureAtlas>>&& atlas);
-    bool contain(const std::string& name);
+    bool contain(const std::string& name) const;
     void remove(const std::string& name);
     void clear();
 
