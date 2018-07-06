@@ -148,10 +148,7 @@ void TextWidget::setAutoResize(bool value)
     autoresize();
 }
 
-bool TextWidget::isAutoResize() const
-{
-    return autosize;
-}
+bool TextWidget::isAutoResize() const { return autosize; }
 
 void TextWidget::setHAlign(HALIGN value) { this->halign = value; }
 HALIGN TextWidget::getHAlign() const { return halign; }
@@ -239,7 +236,8 @@ void TextWidget::onDraw()
     const auto posy = -pos.y - font.getAscender() + vAlignOffset;
     transform.setPosition(posx, posy, 0);
 
-    drawTexturedColored(camera, sh, geometry, transform, texture, this->color);
+    drawTexturedColored(camera, sh, geometry, transform.getModelMatrix(),
+                        texture, this->color);
 }
 
 TextWidget::~TextWidget() = default;

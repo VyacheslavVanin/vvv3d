@@ -66,6 +66,7 @@ void drawSprite(const Camera& camera, const Sprite& spr)
     auto& sh = shaderman.get("sprite");
     const auto& g = geomman.get("sprite");
 
-    drawTextured(camera, sh, g, spr.transform, spr.getTexture());
+    const auto& model_matrix = spr.transform.getModelMatrix();
+    drawTextured(camera, sh, g, model_matrix, spr.getTexture());
 }
 } // namespace vvv3d

@@ -4,33 +4,32 @@
 #include <core/graphics/geometry.hpp>
 #include <core/graphics/shaders/shader.hpp>
 #include <core/graphics/textures/texture.hpp>
-#include <core/transform.hpp>
 
 namespace vvv3d {
 
 static inline void setup_shader(Shader& shader, const Camera& camera,
-                                const Transform& transform)
+                                const vvv::matrix44f& model_matrix)
 {
     shader.activate();
-    shader.setModel(transform.getModelMatrix());
+    shader.setModel(model_matrix);
     shader.setViewProjection(camera.getViewProjection());
 }
 
 void drawTextured(const Camera& camera, Shader& shader,
-                  const Geometry& geometry, const Transform& transform,
+                  const Geometry& geometry, const vvv::matrix44f& model_matrix,
                   const Texture& texture)
 {
-    setup_shader(shader, camera, transform);
+    setup_shader(shader, camera, model_matrix);
     shader.setTexturePosition(texture.getTexturePosition());
     shader.setTexture0(texture);
     geometry.draw();
 }
 
 void drawTextured(const Camera& camera, Shader& shader,
-                  const Geometry& geometry, const Transform& transform,
+                  const Geometry& geometry, const vvv::matrix44f& model_matrix,
                   const Texture& texture0, const Texture& texture1)
 {
-    setup_shader(shader, camera, transform);
+    setup_shader(shader, camera, model_matrix);
     shader.setTexturePosition(texture0.getTexturePosition());
     shader.setTexture0(texture0);
     shader.setTexture1(texture1);
@@ -38,11 +37,11 @@ void drawTextured(const Camera& camera, Shader& shader,
 }
 
 void drawTextured(const Camera& camera, Shader& shader,
-                  const Geometry& geometry, const Transform& transform,
+                  const Geometry& geometry, const vvv::matrix44f& model_matrix,
                   const Texture& texture0, const Texture& texture1,
                   const Texture& texture2)
 {
-    setup_shader(shader, camera, transform);
+    setup_shader(shader, camera, model_matrix);
     shader.setTexturePosition(texture0.getTexturePosition());
     shader.setTexture0(texture0);
     shader.setTexture1(texture1);
@@ -51,11 +50,11 @@ void drawTextured(const Camera& camera, Shader& shader,
 }
 
 void drawTextured(const Camera& camera, Shader& shader,
-                  const Geometry& geometry, const Transform& transform,
+                  const Geometry& geometry, const vvv::matrix44f& model_matrix,
                   const Texture& texture0, const Texture& texture1,
                   const Texture& texture2, const Texture& texture3)
 {
-    setup_shader(shader, camera, transform);
+    setup_shader(shader, camera, model_matrix);
     shader.setTexturePosition(texture0.getTexturePosition());
     shader.setTexture0(texture0);
     shader.setTexture1(texture1);
@@ -65,18 +64,19 @@ void drawTextured(const Camera& camera, Shader& shader,
 }
 
 void drawColored(const Camera& camera, Shader& shader, const Geometry& geometry,
-                 const Transform& transform, const Color& color0)
+                 const vvv::matrix44f& model_matrix, const Color& color0)
 {
-    setup_shader(shader, camera, transform);
+    setup_shader(shader, camera, model_matrix);
     shader.setColor0(color0);
     geometry.draw();
 }
 
 void drawTexturedColored(const Camera& camera, Shader& shader,
-                         const Geometry& geometry, const Transform& transform,
+                         const Geometry& geometry,
+                         const vvv::matrix44f& model_matrix,
                          const Texture& texture, const Color& color)
 {
-    setup_shader(shader, camera, transform);
+    setup_shader(shader, camera, model_matrix);
     shader.setTexturePosition(texture.getTexturePosition());
     shader.setTexture0(texture);
     shader.setColor0(color);
@@ -84,9 +84,10 @@ void drawTexturedColored(const Camera& camera, Shader& shader,
 }
 
 void drawText(const Camera& camera, Shader& shader, const Geometry& geometry,
-              const Transform& transform, const Font& font, const Color& color)
+              const vvv::matrix44f& model_matrix, const Font& font,
+              const Color& color)
 {
-    setup_shader(shader, camera, transform);
+    setup_shader(shader, camera, model_matrix);
     const auto& tex = font.getTexture();
     shader.setTexturePosition(tex.getTexturePosition());
     shader.setTexture0(tex);

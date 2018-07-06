@@ -18,37 +18,38 @@ namespace vvv3d {
 class Camera;
 class Shader;
 class Geometry;
-class Transform;
 class Texture;
 class Font;
 
 void drawTextured(const Camera& camera, Shader& shader,
-                  const Geometry& geometry, const Transform& transform,
+                  const Geometry& geometry, const vvv::matrix44f& model_matrix,
                   const Texture& texture);
 
 void drawTextured(const Camera& camera, Shader& shader,
-                  const Geometry& geometry, const Transform& transform,
+                  const Geometry& geometry, const vvv::matrix44f& model_matrix,
                   const Texture& texture0, const Texture& texture1);
 
 void drawTextured(const Camera& camera, Shader& shader,
-                  const Geometry& geometry, const Transform& transform,
+                  const Geometry& geometry, const vvv::matrix44f& model_matrix,
                   const Texture& texture0, const Texture& texture1,
                   const Texture& texture2);
 
 void drawTextured(const Camera& camera, Shader& shader,
-                  const Geometry& geometry, const Transform& transform,
+                  const Geometry& geometry, const vvv::matrix44f& model_matrix,
                   const Texture& texture0, const Texture& texture1,
                   const Texture& texture2, const Texture& texture3);
 
 void drawColored(const Camera& camera, Shader& shader, const Geometry& geometry,
-                 const Transform& transform, const Color& color0);
+                 const vvv::matrix44f& model_matrix, const Color& color0);
 
 void drawTexturedColored(const Camera& camera, Shader& shader,
-                         const Geometry& geometry, const Transform& transform,
+                         const Geometry& geometry,
+                         const vvv::matrix44f& model_matrix,
                          const Texture& texture, const Color& color);
 
 void drawText(const Camera& camera, Shader& shader, const Geometry& geometry,
-              const Transform& transform, const Font& font, const Color& color);
+              const vvv::matrix44f& model_matrix, const Font& font,
+              const Color& color);
 
 void scissor(int x, int y, int width, int height);
 void scissorDisable();
