@@ -56,6 +56,9 @@ private:
     struct _private {
     };
 
+    friend class ShaderManager;
+
+public:
     static std::unique_ptr<Shader> fromStrings(const std::string& name,
                                                const char* vertexSource,
                                                const char* fragmentSource,
@@ -65,9 +68,6 @@ private:
                                              const char* vertexFileName,
                                              const char* fragmentFileName,
                                              const char* geometryFileName = 0);
-    friend class ShaderManager;
-
-public:
     void activate();
 
     void setModel(const vvv::matrix44f& m);
@@ -118,6 +118,8 @@ public:
              const std::string& fragmentShaderFilename,
              const std::string& geometryShaderFilename);
     void add(const std::string& name, std::unique_ptr<Shader> shader);
+    void add(const std::string& name,
+             const std::function<std::unique_ptr<Shader>()>& f);
     void addFromSource(const std::string& name,
                        const std::string& vertexShaderSource,
                        const std::string& fragmentShaderSource);
@@ -127,11 +129,14 @@ public:
                        const std::string& geometryShaderSource);
 
     Shader& get(const std::string& name) const;
+    Shader& get(const std::string& name);
     bool contain(const std::string& name) const;
 
     std::vector<std::string> listNames() const;
 
 private:
     std::unordered_map<std::string, std::unique_ptr<Shader>> shaders;
+    using init_func_t = std::function<std::unique_ptr<Shader>(void)>;
+    std::unordered_map<std::string, init_func_t> initializers;
 };
 } // namespace vvv3d

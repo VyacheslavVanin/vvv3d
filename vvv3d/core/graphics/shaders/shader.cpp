@@ -387,7 +387,28 @@ void ShaderManager::add(const std::string& name, std::unique_ptr<Shader> shader)
     shaders[name].swap(shader);
 }
 
+void ShaderManager::add(const std::string& name,
+                        const std::function<std::unique_ptr<Shader>()>& f)
+{
+    initializers[name] = f;
+}
+
 Shader& ShaderManager::get(const std::string& name) const try {
+    return *shaders.at(name);
+}
+catch (std::exception& e) {
+    std::cerr << "failed to get shader \'" << name << "\'\n";
+    throw;
+}
+
+Shader& ShaderManager::get(const std::string& name) try {
+    if (!contain(name)) {
+        auto it = initializers.find(name);
+        if (it != initializers.end()) {
+            auto shader = it->second();
+            add(name, std::move(shader));
+        }
+    }
     return *shaders.at(name);
 }
 catch (std::exception& e) {
