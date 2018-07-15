@@ -15,9 +15,12 @@ public:
     }
 
     template <typename... Args>
-    void invoke(const std::string& name, Args&... args)
+    void invoke(const std::string& name, Args&... args) const
     {
-        actions[name](args...);
+        const auto& it = actions.find(name);
+        if (it == actions.end())
+            return;
+        it->second(args...);
     }
 
     const ActionList<T>& operator[](const std::string& name) const
