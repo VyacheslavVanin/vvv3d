@@ -26,4 +26,4 @@ private:
 
     double getFrameTime(double now) const;
 };
-}
+} // namespace vvv3d

@@ -1,8 +1,8 @@
 #pragma once
 #include <freetype2/ft2build.h>
-#include <unordered_map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include FT_FREETYPE_H
 
 namespace vvv3d {
@@ -15,7 +15,8 @@ public:
     MgrFreetype(const MgrFreetype&) = delete;
     MgrFreetype& operator=(const MgrFreetype&) = delete;
 
-    const FT_Face& addFont(const std::string& name, const std::string& fontPath);
+    const FT_Face& addFont(const std::string& name,
+                           const std::string& fontPath);
     void addFont(const std::string& fontNameOrPath);
     const FT_Face& getFont(const std::string& fontNameOrPath) const;
 

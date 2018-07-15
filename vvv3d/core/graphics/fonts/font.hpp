@@ -26,6 +26,7 @@ private:
     // part of workaround std::make_shared with private constructor
     struct _private {
     };
+
 public:
     const Glyph& getGlyph(uint32_t c) const;
     void activate(GLuint texUnit = 0);
@@ -39,6 +40,7 @@ public:
     explicit Font(const _private&) : Font() {}
 
     ~Font();
+
 private:
     Font();
     friend class FontManager;

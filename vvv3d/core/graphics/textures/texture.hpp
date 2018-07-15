@@ -42,7 +42,7 @@ public:
      * @brief getWidth get width of texture in pixels
      * @return  */
     GLuint getWidth() const { return size.x; }
-    const vvv::vector2i& getSize() const {return size;}
+    const vvv::vector2i& getSize() const { return size; }
 
     /**
      * @brief getFormat get OpenGL texture format ( GL_RGBA)

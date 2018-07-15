@@ -39,7 +39,7 @@ public:
     const Animation& get(const std::string& name) const;
 
     // Config have to contain something like this:
-    //animations
+    // animations
     //    animation1 frames=[texture_name, texture_name2, ...] length=1
     //    animation2 frames=[texture_name, texture_name2, ...] length=1
     void load(const vvv::CfgNode& cfg);
@@ -51,4 +51,4 @@ public:
 private:
     std::unordered_map<std::string, Animation> animations;
 };
-}
+} // namespace vvv3d
