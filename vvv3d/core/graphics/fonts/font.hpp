@@ -22,6 +22,10 @@ struct Glyph {
 class MgrFreetype;
 struct FontImpl;
 class Font {
+private:
+    // part of workaround std::make_shared with private constructor
+    struct _private {
+    };
 public:
     const Glyph& getGlyph(uint32_t c) const;
     void activate(GLuint texUnit = 0);
@@ -31,6 +35,10 @@ public:
     int getMinLeftGlyphEdge() const;
     int getHeight() const;
 
+    // part of workaround std::make_shared with private constructor
+    explicit Font(const _private&) : Font() {}
+
+    ~Font();
 private:
     Font();
     friend class FontManager;
@@ -51,7 +59,7 @@ public:
     const Font& getFont(const std::string& name) const;
 
 private:
-    std::map<std::string, std::unique_ptr<Font>> fonts;
+    std::map<std::string, std::shared_ptr<Font>> fonts;
     std::unique_ptr<MgrFreetype> freetypeMgr;
 };
 } // namespace vvv3d

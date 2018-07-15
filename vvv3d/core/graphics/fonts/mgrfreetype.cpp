@@ -10,11 +10,21 @@ MgrFreetype::MgrFreetype() : library(), fonts()
 
 MgrFreetype::~MgrFreetype() { FT_Done_FreeType(library); }
 
-FT_Face MgrFreetype::addFont(const std::string& name,
+const FT_Face& MgrFreetype::addFont(const std::string& name,
                              const std::string& fontPath)
 {
-    FT_Face face;
-    const FT_Error error = FT_New_Face(library, fontPath.c_str(), 0, &face);
+    auto name_it = fonts.find(name);
+    if (name_it != fonts.end())
+        return *name_it->second;
+
+    auto path_it = fonts.find(fontPath);
+    if (path_it != fonts.end()) {
+        fonts[name] = path_it->second;
+        return *path_it->second;
+    }
+
+    auto face = std::make_shared<FT_Face>();
+    const FT_Error error = FT_New_Face(library, fontPath.c_str(), 0, face.get());
     if (error == FT_Err_Unknown_File_Format)
         throw std::logic_error(
             "the font file could be opened and read, but it appears"
@@ -23,7 +33,8 @@ FT_Face MgrFreetype::addFont(const std::string& name,
         throw std::logic_error("the font file could not be opened or read, or "
                                "that it is broken...");
     fonts[name] = face;
-    return face;
+    fonts[fontPath] = face;
+    return *face;
 }
 
 void MgrFreetype::addFont(const std::string& fontNameOrPath)
@@ -31,8 +42,8 @@ void MgrFreetype::addFont(const std::string& fontNameOrPath)
     addFont(fontNameOrPath, fontNameOrPath);
 }
 
-FT_Face MgrFreetype::getFont(const std::string& fontNameOrPath) const
+const FT_Face& MgrFreetype::getFont(const std::string& fontNameOrPath) const
 {
-    return fonts.at(fontNameOrPath);
+    return *fonts.at(fontNameOrPath);
 }
 } // namespace vvv3d

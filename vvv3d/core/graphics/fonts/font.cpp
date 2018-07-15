@@ -182,6 +182,8 @@ int Font::getMinLeftGlyphEdge() const
 
 Font::Font() : pImpl() {}
 
+Font::~Font() = default;
+
 const Glyph& Font::getGlyph(uint32_t c) const
 {
     return pImpl->mapCharToGlyph.at(c);
@@ -206,10 +208,21 @@ void FontManager::addFont(const string& name, const string& filename,
 {
     bench timings("load font " + filename + " of size " +
                   std::to_string(fontsize) + " as " + name);
+
+    if (fonts.count(name))
+        return;
+
+    const auto it = fonts.find(filename);
+    if (it != fonts.end()) {
+        fonts[name] = it->second;
+        return;
+    }
+
     FT_Face face = freetypeMgr->addFont(name, filename);
-    auto f = new Font();
-    f->pImpl.reset(new FontImpl(face, fontsize, 16, 96, 256));
-    fonts[name].reset(f);
+    auto f = std::make_shared<Font>(Font::_private{});
+    f->pImpl = std::make_unique<FontImpl>(face, fontsize, 16, 96, 256);
+    fonts[name] = f;
+    fonts[filename] = f;
 }
 
 const Font& FontManager::getFont(const string& name) const
