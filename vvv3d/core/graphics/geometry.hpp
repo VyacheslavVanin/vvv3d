@@ -30,6 +30,9 @@ class GeometryManager {
 public:
     GeometryManager();
     void add(const std::string& name, std::unique_ptr<Geometry> geom);
+    void add(const std::string& name,
+             const std::function<std::unique_ptr<Geometry>()>& f);
+    const Geometry& get(const std::string& name) const;
     const Geometry& get(const std::string& name);
     std::vector<std::string> listNames() const;
     void clear();
@@ -37,5 +40,7 @@ public:
 
 private:
     std::unordered_map<std::string, std::unique_ptr<Geometry>> geometries;
+    using init_func_t = std::function<std::unique_ptr<Geometry>(void)>;
+    std::unordered_map<std::string, init_func_t> initializers;
 };
 } // namespace vvv3d

@@ -404,10 +404,8 @@ catch (std::exception& e) {
 Shader& ShaderManager::get(const std::string& name) try {
     if (!contain(name)) {
         auto it = initializers.find(name);
-        if (it != initializers.end()) {
-            auto shader = it->second();
-            add(name, std::move(shader));
-        }
+        if (it != initializers.end())
+            add(name, it->second());
     }
     return *shaders.at(name);
 }
