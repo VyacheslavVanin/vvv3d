@@ -42,7 +42,7 @@ public:
     /**
      * @brief Return time at the beginning of current frame.
      * @return seconds */
-    static double time();
+    static double frameTime();
 
     /**
      * @brief Return time passed between brginning of last frame and current.

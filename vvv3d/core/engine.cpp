@@ -102,7 +102,7 @@ float Engine::getCurrentFps() const { return currentfps; }
 void Engine::setVSync(bool vsync) { hal->setVSync(vsync); }
 GuiLayer& Engine::gui() { return gui_layer; }
 
-double Engine::time() { return clock.currentFrameTime(); }
+double Engine::frameTime() { return clock.currentFrameTime(); }
 
 double Engine::getTimeSinceLastFrame() { return clock.sinceLastFrame(); }
 

@@ -11,7 +11,7 @@ AnimationPlayer::AnimationPlayer()
 void AnimationPlayer::setAnimation(const Animation* animation)
 {
     this->animation = animation;
-    this->startTime = vvv3d::Engine::time();
+    this->startTime = vvv3d::Engine::frameTime();
 }
 
 void AnimationPlayer::setAnimation(const Animation& animation)
@@ -27,7 +27,7 @@ void AnimationPlayer::setSpeed(double speed)
     if (newSpeed == oldSpeed)
         return;
 
-    const auto now = vvv3d::Engine::time();
+    const auto now = vvv3d::Engine::frameTime();
     // Special case to avoid division to zero
     if (newSpeed == 0) {
         const auto sinceStartOfAnimation = getFrameTime(now);
@@ -68,14 +68,14 @@ const vvv3d::Texture* AnimationPlayer::getFrame(double time) const
     if (animation == nullptr)
         return nullptr;
 
-    const auto now = vvv3d::Engine::time();
+    const auto now = vvv3d::Engine::frameTime();
     const auto frameTime = getFrameTime(now);
     return animation->getFrame(frameTime);
 }
 
 const vvv3d::Texture* AnimationPlayer::getFrame() const
 {
-    const auto& now = vvv3d::Engine::time();
+    const auto& now = vvv3d::Engine::frameTime();
     return getFrame(now);
 }
 }
