@@ -43,6 +43,9 @@ public:
      * @brief Return time at the beginning of current frame.
      * @return seconds */
     static double frameTime();
+    static double currentTime();
+    static int64_t currentTimeMillis();
+    static int64_t currentTimeMicros();
 
     /**
      * @brief Return time passed between brginning of last frame and current.

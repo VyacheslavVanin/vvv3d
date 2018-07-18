@@ -103,6 +103,17 @@ void Engine::setVSync(bool vsync) { hal->setVSync(vsync); }
 GuiLayer& Engine::gui() { return gui_layer; }
 
 double Engine::frameTime() { return clock.currentFrameTime(); }
+double Engine::currentTime() { return clock.sinceEpoch(); }
+
+int64_t Engine::currentTimeMillis()
+{
+    return clock.sinceEpoch<std::chrono::milliseconds>();
+}
+
+int64_t Engine::currentTimeMicros()
+{
+    return clock.sinceEpoch<std::chrono::microseconds>();
+}
 
 double Engine::getTimeSinceLastFrame() { return clock.sinceLastFrame(); }
 
@@ -131,7 +142,8 @@ AnimationManager& getAnimationManager()
     return Engine::getActiveEngine().getResourceManager().getAnimationManager();
 }
 
-void Engine::load(const vvv::CfgNode& node) {
+void Engine::load(const vvv::CfgNode& node)
+{
     getTextureManager().load(node);
     getAnimationManager().load(node);
     gui().load(node);
