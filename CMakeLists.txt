@@ -19,6 +19,11 @@ if(WITH_DEPENDENCIES)
     add_subdirectory(vvvcfg)
 endif(WITH_DEPENDENCIES)
 
+option(WITH_GL_DEBUG "BUILD WITH GL DEBUG" OFF)
+if(WITH_GL_DEBUG)
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_GL")
+endif(WITH_GL_DEBUG)
+
 # Set include path
 include_directories(${FREETYPE_INCLUDE_DIRS}
                     ${SDL2_INCLUDE_DIRS}
