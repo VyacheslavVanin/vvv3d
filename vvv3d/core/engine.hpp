@@ -1,5 +1,7 @@
 #pragma once
 #include <memory>
+#include <atomic>
+
 #include <vvv3d/core/input.hpp>
 #include <vvv3d/core/time.hpp>
 #include <vvv3d/core/viewport.hpp>
@@ -25,10 +27,11 @@ public:
 
     void run();
     void stop();
+
     float getCurrentFps() const;
     const Viewport& getViewport() const;
-    static Engine& getActiveEngine();
     void setVSync(bool vsync);
+    bool isRunning() const;
 
     GuiLayer& gui();
 
@@ -39,6 +42,7 @@ public:
     void load(std::istream& stream);
     void load(const std::string& string);
 
+    static Engine& getActiveEngine();
     /**
      * @brief Return time at the beginning of current frame.
      * @return seconds */
@@ -70,6 +74,7 @@ private:
     Input input;
     static Time<> clock;
     vvv3d::GuiLayer gui_layer;
+    std::atomic<bool> is_running{false};
 };
 
 TextureManager& getTextureManager();

@@ -66,6 +66,7 @@ void Engine::run()
     const auto height = getViewport().getHeight();
     onResize(width, height);
     gui().resize(width, height);
+    is_running.store(true);
     hal->mainLoop();
 }
 
@@ -116,6 +117,8 @@ void Engine::resize(int x, int y)
 float Engine::getCurrentFps() const { return currentfps; }
 
 void Engine::setVSync(bool vsync) { hal->setVSync(vsync); }
+bool Engine::isRunning() const { return is_running.load(); }
+
 GuiLayer& Engine::gui() { return gui_layer; }
 
 double Engine::frameTime() { return clock.currentFrameTime(); }
