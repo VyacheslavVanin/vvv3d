@@ -670,49 +670,20 @@ inline matrix44<T>& matrix44<T>::loadRotationZ(T angle)
 template <typename T>
 inline matrix44<T>& matrix44<T>::loadTranslation(const vector3<T>& to)
 {
-    matrix[0][0] = 1;
-    matrix[0][1] = 0;
-    matrix[0][2] = 0;
-    matrix[0][3] = 0;
-
-    matrix[1][0] = 0;
-    matrix[1][1] = 1;
-    matrix[1][2] = 0;
-    matrix[1][3] = 0;
-
-    matrix[2][0] = 0;
-    matrix[2][1] = 0;
-    matrix[2][2] = 1;
-    matrix[2][3] = 0;
-
+    loadIdentity();
     matrix[3][0] = to.x;
     matrix[3][1] = to.y;
     matrix[3][2] = to.z;
-    matrix[3][3] = 1;
     return *this;
 }
 
 template <typename T>
 matrix44<T>& matrix44<T>::loadScale(const T& x, const T& y, const T& z)
 {
+    memset(matrix, 0, sizeof(matrix));
     matrix[0][0] = x;
-    matrix[0][1] = 0;
-    matrix[0][2] = 0;
-    matrix[0][3] = 0;
-
-    matrix[1][0] = 0;
     matrix[1][1] = y;
-    matrix[1][2] = 0;
-    matrix[1][3] = 0;
-
-    matrix[2][0] = 0;
-    matrix[2][1] = 0;
     matrix[2][2] = z;
-    matrix[2][3] = 0;
-
-    matrix[3][0] = 0;
-    matrix[3][1] = 0;
-    matrix[3][2] = 0;
     matrix[3][3] = 1;
     return *this;
 }
@@ -720,26 +691,7 @@ matrix44<T>& matrix44<T>::loadScale(const T& x, const T& y, const T& z)
 template <typename T>
 matrix44<T>& matrix44<T>::loadScale(const vector3<T>& s)
 {
-    matrix[0][0] = s.x;
-    matrix[0][1] = 0;
-    matrix[0][2] = 0;
-    matrix[0][3] = 0;
-
-    matrix[1][0] = 0;
-    matrix[1][1] = s.y;
-    matrix[1][2] = 0;
-    matrix[1][3] = 0;
-
-    matrix[2][0] = 0;
-    matrix[2][1] = 0;
-    matrix[2][2] = s.z;
-    matrix[2][3] = 0;
-
-    matrix[3][0] = 0;
-    matrix[3][1] = 0;
-    matrix[3][2] = 0;
-    matrix[3][3] = 1;
-    return *this;
+    return loadScale(s.x, s.y, s.z);
 }
 
 template <typename T>

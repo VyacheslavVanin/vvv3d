@@ -14,6 +14,7 @@
 #include <iomanip>
 #include <ostream>
 #include <stdexcept>
+#include <string.h>
 
 namespace vvv {
 
@@ -26,38 +27,10 @@ public:
 
     matrix44<T>& loadIdentity()
     {
-        for (size_t i = 0; i < 4; ++i) {
-            for (size_t j = 0; j < 4; ++j) {
-                matrix[i][j] = 0.0;
-            }
-        }
+        memset(matrix, 0, sizeof(matrix));
         matrix[0][0] = 1;
         matrix[1][1] = 1;
         matrix[2][2] = 1;
-        matrix[3][3] = 1;
-        return *this;
-    }
-
-    matrix44<T>& loadScale(T x, T y, T z)
-    {
-        matrix[0][0] = x;
-        matrix[0][1] = 0;
-        matrix[0][2] = 0;
-        matrix[0][3] = 0;
-
-        matrix[1][0] = 0;
-        matrix[1][1] = y;
-        matrix[1][2] = 0;
-        matrix[1][3] = 0;
-
-        matrix[2][0] = 0;
-        matrix[2][1] = 0;
-        matrix[2][2] = z;
-        matrix[2][3] = 0;
-
-        matrix[3][0] = 0;
-        matrix[3][1] = 0;
-        matrix[3][2] = 0;
         matrix[3][3] = 1;
         return *this;
     }
@@ -102,22 +75,12 @@ public:
         const T f = 1 / tan(fovy * M_PI / 360);
         const T A = (zFar + zNear) / (zNear - zFar);
         const T B = (2 * zFar * zNear) / (zNear - zFar);
+        memset(matrix, 0, sizeof(matrix));
         matrix[0][0] = f / aspect;
-        matrix[0][1] = 0;
-        matrix[0][2] = 0;
-        matrix[0][3] = 0;
-        matrix[1][0] = 0;
         matrix[1][1] = f;
-        matrix[1][2] = 0;
-        matrix[1][3] = 0;
-        matrix[2][0] = 0;
-        matrix[2][1] = 0;
         matrix[2][2] = A;
         matrix[2][3] = -1;
-        matrix[3][0] = 0;
-        matrix[3][1] = 0;
         matrix[3][2] = B;
-        matrix[3][3] = 0;
         return *this;
     }
 
