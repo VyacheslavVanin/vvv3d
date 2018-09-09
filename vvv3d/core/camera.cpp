@@ -131,6 +131,18 @@ Camera& Camera::setOrthoWidth(const Viewport& viewport, float width,
     return setOrtho(-w, w, -h, h, zNear, zFar);
 }
 
+Camera& Camera::setOrtho(const Viewport& viewport, float width, float height,
+                         float zNear, float zFar)
+{
+    const Viewport field(width, height);
+    const auto field_aspect = field.getAspect();
+    const auto viewport_aspect = viewport.getAspect();
+    if (field_aspect < viewport_aspect)
+        return setOrthoHeight(viewport, height, zNear, zFar);
+    else
+        return setOrthoWidth(viewport, width, zNear, zFar);
+}
+
 Camera& Camera::setPerspective(float fovy, float aspect, float zNear,
                                float zFar)
 {
