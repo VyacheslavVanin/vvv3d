@@ -61,6 +61,10 @@ void TextureManager::add(const std::string& filename)
 void TextureManager::safe_add(const std::string& filename) try {
     add(filename);
 }
+catch (const std::exception& e) {
+    std::cerr << "TextureManager: Failed to load \"" << filename << "\"\n";
+    std::cerr << "\t\"" << e.what() << "\"\n";
+}
 catch (...) {
     std::cerr << "TextureManager: Failed to load \"" << filename << "\"\n";
 }
