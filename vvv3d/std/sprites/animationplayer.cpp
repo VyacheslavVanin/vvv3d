@@ -8,10 +8,20 @@ AnimationPlayer::AnimationPlayer()
 {
 }
 
-void AnimationPlayer::setAnimation(const Animation* animation)
+void AnimationPlayer::setAnimation(const Animation* animation, double startTime)
 {
     this->animation = animation;
-    this->startTime = vvv3d::Engine::frameTime();
+    this->startTime = startTime;
+}
+
+void AnimationPlayer::setAnimation(const Animation& animation, double startTime)
+{
+    setAnimation(&animation, startTime);
+}
+
+void AnimationPlayer::setAnimation(const Animation* animation)
+{
+    setAnimation(animation, vvv3d::Engine::frameTime());
 }
 
 void AnimationPlayer::setAnimation(const Animation& animation)
@@ -21,13 +31,19 @@ void AnimationPlayer::setAnimation(const Animation& animation)
 
 void AnimationPlayer::setSpeed(double speed)
 {
+    const auto now = vvv3d::Engine::frameTime();
+    setSpeed(speed, now);
+}
+
+void AnimationPlayer::setSpeed(double speed, double speedChangeTime)
+{
     const auto newSpeed = speed;
     const auto oldSpeed = this->speed;
 
     if (newSpeed == oldSpeed)
         return;
 
-    const auto now = vvv3d::Engine::frameTime();
+    const auto& now = speedChangeTime;
     // Special case to avoid division to zero
     if (newSpeed == 0) {
         const auto sinceStartOfAnimation = getFrameTime(now);
@@ -68,8 +84,7 @@ const vvv3d::Texture* AnimationPlayer::getFrame(double time) const
     if (animation == nullptr)
         return nullptr;
 
-    const auto now = vvv3d::Engine::frameTime();
-    const auto frameTime = getFrameTime(now);
+    const auto frameTime = getFrameTime(time);
     return animation->getFrame(frameTime);
 }
 
@@ -78,4 +93,4 @@ const vvv3d::Texture* AnimationPlayer::getFrame() const
     const auto& now = vvv3d::Engine::frameTime();
     return getFrame(now);
 }
-}
+} // namespace vvv3d

@@ -33,7 +33,7 @@ const vvv3d::Texture* Animation::getFrame(double t) const
 
     const auto l = std::lower_bound(frames.begin(), frames.end(), t,
                                     [](const AnimationFrame& f, double t) {
-                                        return f.timestamp < t;
+                                        return f.timestamp <= t;
                                     }) -
                    1;
     return l->frame;
