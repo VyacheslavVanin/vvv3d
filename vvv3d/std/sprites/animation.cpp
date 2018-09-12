@@ -75,6 +75,7 @@ Animation make_animation(const vvv::CfgNode& node) {
     const auto& frame_duration = animation_length / frames_count;
     for (const auto& frame: frames)
         ret.addFrame(&texman.get(frame), frame_duration);
+    ret.setName(node.getName());
     return ret;
 }
 }
@@ -84,8 +85,10 @@ void AnimationManager::load(const vvv::CfgNode& cfg)
     if (!cfg.hasChild("animations"))
         return;
 
-   for (const auto& c: cfg.getChild("animations").getChildren())
-       add(c.getName(), make_animation(c));
+   for (const auto& c: cfg.getChild("animations").getChildren()) {
+       auto animation = make_animation(c);
+       add(animation.getName(), std::move(animation));
+   }
 }
 
 void AnimationManager::load(const std::string& string)
