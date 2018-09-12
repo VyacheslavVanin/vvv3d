@@ -1,47 +1,7 @@
 #include <gtest/gtest.h>
+#include "vvv3dfixture.hpp"
 #include <vvv3d/vvv3d.hpp>
 #include <vvv3d/vvv3dgui.hpp>
-
-class TestEngine : public vvv3d::Engine {
-public:
-    TestEngine(int argc, char** argv, const char* wname = "Vvv3d Hello World");
-    // Engine interface
-protected:
-    void initialSetup() override;
-    void onDraw() override;
-    void onResize(int x, int y) override;
-    int frame_counter = 0;
-};
-TestEngine::TestEngine(int argc, char** argv, const char* wname)
-    : vvv3d::Engine(argc, argv, wname)
-{
-}
-
-// Override Engine interface
-void TestEngine::initialSetup() { frame_counter = 0; }
-void TestEngine::onDraw()
-{
-    if (++frame_counter > 1)
-        stop();
-}
-void TestEngine::onResize(int x, int y) {}
-
-class vvv3dFixture : public ::testing::Test {
-public:
-    vvv3dFixture()
-    {
-        static char name[] = "vvv3d";
-        static char* argv[]{name};
-        e = new TestEngine(1, argv);
-    }
-
-    void SetUp() {}
-    void TearDown() {}
-
-    ~vvv3dFixture() { delete e; }
-
-    vvv3d::Engine* e;
-};
 
 TEST_F(vvv3dFixture, gui)
 {
