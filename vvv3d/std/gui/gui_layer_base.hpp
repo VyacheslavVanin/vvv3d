@@ -19,6 +19,7 @@ public:
     void addWidget(Widget* widget);
     void removeWidget(Widget* widget);
     void resize(int width, int height);
+    void resize(const vvv::vector2i& size);
     const vvv::vector2<int>& getSize() const;
 
     const vvv3d::Camera& getCamera() const;

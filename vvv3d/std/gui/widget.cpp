@@ -1,6 +1,6 @@
-#include "widget.hpp"
 #include "gui_layer_base.hpp"
 #include "rect.hpp"
+#include "widget.hpp"
 #include <algorithm>
 #include <memory>
 #include <vector>
@@ -108,10 +108,7 @@ void Widget::setVisible(bool visible) { this->visible = visible; }
 
 void Widget::toggleVisible() { setVisible(!isVisible()); }
 
-bool Widget::isIgnoreContentChanged() const
-{
-    return ignore_content_changed;
-}
+bool Widget::isIgnoreContentChanged() const { return ignore_content_changed; }
 
 void Widget::setIgnoreContentChanged(bool ignore)
 {
@@ -301,6 +298,8 @@ void Widget::onContentChanged() {}
 const Camera& Widget::getCamera() const { return layer->getCamera(); }
 
 const std::vector<Widget*>& Widget::getChildren() const { return children; }
+
+void Widget::loadResources() {}
 
 Widget::~Widget()
 {

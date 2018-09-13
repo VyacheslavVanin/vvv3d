@@ -20,9 +20,9 @@ static std::unique_ptr<Geometry> makeRectGeometry()
         GL_TRIANGLES);
 }
 
-static void loadSolidRectShader()
+static std::unique_ptr<vvv3d::Shader> loadSolidRectShader()
 {
-    const char* fsh = R"(
+    static const char* fsh = R"(
     #version 300 es
     precision mediump float;
     uniform vec4 color0;
@@ -35,7 +35,7 @@ static void loadSolidRectShader()
     }
     )";
 
-    const char* vsh = R"(
+    static const char* vsh = R"(
     #version 300 es
     in vec2 va_position;
     uniform mat4    viewProjectionMatrix;
@@ -48,18 +48,12 @@ static void loadSolidRectShader()
         gl_Position  = viewProjectionMatrix*vec4(fullPosition, 0 ,1 ) ;
     }
     )";
-    auto& sm = getShaderManager();
-    sm.addFromSource("SolidRect", vsh, fsh);
+    return vvv3d::Shader::fromStrings("SolidRect", vsh, fsh);
 }
 
 ColorRectWidget::ColorRectWidget(const Color& color) : color(color)
 {
-    static std::once_flag flag;
-    std::call_once(flag, []() {
-        auto& geomMan = getGeometryManager();
-        geomMan.add("SolidRect", makeRectGeometry());
-        loadSolidRectShader();
-    });
+    loadResources(); // TODO: need more centralized aproach to init resources
     setSize(60, 60);
 }
 
@@ -87,6 +81,14 @@ void ColorRectWidget::onDraw()
     sh.setViewProjection(camera.getViewProjection());
 
     geom.draw();
+}
+
+void ColorRectWidget::loadResources() {
+    auto& geomMan = getGeometryManager();
+    geomMan.add("SolidRect", makeRectGeometry);
+
+    auto& shaderMan = getShaderManager();
+    shaderMan.add("SolidRect", loadSolidRectShader);
 }
 
 ColorRectWidget::~ColorRectWidget() = default;

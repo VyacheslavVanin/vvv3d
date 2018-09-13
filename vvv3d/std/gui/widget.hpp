@@ -70,6 +70,8 @@ public:
     void setVisible(bool visible);
     void toggleVisible();
 
+    virtual void loadResources();
+
 private:
     static Widget* focus;
     bool focusable = false;

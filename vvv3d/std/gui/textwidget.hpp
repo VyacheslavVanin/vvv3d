@@ -26,6 +26,8 @@ public:
     explicit TextWidget(const std::string& text = "Text");
     ~TextWidget() override;
 
+    void loadResources() override;
+
     void setText(const std::string& text) override;
     const std::string& getText() const override;
     void setText(std::string&& text);

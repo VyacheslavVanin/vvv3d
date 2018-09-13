@@ -45,6 +45,11 @@ void GuiLayerBase::resize(int width, int height)
     size.set(width, height);
 }
 
+void GuiLayerBase::resize(const vvv::vector2i& size)
+{
+    resize(size.x, size.y);
+}
+
 const vvv::vector2<int>& GuiLayerBase::getSize() const { return size; }
 
 const Camera& GuiLayerBase::getCamera() const { return camera; }

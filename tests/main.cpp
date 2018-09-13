@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
-#include "vvv3dfixture.hpp"
+
 #include <vvv3d/vvv3d.hpp>
 #include <vvv3d/vvv3dgui.hpp>
+
+#include "vvv3dfixture.hpp"
 
 TEST_F(vvv3dFixture, gui)
 {
@@ -94,7 +96,45 @@ gui
     EXPECT_EQ(button3->getPosition().x, 193);
     EXPECT_EQ(button3->getPosition().y, 1);
 
+    int counter = 0;
+    e->setDrawFunc([this, &counter] {
+        if (++counter > 1)
+            e->stop();
+    });
     // Check render without segfaults
+    e->run();
+}
+
+TEST_F(vvv3dFixture, do_not_expand)
+{
+    e->gui().load(R"(
+gui
+    panel type=panel pos=[30, 30]
+        hl type=hlayout padding=16
+            text type=label text="co"
+            value type=label text="0"
+    )");
+
+    auto& gui = e->gui();
+    auto panel = gui.get("panel");
+
+    gui.setText("value", "222222");
+    const auto panel_size = panel->getSize();
+
+    int counter = 0;
+    e->setDrawFunc([this, &counter, &panel_size] {
+        auto& gui = e->gui();
+        auto panel = gui.get("panel");
+
+        switch (counter % 2) {
+        case 0: gui.setText("value", "1"); break;
+        case 1: gui.setText("value", "22"); break;
+        }
+        EXPECT_LE(panel->getSize().x, panel_size.x);
+
+        if (++counter > 2)
+            e->stop();
+    });
     e->run();
 }
 

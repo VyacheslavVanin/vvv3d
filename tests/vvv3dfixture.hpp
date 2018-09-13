@@ -6,12 +6,14 @@
 class TestEngine : public vvv3d::Engine {
 public:
     TestEngine(int argc, char** argv, const char* wname = "Vvv3d Hello World");
+    void setDrawFunc(const std::function<void()>& func);
     // Engine interface
 protected:
     void initialSetup() override;
     void onDraw() override;
     void onResize(int x, int y) override;
     int frame_counter = 0;
+    std::function<void()> func;
 };
 
 class vvv3dFixture : public ::testing::Test {
@@ -21,5 +23,5 @@ public:
     void SetUp() {}
     void TearDown() {}
 
-    std::unique_ptr<vvv3d::Engine> e;
+    std::unique_ptr<TestEngine> e;
 };

@@ -12,8 +12,11 @@ public:
     explicit ColorRectWidget(const vvv3d::Color& colour);
     ~ColorRectWidget();
 
+    void loadResources() override;
+
     void setColor(const vvv3d::Color& colour) override;
     const vvv3d::Color& getColor() const override;
+    
 
 private:
     vvv3d::Color color;

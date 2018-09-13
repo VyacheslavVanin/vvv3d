@@ -16,9 +16,9 @@ int textLineWidth(const std::u32string& text, const Font& f)
 
 int textLineHeight(const Font& f) { return f.getAscender() - f.getDescender(); }
 
-static void loadTextShader()
+static std::unique_ptr<vvv3d::Shader> loadTextShader()
 {
-    const char* fsh = R"(
+    static const char* fsh = R"(
     #version 300 es
     precision mediump float;
     uniform sampler2D texture0;
@@ -34,7 +34,7 @@ static void loadTextShader()
     }
     )";
 
-    const char* vsh = R"(
+    static const char* vsh = R"(
     #version 300 es
     uniform mat4    modelMatrix;
     uniform mat4    viewProjectionMatrix;
@@ -49,8 +49,7 @@ static void loadTextShader()
         out_texCoord = va_texCoord;
     }
     )";
-    auto& sm = getShaderManager();
-    sm.addFromSource("text", vsh, fsh);
+    return vvv3d::Shader::fromStrings("text", vsh, fsh);
 }
 
 TextWidget::TextWidget(const std::string& text)
@@ -58,15 +57,13 @@ TextWidget::TextWidget(const std::string& text)
       transform(), text(text), text32(), geometry(), font(), text_changed(true),
       geometry_changed(true)
 {
-    static std::once_flag flag;
-    std::call_once(flag, []() { loadTextShader(); });
+    loadResources();
 
     auto& fontMan = getFontManager();
     font = &fontMan.getFont("default");
     geometry = createTextGeometry(*font, text);
 
     resizeToContent();
-    setMinSize(1, getHeight());
 }
 
 void TextWidget::autoresize()
@@ -139,7 +136,7 @@ void TextWidget::resizeToContent()
     lazyUpdateText();
     const int lineWidth = textLineWidth(text32, *font);
     const int lineHeight = textLineHeight(*font);
-    setSize(lineWidth, lineHeight);
+    setMinSize(lineWidth, lineHeight);
 }
 
 void TextWidget::setAutoResize(bool value)
@@ -238,6 +235,11 @@ void TextWidget::onDraw()
 
     drawTexturedColored(camera, sh, geometry, transform.getModelMatrix(),
                         texture, this->color);
+}
+
+void TextWidget::loadResources() {
+    auto& sm = getShaderManager();
+    sm.add("text", loadTextShader);
 }
 
 TextWidget::~TextWidget() = default;
