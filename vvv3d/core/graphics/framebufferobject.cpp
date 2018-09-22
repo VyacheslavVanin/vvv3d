@@ -93,7 +93,8 @@ bool FrameBufferObject::beginDrawToDepthTexture(LowLevelTexture& depth)
 void FrameBufferObject::endDraw() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
 
 namespace vvv3d {
-void drawToColorTexture(LowLevelTexture& texture, const std::function<void()>& draw)
+void drawToColorTexture(LowLevelTexture& texture,
+                        const std::function<void()>& draw)
 {
     FrameBufferObject fbo;
     fbo.beginDrawToColorTexture(texture);
@@ -101,7 +102,8 @@ void drawToColorTexture(LowLevelTexture& texture, const std::function<void()>& d
     fbo.endDraw();
 }
 
-void drawToDepthTexture(LowLevelTexture& texture, const std::function<void()>& draw)
+void drawToDepthTexture(LowLevelTexture& texture,
+                        const std::function<void()>& draw)
 {
     FrameBufferObject fbo;
     fbo.beginDrawToDepthTexture(texture);
@@ -109,7 +111,8 @@ void drawToDepthTexture(LowLevelTexture& texture, const std::function<void()>& d
     fbo.endDraw();
 }
 
-void drawToColorAndDepthTextures(LowLevelTexture& color_texture, LowLevelTexture& depth_texture,
+void drawToColorAndDepthTextures(LowLevelTexture& color_texture,
+                                 LowLevelTexture& depth_texture,
                                  const std::function<void()>& draw)
 {
     FrameBufferObject fbo;
@@ -131,7 +134,8 @@ void drawToDepthTexture(Texture& texture, const std::function<void()>& draw)
 void drawToColorAndDepthTextures(Texture& color_texture, Texture& depth_texture,
                                  const std::function<void()>& draw)
 {
-    drawToColorAndDepthTextures(color_texture.getLowLevelTexture(), depth_texture.getLowLevelTexture(), draw);
+    drawToColorAndDepthTextures(color_texture.getLowLevelTexture(),
+                                depth_texture.getLowLevelTexture(), draw);
 }
 
 Texture drawToColorTexture(size_t width, size_t height,

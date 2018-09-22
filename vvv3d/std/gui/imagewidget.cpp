@@ -38,10 +38,7 @@ void ImageWidget::setAutoResize(bool value)
     autoresize();
 }
 
-bool ImageWidget::isAutoResize() const
-{
-    return autosize;
-}
+bool ImageWidget::isAutoResize() const { return autosize; }
 
 void ImageWidget::autoresize()
 {

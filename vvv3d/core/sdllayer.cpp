@@ -148,9 +148,9 @@ public:
           idleFunction(), profile(profile), major_ver(major_ver),
           minor_ver(minor_ver)
     {
-        switch(profile) {
-            case GLPROFILE::CORE: printf("Use gl core profile\n"); break;
-            case GLPROFILE::ES: printf("Use gl es profile\n"); break;
+        switch (profile) {
+        case GLPROFILE::CORE: printf("Use gl core profile\n"); break;
+        case GLPROFILE::ES: printf("Use gl es profile\n"); break;
         }
     }
 

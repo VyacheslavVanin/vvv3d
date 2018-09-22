@@ -96,7 +96,8 @@ bench::~bench()
     const auto now = std::chrono::system_clock::now();
     const auto us =
         std::chrono::duration_cast<std::chrono::microseconds>(now - start);
-    std::cout << std::string(2*depth, ' ') << msg << ": " << us.count() << " us\n";
+    std::cout << std::string(2 * depth, ' ') << msg << ": " << us.count()
+              << " us\n";
 }
 
 #if defined ENABLE_3DS

@@ -65,7 +65,8 @@ const Animation& AnimationManager::get(const std::string& name) const
 }
 
 namespace {
-Animation make_animation(const vvv::CfgNode& node) {
+Animation make_animation(const vvv::CfgNode& node)
+{
     auto& texman = vvv3d::getTextureManager();
 
     Animation ret;
@@ -73,22 +74,22 @@ Animation make_animation(const vvv::CfgNode& node) {
     const auto& frames = node.getProperty("frames").asStringList();
     const auto& frames_count = frames.size();
     const auto& frame_duration = animation_length / frames_count;
-    for (const auto& frame: frames)
+    for (const auto& frame : frames)
         ret.addFrame(&texman.get(frame), frame_duration);
     ret.setName(node.getName());
     return ret;
 }
-}
+} // namespace
 
 void AnimationManager::load(const vvv::CfgNode& cfg)
 {
     if (!cfg.hasChild("animations"))
         return;
 
-   for (const auto& c: cfg.getChild("animations").getChildren()) {
-       auto animation = make_animation(c);
-       add(animation.getName(), std::move(animation));
-   }
+    for (const auto& c : cfg.getChild("animations").getChildren()) {
+        auto animation = make_animation(c);
+        add(animation.getName(), std::move(animation));
+    }
 }
 
 void AnimationManager::load(const std::string& string)
@@ -114,4 +115,4 @@ void AnimationManager::init()
 
     add("default", std::move(default_animation));
 }
-}
+} // namespace vvv3d

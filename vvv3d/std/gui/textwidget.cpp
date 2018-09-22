@@ -237,7 +237,8 @@ void TextWidget::onDraw()
                         texture, this->color);
 }
 
-void TextWidget::loadResources() {
+void TextWidget::loadResources()
+{
     auto& sm = getShaderManager();
     sm.add("text", loadTextShader);
 }

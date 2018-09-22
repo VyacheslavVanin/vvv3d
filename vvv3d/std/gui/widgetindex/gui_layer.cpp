@@ -1,8 +1,8 @@
 #include "gui_layer.hpp"
 
-#include <unordered_map>
-#include <string>
 #include <iostream>
+#include <string>
+#include <unordered_map>
 #include <vvv3d/vvv3d.hpp>
 #include <vvv3d/vvv3dgui.hpp>
 #include <vvvcfg/vvvcfg.hpp>
@@ -93,13 +93,13 @@ void GuiLayer::load(const vvv::CfgNode& cfg)
         auto w = addWidgetNode(c);
         top_widgets.push_back(w);
     }
-    for (auto w: topWidgets())
+    for (auto w : topWidgets())
         addWidget(w);
 }
 
 void GuiLayer::clear()
 {
-    for (auto w: topWidgets()) {
+    for (auto w : topWidgets()) {
         removeWidget(w);
         delete w;
     }
@@ -115,8 +115,7 @@ GuiLayer::getByShortName(const std::string& name) const
     return nullptr;
 }
 
-GuiLayer::widget_ptr_type
-GuiLayer::getByFullName(const std::string& name) const
+GuiLayer::widget_ptr_type GuiLayer::getByFullName(const std::string& name) const
 {
     auto it = full_name_map.find(name);
     if (it != full_name_map.end())
@@ -147,11 +146,11 @@ std::string GuiLayer::getText(const std::string& widget_name) const
 }
 
 void GuiLayer::setColor(const std::string& widget_name,
-                           const vvv3d::Color& color)
+                        const vvv3d::Color& color)
 {
     auto w = get<vvv3d::IColorProperty>(widget_name);
     if (w)
         return w->setColor(color);
     log("Error: \"" + widget_name + "\" does not implement IColorProperty");
 }
-}
+} // namespace vvv3d

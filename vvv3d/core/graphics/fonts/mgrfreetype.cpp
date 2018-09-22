@@ -11,7 +11,7 @@ MgrFreetype::MgrFreetype() : library(), fonts()
 MgrFreetype::~MgrFreetype() { FT_Done_FreeType(library); }
 
 const FT_Face& MgrFreetype::addFont(const std::string& name,
-                             const std::string& fontPath)
+                                    const std::string& fontPath)
 {
     auto name_it = fonts.find(name);
     if (name_it != fonts.end())
@@ -24,7 +24,8 @@ const FT_Face& MgrFreetype::addFont(const std::string& name,
     }
 
     auto face = std::make_shared<FT_Face>();
-    const FT_Error error = FT_New_Face(library, fontPath.c_str(), 0, face.get());
+    const FT_Error error =
+        FT_New_Face(library, fontPath.c_str(), 0, face.get());
     if (error == FT_Err_Unknown_File_Format)
         throw std::logic_error(
             "the font file could be opened and read, but it appears"

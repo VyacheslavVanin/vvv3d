@@ -1,7 +1,7 @@
 #include "systemfonts.hpp"
 #include <algorithm>
-#include <fontconfig/fontconfig.h>
 #include <cstring>
+#include <fontconfig/fontconfig.h>
 #include <vector>
 
 namespace vvv3d {
@@ -86,15 +86,15 @@ SystemFonts::SystemFonts()
       defaultBold(loadFirstOflist({{"DejaVu Sans", "Bold"},
                                    {"Droid Sans", "Bold"},
                                    {"Liberation Sans", "Bold"}},
-				   defaultRegular)),
+                                  defaultRegular)),
       defaultItalic(loadFirstOflist({{"DejaVu Sans", "Oblique"},
                                      {"Droid Serif", "Italic"},
                                      {"Liberation Sans", "Italic"}},
-				     defaultBold)),
+                                    defaultBold)),
       defaultMono(loadFirstOflist({{"DejaVu Sans Mono", "Book"},
                                    {"Droid Sans Mono", "Regular"},
                                    {"Liberation Mono", "Regular"}},
-				   defaultBold))
+                                  defaultBold))
 {
 }
 

@@ -59,28 +59,28 @@ void GeometryManager::add(const string& name, std::unique_ptr<Geometry> geom)
 }
 
 void GeometryManager::add(const std::string& name,
-             const std::function<std::unique_ptr<Geometry>()>& f)
+                          const std::function<std::unique_ptr<Geometry>()>& f)
 {
     initializers[name] = f;
 }
 
-const Geometry& GeometryManager::get(const string& name) const try
-{
+const Geometry& GeometryManager::get(const string& name) const try {
     return *geometries.at(name);
-} catch (const std::exception& e) {
+}
+catch (const std::exception& e) {
     std::cerr << "failed to get geometry \'" << name << "\'\n";
     throw;
 }
 
-const Geometry& GeometryManager::get(const string& name) try
-{
+const Geometry& GeometryManager::get(const string& name) try {
     if (!contain(name)) {
         auto it = initializers.find(name);
         if (it != initializers.end())
             add(name, it->second());
     }
     return *geometries.at(name);
-} catch (const std::exception& e) {
+}
+catch (const std::exception& e) {
     std::cerr << "failed to get geometry \'" << name << "\'\n";
     throw;
 }

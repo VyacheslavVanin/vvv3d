@@ -2,9 +2,9 @@
 #include <boost/gil/gil_all.hpp>
 #include <boost/version.hpp>
 #if BOOST_VERSION >= 106800
-#include <fstream>
 #include <boost/gil/extension/io/jpeg.hpp>
 #include <boost/gil/extension/io/png.hpp>
+#include <fstream>
 #else
 #include <boost/gil/extension/io/jpeg_io.hpp>
 #include <boost/gil/extension/io/png_io.hpp>
@@ -91,18 +91,20 @@ toLowLevelTexture(const boost::gil::image<boost::gil::rgba8_pixel_t>& im)
 
 #if BOOST_VERSION >= 106800
 namespace {
-template<typename TAG, typename TI>
-void read_image(const char* filename, TI& image) {
+template <typename TAG, typename TI>
+void read_image(const char* filename, TI& image)
+{
     namespace bg = boost::gil;
     std::ifstream stream(filename, std::ios::binary);
     bg::image_read_settings<TAG> read_settings;
     bg::read_and_convert_image(stream, image, read_settings);
 }
-}
+} // namespace
 #endif
 
-template<typename T>
-void png_write(const char* filename, const T& view) {
+template <typename T>
+void png_write(const char* filename, const T& view)
+{
 #if BOOST_VERSION < 106800
     png_write_view(filename, view);
 #else
@@ -113,7 +115,7 @@ void png_write(const char* filename, const T& view) {
     bg::write_view(stream, view, write_info);
 #endif
 }
-}
+} // namespace
 
 LowLevelTexture* readFromPng(const char* filename)
 {
@@ -193,8 +195,7 @@ void writeToPng(const char* filename, const LowLevelTexture* llt)
 
     using namespace boost::gil;
     auto view = flipped_up_down_view(interleaved_view(
-                       width, height, (const rgba8_pixel_t*)data.data(),
-                       numChannels * width));
+        width, height, (const rgba8_pixel_t*)data.data(), numChannels * width));
     png_write(filename, view);
 }
 

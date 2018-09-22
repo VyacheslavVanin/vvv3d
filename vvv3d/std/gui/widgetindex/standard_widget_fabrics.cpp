@@ -24,10 +24,11 @@ vvv3d::LineEdit* makeLineEdit() { return new vvv3d::LineEdit(); }
 
 vvv3d::SliderH* makeSliderH() { return new vvv3d::SliderH(); }
 
-vvv3d::ImageWidget* makeImage() {
+vvv3d::ImageWidget* makeImage()
+{
     auto& tm = getTextureManager();
     auto ret = new vvv3d::ImageWidget();
     ret->setTexture(tm.get("default"));
     return ret;
 }
-}
+} // namespace vvv3d

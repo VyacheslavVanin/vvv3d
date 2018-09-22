@@ -27,11 +27,13 @@ public:
 
     std::string getText(const std::string& widget_name) const;
     void setText(const std::string& widget_name, const std::string& text);
-    inline void setText(const std::string& widget_name, const char* text) {
+    inline void setText(const std::string& widget_name, const char* text)
+    {
         setText(widget_name, std::string(text));
     }
-    template<typename T>
-    inline void setText(const std::string& widget_name, const T& value) {
+    template <typename T>
+    inline void setText(const std::string& widget_name, const T& value)
+    {
         setText(widget_name, std::to_string(value));
     }
 

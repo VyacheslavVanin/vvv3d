@@ -2,10 +2,10 @@
 #include "utils/myutils.hpp"
 #include <core/graphics/lowlevel/openglprovider.hpp>
 #include <cstdint>
+#include <cstring>
 #include <iostream>
 #include <memory>
 #include <stdexcept>
-#include <cstring>
 #include <string>
 
 using namespace vvv3d;

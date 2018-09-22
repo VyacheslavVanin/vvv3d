@@ -1,6 +1,6 @@
+#include "widget.hpp"
 #include "gui_layer_base.hpp"
 #include "rect.hpp"
-#include "widget.hpp"
 #include <algorithm>
 #include <memory>
 #include <vector>

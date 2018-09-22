@@ -83,7 +83,8 @@ void ColorRectWidget::onDraw()
     geom.draw();
 }
 
-void ColorRectWidget::loadResources() {
+void ColorRectWidget::loadResources()
+{
     auto& geomMan = getGeometryManager();
     geomMan.add("SolidRect", makeRectGeometry);
 

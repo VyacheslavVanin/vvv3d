@@ -1,6 +1,6 @@
 #pragma once
-#include <memory>
 #include <atomic>
+#include <memory>
 
 #include <vvv3d/core/input.hpp>
 #include <vvv3d/core/time.hpp>
