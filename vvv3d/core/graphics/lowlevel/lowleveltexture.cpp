@@ -6,11 +6,11 @@
 #include <boost/gil/extension/io/png.hpp>
 #include <fstream>
 #else
+#define png_infopp_NULL (png_infopp) NULL
+#define int_p_NULL (int*)NULL
 #include <boost/gil/extension/io/jpeg_io.hpp>
 #include <boost/gil/extension/io/png_io.hpp>
 #endif
-#define png_infopp_NULL (png_infopp) NULL
-#define int_p_NULL (int*)NULL
 #include "utils/helper.hpp"
 #include "vvv3d/core/graphics/framebufferobject.hpp"
 
