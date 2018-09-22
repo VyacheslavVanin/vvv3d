@@ -38,6 +38,9 @@ void readImage(const LowLevelTexture* llt, void* out, GLenum format,
                GLenum type);
 LowLevelTexture* makeLLTexture(const std::string& filename);
 void writeToPng(const char* filename, const LowLevelTexture* llt);
+void writeToPng(const char* filename, const LowLevelTexture* llt,
+                uint32_t width, uint32_t height, uint32_t offsetx,
+                uint32_t offsety);
 LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
                                   uint32_t cellSize);
 } // namespace vvv3d
