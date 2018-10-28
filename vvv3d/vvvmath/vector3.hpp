@@ -42,6 +42,11 @@ public:
 
     inline vector3<T>& set(T x, T y, T z);
 
+    template<typename U>
+    vector3(const vector3<U>& o) : x(o.x), y(o.y), z(o.z) {}
+
+    template<typename U>
+    inline vector3<T>& operator=(const vector3<U>& b);
     inline vector3<T>& operator+=(const vector3& b);
     inline vector3<T>& operator-=(const vector3& b);
 
@@ -61,6 +66,7 @@ public:
     inline vector3<T> operator-() const;
 
     inline T length() const;
+    inline T length2() const;
     inline T dot(const vector3& b) const;
     inline vector3<T> cross(const vector3& b) const;
     static inline vector3<T> cross(const vector3& a, const vector3& b);
@@ -92,6 +98,16 @@ inline vector3<T>& vector3<T>::set(T x, T y, T z)
     this->x = x;
     this->y = y;
     this->z = z;
+    return *this;
+}
+
+template <typename T>
+template <typename U>
+inline vector3<T>& vector3<T>::operator=(const vector3<U>& b)
+{
+    x += b.x;
+    y += b.y;
+    z += b.z;
     return *this;
 }
 
@@ -183,6 +199,12 @@ template <typename T>
 inline vector3<T> vector3<T>::operator-() const
 {
     return vector3<T>(-x, -y, -z);
+}
+
+template <typename T>
+inline T vector3<T>::length2() const
+{
+    return x * x + y * y + z * z;
 }
 
 template <typename T>

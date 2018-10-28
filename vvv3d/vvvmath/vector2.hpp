@@ -53,6 +53,7 @@ public:
     inline bool operator!=(const vector2& b) const;
 
     inline T length() const;
+    inline T length2() const;
     inline T dot(const vector2<T>& b) const;
 
     inline vector2<T>& rotate(T angle);
@@ -176,9 +177,15 @@ inline bool vector2<T>::operator!=(const vector2& b) const
 }
 
 template <typename T>
+inline T vector2<T>::length2() const
+{
+    return x * x + y * y;
+}
+
+template <typename T>
 inline T vector2<T>::length() const
 {
-    return sqrt(x * x + y * y);
+    return sqrt(length2());
 }
 
 template <typename T>
