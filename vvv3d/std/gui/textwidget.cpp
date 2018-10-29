@@ -85,7 +85,6 @@ const Font& TextWidget::getFont() const { return text_.getFont(); }
 
 void TextWidget::resizeToContent()
 {
-    lazyUpdateText();
     const auto& text32 = text_.getText32();
     const auto& font = text_.getFont();
     const int lineWidth = textLineWidth(text32, font);
@@ -132,7 +131,6 @@ int TextWidget::getVAlignOffset() const
 
 const std::u32string& TextWidget::getText32() const
 {
-    text_.lazyUpdateText();
     return text_.getText32();
 }
 

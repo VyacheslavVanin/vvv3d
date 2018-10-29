@@ -39,7 +39,9 @@ public:
     void lazyUpdateGeometryData() const;
     vvv3d::Geometry& getGeometry() const;
 
-    const std::u32string& getText32() const {return text32;}
+    const std::u32string& getText32() const {
+        lazyUpdateText();
+        return text32;}
     int getWidthInPixels() const;
 
     void draw(const vvv3d::Camera& camera, const vvv::matrix44f& model_matrix);
