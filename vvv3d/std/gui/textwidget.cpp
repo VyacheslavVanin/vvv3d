@@ -16,6 +16,170 @@ int textLineWidth(const std::u32string& text, const Font& f)
 
 int textLineHeight(const Font& f) { return f.getAscender() - f.getDescender(); }
 
+TextWidget::TextWidget(const std::string& text)
+    : autosize(true), halign(HALIGN::CENTER), valign(VALIGN::CENTER),
+      transform(), text_(text)
+{
+    loadResources();
+
+    resizeToContent();
+}
+
+void TextWidget::autoresize()
+{
+    if (autosize)
+        resizeToContent();
+}
+
+void TextWidget::setText(const std::string& text)
+{
+    text_.setText(text);
+    autoresize();
+}
+
+void TextWidget::setText(std::string&& text)
+{
+    text_.setText(std::move(text));
+    autoresize();
+}
+
+const std::string& TextWidget::getText() const { return text_.getText(); }
+
+void TextWidget::append(const std::string& text)
+{
+    text_.append(text);
+    autoresize();
+}
+
+void TextWidget::prepend(const std::string& text)
+{
+    text_.prepend(text);
+    autoresize();
+}
+
+std::string TextWidget::popBack()
+{
+    auto ret = text_.popBack();
+    autoresize();
+    return ret;
+}
+
+std::string TextWidget::popFront()
+{
+    auto ret = text_.popFront();
+    autoresize();
+    return ret;
+}
+
+void TextWidget::setColor(const Color& color) { text_.setColor(color); }
+
+const Color& TextWidget::getColor() const { return text_.getColor(); }
+
+void TextWidget::setFont(const Font& font)
+{
+    text_.setFont(font);
+    autoresize();
+}
+
+const Font& TextWidget::getFont() const { return text_.getFont(); }
+
+void TextWidget::resizeToContent()
+{
+    lazyUpdateText();
+    const auto& text32 = text_.getText32();
+    const auto& font = text_.getFont();
+    const int lineWidth = textLineWidth(text32, font);
+    const int lineHeight = textLineHeight(font);
+    setMinSize(lineWidth, lineHeight);
+}
+
+void TextWidget::setAutoResize(bool value)
+{
+    this->autosize = value;
+    autoresize();
+}
+
+bool TextWidget::isAutoResize() const { return autosize; }
+
+void TextWidget::setHAlign(HALIGN value) { this->halign = value; }
+HALIGN TextWidget::getHAlign() const { return halign; }
+
+void TextWidget::setVAlign(VALIGN value) { this->valign = value; }
+VALIGN TextWidget::getVAlign() const { return valign; }
+
+int TextWidget::getHAlignOffset() const
+{
+    const auto& size = getSize();
+    switch (halign) {
+    case HALIGN::FILL:
+    case HALIGN::LEFT: return 0;
+    case HALIGN::RIGHT: return size.x - getWidthInPixels();
+    case HALIGN::CENTER: return (size.x - getWidthInPixels()) / 2;
+    }
+    throw std::logic_error("Shouldn't be here");
+}
+
+int TextWidget::getVAlignOffset() const
+{
+    switch (valign) {
+    case VALIGN::CENTER: return -(size.y - textLineHeight(text_.getFont())) / 2;
+    case VALIGN::FILL:
+    case VALIGN::TOP: return 0;
+    case VALIGN::BOTTOM: return -(size.y - textLineHeight(text_.getFont()));
+    }
+    throw std::logic_error("Shouldn't be here");
+}
+
+const std::u32string& TextWidget::getText32() const
+{
+    text_.lazyUpdateText();
+    return text_.getText32();
+}
+
+void TextWidget::lazyUpdateText() const { text_.lazyUpdateText(); }
+
+void TextWidget::lazyUpdateGeometryData() const
+{
+    text_.lazyUpdateGeometryData();
+}
+
+Geometry& TextWidget::getGeometry() const { return text_.getGeometry(); }
+
+int TextWidget::getWidthInPixels() const { return text_.getWidthInPixels(); }
+
+void TextWidget::onDraw()
+{
+    const auto& camera = getCamera();
+
+    auto& transform = this->transform;
+
+    const auto& pos = getAbsolutePosition();
+
+    const auto hAlignOffset = getHAlignOffset();
+    const int vAlignOffset = getVAlignOffset();
+
+    const auto posx = pos.x + hAlignOffset;
+    const auto posy = -pos.y - text_.getFont().getAscender() + vAlignOffset;
+    transform.setPosition(posx, posy, 0);
+
+    text_.draw(camera, transform.getModelMatrix());
+}
+
+void TextWidget::loadResources()
+{
+    text_.loadResources();
+}
+
+TextWidget::~TextWidget() = default;
+
+
+
+Text::Text(const std::string& text) : text(text) {
+    auto& fontMan = getFontManager();
+    font = &fontMan.getFont("default");
+    geometry = createTextGeometry(*font, text);
+}
+
 static std::unique_ptr<vvv3d::Shader> loadTextShader()
 {
     static const char* fsh = R"(
@@ -52,137 +216,63 @@ static std::unique_ptr<vvv3d::Shader> loadTextShader()
     return vvv3d::Shader::fromStrings("text", vsh, fsh);
 }
 
-TextWidget::TextWidget(const std::string& text)
-    : autosize(true), halign(HALIGN::CENTER), valign(VALIGN::CENTER),
-      transform(), text(text), text32(), geometry(), font(), text_changed(true),
-      geometry_changed(true)
-{
-    loadResources();
-
-    auto& fontMan = getFontManager();
-    font = &fontMan.getFont("default");
-    geometry = createTextGeometry(*font, text);
-
-    resizeToContent();
+void Text::loadResources() {
+    auto& sm = getShaderManager();
+    sm.add("text", loadTextShader);
 }
 
-void TextWidget::autoresize()
-{
-    if (autosize)
-        resizeToContent();
-}
-
-void TextWidget::setText(const std::string& text)
+void Text::setText(const std::string& text)
 {
     this->text = text;
     text_changed = true;
-    autoresize();
 }
 
-void TextWidget::setText(std::string&& text)
+void Text::setText(std::string&& text)
 {
     this->text = std::move(text);
     text_changed = true;
-    autoresize();
 }
 
-const std::string& TextWidget::getText() const { return text; }
+const std::string& Text::getText() const { return text; }
 
-void TextWidget::append(const std::string& text)
+void Text::append(const std::string& text)
 {
     this->text += text;
     text_changed = true;
-    autoresize();
 }
-
-void TextWidget::prepend(const std::string& text)
+void Text::prepend(const std::string& text)
 {
     this->text = text + this->text;
     text_changed = true;
-    autoresize();
 }
 
-std::string TextWidget::popBack()
+std::string Text::popBack()
 {
     auto ret = vvv::getLastChar(text);
     text_changed = true;
-    autoresize();
     return ret;
 }
-
-std::string TextWidget::popFront()
+std::string Text::popFront()
 {
     auto ret = vvv::getFirstChar(text);
     text_changed = true;
-    autoresize();
     return ret;
 }
 
-void TextWidget::setColor(const Color& color) { this->color = color; }
-
-const Color& TextWidget::getColor() const { return this->color; }
-
-void TextWidget::setFont(const Font& font)
+void Text::setColor(const vvv3d::Color& color) { this->color = color; }
+const vvv3d::Color& Text::getColor() const { return color; }
+void Text::setFont(const vvv3d::Font& font)
 {
     this->font = &font;
     geometry_changed = true;
-    autoresize();
 }
-
-const Font& TextWidget::getFont() const { return *this->font; }
-
-void TextWidget::resizeToContent()
+const vvv3d::Font& Text::getFont() const
 {
-    lazyUpdateText();
-    const int lineWidth = textLineWidth(text32, *font);
-    const int lineHeight = textLineHeight(*font);
-    setMinSize(lineWidth, lineHeight);
+    // TODO: return "default" if nullptr
+    return *font;
 }
 
-void TextWidget::setAutoResize(bool value)
-{
-    this->autosize = value;
-    autoresize();
-}
-
-bool TextWidget::isAutoResize() const { return autosize; }
-
-void TextWidget::setHAlign(HALIGN value) { this->halign = value; }
-HALIGN TextWidget::getHAlign() const { return halign; }
-
-void TextWidget::setVAlign(VALIGN value) { this->valign = value; }
-VALIGN TextWidget::getVAlign() const { return valign; }
-
-int TextWidget::getHAlignOffset() const
-{
-    const auto& size = getSize();
-    switch (halign) {
-    case HALIGN::FILL:
-    case HALIGN::LEFT: return 0;
-    case HALIGN::RIGHT: return size.x - getWidthInPixels();
-    case HALIGN::CENTER: return (size.x - getWidthInPixels()) / 2;
-    }
-    throw std::logic_error("Shouldn't be here");
-}
-
-int TextWidget::getVAlignOffset() const
-{
-    switch (valign) {
-    case VALIGN::CENTER: return -(size.y - textLineHeight(*font)) / 2;
-    case VALIGN::FILL:
-    case VALIGN::TOP: return 0;
-    case VALIGN::BOTTOM: return -(size.y - textLineHeight(*font));
-    }
-    throw std::logic_error("Shouldn't be here");
-}
-
-const std::u32string& TextWidget::getText32() const
-{
-    lazyUpdateText();
-    return text32;
-}
-
-void TextWidget::lazyUpdateText() const
+void Text::lazyUpdateText() const
 {
     if (text_changed) {
         text32 = toU32(text);
@@ -190,8 +280,7 @@ void TextWidget::lazyUpdateText() const
         geometry_changed = true;
     }
 }
-
-void TextWidget::lazyUpdateGeometryData() const
+void Text::lazyUpdateGeometryData() const
 {
     lazyUpdateText();
     if (geometry_changed) {
@@ -200,49 +289,32 @@ void TextWidget::lazyUpdateGeometryData() const
         geometry_changed = false;
     }
 }
-
-Geometry& TextWidget::getGeometry() const
+vvv3d::Geometry& Text::getGeometry() const
 {
     lazyUpdateGeometryData();
     return *geometry;
 }
-
-int TextWidget::getWidthInPixels() const
+int Text::getWidthInPixels() const
 {
     lazyUpdateGeometryData();
     return widthInPixels;
 }
 
-void TextWidget::onDraw()
+void Text::draw(const vvv3d::Camera& camera, const vvv::matrix44f& model_matrix)
 {
-    const auto& camera = getCamera();
     auto& shaderMan = getShaderManager();
     auto& sh = shaderMan.get("text");
 
     const auto& geometry = getGeometry();
-    const auto& font = *this->font;
+    const auto& font = getFont();
     const auto& texture = font.getTexture();
-    auto& transform = this->transform;
 
-    const auto& pos = getAbsolutePosition();
-
-    const auto hAlignOffset = getHAlignOffset();
-    const int vAlignOffset = getVAlignOffset();
-
-    const auto posx = pos.x + hAlignOffset;
-    const auto posy = -pos.y - font.getAscender() + vAlignOffset;
-    transform.setPosition(posx, posy, 0);
-
-    drawTexturedColored(camera, sh, geometry, transform.getModelMatrix(),
-                        texture, this->color);
+    drawTexturedColored(camera, sh, geometry, model_matrix, texture, color);
 }
 
-void TextWidget::loadResources()
+void Text::draw(const vvv3d::Camera& camera, int x, int y)
 {
-    auto& sm = getShaderManager();
-    sm.add("text", loadTextShader);
+    draw(camera, vvv::matrix44f::createTranslateMatrix(x, y, 0));
 }
-
-TextWidget::~TextWidget() = default;
 
 } // namespace vvv3d
