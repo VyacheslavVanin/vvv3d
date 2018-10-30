@@ -139,6 +139,7 @@ void Text::draw(const vvv3d::Camera& camera, const vvv::matrix44f& model_matrix)
     const auto& font = getFont();
     const auto& texture = font.getTexture();
 
+    TransparentScope ts;
     drawTexturedColored(camera, sh, geometry, model_matrix, texture, color);
 }
 

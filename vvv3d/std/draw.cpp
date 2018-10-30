@@ -92,7 +92,7 @@ void drawText(const Camera& camera, Shader& shader, const Geometry& geometry,
     shader.setTexturePosition(tex.getTexturePosition());
     shader.setTexture0(tex);
     shader.setColor0(color);
-    DRAW_TRANSPARENT
+    TransparentScope ts;
     geometry.draw();
 }
 

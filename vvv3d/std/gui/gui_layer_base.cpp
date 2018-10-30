@@ -19,7 +19,7 @@ void GuiLayerBase::draw()
     if (!visible)
         return;
 
-    DRAW_TRANSPARENT
+    TransparentScope ts;
     for (auto w : widgets)
         w->Draw();
 }

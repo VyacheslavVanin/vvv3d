@@ -1,19 +1,37 @@
 #pragma once
 #include <vvv3d/core/graphics/color.hpp>
+#include <vvv3d/core/graphics/lowlevel/openglprovider.hpp>
 #include <vvv3d/vvvmath/vector4.hpp>
 
 namespace vvv3d {
 
-#define DRAW_TRANSPARENT                                                       \
-    for (auto trenable =                                                       \
-             []() {                                                            \
-                 glDisable(GL_DEPTH_TEST);                                     \
-                 glEnable(GL_BLEND);                                           \
-                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);            \
-                 return true;                                                  \
-             }();                                                              \
-         trenable;                                                             \
-         glEnable(GL_DEPTH_TEST), glDisable(GL_BLEND), trenable = false)
+class TransparentScope {
+    public:
+    TransparentScope()
+    {
+        glGetBooleanv(GL_DEPTH_TEST, &depth_state);
+        glGetBooleanv(GL_BLEND, &blend_state);
+
+        glDisable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
+    ~TransparentScope()
+    {
+        if (depth_state)
+            glEnable(GL_DEPTH_TEST);
+        else
+            glDisable(GL_DEPTH_TEST);
+        if (blend_state)
+            glEnable(GL_BLEND);
+        else
+            glDisable(GL_BLEND);
+    }
+
+private:
+    GLboolean depth_state;
+    GLboolean blend_state;
+};
 
 class Camera;
 class Shader;
