@@ -51,11 +51,16 @@ public:
     Camera& setOrthoWidth(const Viewport& viewport, float width,
                           float zNear = -1, float zFar = 1);
 
+    /**
+     * @brief Set ortho projection/ Preserve width, height and aspect ratio */
     Camera& setOrtho(const Viewport& viewport, float width, float height,
                      float zNear = -1, float zFar = 1);
 
     Camera& setPerspective(float fovy, float aspect, float zNear, float zFar);
     float getAspectRatio() const;
+
+    float getZNear() const { return zNear; }
+    float getZFar() const { return zFar; }
 
 private:
     vvv::vector3f position;

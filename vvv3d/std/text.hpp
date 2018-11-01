@@ -43,6 +43,12 @@ public:
     void draw(const vvv3d::Camera& camera, const vvv::matrix44f& model_matrix);
     void draw(const vvv3d::Camera& camera, int x, int y);
 
+    /**
+     * @brief Draw in normalized screen coords (-1, 1)
+     * @param x
+     * @param y */
+    void draw(float x, float y, float z = 0);
+
 private:
     std::string text;
     mutable std::u32string text32;
