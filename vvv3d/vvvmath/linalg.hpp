@@ -873,6 +873,13 @@ T clamp_fast(const T& min, const T& max, const T& val)
 {
     return std::max(std::min(max, val), min);
 }
+
+template <typename T>
+T lerp(T k, const T& max, const T& min)
+{
+    return min + k * (max - min);
+}
+
 } // namespace vvv
 
 #endif // LINALG_H
