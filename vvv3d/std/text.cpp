@@ -1,10 +1,11 @@
 #include "text.hpp"
-#include <vvv3d/vvv3d.hpp>
 #include <vvv3d/utils/utf8string.hpp>
+#include <vvv3d/vvv3d.hpp>
 
 namespace vvv3d {
 
-Text::Text(const std::string& text) : text(text) {
+Text::Text(const std::string& text) : text(text)
+{
     auto& fontMan = getFontManager();
     font = &fontMan.getFont("default");
     geometry = createTextGeometry(*font, text);
@@ -46,7 +47,8 @@ static std::unique_ptr<vvv3d::Shader> loadTextShader()
     return vvv3d::Shader::fromStrings("text", vsh, fsh);
 }
 
-void Text::loadResources() {
+void Text::loadResources()
+{
     auto& sm = getShaderManager();
     sm.add("text", loadTextShader);
 }
@@ -132,6 +134,8 @@ int Text::getWidthInPixels() const
 
 void Text::draw(const vvv3d::Camera& camera, const vvv::matrix44f& model_matrix)
 {
+    if (text.empty())
+        return;
     auto& shaderMan = getShaderManager();
     auto& sh = shaderMan.get("text");
 
@@ -145,11 +149,15 @@ void Text::draw(const vvv3d::Camera& camera, const vvv::matrix44f& model_matrix)
 
 void Text::draw(const vvv3d::Camera& camera, int x, int y)
 {
+    if (text.empty())
+        return;
     draw(camera, vvv::matrix44f::createTranslateMatrix(x, y, 0));
 }
 
 void Text::draw(float x, float y, float z)
 {
+    if (text.empty())
+        return;
     const auto& e = vvv3d::Engine::getActiveEngine();
     const auto& viewport = e.getViewport();
     vvv3d::Camera camera;
@@ -157,9 +165,9 @@ void Text::draw(float x, float y, float z)
 
     const float k = z / 2.0f + 1.0f;
     const float zExpanded = vvv::lerp(z, camera.getZNear(), camera.getZFar());
-    const auto& pos = vvv::vector3f(
-            std::floor(x * viewport.getWidth() * 0.5f),
-            std::floor(y * viewport.getHeight() * 0.5f), zExpanded);
+    const auto& pos =
+        vvv::vector3f(std::floor(x * viewport.getWidth() * 0.5f),
+                      std::floor(y * viewport.getHeight() * 0.5f), zExpanded);
     const auto& model_matrix = vvv::matrix44f::createTranslateMatrix(pos);
 
     draw(camera, model_matrix);
@@ -177,6 +185,10 @@ int Text::textLineWidth() const
     return ret;
 }
 
-int Text::textLineHeight() const { const auto& f = getFont(); return f.getAscender() - f.getDescender(); }
-
+int Text::textLineHeight() const
+{
+    const auto& f = getFont();
+    return f.getAscender() - f.getDescender();
 }
+
+} // namespace vvv3d
