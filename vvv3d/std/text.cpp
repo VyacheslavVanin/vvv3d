@@ -162,13 +162,11 @@ void Text::draw(float x, float y, float z) const
     const auto& e = vvv3d::Engine::getActiveEngine();
     const auto& viewport = e.getViewport();
     vvv3d::Camera camera;
-    camera.setOrtho(viewport);
+    camera.setOrtho(viewport, 0.0f, 1.0f);
 
-    const float k = z / 2.0f + 1.0f;
-    const float zExpanded = vvv::lerp(z, camera.getZNear(), camera.getZFar());
     const auto& pos =
         vvv::vector3f(std::floor(x * viewport.getWidth() * 0.5f),
-                      std::floor(y * viewport.getHeight() * 0.5f), zExpanded);
+                      std::floor(y * viewport.getHeight() * 0.5f), z);
     const auto& model_matrix = vvv::matrix44f::createTranslateMatrix(pos);
 
     draw(camera, model_matrix);

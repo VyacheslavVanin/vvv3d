@@ -131,8 +131,8 @@ Camera& Camera::setOrthoWidth(const Viewport& viewport, float width,
     return setOrtho(-w, w, -h, h, zNear, zFar);
 }
 
-Camera& Camera::setOrtho(const Viewport& viewport, float width, float height,
-                         float zNear, float zFar)
+Camera& Camera::setOrthoWindow(const Viewport& viewport, float width,
+                               float height, float zNear, float zFar)
 {
     const Viewport field(width, height);
     const auto field_aspect = field.getAspect();
