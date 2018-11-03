@@ -134,6 +134,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
         if (old.empty())
             break;
         auto s = leftpart->popBack();
+        leftpart->setSize(leftpart->getMinSize());
         rightpart->prepend(s);
         placeWidgets();
         break;
@@ -143,6 +144,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
         if (old.empty())
             break;
         auto s = rightpart->popFront();
+        rightpart->setSize(rightpart->getMinSize());
         leftpart->append(s);
         placeWidgets();
         break;
@@ -152,6 +154,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
         if (old.empty())
             break;
         leftpart->popBack();
+        leftpart->setSize(leftpart->getMinSize());
         placeWidgets();
         text_changed = true;
         Actions<void(const std::string&)>::invoke(onValueChangedActionNames,
@@ -163,6 +166,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
         if (old.empty())
             break;
         rightpart->popFront();
+        rightpart->setSize(rightpart->getMinSize());
         placeWidgets();
         text_changed = true;
         Actions<void(const std::string&)>::invoke(onValueChangedActionNames,
