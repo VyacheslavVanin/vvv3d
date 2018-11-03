@@ -33,7 +33,7 @@ public:
 
     Camera& setOrtho(float left, float right, float bottom, float top,
                      float zNear, float zFar);
-    Camera& setOrtho(const Viewport& viewport, float zNear = -1,
+    Camera& setOrtho(const Viewport& viewport, float zNear = 0,
                      float zFar = 1);
 
     /**
@@ -42,19 +42,19 @@ public:
      * w = h * viewport.getAspect();
      * same as setOrtho(-w, w, -h, h, zNear, zFar)*/
     Camera& setOrthoHeight(const Viewport& viewport, float height,
-                           float zNear = -1, float zFar = 1);
+                           float zNear = 0, float zFar = 1);
     /**
      * @brief Set ortho projection. Preserve aspect ratio and height.
      * w = width / 2;
      * h = w / aspectRatio;
      * same as setOrtho(-w, w, -h, h, zNear, zFar)*/
     Camera& setOrthoWidth(const Viewport& viewport, float width,
-                          float zNear = -1, float zFar = 1);
+                          float zNear = 0, float zFar = 1);
 
     /**
      * @brief Set ortho projection/ Preserve width, height and aspect ratio */
     Camera& setOrtho(const Viewport& viewport, float width, float height,
-                     float zNear = -1, float zFar = 1);
+                     float zNear = 0, float zFar = 1);
 
     Camera& setPerspective(float fovy, float aspect, float zNear, float zFar);
     float getAspectRatio() const;
