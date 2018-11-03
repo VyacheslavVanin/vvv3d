@@ -23,6 +23,9 @@ gui
         le2 type=lineedit
         sl2 type=sliderh
         im2 type=image image=default size=[64, 64]
+    self_descriptive_panel pos=[30, 500]
+        named_label
+        named_button
     )");
     auto& gui = e->gui();
     auto panel = gui.get<vvv3d::Panel>("panel");
@@ -95,6 +98,15 @@ gui
     EXPECT_EQ(button2->getPosition().y, 1);
     EXPECT_EQ(button3->getPosition().x, 193);
     EXPECT_EQ(button3->getPosition().y, 1);
+
+    auto self_descriptive_panel = gui.get<vvv3d::Panel>("self_descriptive_panel");
+    ASSERT_NE(nullptr, self_descriptive_panel);
+    auto named_label = gui.get<vvv3d::TextWidget>("named_label");
+    auto named_button = gui.get<vvv3d::ButtonText>("named_button");
+    ASSERT_NE(nullptr, named_label);
+    ASSERT_NE(nullptr, named_button);
+    EXPECT_EQ(named_label->getText(), std::string("named"));
+    EXPECT_EQ(named_button->getText(), std::string("named"));
 
     int counter = 0;
     e->setDrawFunc([this, &counter] {
