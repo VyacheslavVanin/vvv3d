@@ -132,7 +132,8 @@ int Text::getWidthInPixels() const
     return widthInPixels;
 }
 
-void Text::draw(const vvv3d::Camera& camera, const vvv::matrix44f& model_matrix)
+void Text::draw(const vvv3d::Camera& camera,
+                const vvv::matrix44f& model_matrix) const
 {
     if (text.empty())
         return;
@@ -147,14 +148,14 @@ void Text::draw(const vvv3d::Camera& camera, const vvv::matrix44f& model_matrix)
     drawTexturedColored(camera, sh, geometry, model_matrix, texture, color);
 }
 
-void Text::draw(const vvv3d::Camera& camera, int x, int y)
+void Text::draw(const vvv3d::Camera& camera, int x, int y) const
 {
     if (text.empty())
         return;
     draw(camera, vvv::matrix44f::createTranslateMatrix(x, y, 0));
 }
 
-void Text::draw(float x, float y, float z)
+void Text::draw(float x, float y, float z) const
 {
     if (text.empty())
         return;
