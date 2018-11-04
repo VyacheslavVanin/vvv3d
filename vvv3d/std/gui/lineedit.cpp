@@ -157,8 +157,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
         leftpart->setSize(leftpart->getMinSize());
         placeWidgets();
         text_changed = true;
-        Actions<void(const std::string&)>::invoke(onValueChangedActionNames,
-                                                  getText());
+        invokeAction(onValueChangedActionNames, getText());
         break;
     }
     case SCANCODE_DELETE: {
@@ -169,14 +168,13 @@ void LineEdit::onKeyDown(uint16_t scancode)
         rightpart->setSize(rightpart->getMinSize());
         placeWidgets();
         text_changed = true;
-        Actions<void(const std::string&)>::invoke(onValueChangedActionNames,
-                                                  getText());
+        invokeAction(onValueChangedActionNames, getText());
         break;
     }
     case SCANCODE_ENTER: {
         auto t = getText();
         onEnterPressedActions(t);
-        Actions<void(const std::string&)>::invoke(onEnterActionNames, t);
+        invokeAction(onEnterActionNames, t);
         break;
     }
     default: return;
@@ -195,8 +193,7 @@ void LineEdit::onTextEntered(const std::string& text)
     leftpart->append(text);
     placeWidgets();
     text_changed = true;
-    Actions<void(const std::string&)>::invoke(onValueChangedActionNames,
-                                              getText());
+    invokeAction(onValueChangedActionNames, getText());
 }
 
 int LineEdit::roughLeftOffset(int leftMargin, int width, int fullTextWidth,

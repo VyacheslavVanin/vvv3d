@@ -25,7 +25,7 @@ public:
 
     const ActionList<T>& operator[](const std::string& name) const
     {
-        return actions[name];
+        return actions.at(name);
     }
 
 private:

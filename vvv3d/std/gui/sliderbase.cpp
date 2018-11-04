@@ -30,7 +30,7 @@ void SliderBase::setValue(int value)
     this->value = newValue;
     onValueChanged();
     onValueChangedActions(this->value);
-    Actions<void(int)>::invoke(onValueChangeActionNames, this->value);
+    invokeAction(onValueChangeActionNames, this->value);
 }
 
 int SliderBase::getValue() const { return value; }

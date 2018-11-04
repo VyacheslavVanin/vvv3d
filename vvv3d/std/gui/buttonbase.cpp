@@ -12,7 +12,7 @@ void ButtonBase::addOnClickAction(const std::function<void()>& action)
 void ButtonBase::onHoverReleased(int, int)
 {
     actions();
-    Actions<void()>::invoke(actionNames);
+    invokeAction(actionNames);
 }
 
 void ButtonBase::setAction(const std::string& actionName)
