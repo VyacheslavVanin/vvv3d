@@ -11,6 +11,7 @@ ButtonText::ButtonText(const std::string& caption)
     : text(new TextWidget(caption)), background(new ColorRectWidget(Color(0))),
       panel(new Panel(new VerticalLayout(), background))
 {
+    panel->setBorder(0);
     panel->addWidget(text);
     addChild(panel);
     setSize(text->getSize());
