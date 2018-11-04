@@ -108,11 +108,21 @@ Camera& Camera::setOrtho(float left, float right, float bottom, float top,
     return *this;
 }
 
+namespace {
+/** @brief Divide integer value without loss */
+template<typename T>
+inline std::pair<T, T> divideBy2(T value) {
+    const auto l = value / 2;
+    const auto r = value - l;
+    return std::make_pair(l, r);
+}
+}
+
 Camera& Camera::setOrtho(const Viewport& viewport, float zNear, float zFar)
 {
-    const auto& w = viewport.getWidth() / 2.0f;
-    const auto& h = viewport.getHeight() / 2.0f;
-    return setOrtho(-w, w, -h, h, zNear, zFar);
+    const auto w = divideBy2(viewport.getWidth());
+    const auto h = divideBy2(viewport.getHeight());
+    return setOrtho(-w.first, w.second, -h.first, h.second, zNear, zFar);
 }
 
 Camera& Camera::setOrthoHeight(const Viewport& viewport, float height,
