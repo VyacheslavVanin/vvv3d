@@ -42,6 +42,9 @@ public:
     void load(std::istream& stream);
     void load(const std::string& string);
 
+    void setClearColor(const vvv3d::Color& color);
+    const vvv3d::Color& getClearColor() const;
+
     static Engine& getActiveEngine();
     /**
      * @brief Return time at the beginning of current frame.
@@ -75,6 +78,7 @@ private:
     static Time<> clock;
     vvv3d::GuiLayer gui_layer;
     std::atomic<bool> is_running{false};
+    vvv3d::Color clear_color;
 };
 
 TextureManager& getTextureManager();

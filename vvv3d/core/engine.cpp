@@ -31,7 +31,7 @@ Engine::Engine(int argc, char** argv, const char* windowName)
 #else
       hal(new sdlLayer(argc, argv, GLPROFILE::ES, 3, 0)),
 #endif
-      resourceManager(), input(), gui_layer()
+      resourceManager(), input(), gui_layer(), clear_color(0.05f, 0.1f, 0.2f, 0)
 {
     bench timings("Engine base initialization");
     bench("init hal context"), hal->initContext(argc, argv);
@@ -49,7 +49,7 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     bench("init resource manager"),
         resourceManager.reset(new ResourceManager());
 
-    glClearColor(0.05f, 0.1f, 0.2f, 0);
+    setClearColor(clear_color);
     glEnable(GL_DEPTH_TEST);
 
     activeEngine = this;
@@ -180,5 +180,11 @@ void Engine::load(const std::string& string)
     ss << string;
     load(ss);
 }
+
+void Engine::setClearColor(const vvv3d::Color& color) {
+    clear_color = color;
+    glClearColor(color.r, color.g, color.b, color.a);
+}
+const vvv3d::Color& Engine::getClearColor() const { return clear_color; }
 
 } // namespace vvv3d
