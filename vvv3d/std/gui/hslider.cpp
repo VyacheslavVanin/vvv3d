@@ -48,4 +48,12 @@ void SliderH::onRangeChanged()
     pointer->setPosition(pos, 0);
 }
 
+void SliderH::setColor(const vvv3d::Color& color)
+{
+    pointer_color = color;
+    static_cast<ColorRectWidget*>(pointer)->setColor(color);
+}
+
+const vvv3d::Color& SliderH::getColor() const { return pointer_color; }
+
 } // namespace vvv3d

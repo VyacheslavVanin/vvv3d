@@ -1,9 +1,10 @@
 #pragma once
+#include "properties/icolor.hpp"
 #include "sliderbase.hpp"
 
 namespace vvv3d {
 
-class SliderH : public SliderBase {
+class SliderH : public SliderBase, public IColorProperty {
 public:
     SliderH();
 
@@ -12,6 +13,9 @@ protected:
     void onValueChanged() override;
     void onRangeChanged() override;
 
+    void setColor(const vvv3d::Color& color) override;
+    const vvv3d::Color& getColor() const override;
+
     void onResize(const vvv::vector2i& oldSize,
                   const vvv::vector2i& newSize) override;
 
@@ -19,6 +23,7 @@ private:
     vvv3d::Widget* background;
     vvv3d::Widget* pointer;
     int pointerWidth;
+    vvv3d::Color pointer_color;
 };
 
 } // namespace vvv3d
