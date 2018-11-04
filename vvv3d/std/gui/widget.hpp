@@ -48,6 +48,8 @@ public:
     void setMinHeight(int height);
     int getMinWidth() const;
     int getMinHeight() const;
+    /** @brief Resize to minimum size */
+    void minimize();
 
     const Rect& getRect() const;
 

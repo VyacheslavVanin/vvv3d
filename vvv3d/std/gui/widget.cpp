@@ -1,6 +1,6 @@
-#include "widget.hpp"
 #include "gui_layer_base.hpp"
 #include "rect.hpp"
+#include "widget.hpp"
 #include <algorithm>
 #include <memory>
 #include <vector>
@@ -223,6 +223,8 @@ void Widget::setMaxSize(const vvv::vector2i& size)
 {
     setMaxSize(size.x, size.y);
 }
+
+void Widget::minimize() { setSize(getMinSize()); }
 
 const Rect& Widget::getRect() const { return clipArea; }
 
