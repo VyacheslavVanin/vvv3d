@@ -1,5 +1,6 @@
 #include "texturemanager.hpp"
 #include "utils/helper.hpp"
+#include "vvvstlhelper.hpp"
 
 using namespace vvv3d;
 
@@ -157,6 +158,54 @@ void loadAtlassesFromList(vvv3d::TextureManager& tm, const vvv::Value& images,
     tm.addAtlas(std::move(atlases));
 }
 
+void loadAtlasFromPackedTexture(vvv3d::TextureManager& tm,
+                                const vvv::CfgNode& atlas_node)
+{
+    const auto& atlas_name = atlas_node.getName();
+    const vvv::Value& texture_property = atlas_node.getProperty("texture");
+    if (!texture_property.isString()) {
+        std::cerr << "Error: skip loading atlas " << atlas_name
+                  << ": \"texture\" property has non string type\n";
+        return;
+    }
+
+    const vvv::Value& images = atlas_node.getProperty("images");
+    if (!images.isDict()) {
+        std::cerr << "Error: skip loading atlas " << atlas_name
+                  << ": \"images\" property has non dict type\n";
+        return;
+    }
+
+    const auto& filename = texture_property.asString();
+    std::vector<std::string> names;
+    std::vector<vvv::vector4f> coords;
+    const auto& dict = images.asDict();
+    names.reserve(dict.size());
+    coords.reserve(dict.size());
+    for (const auto& item : dict) {
+        const auto& name = item.first;
+        const auto& value = item.second;
+        if (!value.isList()) {
+            std::cerr << "Error: skip loading atlas " << atlas_name
+                      << ": one of \"images\" value has non list type\n";
+            return;
+        }
+        if (value.size() != 4) {
+            std::cerr << "Error: skip loading atlas " << atlas_name
+                      << ": one of \"images\" value has size != 4\n";
+            return;
+        }
+        const auto& string_list = value.asStringList();
+        const vvv::vector4f coord(
+            to_float(string_list[0]), to_float(string_list[1]),
+            to_float(string_list[2]), to_float(string_list[3]));
+        names.push_back(name);
+        coords.push_back(coord);
+    }
+
+    tm.addAtlas(vvv3d::TextureAtlas::makeAtlas(filename, coords, names));
+}
+
 void loadAtlasesSection(vvv3d::TextureManager& tm, const vvv::CfgNode& cfg)
 {
     vvv3d::bench timing("loading atlases section");
@@ -172,6 +221,12 @@ void loadAtlasesSection(vvv3d::TextureManager& tm, const vvv::CfgNode& cfg)
         }
         const auto& images = atlas.getProperty("images");
         const auto& type = images.getType();
+
+        if (atlas.hasProperty("texture")) {
+            const auto& texture_property = atlas.getProperty("texture");
+            loadAtlasFromPackedTexture(tm, atlas);
+            continue;
+        }
 
         const auto& size = atlas.getPropertyAsLong("size", 512);
         const auto& border = atlas.getPropertyAsLong("border", 0);
@@ -245,6 +300,7 @@ void loadImagesSection(vvv3d::TextureManager& tm, const vvv::CfgNode& cfg)
         }
     }
 }
+
 } // namespace
 
 void TextureManager::load(const vvv::CfgNode& cfg)

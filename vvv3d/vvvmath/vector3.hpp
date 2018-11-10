@@ -105,9 +105,9 @@ template <typename T>
 template <typename U>
 inline vector3<T>& vector3<T>::operator=(const vector3<U>& b)
 {
-    x += b.x;
-    y += b.y;
-    z += b.z;
+    x = b.x;
+    y = b.y;
+    z = b.z;
     return *this;
 }
 

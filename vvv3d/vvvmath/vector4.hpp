@@ -45,6 +45,13 @@ public:
 
     inline vector4& set(T x, T y, T z, T w = 1);
 
+    template <typename U>
+    vector4(const vector4<U>& o) : x(o.x), y(o.y), z(o.z), w(o.w)
+    {
+    }
+
+    template <typename U>
+    inline vector4<T>& operator=(const vector4<U>& b);
     inline vector4& operator+=(const vector4& b);
     inline vector4& operator-=(const vector4& b);
 
@@ -52,6 +59,16 @@ public:
     inline vector4 operator/(const T& b) const;
     inline vector4& operator*=(T s);
     inline vector4& operator/=(T s);
+
+    template <typename U>
+    inline vector4<T>& operator*=(const vector4<U>& b);
+    template <typename U>
+    inline vector4<T>& operator/=(const vector4<U>& b);
+
+    template <typename U>
+    inline vector4<T> operator*(const vector4<U>& b) const;
+    template <typename U>
+    inline vector4<T> operator/(const vector4<U>& b) const;
 
     inline vector4 operator+(const vector4& b) const;
     inline vector4 operator-(const vector4& b) const;
@@ -90,6 +107,53 @@ inline vector4<T>& vector4<T>::set(T x, T y, T z, T w)
     this->z = z;
     this->w = w;
     return *this;
+}
+
+template <typename T>
+template <typename U>
+inline vector4<T>& vector4<T>::operator=(const vector4<U>& b)
+{
+    x = b.x;
+    y = b.y;
+    z = b.z;
+    w = b.w;
+    return *this;
+}
+
+template <typename T>
+template <typename U>
+inline vector4<T>& vector4<T>::operator*=(const vector4<U>& b)
+{
+    x *= b.x;
+    y *= b.y;
+    z *= b.z;
+    w *= b.w;
+    return *this;
+}
+
+template <typename T>
+template <typename U>
+inline vector4<T>& vector4<T>::operator/=(const vector4<U>& b)
+{
+    x /= b.x;
+    y /= b.y;
+    z /= b.z;
+    w /= b.w;
+    return *this;
+}
+
+template <typename T>
+template <typename U>
+inline vector4<T> vector4<T>::operator*(const vector4<U>& b) const
+{
+    return vector4(x * b.x, y * b.y, z * b.z, w * b.w);
+}
+
+template <typename T>
+template <typename U>
+inline vector4<T> vector4<T>::operator/(const vector4<U>& b) const
+{
+    return vector4(x / b.x, y / b.y, z / b.z, w / b.w);
 }
 
 template <typename T>

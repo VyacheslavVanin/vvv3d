@@ -23,6 +23,15 @@ public:
     pack(size_t width, size_t height, const std::vector<std::string>& filenames,
          unsigned int border = 0);
 
+    static std::unique_ptr<TextureAtlas>
+    makeAtlas(std::shared_ptr<LowLevelTexture>&& atlas,
+              const std::vector<vvv::vector4f>& coords,
+              const std::vector<std::string>& names);
+    static std::unique_ptr<TextureAtlas>
+    makeAtlas(const std::string& texture_file_name,
+              const std::vector<vvv::vector4f>& coords,
+              const std::vector<std::string>& names);
+
     const Texture& get(const std::string& name) const;
     std::vector<std::string> listNames() const;
 

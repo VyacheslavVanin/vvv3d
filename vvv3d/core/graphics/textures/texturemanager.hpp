@@ -54,6 +54,9 @@ public:
     //                                           "images/image2.png"]
     //        a1_named size=512 border=0 images={a: "images/image1.png",
     //                                           b: "images/image2.png"}
+    //        a2_packed texture="atlas_texture.png" \
+    //                  images={image_1: [0,0, 16, 16],
+    //                          image_2: [16, 0, 16, 42]}
     void load(const vvv::CfgNode& cfg);
     void load(const std::string& cfg);
     void load(std::istream& cfg);

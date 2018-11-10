@@ -142,3 +142,52 @@ std::vector<string> TextureAtlas::listNames() const
         ret.push_back(i.first);
     return ret;
 }
+namespace {
+void log(const std::string& msg) { std::cerr << msg << "\n"; }
+} // namespace
+
+std::unique_ptr<TextureAtlas>
+TextureAtlas::makeAtlas(std::shared_ptr<LowLevelTexture>&& atlas_texuture,
+                        const std::vector<vvv::vector4f>& coords,
+                        const std::vector<std::string>& names)
+{
+    if (coords.size() != names.size()) {
+        log("Error: TextureAtlas::makeAtlas coords.size() != names.size()");
+        throw std::invalid_argument("coords.size() != names.size()");
+    }
+
+    struct _PrivConstrWorkaround : public TextureAtlas {
+    public:
+        _PrivConstrWorkaround(size_t width, size_t height)
+            : TextureAtlas(width, height)
+        {
+        }
+    };
+
+    const auto width = atlas_texuture->getWidth();
+    const auto height = atlas_texuture->getHeight();
+    const auto wx = 1.0f / width;
+    const auto hx = 1.0f / height;
+    const auto& px_multiplier = vvv::vector4f(wx, hx, wx, hx);
+    std::unique_ptr<TextureAtlas> newAtlas =
+        std::make_unique<_PrivConstrWorkaround>(width, height);
+    newAtlas->atlas = std::move(atlas_texuture);
+    for (size_t i = 0; i < names.size(); ++i) {
+        const auto& name = names[i];
+        const auto& coord = coords[i] * px_multiplier;
+        newAtlas->textures[name] =
+            std::make_unique<Texture>(newAtlas->atlas, coord);
+    }
+
+    return newAtlas;
+}
+
+std::unique_ptr<TextureAtlas>
+TextureAtlas::makeAtlas(const std::string& texture_file_name,
+                        const std::vector<vvv::vector4f>& coords,
+                        const std::vector<std::string>& names)
+{
+    auto atlas_texture =
+        std::shared_ptr<LowLevelTexture>(makeLLTexture(texture_file_name));
+    return makeAtlas(std::move(atlas_texture), coords, names);
+}
