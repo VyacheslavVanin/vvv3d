@@ -233,5 +233,15 @@ const Font& FontManager::getFont(const string& name) const
     return *(it->second);
 }
 
+std::vector<std::string> FontManager::listNames() const
+{
+    std::vector<std::string> ret;
+    ret.reserve(fonts.size());
+    for (const auto& font : fonts)
+        ret.push_back(font.first);
+
+    return ret;
+}
+
 FontManager::~FontManager() = default;
 } // namespace vvv3d

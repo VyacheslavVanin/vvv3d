@@ -37,6 +37,7 @@ public:
     void add(const std::string& name, Animation&& animation);
 
     const Animation& get(const std::string& name) const;
+    std::vector<std::string> listNames() const;
 
     // Config have to contain something like this:
     // animations

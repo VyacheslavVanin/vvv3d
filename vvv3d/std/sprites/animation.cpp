@@ -115,4 +115,14 @@ void AnimationManager::init()
 
     add("default", std::move(default_animation));
 }
+
+std::vector<std::string> AnimationManager::listNames() const
+{
+    std::vector<std::string> ret;
+    ret.reserve(animations.size());
+    for (const auto& animation : animations)
+        ret.push_back(animation.first);
+
+    return ret;
+}
 } // namespace vvv3d

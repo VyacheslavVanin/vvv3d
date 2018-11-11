@@ -59,6 +59,7 @@ public:
     void addFont(const std::string& name, const std::string& filename,
                  unsigned int fontsize);
     const Font& getFont(const std::string& name) const;
+    std::vector<std::string> listNames() const;
 
 private:
     std::map<std::string, std::shared_ptr<Font>> fonts;
