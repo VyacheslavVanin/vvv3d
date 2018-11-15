@@ -6,7 +6,7 @@
 namespace vvv3d {
 
 class TransparentScope {
-    public:
+public:
     TransparentScope()
     {
         glGetBooleanv(GL_DEPTH_TEST, &depth_state);
