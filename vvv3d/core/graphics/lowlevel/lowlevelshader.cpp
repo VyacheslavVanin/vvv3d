@@ -10,6 +10,19 @@
 
 using namespace vvv3d;
 
+const std::string& shader_type_to_string(GLenum shader_type)
+{
+    static const std::string vertex = "vertex";
+    static const std::string fragment = "fragment";
+    static const std::string geometry = "geometry";
+    switch (shader_type) {
+    case GL_VERTEX_SHADER: return vertex;
+    case GL_FRAGMENT_SHADER: return fragment;
+    case GL_GEOMETRY_SHADER: return geometry;
+    default: throw std::logic_error("Invalid shader type");
+    }
+}
+
 static GLint ShaderStatus(GLuint shader, GLenum param)
 {
     GLint status, length;
@@ -29,7 +42,9 @@ static GLuint createFromString(const char* source, GLenum shaderType)
     glShaderSource(shader, 1, &source, &sourceSize);
     glCompileShader(shader);
     if (ShaderStatus(shader, GL_COMPILE_STATUS) != GL_TRUE) {
-        throw std::logic_error("Failed to compile shader ... ");
+        throw std::logic_error("Failed to compile " +
+                               shader_type_to_string(shaderType) +
+                               " shader ... ");
     }
     return shader;
 }
@@ -43,12 +58,13 @@ LowLevelShader::LowLevelShader(const char* filename, GLenum shaderType)
         shader = ::createFromString(source.c_str(), shaderType);
     }
     catch (std::ios_base::failure& f) {
-        std::cerr << "Failed to read shader from file " << filename << "\n";
+        std::cerr << "Failed to read " << shader_type_to_string(shaderType)
+                  << " shader from file " << filename << "\n";
         throw;
     }
     catch (std::exception& e) {
-        std::cerr << "Failed to create shader from source in " << filename
-                  << "\n";
+        std::cerr << "Failed to create " << shader_type_to_string(shaderType)
+                  << " shader from source in " << filename << "\n";
         throw;
     }
 }
