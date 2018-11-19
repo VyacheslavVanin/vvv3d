@@ -57,9 +57,19 @@ public:
         glUniform3f(location, v.x, v.y, v.z);
     }
 
+    static void setUniform(GLint location, const vvv::vector3f* v, GLsizei num)
+    {
+        glUniform3fv(location, num, static_cast<const float*>(v->vector));
+    }
+
     static void setUniform(GLint location, const vvv::vector4f& v)
     {
         glUniform4f(location, v.x, v.y, v.z, v.w);
+    }
+
+    static void setUniform(GLint location, const vvv::vector4f* v, GLsizei num)
+    {
+        glUniform4fv(location, num, static_cast<const float*>(v->vector));
     }
 
     static void setUniform(GLint location, const vvv::matrix33f& m)
