@@ -11,32 +11,30 @@ std::unique_ptr<Geometry> makeBoxGeometry(float xs, float ys, float zs,
     const GLfloat near = -zs - pivot.z;
     const GLfloat far = zs - pivot.z;
     const GLfloat spriteVertices[] = {
-        right, bottom, near, -0.0, -0.0, -1.0, 0.0,  0.0,  //
-        left,  top,    near, -0.0, -0.0, -1.0, 1.0,  1.0,  //
-        right, top,    near, -0.0, -0.0, -1.0, 0.0,  1.0,  //
-        left,  top,    far,  0.0,  0.0,  1.0,  0.0,  0.0,  //
-        right, bottom, far,  0.0,  0.0,  1.0,  1.0,  1.0,  //
-        right, top,    far,  0.0,  0.0,  1.0,  1.0,  -0.0, //
-        right, top,    far,  1.0,  0.0,  -0.0, 1.0,  0.0,  //
-        right, bottom, near, 1.0,  0.0,  -0.0, 0.0,  1.0,  //
-        right, top,    near, 1.0,  0.0,  -0.0, 1.0,  1.0,  //
-        right, bottom, far,  -0.0, -1.0, -0.0, 1.0,  0.0,  //
-        left,  bottom, near, -0.0, -1.0, -0.0, 0.0,  1.0,  //
-        right, bottom, near, -0.0, -1.0, -0.0, 1.0,  1.0,  //
-        left,  bottom, near, -1.0, 0.0,  -0.0, 0.0,  0.0,  //
-        left,  top,    far,  -1.0, 0.0,  -0.0, 1.0,  1.0,  //
-        left,  top,    near, -1.0, 0.0,  -0.0, 1.0,  0.0,  //
-        right, top,    near, 0.0,  1.0,  0.0,  0.0,  0.0,  //
-        left,  top,    far,  0.0,  1.0,  0.0,  1.0,  1.0,  //
-        right, top,    far,  0.0,  1.0,  0.0,  0.0,  1.0,  //
-        left,  bottom, near, 0.0,  -0.0, -1.0, 1.0,  0.0,  //
-        left,  bottom, far,  0.0,  -0.0, 1.0,  0.0,  1.0,  //
-        right, top,    far,  1.0,  -0.0, 0.0,  1.0,  0.0,  //
-        right, bottom, far,  1.0,  -0.0, 0.0,  -0.0, 0.0,  //
-        right, bottom, near, 1.0,  -0.0, 0.0,  0.0,  1.0,  //
-        left,  bottom, far,  -0.0, -1.0, 0.0,  -0.0, 0.0,  //
-        left,  bottom, far,  -1.0, 0.0,  -0.0, 0.0,  1.0,  //
-        left,  top,    near, 0.0,  1.0,  0.0,  1.0,  0.0,  //
+        right, bottom, near, 0.0,  0.0,  -1.0, 0.0, 0.0, //
+        left,  top,    near, 0.0,  0.0,  -1.0, 1.0, 1.0, //
+        right, top,    near, 0.0,  0.0,  -1.0, 0.0, 1.0, //
+        left,  top,    far,  0.0,  0.0,  1.0,  0.0, 0.0, //
+        right, bottom, far,  0.0,  0.0,  1.0,  1.0, 1.0, //
+        right, top,    far,  0.0,  0.0,  1.0,  1.0, 0.0, //
+        right, top,    far,  1.0,  0.0,  0.0,  1.0, 0.0, //
+        right, bottom, near, 1.0,  0.0,  0.0,  0.0, 1.0, //
+        right, top,    near, 1.0,  0.0,  0.0,  1.0, 1.0, //
+        right, bottom, far,  0.0,  -1.0, 0.0,  1.0, 0.0, //
+        left,  bottom, near, 0.0,  -1.0, 0.0,  0.0, 1.0, //
+        right, bottom, near, 0.0,  -1.0, 0.0,  1.0, 1.0, //
+        left,  bottom, near, -1.0, 0.0,  0.0,  0.0, 0.0, //
+        left,  top,    far,  -1.0, 0.0,  0.0,  1.0, 1.0, //
+        left,  top,    near, -1.0, 0.0,  0.0,  1.0, 0.0, //
+        right, top,    near, 0.0,  1.0,  0.0,  0.0, 0.0, //
+        left,  top,    far,  0.0,  1.0,  0.0,  1.0, 1.0, //
+        right, top,    far,  0.0,  1.0,  0.0,  0.0, 1.0, //
+        left,  bottom, near, 0.0,  0.0,  -1.0, 1.0, 0.0, //
+        left,  bottom, far,  0.0,  0.0,  1.0,  0.0, 1.0, //
+        right, bottom, far,  1.0,  0.0,  0.0,  0.0, 0.0, //
+        left,  bottom, far,  0.0,  -1.0, 0.0,  0.0, 0.0, //
+        left,  bottom, far,  -1.0, 0.0,  0.0,  0.0, 1.0, //
+        left,  top,    near, 0.0,  1.0,  0.0,  1.0, 0.0, //
     };
     static const size_t sizeOfVertices = sizeof(spriteVertices);
     static const GLuint spriteIndices[] = {
@@ -48,10 +46,10 @@ std::unique_ptr<Geometry> makeBoxGeometry(float xs, float ys, float zs,
         15, 16, 17, //
         0,  18, 1,  //
         3,  19, 4,  //
-        20, 21, 22, //
-        9,  23, 10, //
-        12, 24, 13, //
-        15, 25, 16, //
+        6, 20, 7, //
+        9,  21, 10, //
+        12, 22, 13, //
+        15, 23, 16, //
     };
     static const size_t numIndices =
         sizeof(spriteIndices) / sizeof(spriteIndices[0]);
