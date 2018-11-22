@@ -7,6 +7,7 @@
 #include <vvv3d/core/graphics/lowlevel/lowlevelshaderprogram.hpp>
 #include <vvv3d/core/graphics/textures/texture.hpp>
 #include <vvv3d/vvvmath/linalg.hpp>
+#include <vvv3d/std/lighting/light.hpp>
 
 namespace vvv3d {
 
@@ -47,6 +48,14 @@ private:
         TIME,
         AMBIENT_COLOR,
         POSITION,
+        LIGHT_POSITIONS,
+        LIGHT_DIRECTIONS,
+        LIGHT_COLORS,
+        LIGHT_TYPES,
+        LIGHT_INTENSITIES,
+        LIGHT_CUTOFFS,
+        LIGHT_EXPONENTS,
+        LIGHTS_COUNT,
         COUNT
     };
     static const char* locations_names[static_cast<size_t>(LOCATIONS::COUNT)];
@@ -98,9 +107,7 @@ public:
     void setTime(float t);
     void setAmbientLightColor(const Color& color);
     void setPosition(const vvv::vector4f& pos);
-    void setLightPos(int n, const vvv::vector3f& pos);
-    void setLightDir(int n, const vvv::vector3f& pos);
-    void setLightColor(int n, const Color& color);
+    void setLights(const std::vector<vvv3d::Light>& lights);
 
     const LowLevelShaderProgram& getLowLevelShader() const;
 

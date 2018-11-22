@@ -262,19 +262,62 @@ void Shader::setPosition(const vvv::vector4f& pos)
     program.setUniform(loc, pos);
 }
 
-void Shader::setLightPos(int, const vvv::vector3f&)
+void Shader::setLights(const std::vector<vvv3d::Light>& lights)
 {
-    std::cout << "Shader::setLightPos not implemented yet" << std::endl;
-}
+    const auto lights_count_loc = LOC_(LOCATIONS::LIGHTS_COUNT);
+    if (lights_count_loc == -1)
+        return;
 
-void Shader::setLightDir(int, const vvv::vector3f&)
-{
-    std::cout << "Shader::setLightDir not implemented yet" << std::endl;
-}
+    constexpr size_t MAX_LIGHTS = 8;
+    std::array<vvv::vector3f, MAX_LIGHTS> positions;
+    std::array<vvv::vector3f, MAX_LIGHTS> directions;
+    std::array<vvv3d::Color, MAX_LIGHTS> colors;
+    std::array<GLint, MAX_LIGHTS> types;
+    std::array<float, MAX_LIGHTS> intensities;
+    std::array<float, MAX_LIGHTS> cutoffs;
+    std::array<float, MAX_LIGHTS> exponents;
 
-void Shader::setLightColor(int, const Color&)
-{
-    std::cout << "Shader::setLightColor not implemented yet" << std::endl;
+    const auto lights_size = lights.size();
+    const size_t num_lights = std::min(MAX_LIGHTS, lights_size);
+    if (num_lights < lights_size)
+        std::cerr << "warning: too many lights passed to set (" << lights_size
+                  << ") "
+                  << " truncated to " << MAX_LIGHTS << "\n";
+
+    for (size_t i = 0; i < num_lights; ++i) {
+        positions[i] = lights[i].getPosition();
+        directions[i] = lights[i].getDirection();
+        colors[i] = lights[i].getColor();
+        types[i] = static_cast<GLint>(lights[i].getType());
+        intensities[i] = lights[i].getIntensity();
+        cutoffs[i] = lights[i].getCutoff();
+        exponents[i] = lights[i].getExponent();
+    }
+
+    const auto positions_loc = LOC_(LOCATIONS::LIGHT_POSITIONS);
+    const auto directions_loc = LOC_(LOCATIONS::LIGHT_DIRECTIONS);
+    const auto colors_loc = LOC_(LOCATIONS::LIGHT_COLORS);
+    const auto types_loc = LOC_(LOCATIONS::LIGHT_TYPES);
+    const auto intensities_loc = LOC_(LOCATIONS::LIGHT_INTENSITIES);
+    const auto cutoffs_loc = LOC_(LOCATIONS::LIGHT_CUTOFFS);
+    const auto exponents_loc = LOC_(LOCATIONS::LIGHT_EXPONENTS);
+
+    if (positions_loc != -1)
+        program.setUniform(positions_loc, positions.data(), num_lights);
+    if (directions_loc != -1)
+        program.setUniform(directions_loc, directions.data(), num_lights);
+    if (colors_loc != -1)
+        program.setUniform(colors_loc, colors.data(), num_lights);
+    if (types_loc != -1)
+        program.setUniform(types_loc, types.data(), num_lights);
+    if (intensities_loc != -1)
+        program.setUniform(intensities_loc, intensities.data(), num_lights);
+    if (cutoffs_loc != -1)
+        program.setUniform(cutoffs_loc, cutoffs.data(), num_lights);
+    if (exponents_loc != -1)
+        program.setUniform(exponents_loc, exponents.data(), num_lights);
+
+    program.setUniform(lights_count_loc, static_cast<GLint>(num_lights));
 }
 
 const LowLevelShaderProgram& Shader::getLowLevelShader() const
@@ -326,7 +369,15 @@ const char* Shader::locations_names[] = {"modelMatrix",
                                          "texture7",
                                          "time",
                                          "ambientColor",
-                                         "position"};
+                                         "position",
+                                         "lightPositions",
+                                         "lightDirections",
+                                         "lightColors",
+                                         "lightTypes",
+                                         "lightIntensities",
+                                         "lightCutoffs",
+                                         "lightExponents",
+                                         "lightsCount"};
 
 ShaderManager::ShaderManager() : shaders() {}
 
