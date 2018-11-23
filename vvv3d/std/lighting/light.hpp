@@ -7,6 +7,8 @@ class Light {
 public:
     enum class Type { POINT, DIRECTIONAL, SPOT, AMBIENT };
 
+    Light(Type type) : pos(), dir(), color(), type(type), intensity(100) {}
+
     static Light makeDirectional(const vvv3d::Color& color,
                                  const vvv::vector3f& direction,
                                  float intensity);
@@ -34,7 +36,6 @@ public:
     void setExponent(float exponent) { this->exponent = exponent; }
 
 private:
-    Light(Type type) : pos(), dir(), color(), type(type), intensity(100) {}
     vvv::vector3f pos;
     vvv::vector3f dir;
     vvv3d::Color color;
