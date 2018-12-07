@@ -34,6 +34,11 @@ void TextureManager::add(LowLevelTexture* texture, const std::string& name)
 {
     if (contain(name))
         return;
+    addForce(texture, name);
+}
+
+void TextureManager::addForce(LowLevelTexture* texture, const std::string& name)
+{
     texs[name].reset(new Texture(texture));
 }
 

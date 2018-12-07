@@ -25,6 +25,9 @@ public:
     void add(LowLevelTexture* texture, const std::string& name);
     void add(const std::string& filename, const std::string& name);
 
+    /** @brief Same as add() but overwrite existing texture with new */
+    void addForce(LowLevelTexture* texture, const std::string& name);
+
     /** @brief Add texture. Throws on fail
      * @param filename */
     void add(const std::string& filename);
