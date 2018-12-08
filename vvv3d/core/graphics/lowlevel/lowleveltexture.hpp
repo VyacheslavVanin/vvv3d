@@ -36,7 +36,47 @@ private:
 
 void readImage(const LowLevelTexture* llt, void* out, GLenum format,
                GLenum type);
+
+/** @brief Make low level texture from file.
+ *  Currently supported file types: png, jpeg */
 LowLevelTexture* makeLLTexture(const std::string& filename);
+
+/**
+ * @brief Create texture to store color data
+ * same as
+ * new vvv3d::LowLevelTexture(0, width, height, GL_RGBA,
+ *                            GL_RGBA, GL_UNSIGNED_BYTE);
+ * should be freed after use with delete or passed to owner object
+ * (Texture, TextureManager) */
+LowLevelTexture* makeLLTextureRGBA(uint32_t width, uint32_t height);
+
+/**
+ * @brief Create texture to store color data
+ * same as
+ * new vvv3d::LowLevelTexture(0, width, height, GL_DEPTH_COMPONENT,
+ *                            GL_DEPTH_COMPONENT, GL_UNSIGNED_INT);
+ * should be freed after use with delete or passed to owner object
+ * (Texture, TextureManager) */
+LowLevelTexture* makeLLTextureDepth(uint32_t width, uint32_t height);
+
+/**
+ * @brief Create texture to store color data
+ * same as
+ * new vvv3d::LowLevelTexture(0, width, height, GL_RGBA,
+ *                            GL_RGBA32F, GL_FLOAT);
+ * should be freed after use with delete or passed to owner object
+ * (Texture, TextureManager) */
+LowLevelTexture* makeLLTextureRGBAf(uint32_t width, uint32_t height);
+
+/**
+ * @brief Create texture to store color data
+ * same as
+ * new vvv3d::LowLevelTexture(0, width, height, GL_DEPTH_COMPONENT,
+ *                            GL_DEPTH_COMPONENT32F, GL_FLOAT);
+ * should be freed after use with delete or passed to owner object
+ * (Texture, TextureManager) */
+LowLevelTexture* makeLLTextureDepthf(uint32_t width, uint32_t height);
+
 void writeToPng(const char* filename, const LowLevelTexture* llt);
 void writeToPng(const char* filename, const LowLevelTexture* llt,
                 uint32_t width, uint32_t height, uint32_t offsetx,

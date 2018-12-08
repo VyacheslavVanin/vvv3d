@@ -256,4 +256,25 @@ LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
                                GL_UNSIGNED_BYTE);
 }
 
+LowLevelTexture* makeLLTextureRGBA(uint32_t width, uint32_t height)
+{
+    return new vvv3d::LowLevelTexture(0, width, height, GL_RGBA, GL_RGBA,
+                                      GL_UNSIGNED_BYTE);
+}
+LowLevelTexture* makeLLTextureDepth(uint32_t width, uint32_t height)
+{
+    return new vvv3d::LowLevelTexture(0, width, height, GL_DEPTH_COMPONENT,
+                                      GL_DEPTH_COMPONENT, GL_UNSIGNED_INT);
+}
+LowLevelTexture* makeLLTextureRGBAf(uint32_t width, uint32_t height)
+{
+    return new vvv3d::LowLevelTexture(0, width, height, GL_RGBA, GL_RGBA32F,
+                                      GL_FLOAT);
+}
+LowLevelTexture* makeLLTextureDepthf(uint32_t width, uint32_t height)
+{
+    return new vvv3d::LowLevelTexture(0, width, height, GL_DEPTH_COMPONENT,
+                                      GL_DEPTH_COMPONENT32F, GL_FLOAT);
+}
+
 } // namespace vvv3d

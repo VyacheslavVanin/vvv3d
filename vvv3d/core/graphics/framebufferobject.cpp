@@ -33,9 +33,11 @@ bool FrameBufferObject::beginDrawToDepthTexture(Texture& depthTexture)
 bool FrameBufferObject::beginDrawToTextures(LowLevelTexture& colorTexture,
                                             LowLevelTexture& depthTexture)
 {
-    if (depthTexture.getFormat() != GL_DEPTH_COMPONENT)
+    if (depthTexture.getFormat() != GL_DEPTH_COMPONENT &&
+        depthTexture.getFormat() != GL_DEPTH_COMPONENT32F)
         throw std::logic_error("FrameBufferObject depth texture must have "
-                               "GL_DEPTH_COMPONENT internal format");
+                               "GL_DEPTH_COMPONENT or GL_DEPTH_COMPONENT32F"
+                               "internal format");
 
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
@@ -43,9 +45,8 @@ bool FrameBufferObject::beginDrawToTextures(LowLevelTexture& colorTexture,
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
                            depthTexture.getID(), 0);
 
-    static const GLenum DrawBuffers[] = {GL_COLOR_ATTACHMENT0,
-                                         GL_DEPTH_ATTACHMENT};
-    glDrawBuffers(2, DrawBuffers);
+    static const GLenum DrawBuffers[] = {GL_COLOR_ATTACHMENT0};
+    glDrawBuffers(1, DrawBuffers);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         endDraw();
