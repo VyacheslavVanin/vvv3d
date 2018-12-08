@@ -25,6 +25,7 @@ public:
 
     GLuint getID() const { return texture; }
     GLint getFormat() const { return internalFormat; }
+    size_t getChannelsCount() const { return num_channels; }
 
 private:
     GLuint texture;
@@ -32,6 +33,7 @@ private:
     GLuint width;
     GLuint height;
     GLint internalFormat;
+    size_t num_channels;
 };
 
 void readImage(const LowLevelTexture* llt, void* out, GLenum format,

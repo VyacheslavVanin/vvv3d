@@ -23,6 +23,23 @@ static void loadSpriteShader()
     }
     )";
 
+    const char* fsh_single_channel = R"(
+    #version 300 es
+    precision mediump float;
+    uniform sampler2D texture0;
+    uniform float time;
+
+    in  vec2 out_position;
+    in  vec2 out_texCoord;
+    out vec4 color;
+
+    void main(void)
+    {
+        float value = texture(texture0, out_texCoord)[0];
+        color = vec4(value, value, value, 1.0f);
+    }
+    )";
+
     const char* vsh = R"(
     #version 300 es
     in vec2 va_position;
@@ -40,6 +57,7 @@ static void loadSpriteShader()
     )";
     auto& sm = getShaderManager();
     sm.addFromSource("sprite", vsh, fsh);
+    sm.addFromSource("sprite_single_channel", vsh, fsh_single_channel);
 }
 
 Sprite::Sprite() : transform(), texture(nullptr)
@@ -63,10 +81,12 @@ void drawSprite(const Camera& camera, const Sprite& spr)
 {
     auto& shaderman = getShaderManager();
     auto& geomman = getGeometryManager();
-    auto& sh = shaderman.get("sprite");
     const auto& g = geomman.get("sprite");
-
     const auto& model_matrix = spr.transform.getModelMatrix();
-    drawTextured(camera, sh, g, model_matrix, spr.getTexture());
+    const auto& texture = spr.getTexture();
+    auto& sh = texture.getChannelsCount() == 1
+                   ? shaderman.get("sprite_single_channel")
+                   : shaderman.get("sprite");
+    drawTextured(camera, sh, g, model_matrix, texture);
 }
 } // namespace vvv3d

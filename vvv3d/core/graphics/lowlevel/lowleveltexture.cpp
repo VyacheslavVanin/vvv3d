@@ -16,12 +16,28 @@
 
 namespace vvv3d {
 
+size_t getChannelsCount(GLint format)
+{
+    const static std::map<GLenum, size_t> mapping = {
+        {GL_RGB, 3},
+        {GL_RGBA, 4},
+        {GL_DEPTH_COMPONENT, 1},
+    };
+    const auto it = mapping.find(format);
+    if (it == mapping.end())
+        throw std::logic_error("getChannelsCount() do not support format " +
+                               std::to_string(format));
+
+    return it->second;
+}
+
 LowLevelTexture::LowLevelTexture(const void* src, GLuint imageWidth,
                                  GLuint imageHeight, GLint format,
                                  GLint internalFormat, GLenum type,
                                  GLenum target)
     : texture(~0u), target(target), width(imageWidth), height(imageHeight),
-      internalFormat(internalFormat)
+      internalFormat(internalFormat),
+      num_channels(vvv3d::getChannelsCount(format))
 {
     glGenTextures(1, &texture);
     glBindTexture(target, texture);
@@ -35,7 +51,8 @@ LowLevelTexture::LowLevelTexture(const void* src, GLuint imageWidth,
 
 LowLevelTexture::LowLevelTexture(LowLevelTexture&& other) noexcept
     : texture(other.texture), target(other.target), width(other.width),
-      height(other.height), internalFormat(other.internalFormat)
+      height(other.height), internalFormat(other.internalFormat),
+      num_channels(other.num_channels)
 {
     other.texture = 0;
 }
@@ -48,6 +65,7 @@ LowLevelTexture& LowLevelTexture::operator=(LowLevelTexture&& other) noexcept
     width = other.width;
     height = other.height;
     internalFormat = other.internalFormat;
+    num_channels = other.num_channels;
 
     other.texture = 0;
     return *this;
