@@ -35,7 +35,7 @@ static void loadSpriteShader()
 
     void main(void)
     {
-        float value = texture(texture0, out_texCoord)[0];
+        float value = 1.0f - texture(texture0, out_texCoord)[0];
         color = vec4(value, value, value, 1.0f);
     }
     )";
