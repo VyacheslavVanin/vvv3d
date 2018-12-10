@@ -6,5 +6,6 @@
 namespace vvv3d {
 
 std::unique_ptr<Geometry>
-makeQuadGeometry2d(const vvv::vector2f& pivot = vvv::vector2f(0.5, 0.5));
+makeQuadGeometry2d(float scale = 1.0f,
+                   const vvv::vector2f& pivot = vvv::vector2f(0.5, 0.5));
 }

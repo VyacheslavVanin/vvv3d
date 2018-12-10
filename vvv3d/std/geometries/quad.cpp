@@ -2,12 +2,13 @@
 
 namespace vvv3d {
 
-std::unique_ptr<Geometry> makeQuadGeometry2d(const vvv::vector2f& pivot)
+std::unique_ptr<Geometry> makeQuadGeometry2d(float scale,
+                                             const vvv::vector2f& pivot)
 {
-    const GLfloat left = 0 - pivot.x;
-    const GLfloat right = 1 - pivot.x;
-    const GLfloat top = 1 - pivot.y;
-    const GLfloat bottom = 0 - pivot.y;
+    const GLfloat left = (0 - pivot.x) * scale;
+    const GLfloat right = (1 - pivot.x) * scale;
+    const GLfloat top = (1 - pivot.y) * scale;
+    const GLfloat bottom = (0 - pivot.y) * scale;
     const GLfloat spriteVertices[] = {
         left,  bottom, 0, 0, //
         right, top,    1, 1, //
