@@ -1,6 +1,7 @@
 #pragma once
 #include "textures/texture.hpp"
 #include <functional>
+#include <vector>
 
 namespace vvv3d {
 
@@ -19,6 +20,13 @@ public:
        LowLevelTexture(0,1024,1024,GL_DEPTH_COMPONENT,GL_DEPTH_COMPONENT,GL_UNSIGNED_INT))
        )); */
     bool beginDrawToTextures(Texture& colorTexture, Texture& depthTexture);
+    bool beginDrawToTextures(
+        const std::vector<std::reference_wrapper<Texture>>& color_textures,
+        Texture& depthTexture);
+    bool beginDrawToTextures(
+        const std::vector<std::reference_wrapper<LowLevelTexture>>&
+            color_textures,
+        LowLevelTexture& depthTexture);
     bool beginDrawToColorTexture(Texture& colorTexture);
     bool beginDrawToDepthTexture(Texture& depth);
 
@@ -37,6 +45,12 @@ void drawToColorTexture(Texture& texture, const std::function<void()>& draw);
 void drawToDepthTexture(Texture& texture, const std::function<void()>& draw);
 void drawToColorAndDepthTextures(Texture& color_texture, Texture& depth_texture,
                                  const std::function<void()>& draw);
+void drawToColorAndDepthTextures(
+    const std::vector<std::reference_wrapper<Texture>>& color_textures,
+    Texture& depth_texture, const std::function<void()>& draw);
+void drawToColorAndDepthTextures(
+    const std::vector<std::reference_wrapper<LowLevelTexture>>& color_textures,
+    LowLevelTexture& depth_texture, const std::function<void()>& draw);
 
 void drawToColorTexture(LowLevelTexture& texture,
                         const std::function<void()>& draw);

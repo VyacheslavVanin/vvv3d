@@ -1,3 +1,4 @@
+#include "assert.h"
 #include "framebufferobject.hpp"
 
 using namespace vvv3d;
@@ -30,14 +31,69 @@ bool FrameBufferObject::beginDrawToDepthTexture(Texture& depthTexture)
     return beginDrawToDepthTexture(depthTexture.getLowLevelTexture());
 }
 
+namespace {
+template <typename T>
+void beginDrawToTextures(
+    GLuint framebuffer,
+    const std::vector<std::reference_wrapper<T>>& color_textures,
+    T& depthTexture)
+{
+    assert(depthTexture.getFormat() == GL_DEPTH_COMPONENT ||
+           depthTexture.getFormat() == GL_DEPTH_COMPONENT32F);
+    assert(color_textures.size() <= 32);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
+                           depthTexture.getID(), 0);
+
+    const GLsizei color_textures_count = color_textures.size();
+    for (size_t i = 0; i < color_textures_count; ++i) {
+        const auto& texture_ref = color_textures[i];
+        const auto& id = texture_ref.get().getID();
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i,
+                               GL_TEXTURE_2D, id, 0);
+    }
+
+    static const GLenum DrawBuffers[] = {
+        GL_COLOR_ATTACHMENT0,  GL_COLOR_ATTACHMENT1,  GL_COLOR_ATTACHMENT2,
+        GL_COLOR_ATTACHMENT3,  GL_COLOR_ATTACHMENT4,  GL_COLOR_ATTACHMENT5,
+        GL_COLOR_ATTACHMENT6,  GL_COLOR_ATTACHMENT7,  GL_COLOR_ATTACHMENT8,
+        GL_COLOR_ATTACHMENT9,  GL_COLOR_ATTACHMENT10, GL_COLOR_ATTACHMENT11,
+        GL_COLOR_ATTACHMENT12, GL_COLOR_ATTACHMENT13, GL_COLOR_ATTACHMENT14,
+        GL_COLOR_ATTACHMENT15, GL_COLOR_ATTACHMENT16, GL_COLOR_ATTACHMENT17,
+        GL_COLOR_ATTACHMENT18, GL_COLOR_ATTACHMENT19, GL_COLOR_ATTACHMENT20,
+        GL_COLOR_ATTACHMENT21, GL_COLOR_ATTACHMENT22, GL_COLOR_ATTACHMENT23,
+        GL_COLOR_ATTACHMENT24, GL_COLOR_ATTACHMENT25, GL_COLOR_ATTACHMENT26,
+        GL_COLOR_ATTACHMENT27, GL_COLOR_ATTACHMENT28, GL_COLOR_ATTACHMENT29,
+        GL_COLOR_ATTACHMENT30, GL_COLOR_ATTACHMENT31,
+    };
+    glDrawBuffers(color_textures_count, DrawBuffers);
+
+    assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+}
+}
+
+bool FrameBufferObject::beginDrawToTextures(
+    const std::vector<std::reference_wrapper<Texture>>& color_textures,
+    Texture& depthTexture)
+{
+    ::beginDrawToTextures(framebuffer, color_textures, depthTexture);
+    return false;
+}
+
+bool FrameBufferObject::beginDrawToTextures(
+    const std::vector<std::reference_wrapper<LowLevelTexture>>& color_textures,
+    LowLevelTexture& depthTexture)
+{
+    ::beginDrawToTextures(framebuffer, color_textures, depthTexture);
+    return false;
+}
+
 bool FrameBufferObject::beginDrawToTextures(LowLevelTexture& colorTexture,
                                             LowLevelTexture& depthTexture)
 {
-    if (depthTexture.getFormat() != GL_DEPTH_COMPONENT &&
-        depthTexture.getFormat() != GL_DEPTH_COMPONENT32F)
-        throw std::logic_error("FrameBufferObject depth texture must have "
-                               "GL_DEPTH_COMPONENT or GL_DEPTH_COMPONENT32F"
-                               "internal format");
+    assert(depthTexture.getFormat() == GL_DEPTH_COMPONENT ||
+           depthTexture.getFormat() == GL_DEPTH_COMPONENT32F);
 
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
@@ -48,10 +104,8 @@ bool FrameBufferObject::beginDrawToTextures(LowLevelTexture& colorTexture,
     static const GLenum DrawBuffers[] = {GL_COLOR_ATTACHMENT0};
     glDrawBuffers(1, DrawBuffers);
 
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        endDraw();
-        throw std::logic_error("FrameBufferObject incomplete!!! code");
-    }
+    assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+
     return true;
 }
 
@@ -64,18 +118,15 @@ bool FrameBufferObject::beginDrawToColorTexture(LowLevelTexture& colorTexture)
     static const GLenum DrawBuffers[] = {GL_COLOR_ATTACHMENT0};
     glDrawBuffers(1, DrawBuffers);
 
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        endDraw();
-        throw std::logic_error("FrameBufferObject incomplete!!! code");
-    }
+    assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+
     return true;
 }
 
 bool FrameBufferObject::beginDrawToDepthTexture(LowLevelTexture& depth)
 {
-    if (depth.getFormat() != GL_DEPTH_COMPONENT)
-        throw std::logic_error("FrameBufferObject depth texture must have "
-                               "GL_DEPTH_COMPONENT internal format");
+    assert(depth.getFormat() == GL_DEPTH_COMPONENT ||
+           depth.getFormat() == GL_DEPTH_COMPONENT32F);
 
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
@@ -84,10 +135,8 @@ bool FrameBufferObject::beginDrawToDepthTexture(LowLevelTexture& depth)
     static const GLenum DrawBuffers[] = {GL_DEPTH_ATTACHMENT};
     glDrawBuffers(1, DrawBuffers);
 
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        endDraw();
-        throw std::logic_error("FrameBufferObject incomplete!!! code");
-    }
+    assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+
     return true;
 }
 
@@ -118,6 +167,26 @@ void drawToColorAndDepthTextures(LowLevelTexture& color_texture,
 {
     FrameBufferObject fbo;
     fbo.beginDrawToTextures(color_texture, depth_texture);
+    draw();
+    fbo.endDraw();
+}
+
+void drawToColorAndDepthTextures(
+    const std::vector<std::reference_wrapper<Texture>>& color_textures,
+    Texture& depth_texture, const std::function<void()>& draw)
+{
+    FrameBufferObject fbo;
+    fbo.beginDrawToTextures(color_textures, depth_texture);
+    draw();
+    fbo.endDraw();
+}
+
+void drawToColorAndDepthTextures(
+    const std::vector<std::reference_wrapper<LowLevelTexture>>& color_textures,
+    LowLevelTexture& depth_texture, const std::function<void()>& draw)
+{
+    FrameBufferObject fbo;
+    fbo.beginDrawToTextures(color_textures, depth_texture);
     draw();
     fbo.endDraw();
 }
