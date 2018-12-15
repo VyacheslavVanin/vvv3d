@@ -13,6 +13,8 @@ public:
         bool hasText() const;
         const std::string& getText() const;
         const std::vector<InputEvent>& getEvents() const;
+        bool hasKeyDownEvent(uint16_t scancode) const;
+        bool hasKeyUpEvent(uint16_t scancode) const;
     };
     class Mouse {
     public:

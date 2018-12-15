@@ -14,6 +14,25 @@ bool Input::Keyboard::keyDown(uint16_t scancode) const
     return Engine::getActiveEngine().hal->keyDown(scancode);
 }
 
+bool Input::Keyboard::hasKeyDownEvent(uint16_t scancode) const
+{
+    const auto& events = getEvents();
+    for (const auto& e : events)
+        if (e.scancode == scancode &&
+            e.type == vvv3d::INPUT_EVENT_TYPE::KEY_DOWN)
+            return true;
+    return false;
+}
+
+bool Input::Keyboard::hasKeyUpEvent(uint16_t scancode) const {
+    const auto& events = getEvents();
+    for (const auto& e : events)
+        if (e.scancode == scancode &&
+            e.type == vvv3d::INPUT_EVENT_TYPE::KEY_UP)
+            return true;
+    return false;
+}
+
 bool Input::Keyboard::hasText() const
 {
     return Engine::getActiveEngine().hal->hasText();
