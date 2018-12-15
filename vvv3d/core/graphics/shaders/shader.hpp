@@ -85,6 +85,7 @@ public:
     void setViewProjection(const vvv::matrix44f& m);
     void setModelViewProjeciton(const vvv::matrix44f& m);
     void setModelRotation(const vvv::matrix33f& m);
+    void setModelRotation(const vvv::matrix44f& m);
     void setColor(int n, const Color& color);
     void setColor0(const Color& color);
     void setColor1(const Color& color);

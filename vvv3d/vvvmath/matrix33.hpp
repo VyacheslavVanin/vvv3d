@@ -9,6 +9,7 @@
 #define MATRIX33_H
 #include "matrices_types.hpp"
 #include <algorithm>
+#include <ostream>
 
 namespace vvv {
 
@@ -116,6 +117,19 @@ public:
 
     void transform(const vector3<T>& in, vector3<T>& out) const;
 };
+
+template <typename T>
+inline std::ostream& operator<<(std::ostream& stream, const vvv::matrix33<T>& m)
+{
+    stream << "{ { " << m.matrix[0][0] << ", " << m.matrix[0][1] << ", "
+           << m.matrix[0][2] << "}, " << std::endl;
+    stream << "  { " << m.matrix[1][0] << ", " << m.matrix[1][1] << ", "
+           << m.matrix[1][2] << "}, " << std::endl;
+    stream << "  { " << m.matrix[2][0] << ", " << m.matrix[2][1] << ", "
+           << m.matrix[2][2] << "}, " << std::endl;
+    return stream;
+}
+
 
 typedef matrix33<double> matrix33d;
 typedef matrix33<float> matrix33f;

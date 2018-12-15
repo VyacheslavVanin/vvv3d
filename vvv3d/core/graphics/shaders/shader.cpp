@@ -99,6 +99,13 @@ void Shader::setModelRotation(const vvv::matrix33f& m)
     program.setUniform(loc, m);
 }
 
+void Shader::setModelRotation(const vvv::matrix44f& m)
+{
+    const auto loc = LOC_(LOCATIONS::MODEL_ROTATION);
+    CHECK_LOC()
+    program.setUniform(loc, m);
+}
+
 void Shader::setColor(int n, const Color& color)
 {
     const auto loc = LOC_(static_cast<size_t>(LOCATIONS::COLOR0) + n);
