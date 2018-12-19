@@ -83,6 +83,7 @@ Geometry* loadGeometryFrom_vvv3d(const char* filename)
 }
 
 thread_local int bench::depth = 0;
+int bench::enable = 1;
 
 bench::bench(const std::string& msg)
     : msg(msg), start(std::chrono::system_clock::now())
@@ -93,6 +94,8 @@ bench::bench(const std::string& msg)
 bench::~bench()
 {
     --depth;
+    if (!enable)
+        return;
     const auto now = std::chrono::system_clock::now();
     const auto us =
         std::chrono::duration_cast<std::chrono::microseconds>(now - start);
