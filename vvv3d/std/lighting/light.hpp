@@ -29,7 +29,10 @@ public:
     float getExponent() const { return exponent; }
 
     void setPosition(const vvv::vector3f& position) { pos = position; }
-    void setDirection(const vvv::vector3f& direction) { dir = direction; }
+    void setDirection(const vvv::vector3f& direction)
+    {
+        dir = direction.normalized();
+    }
     void setColor(const vvv3d::Color& color) { this->color = color; }
     void setIntensity(float intensity) { this->intensity = intensity; }
     void setCutoff(float cutoff) { this->cutoff = cutoff; }

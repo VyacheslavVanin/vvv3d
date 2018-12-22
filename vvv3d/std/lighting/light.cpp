@@ -7,7 +7,7 @@ Light Light::makeDirectional(const vvv3d::Color& color,
 {
     Light ret(Type::DIRECTIONAL);
     ret.color = color;
-    ret.dir = direction;
+    ret.dir = direction.normalized();
     ret.intensity = intensity;
 
     return ret;
@@ -40,7 +40,7 @@ Light Light::makeSpot(const vvv3d::Color& color, const vvv::vector3f& position,
     Light ret(Type::SPOT);
     ret.color = color;
     ret.pos = position;
-    ret.dir = direction;
+    ret.dir = direction.normalized();
     ret.intensity = intensity;
     ret.cutoff = cutoff;
     ret.exponent = exponent;
