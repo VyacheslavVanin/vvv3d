@@ -1,5 +1,6 @@
 #include "sliderbase.hpp"
 #include <vvv3d/vvv3d.hpp>
+#include <vvv3d/vvvmath/functions.hpp>
 
 namespace vvv3d {
 

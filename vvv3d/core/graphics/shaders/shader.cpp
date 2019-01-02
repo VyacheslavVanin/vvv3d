@@ -3,6 +3,7 @@
 #include <core/graphics/lowlevel/lowlevelshader.hpp>
 #include <core/graphics/lowlevel/vertexattribute.hpp>
 #include <memory>
+#include <vvv3d/vvvmath/functions.hpp>
 
 using namespace vvv3d;
 
@@ -297,7 +298,7 @@ void Shader::setLights(const std::vector<vvv3d::Light>& lights)
         colors[i] = lights[i].getColor();
         types[i] = static_cast<GLint>(lights[i].getType());
         intensities[i] = lights[i].getIntensity();
-        cutoffs[i] = lights[i].getCutoff();
+        cutoffs[i] = cos(vvv::deg2radians(lights[i].getCutoff()));
         exponents[i] = lights[i].getExponent();
     }
 

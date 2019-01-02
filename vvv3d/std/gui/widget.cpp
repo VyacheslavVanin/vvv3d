@@ -1,11 +1,11 @@
+#include "widget.hpp"
 #include "gui_layer_base.hpp"
 #include "rect.hpp"
-#include "widget.hpp"
 #include <algorithm>
 #include <memory>
 #include <vector>
 #include <vvv3d/std/draw.hpp>
-#include <vvv3d/vvvmath/linalg.hpp>
+#include <vvv3d/vvvmath/functions.hpp>
 
 namespace vvv3d {
 class GuiLayerBase;
