@@ -17,6 +17,26 @@ void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
             (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""), type,
             severity, message);
 }
+
+void PrintGLParams()
+{
+    GLint max_texture_size;
+    GLint max_texture_units;
+    GLint max_uniform_locations;
+    GLint max_color_attachments;
+    GLint max_vertex_attribs;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texture_size);
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &max_texture_units);
+    glGetIntegerv(GL_MAX_UNIFORM_LOCATIONS, &max_uniform_locations);
+    glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS, &max_color_attachments);
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &max_vertex_attribs);
+    std::cerr << "GL_MAX_TEXTURE_SIZE = " << max_texture_size << "\n";
+    std::cerr << "GL_MAX_TEXTURE_IMAGE_UNITS = " << max_texture_units << "\n";
+    std::cerr << "GL_MAX_UNIFORM_LOCATIONS = " << max_uniform_locations << "\n";
+    std::cerr << "GL_MAX_COLOR_ATTACHMENTS = " << max_color_attachments << "\n";
+    std::cerr << "GL_MAX_VERTEX_ATTRIBS = " << max_vertex_attribs << "\n";
+}
+
 } // namespace
 
 static const int DEFAULT_SCREEN_WIDTH = 640;
@@ -61,6 +81,8 @@ Engine::~Engine() {}
 
 void Engine::run()
 {
+    PrintGLParams();
+
     bench("initial setup"), initialSetup();
     const auto width = getViewport().getWidth();
     const auto height = getViewport().getHeight();
