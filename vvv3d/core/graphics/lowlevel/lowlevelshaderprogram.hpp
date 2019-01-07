@@ -83,6 +83,11 @@ public:
         glUniformMatrix4fv(location, 1, GL_FALSE,
                            static_cast<const GLfloat*>(&m.matrix[0][0]));
     }
+    static void setUniform(GLint location, const vvv::matrix44f* m, GLsizei num)
+    {
+        glUniformMatrix4fv(location, num, GL_FALSE,
+                           static_cast<const GLfloat*>(&m[0].matrix[0][0]));
+    }
 
     void CreateProgram(GLuint vertsh, GLuint fragsh, GLuint geomsh,
                        const std::function<void(GLuint)>& f);
