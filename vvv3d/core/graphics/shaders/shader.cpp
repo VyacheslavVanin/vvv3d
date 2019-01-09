@@ -298,7 +298,7 @@ void Shader::setLights(const std::vector<vvv3d::Light>& lights)
         colors[i] = lights[i].getColor();
         types[i] = static_cast<GLint>(lights[i].getType());
         intensities[i] = lights[i].getIntensity();
-        cutoffs[i] = cos(vvv::deg2radians(lights[i].getCutoff()));
+        cutoffs[i] = cos(vvv::deg2radians(lights[i].getCutoff()/2));
         exponents[i] = lights[i].getExponent();
     }
 
