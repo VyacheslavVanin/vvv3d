@@ -132,8 +132,7 @@ bool FrameBufferObject::beginDrawToDepthTexture(LowLevelTexture& depth)
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
                            depth.getID(), 0);
 
-    static const GLenum DrawBuffers[] = {GL_DEPTH_ATTACHMENT};
-    glDrawBuffers(1, DrawBuffers);
+    glDrawBuffers(0, nullptr);
 
     assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 
