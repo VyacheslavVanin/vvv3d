@@ -27,6 +27,13 @@ public:
         const std::vector<std::reference_wrapper<LowLevelTexture>>&
             color_textures,
         LowLevelTexture& depthTexture);
+
+    bool beginDrawToTextures(
+        const std::vector<std::reference_wrapper<Texture>>& color_textures);
+    bool beginDrawToTextures(
+        const std::vector<std::reference_wrapper<LowLevelTexture>>&
+            color_textures);
+
     bool beginDrawToColorTexture(Texture& colorTexture);
     bool beginDrawToDepthTexture(Texture& depth);
 
@@ -45,12 +52,20 @@ void drawToColorTexture(Texture& texture, const std::function<void()>& draw);
 void drawToDepthTexture(Texture& texture, const std::function<void()>& draw);
 void drawToColorAndDepthTextures(Texture& color_texture, Texture& depth_texture,
                                  const std::function<void()>& draw);
+
 void drawToColorAndDepthTextures(
     const std::vector<std::reference_wrapper<Texture>>& color_textures,
     Texture& depth_texture, const std::function<void()>& draw);
 void drawToColorAndDepthTextures(
     const std::vector<std::reference_wrapper<LowLevelTexture>>& color_textures,
     LowLevelTexture& depth_texture, const std::function<void()>& draw);
+
+void drawToColorTextures(
+    const std::vector<std::reference_wrapper<Texture>>& color_textures,
+    const std::function<void()>& draw);
+void drawToColorTextures(
+    const std::vector<std::reference_wrapper<LowLevelTexture>>& color_textures,
+    const std::function<void()>& draw);
 
 void drawToColorTexture(LowLevelTexture& texture,
                         const std::function<void()>& draw);

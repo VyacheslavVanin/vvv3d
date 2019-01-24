@@ -33,19 +33,10 @@ bool FrameBufferObject::beginDrawToDepthTexture(Texture& depthTexture)
 
 namespace {
 template <typename T>
-void beginDrawToTextures(
+void beginDrawToTextures_impl(
     GLuint framebuffer,
-    const std::vector<std::reference_wrapper<T>>& color_textures,
-    T& depthTexture)
+    const std::vector<std::reference_wrapper<T>>& color_textures)
 {
-    assert(depthTexture.getFormat() == GL_DEPTH_COMPONENT ||
-           depthTexture.getFormat() == GL_DEPTH_COMPONENT32F);
-    assert(color_textures.size() <= 32);
-
-    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
-                           depthTexture.getID(), 0);
-
     const GLsizei color_textures_count = color_textures.size();
     for (size_t i = 0; i < color_textures_count; ++i) {
         const auto& texture_ref = color_textures[i];
@@ -68,10 +59,41 @@ void beginDrawToTextures(
         GL_COLOR_ATTACHMENT30, GL_COLOR_ATTACHMENT31,
     };
     glDrawBuffers(color_textures_count, DrawBuffers);
+}
+
+template <typename T>
+void beginDrawToTextures(
+    GLuint framebuffer,
+    const std::vector<std::reference_wrapper<T>>& color_textures,
+    T& depthTexture)
+{
+    assert(depthTexture.getFormat() == GL_DEPTH_COMPONENT ||
+           depthTexture.getFormat() == GL_DEPTH_COMPONENT32F);
+    assert(color_textures.size() <= 32);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
+                           depthTexture.getID(), 0);
+
+    beginDrawToTextures_impl(framebuffer, color_textures);
 
     assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 }
+
+template <typename T>
+void beginDrawToTextures(
+    GLuint framebuffer,
+    const std::vector<std::reference_wrapper<T>>& color_textures)
+{
+    assert(color_textures.size() <= 32);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+    beginDrawToTextures_impl(framebuffer, color_textures);
+
+    assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 }
+} // namespace
 
 bool FrameBufferObject::beginDrawToTextures(
     const std::vector<std::reference_wrapper<Texture>>& color_textures,
@@ -86,6 +108,19 @@ bool FrameBufferObject::beginDrawToTextures(
     LowLevelTexture& depthTexture)
 {
     ::beginDrawToTextures(framebuffer, color_textures, depthTexture);
+    return false;
+}
+
+bool FrameBufferObject::beginDrawToTextures(
+    const std::vector<std::reference_wrapper<Texture>>& color_textures)
+{
+    ::beginDrawToTextures(framebuffer, color_textures);
+    return false;
+}
+bool FrameBufferObject::beginDrawToTextures(
+    const std::vector<std::reference_wrapper<LowLevelTexture>>& color_textures)
+{
+    ::beginDrawToTextures(framebuffer, color_textures);
     return false;
 }
 
@@ -186,6 +221,26 @@ void drawToColorAndDepthTextures(
 {
     FrameBufferObject fbo;
     fbo.beginDrawToTextures(color_textures, depth_texture);
+    draw();
+    fbo.endDraw();
+}
+
+void drawToColorTextures(
+    const std::vector<std::reference_wrapper<Texture>>& color_textures,
+    const std::function<void()>& draw)
+{
+    FrameBufferObject fbo;
+    fbo.beginDrawToTextures(color_textures);
+    draw();
+    fbo.endDraw();
+}
+
+void drawToColorTextures(
+    const std::vector<std::reference_wrapper<LowLevelTexture>>& color_textures,
+    const std::function<void()>& draw)
+{
+    FrameBufferObject fbo;
+    fbo.beginDrawToTextures(color_textures);
     draw();
     fbo.endDraw();
 }
