@@ -16,7 +16,7 @@ std::unique_ptr<Geometry> makeQuadGeometry2d(float scale,
         right, bottom, 1, 0  //
     };
     static const size_t sizeOfVertices = sizeof(spriteVertices);
-    static const GLuint spriteIndices[] = {0, 1, 2, 0, 1, 3};
+    static const GLuint spriteIndices[] = {0, 1, 2, 0, 3, 1};
     static const size_t numIndices =
         sizeof(spriteIndices) / sizeof(spriteIndices[0]);
 

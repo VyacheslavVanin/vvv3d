@@ -1,6 +1,6 @@
 #pragma once
-#include "hal.hpp"
 #include <memory>
+#include <vvv3d/core/hal/hal.hpp>
 
 namespace vvv3d {
 
@@ -8,7 +8,9 @@ class sdlLayer : public HAL {
 public:
     sdlLayer(int argc, char** argv, GLPROFILE p = GLPROFILE::CORE,
              int major = 3, int minor = 3);
+    ~sdlLayer();
 
+    // HAL interface
     void initContext(int argc, char** argv) override;
     void createWindow(int width, int height, const char* name) override;
     void mainLoop() override;
@@ -23,14 +25,6 @@ public:
 
     void setIdleFunction(const std::function<void()>& idleFunction) override;
 
-    ~sdlLayer();
-
-private:
-    class SDLWraper;
-    std::unique_ptr<SDLWraper> sdl;
-
-    // HAL interface
-public:
     size_t getNumScanCodes() const override;
     bool keyDown(uint16_t scancode) const override;
     bool mouseButtonDown(uint16_t button) const override;
@@ -50,5 +44,26 @@ public:
      * @brief Return list of input events occurred at this cycle
      * @return  */
     const std::vector<InputEvent>& getEvents() const override;
+
+    LowLevelTexture* readTexture(const std::string& filename) const override;
+    void writeTexture(const std::string& filename, const LowLevelTexture* llt,
+                      uint32_t width, uint32_t height, uint32_t offsetx,
+                      uint32_t offsety) const override;
+
+    std::unique_ptr<IFont> GetFont(const std::string& font_name,
+                                   unsigned pixel_size, unsigned char_size,
+                                   unsigned dpi) const override;
+    std::unique_ptr<IFont> GetFont(const FontDesc& desc, unsigned pixel_size,
+                                   unsigned char_size,
+                                   unsigned dpi) const override;
+
+    virtual const ISystemFonts& GetSystemFonts() const override;
+
+    virtual std::string toUtf8(const std::u32string& input) const override;
+    virtual std::u32string toUtf32(const std::string& input) const override;
+
+private:
+    class SDLWraper;
+    std::unique_ptr<SDLWraper> sdl;
 };
 } // namespace vvv3d

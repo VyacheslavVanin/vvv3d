@@ -27,6 +27,7 @@ void ButtonText::onContentChanged() { setSize(text->getSize()); }
 void ButtonText::onResize(const vvv::vector2i& oldsize,
                           const vvv::vector2i& newsize)
 {
+    std::ignore = oldsize;
     text->setSize(newsize);
 }
 

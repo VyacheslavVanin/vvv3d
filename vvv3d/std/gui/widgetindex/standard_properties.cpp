@@ -1,11 +1,10 @@
 #include "standard_properties.hpp"
-#include <iostream>
+#include <vvv3d/std/log.hpp>
 
 namespace vvv3d {
+using vvv::helper::format;
 
 namespace {
-void log(const std::string& text) { std::cerr << text << "\n"; }
-
 auto DEFAULT_COLOR = vvv3d::WHITE;
 }; // namespace
 
@@ -18,7 +17,8 @@ bool str_to_bool(const std::string& value)
         return true;
     if (std::find(f.begin(), f.end(), value) != f.end())
         return false;
-    log("String \"" + value + "\" is not convertable to bool");
+
+    LOG(format("String \"@\" is not convertable to bool", value));
     return false;
 }
 
@@ -32,7 +32,8 @@ vvv3d::HALIGN str_to_halign(const std::string& value)
         return vvv3d::HALIGN::LEFT;
     if (value == "right")
         return vvv3d::HALIGN::RIGHT;
-    log("String \"" + value + "\" can't be converted to HALIGN");
+
+    LOG(format("String \"@\" can't be converted to HALIGN", value));
     return vvv3d::HALIGN::CENTER;
 }
 
@@ -46,7 +47,8 @@ vvv3d::VALIGN str_to_valign(const std::string& value)
         return vvv3d::VALIGN::TOP;
     if (value == "bottom")
         return vvv3d::VALIGN::BOTTOM;
-    log("String \"" + value + "\" can't be converted to VALIGN");
+
+    LOG(format("String \"@\" can't be converted to VALIGN", value));
     return vvv3d::VALIGN::CENTER;
 }
 

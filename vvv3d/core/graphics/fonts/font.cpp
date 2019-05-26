@@ -1,13 +1,14 @@
-#include <freetype2/ft2build.h>
-#include FT_FREETYPE_H
 #include "font.hpp"
-#include "mgrfreetype.hpp"
 #include "utils/helper.hpp"
 #include <map>
 #include <vector>
-#include <vvv3d/core/graphics/fonts/systemfonts.hpp>
+#include <vvv3d/core/engine.hpp>
+#include <vvv3d/core/graphics/fonts/font_desc.hpp>
 #include <vvv3d/core/graphics/textures/texturepacker.hpp>
+#include <vvv3d/core/hal/hal.hpp>
 #include <vvv3d/utils/myutils.hpp>
+
+#include <vvv3d/core/hal/fonts/interface/font_interface.hpp>
 
 namespace vvv3d {
 
@@ -18,64 +19,8 @@ const std::u32string characters = U"abcdefghijklmnopqrstuvwxyz"
                                   "{}[]|\\/?,.<>;:'\"№"
                                   "абвгдеёжзиЙклмнопрстуфхцчшщъыьэюя"
                                   "АБВГДЕЁЖЗИйКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
-
-void convert8to32tex(const void* in, size_t width, size_t height, void* out)
-{
-    const uint8_t* u8 = static_cast<const uint8_t*>(in);
-    uint8_t* u32 = static_cast<uint8_t*>(out);
-    const size_t size = width * height;
-    for (size_t i = 0; i < size; ++i)
-        for (size_t j = 0; j < 4; ++j)
-            u32[i * 4 + j] = (j == 3) ? u8[i] : 0xff;
-}
-
-std::vector<uint8_t> convert8to32tex(const void* in, size_t width,
-                                     size_t height)
-{
-    const uint8_t* u8 = static_cast<const uint8_t*>(in);
-    const size_t size = width * height;
-    std::vector<uint8_t> ret(size * 4);
-
-    for (size_t y = 0; y < height; ++y)
-        for (size_t x = 0; x < width; ++x) {
-            const size_t inPixelIndex = y * width + x;
-            const size_t outPixelIndex = (height - y - 1) * width + x;
-            for (size_t j = 0; j < 4; ++j)
-                ret[outPixelIndex * 4 + j] = 0xff;
-            ret[outPixelIndex * 4 + 3] = u8[inPixelIndex];
-        }
-    return ret;
-}
-
-static std::vector<Glyph> loadGlyphes(FT_Face face,
-                                      const std::u32string& characters)
-{
-    std::vector<Glyph> glyphes;
-    for (const auto& c : characters) {
-        const auto glyph_index = FT_Get_Char_Index(face, c);
-        FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT);
-        if (face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
-            FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
-        const auto glyph = face->glyph;
-        const auto& bm = face->glyph->bitmap;
-        const auto width = bm.width;
-        const auto height = bm.rows;
-        const auto xoffset = glyph->metrics.horiBearingX / 64;
-        const auto yoffset = glyph->metrics.horiBearingY / 64 - height;
-        const auto advance = glyph->metrics.horiAdvance / 64;
-        Glyph toPlace{static_cast<uint32_t>(c),
-                      static_cast<int32_t>(width),
-                      static_cast<int32_t>(height),
-                      static_cast<int32_t>(xoffset),
-                      static_cast<int32_t>(yoffset),
-                      static_cast<int32_t>(advance),
-                      convert8to32tex(bm.buffer, width, height),
-                      0,
-                      0};
-        glyphes.push_back(toPlace);
-    }
-    return glyphes;
-}
+// TODO: get correct texturesize
+const constexpr size_t GLYPH_TEXURE_SIZE = 512;
 
 static bool glyphSizeComparisionHeightFirst(const Glyph& l, const Glyph& r)
 {
@@ -119,34 +64,39 @@ static void drawGlyphesToTexture(std::shared_ptr<Texture> lltex,
                         g.buffer.data());
 }
 
+static std::vector<Glyph> loadGlyphes(const IFont& face,
+                                      const std::u32string& characters)
+{
+    std::vector<Glyph> glyphes;
+    glyphes.reserve(characters.size());
+    for (const auto& c : characters)
+        glyphes.push_back(face.GetGlyph(c));
+
+    return glyphes;
+}
+
 struct FontImpl {
-    FontImpl(FT_Face f, unsigned int size = 16, unsigned int charSize = 16,
-             unsigned int dpi = 96, unsigned int textureSize = 512);
+    FontImpl(std::unique_ptr<IFont>&& face, unsigned int textureSize = 512);
     FontImpl(const FontImpl&) = delete;
     FontImpl& operator=(const FontImpl&) = delete;
+
+    const Glyph& getGlyph(uint32_t c) const;
 
     std::map<uint32_t, Glyph> mapCharToGlyph;
     std::shared_ptr<Texture> lltex;
 
-    FT_Face face;
-    unsigned int charSize;
-    unsigned int dpi;
-    unsigned int pixelSize;
-    unsigned int textureSize;
+    std::unique_ptr<IFont> face;
+    FontMetrics metrics;
+    Glyph dummyGlyph;
 };
 
-FontImpl::FontImpl(FT_Face f, unsigned int size, unsigned int charSize,
-                   unsigned int dpi, unsigned int textureSize)
+FontImpl::FontImpl(std::unique_ptr<IFont>&& face, unsigned int textureSize)
     : mapCharToGlyph(),
       lltex(new Texture(std::make_shared<LowLevelTexture>(
           nullptr, textureSize, textureSize, GL_RGBA, GL_RGBA))),
-      face(f), charSize(charSize), dpi(dpi), pixelSize(size),
-      textureSize(textureSize)
+      face(std::move(face)), metrics(this->face->GetMetrics())
 {
-    FT_Set_Char_Size(face, charSize * 64, charSize * 64, dpi, dpi);
-    FT_Set_Pixel_Sizes(face, 0, size);
-
-    vector<Glyph> glyphes = loadGlyphes(face, characters);
+    vector<Glyph> glyphes = loadGlyphes(*this->face, characters);
     vector<Glyph> notPlaced = pack2d(glyphes, textureSize, textureSize,
                                      glyphSizeComparisionHeightFirst,
                                      glyphGetSize, glyphSetOffset, glyphes, 0);
@@ -157,46 +107,51 @@ FontImpl::FontImpl(FT_Face f, unsigned int size, unsigned int charSize,
 
     for (const auto& g : glyphes)
         mapCharToGlyph[g.character] = g;
+
+    static const std::u32string dummy = U"?";
+    static const uint32_t dummyCharacter = dummy[0];
+    dummyGlyph = mapCharToGlyph.at(dummyCharacter);
+}
+
+const Glyph& FontImpl::getGlyph(uint32_t c) const
+{
+    const auto& it = mapCharToGlyph.find(c);
+    if (it == mapCharToGlyph.end())
+        return dummyGlyph;
+
+    return it->second;
 }
 
 void Font::activate(GLuint texUnit) { pImpl->lltex->bind(texUnit); }
 
 const Texture& Font::getTexture() const { return *pImpl->lltex; }
 
-int Font::getAscender() const
-{
-    return static_cast<int>(pImpl->face->size->metrics.ascender / 64);
-}
+int Font::getAscender() const { return pImpl->metrics.ascender; }
 
-int Font::getDescender() const
-{
-    return static_cast<int>(pImpl->face->size->metrics.descender / 64);
-}
+int Font::getDescender() const { return pImpl->metrics.descender; }
 
 int Font::getHeight() const { return getAscender() - getDescender(); }
 
 int Font::getMinLeftGlyphEdge() const
 {
-    return static_cast<int>(pImpl->face->bbox.xMin);
+    return pImpl->metrics.minLeftGlyphEdge;
 }
 
 Font::Font() : pImpl() {}
 
 Font::~Font() = default;
 
-const Glyph& Font::getGlyph(uint32_t c) const
-{
-    return pImpl->mapCharToGlyph.at(c);
-}
+const Glyph& Font::getGlyph(uint32_t c) const { return pImpl->getGlyph(c); }
 
-FontManager::FontManager() : fonts(), freetypeMgr(new MgrFreetype())
+FontManager::FontManager() : fonts()
 {
     bench timings("initializing font manager");
-    const auto& sysfonts = (bench("search fonts"), systemFonts());
-    const auto& defaultFont = sysfonts.getDefaultRegular()->getFileName();
-    const auto& defaultBold = sysfonts.getDefaultBold()->getFileName();
-    const auto& defaultItalic = sysfonts.getDefaultItalic()->getFileName();
-    const auto& defaultMono = sysfonts.getDefaultMono()->getFileName();
+    const auto& sysfonts =
+        (bench("search fonts"), vvv3d::Engine::getHAL().GetSystemFonts());
+    const auto& defaultFont = *sysfonts.getDefaultRegular();
+    const auto& defaultBold = *sysfonts.getDefaultBold();
+    const auto& defaultItalic = *sysfonts.getDefaultItalic();
+    const auto& defaultMono = *sysfonts.getDefaultMono();
     addFont("default", defaultFont, 20);
     addFont("bold", defaultBold, 20);
     addFont("italic", defaultItalic, 20);
@@ -218,11 +173,27 @@ void FontManager::addFont(const string& name, const string& filename,
         return;
     }
 
-    FT_Face face = freetypeMgr->addFont(name, filename);
+    // TODO: detect or use constant pixel_size and dpi
+    auto ifont = vvv3d::Engine::getHAL().GetFont(filename, fontsize, 16, 96);
+
     auto f = std::make_shared<Font>(Font::_private{});
-    f->pImpl = std::make_unique<FontImpl>(face, fontsize, 16, 96, 256);
+    f->pImpl = std::make_unique<FontImpl>(std::move(ifont), GLYPH_TEXURE_SIZE);
     fonts[name] = f;
     fonts[filename] = f;
+}
+
+void FontManager::addFont(const std::string& name, const FontDesc& desc,
+                          unsigned int fontsize)
+{
+    const auto& filename = desc.getFileName();
+    if (filename.size())
+        return addFont(name, filename, fontsize);
+
+    // TODO: detect or use constant pixel_size and dpi
+    auto ifont = vvv3d::Engine::getHAL().GetFont(desc, fontsize, 16, 96);
+    auto f = std::make_shared<Font>(Font::_private{});
+    f->pImpl = std::make_unique<FontImpl>(std::move(ifont), GLYPH_TEXURE_SIZE);
+    fonts[name] = f;
 }
 
 const Font& FontManager::getFont(const string& name) const

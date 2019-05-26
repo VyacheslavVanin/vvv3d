@@ -1,8 +1,8 @@
 #include "lowlevelshaderprogram.hpp"
 #include <core/graphics/lowlevel/openglprovider.hpp>
 #include <functional>
-#include <iostream>
 #include <stdexcept>
+#include <vvv3d/std/log.hpp>
 
 using namespace vvv3d;
 
@@ -15,7 +15,10 @@ static GLint ProgramStatus(GLuint program, GLenum param)
     if (status != GL_TRUE) {
         GLchar buffer[1024];
         glGetProgramInfoLog(program, 1024, &length, buffer);
-        std::cout << "Program: " << buffer << std::endl;
+
+        std::stringstream ss;
+        ss << "Program: " << buffer;
+        LOG(ss.str());
     }
     return status;
 }
@@ -46,14 +49,7 @@ operator=(LowLevelShaderProgram&& other) noexcept
     return *this;
 }
 
-void LowLevelShaderProgram::activate() const
-{
-    static GLuint currentProgram = ~0u;
-    if (currentProgram != program) {
-        glUseProgram(program);
-        currentProgram = program;
-    }
-}
+void LowLevelShaderProgram::activate() const { glUseProgram(program); }
 
 void LowLevelShaderProgram::CreateProgram(
     GLuint vertshader, GLuint fragshader, GLuint geomshader,

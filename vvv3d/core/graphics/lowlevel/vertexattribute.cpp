@@ -65,9 +65,9 @@ VertexAttributes::VertexAttributes(
 void VertexAttributes::enable() const
 {
     static const auto isNeedAttribI = [](const VertexAttribute& a) {
-        const static auto glIntTypes = {GL_UNSIGNED_BYTE, GL_BYTE,
-                                        GL_SHORT,         GL_UNSIGNED_SHORT,
-                                        GL_INT,           GL_UNSIGNED_INT};
+        const static std::initializer_list<GLenum> glIntTypes = {
+            GL_UNSIGNED_BYTE,  GL_BYTE, GL_SHORT,
+            GL_UNSIGNED_SHORT, GL_INT,  GL_UNSIGNED_INT};
         return !a.normalized && contain(glIntTypes, a.componentType);
     };
 

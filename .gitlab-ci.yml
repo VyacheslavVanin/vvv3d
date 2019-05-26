@@ -1,12 +1,9 @@
+image: registry.gitlab.com/vyacheslav.vanin/vvv3d
+
 before_script:
-  - apt-get update -qq
-  - apt-get install -y -qq
-        libboost-system-dev cmake libgtest-dev
-        libfreetype6-dev libjpeg-dev libgl-dev
-        libsdl2-dev libfontconfig-dev libglew-dev xvfb
-  - (cd /usr/src/gtest; cmake . && make -j8 && cp *.a /usr/lib/)
   - g++ -v
   - which g++
+  - free -h
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive 
@@ -17,6 +14,10 @@ rspec:
     - export DISPLAY=:1
     - mkdir build
     - cd build
-    - cmake ..
+    - cmake .. -DWITH_TESTS=yes
     - make -j
-    - make test
+    - ./tests/vvv3d_test
+    - rm -rf *
+    - cmake .. -DWITH_TESTS=yes -DVVV3D_BACKEND=Qt
+    - make
+    - ./tests/vvv3d_test

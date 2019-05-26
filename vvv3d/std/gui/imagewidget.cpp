@@ -55,6 +55,8 @@ void ImageWidget::resizeToContent()
 void ImageWidget::onResize(const vvv::vector2i& oldSize,
                            const vvv::vector2i& newSize)
 {
+    std::ignore = oldSize;
+    std::ignore = newSize;
     autoresize();
 }
 

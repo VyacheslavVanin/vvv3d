@@ -13,7 +13,8 @@ enum SCANCODE {
     SCANCODE_RIGHT = 79,
     SCANCODE_DOWN = 81,
     SCANCODE_UP = 82,
-    SCANCODE_DELETE = 76
+    SCANCODE_DELETE = 76,
+    SCANCODE_OTHER = 0,
 };
 
 struct InputEvent {

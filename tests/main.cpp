@@ -27,6 +27,13 @@ gui
         named_label
         named_button
     )");
+
+    const auto& font = vvv3d::getFontManager().getFont("default");
+    const auto& font_ascender = font.getAscender();
+    const auto& font_descender = font.getDescender();
+    EXPECT_EQ(font_ascender, 19);
+    EXPECT_EQ(font_descender, -5);
+
     auto& gui = e->gui();
     auto panel = gui.get<vvv3d::Panel>("panel");
     auto text = gui.get("text");
@@ -99,7 +106,8 @@ gui
     EXPECT_EQ(button3->getPosition().x, 193);
     EXPECT_EQ(button3->getPosition().y, 1);
 
-    auto self_descriptive_panel = gui.get<vvv3d::Panel>("self_descriptive_panel");
+    auto self_descriptive_panel =
+        gui.get<vvv3d::Panel>("self_descriptive_panel");
     ASSERT_NE(nullptr, self_descriptive_panel);
     auto named_label = gui.get<vvv3d::TextWidget>("named_label");
     auto named_button = gui.get<vvv3d::ButtonText>("named_button");
@@ -110,8 +118,9 @@ gui
 
     int counter = 0;
     e->setDrawFunc([this, &counter] {
-        if (++counter > 1)
+        if (e->isRunning() && ++counter > 1) {
             e->stop();
+        }
     });
     // Check render without segfaults
     e->run();
@@ -144,8 +153,9 @@ gui
         }
         EXPECT_LE(panel->getSize().x, panel_size.x);
 
-        if (++counter > 2)
+        if (e->isRunning() && ++counter > 2) {
             e->stop();
+        }
     });
     e->run();
 }

@@ -42,10 +42,12 @@ public:
 
     inline vector3<T>& set(T x, T y, T z);
 
-    template<typename U>
-    vector3(const vector3<U>& o) : x(o.x), y(o.y), z(o.z) {}
+    template <typename U>
+    vector3(const vector3<U>& o) : x(o.x), y(o.y), z(o.z)
+    {
+    }
 
-    template<typename U>
+    template <typename U>
     inline vector3<T>& operator=(const vector3<U>& b);
     inline vector3<T>& operator+=(const vector3& b);
     inline vector3<T>& operator-=(const vector3& b);

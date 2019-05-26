@@ -38,9 +38,9 @@ const FT_Face& MgrFreetype::addFont(const std::string& name,
     return *face;
 }
 
-void MgrFreetype::addFont(const std::string& fontNameOrPath)
+const FT_Face& MgrFreetype::addFont(const std::string& fontNameOrPath)
 {
-    addFont(fontNameOrPath, fontNameOrPath);
+    return addFont(fontNameOrPath, fontNameOrPath);
 }
 
 const FT_Face& MgrFreetype::getFont(const std::string& fontNameOrPath) const

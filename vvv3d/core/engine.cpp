@@ -3,38 +3,72 @@
 #include <chrono>
 #include <core/graphics/lowlevel/openglprovider.hpp>
 #include <core/resourcemanager.hpp>
-#include <core/sdllayer.hpp>
+#include <sstream>
+#ifdef VVV3D_BACKEND_SDL
+#include <vvv3d/private/sdl_hal_impl/sdllayer.hpp>
+#elif VVV3D_BACKEND_QT
+#include <vvv3d/private/qt_hal_impl/qthallayer.hpp>
+#endif
+#include <vvv3d/std/log.hpp>
 
 namespace vvv3d {
 
 namespace {
-void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
-                     GLsizei length, const GLchar* message,
-                     const void* userParam)
+
+void enableOpenGLDebug()
 {
-    fprintf(stderr,
-            "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-            (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""), type,
-            severity, message);
+#ifdef DEBUG_GL
+    auto MessageCallback = [](GLenum source, GLenum type, GLuint id,
+                              GLenum severity, GLsizei length,
+                              const GLchar* message, const void* userParam) {
+        using vvv::helper::format;
+        std::ignore = source;
+        std::ignore = length;
+        std::ignore = userParam;
+        std::ignore = id;
+        LOG(format("GL CALLBACK: {} type = {}, severity = {}, message = {}",
+                   (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""), type,
+                   severity, message));
+        if (type == GL_DEBUG_TYPE_ERROR)
+            abort();
+    };
+    LOG("Debug output enabled...");
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallback(MessageCallback, 0);
+#endif
+}
+
+GLint getGLInteger(GLenum pname)
+{
+    GLint ret;
+    glGetIntegerv(pname, &ret);
+    return ret;
 }
 
 void PrintGLParams()
 {
-    GLint max_texture_size;
-    GLint max_texture_units;
-    GLint max_uniform_locations;
-    GLint max_color_attachments;
-    GLint max_vertex_attribs;
-    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texture_size);
-    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &max_texture_units);
-    glGetIntegerv(GL_MAX_UNIFORM_LOCATIONS, &max_uniform_locations);
-    glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS, &max_color_attachments);
-    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &max_vertex_attribs);
-    std::cerr << "GL_MAX_TEXTURE_SIZE = " << max_texture_size << "\n";
-    std::cerr << "GL_MAX_TEXTURE_IMAGE_UNITS = " << max_texture_units << "\n";
-    std::cerr << "GL_MAX_UNIFORM_LOCATIONS = " << max_uniform_locations << "\n";
-    std::cerr << "GL_MAX_COLOR_ATTACHMENTS = " << max_color_attachments << "\n";
-    std::cerr << "GL_MAX_VERTEX_ATTRIBS = " << max_vertex_attribs << "\n";
+    using vvv::helper::format;
+    const auto max_vertex_attribs = getGLInteger(GL_MAX_VERTEX_ATTRIBS);
+    const auto max_texture_size = getGLInteger(GL_MAX_TEXTURE_SIZE);
+    const auto max_texture_units = getGLInteger(GL_MAX_TEXTURE_IMAGE_UNITS);
+    const auto max_uniform_locations = getGLInteger(GL_MAX_UNIFORM_LOCATIONS);
+    const auto max_color_attachments = getGLInteger(GL_MAX_COLOR_ATTACHMENTS);
+    LOG(format("GL_MAX_TEXTURE_SIZE = @", max_texture_size));
+    LOG(format("GL_MAX_TEXTURE_IMAGE_UNITS = @", max_texture_units));
+    LOG(format("GL_MAX_UNIFORM_LOCATIONS = @", max_uniform_locations));
+    LOG(format("GL_MAX_COLOR_ATTACHMENTS = @", max_color_attachments));
+    LOG(format("GL_MAX_VERTEX_ATTRIBS = @", max_vertex_attribs));
+}
+
+void enableBlend(bool blend)
+{
+    if (blend) {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
+    else {
+        glDisable(GL_BLEND);
+    }
 }
 
 } // namespace
@@ -46,22 +80,25 @@ Time<> Engine::clock;
 
 Engine::Engine(int argc, char** argv, const char* windowName)
     : currentfps(0), viewport(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT),
+#ifdef VVV3D_BACKEND_SDL
 #ifdef VVV3D_USE_OPENGL_CORE
       hal(new sdlLayer(argc, argv, GLPROFILE::CORE, 3, 3)),
 #else
       hal(new sdlLayer(argc, argv, GLPROFILE::ES, 3, 0)),
 #endif
+#elif VVV3D_BACKEND_QT
+      hal(new QtHalLayer()),
+#endif
       resourceManager(), input(), gui_layer(), clear_color(0.05f, 0.1f, 0.2f, 0)
 {
+    activeEngine = this;
     bench timings("Engine base initialization");
     bench("init hal context"), hal->initContext(argc, argv);
     bench("create window"),
         hal->createWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT,
                           windowName);
-#ifdef DEBUG_GL
-    glEnable(GL_DEBUG_OUTPUT);
-    glDebugMessageCallback(MessageCallback, 0);
-#endif
+    enableOpenGLDebug();
+
     hal->setDisplayFunction([]() { activeEngine->display(); });
     hal->setIdleFunction([]() {});
     hal->setResizeFunction([](int x, int y) { activeEngine->resize(x, y); });
@@ -72,7 +109,6 @@ Engine::Engine(int argc, char** argv, const char* windowName)
     setClearColor(clear_color);
     glEnable(GL_DEPTH_TEST);
 
-    activeEngine = this;
     resourceManager->getAnimationManager().init();
     gui_layer.setVisible(true);
 }
@@ -105,6 +141,7 @@ void Engine::display()
     const auto t1 = std::chrono::system_clock::now();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    enableBlend(blend_enabled);
     onDraw();
     gui().draw();
     gui().processInputEvents(getInput());
@@ -113,8 +150,8 @@ void Engine::display()
     const auto t2 = std::chrono::system_clock::now();
     const auto dt = t2 - t1;
     const auto milis =
-        (float)(std::chrono::duration_cast<std::chrono::microseconds>(dt)
-                    .count()) /
+        static_cast<float>(
+            std::chrono::duration_cast<std::chrono::microseconds>(dt).count()) /
         1000;
     currentfps = 1000.0f / milis;
 }
@@ -126,6 +163,7 @@ void Engine::onResize(int x, int y) { (void)x, (void)y; }
 const Viewport& Engine::getViewport() const { return viewport; }
 
 Engine& Engine::getActiveEngine() { return *activeEngine; }
+HAL& Engine::getHAL() { return *getActiveEngine().hal; }
 
 void Engine::resize(int x, int y)
 {
@@ -139,6 +177,7 @@ void Engine::resize(int x, int y)
 float Engine::getCurrentFps() const { return currentfps; }
 
 void Engine::setVSync(bool vsync) { hal->setVSync(vsync); }
+void Engine::setBlend(bool blend) { blend_enabled = blend; }
 bool Engine::isRunning() const { return is_running.load(); }
 
 GuiLayer& Engine::gui() { return gui_layer; }
@@ -203,7 +242,8 @@ void Engine::load(const std::string& string)
     load(ss);
 }
 
-void Engine::setClearColor(const vvv3d::Color& color) {
+void Engine::setClearColor(const vvv3d::Color& color)
+{
     clear_color = color;
     glClearColor(color.r, color.g, color.b, color.a);
 }

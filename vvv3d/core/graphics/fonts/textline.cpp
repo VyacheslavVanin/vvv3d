@@ -1,7 +1,9 @@
 #include "textline.hpp"
-#include <boost/locale/encoding_utf.hpp>
 #include <vvv3d/core/engine.hpp>
 #include <vvv3d/vvvmath/linalg.hpp>
+
+// TODO: move used methods to interface functions
+#include <vvv3d/core/hal/hal.hpp>
 
 namespace vvv3d {
 
@@ -74,8 +76,8 @@ void updateTextGeometry(const std::shared_ptr<Geometry>& in, const Font& font,
         indices[iInds + 1] = nVerts + 1;
         indices[iInds + 2] = nVerts + 2;
         indices[iInds + 3] = nVerts + 0;
-        indices[iInds + 4] = nVerts + 1;
-        indices[iInds + 5] = nVerts + 3;
+        indices[iInds + 4] = nVerts + 3;
+        indices[iInds + 5] = nVerts + 1;
         advance += g.advance;
         ++iVerts;
         iInds += 6;
@@ -89,14 +91,12 @@ void updateTextGeometry(const std::shared_ptr<Geometry>& in, const Font& font,
 
 std::u32string toU32(const std::string& u8)
 {
-    return boost::locale::conv::utf_to_utf<char32_t>(u8.c_str(),
-                                                     u8.c_str() + u8.size());
+    return vvv3d::Engine::getActiveEngine().getHAL().toUtf32(u8);
 }
 
 std::string toU8(const std::u32string& u32)
 {
-    return boost::locale::conv::utf_to_utf<char>(u32.c_str(),
-                                                 u32.c_str() + u32.size());
+    return vvv3d::Engine::getActiveEngine().getHAL().toUtf8(u32);
 }
 
 std::shared_ptr<Geometry> createTextGeometry(const Font& f,

@@ -9,8 +9,8 @@
 #include "widget.hpp"
 #include <memory>
 #include <string>
-#include <vvv3d/vvv3d.hpp>
 #include <vvv3d/std/text.hpp>
+#include <vvv3d/vvv3d.hpp>
 
 namespace vvv3d {
 class Font;

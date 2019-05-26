@@ -5,8 +5,8 @@
 namespace vvv3d {
 
 TextWidget::TextWidget(const std::string& text)
-    : autosize(true), halign(HALIGN::CENTER), valign(VALIGN::CENTER),
-      transform(), text_(text)
+    : text_(text), autosize(true), halign(HALIGN::CENTER),
+      valign(VALIGN::CENTER), transform()
 {
     loadResources();
 
@@ -149,10 +149,7 @@ void TextWidget::onDraw()
     text_.draw(camera, transform.getModelMatrix());
 }
 
-void TextWidget::loadResources()
-{
-    text_.loadResources();
-}
+void TextWidget::loadResources() { text_.loadResources(); }
 
 TextWidget::~TextWidget() = default;
 

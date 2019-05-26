@@ -3,9 +3,11 @@
 #include <core/graphics/lowlevel/lowlevelshader.hpp>
 #include <core/graphics/lowlevel/vertexattribute.hpp>
 #include <memory>
+#include <vvv3d/std/log.hpp>
 #include <vvv3d/vvvmath/functions.hpp>
 
 using namespace vvv3d;
+using vvv::helper::format;
 
 std::unique_ptr<Shader> Shader::fromStrings(const std::string& name,
                                             const char* vertexSource,
@@ -277,20 +279,19 @@ void Shader::setLights(const std::vector<vvv3d::Light>& lights)
         return;
 
     constexpr size_t MAX_LIGHTS = 8;
-    std::array<vvv::vector3f, MAX_LIGHTS> positions;
-    std::array<vvv::vector3f, MAX_LIGHTS> directions;
-    std::array<vvv3d::Color, MAX_LIGHTS> colors;
-    std::array<GLint, MAX_LIGHTS> types;
-    std::array<float, MAX_LIGHTS> intensities;
-    std::array<float, MAX_LIGHTS> cutoffs;
-    std::array<float, MAX_LIGHTS> exponents;
+    vvv::vector3f positions[MAX_LIGHTS];
+    vvv::vector3f directions[MAX_LIGHTS];
+    vvv3d::Color colors[MAX_LIGHTS];
+    GLint types[MAX_LIGHTS];
+    float intensities[MAX_LIGHTS];
+    float cutoffs[MAX_LIGHTS];
+    float exponents[MAX_LIGHTS];
 
     const auto lights_size = lights.size();
     const size_t num_lights = std::min(MAX_LIGHTS, lights_size);
     if (num_lights < lights_size)
-        std::cerr << "warning: too many lights passed to set (" << lights_size
-                  << ") "
-                  << " truncated to " << MAX_LIGHTS << "\n";
+        LOG(format("warning: too many lights passed to set (@) truncated to @",
+                   lights_size, MAX_LIGHTS));
 
     for (size_t i = 0; i < num_lights; ++i) {
         positions[i] = lights[i].getPosition();
@@ -298,7 +299,7 @@ void Shader::setLights(const std::vector<vvv3d::Light>& lights)
         colors[i] = lights[i].getColor();
         types[i] = static_cast<GLint>(lights[i].getType());
         intensities[i] = lights[i].getIntensity();
-        cutoffs[i] = cos(vvv::deg2radians(lights[i].getCutoff()/2));
+        cutoffs[i] = cos(vvv::deg2radians(lights[i].getCutoff() / 2));
         exponents[i] = lights[i].getExponent();
     }
 
@@ -311,19 +312,19 @@ void Shader::setLights(const std::vector<vvv3d::Light>& lights)
     const auto exponents_loc = LOC_(LOCATIONS::LIGHT_EXPONENTS);
 
     if (positions_loc != -1)
-        program.setUniform(positions_loc, positions.data(), num_lights);
+        program.setUniform(positions_loc, positions, num_lights);
     if (directions_loc != -1)
-        program.setUniform(directions_loc, directions.data(), num_lights);
+        program.setUniform(directions_loc, directions, num_lights);
     if (colors_loc != -1)
-        program.setUniform(colors_loc, colors.data(), num_lights);
+        program.setUniform(colors_loc, colors, num_lights);
     if (types_loc != -1)
-        program.setUniform(types_loc, types.data(), num_lights);
+        program.setUniform(types_loc, types, num_lights);
     if (intensities_loc != -1)
-        program.setUniform(intensities_loc, intensities.data(), num_lights);
+        program.setUniform(intensities_loc, intensities, num_lights);
     if (cutoffs_loc != -1)
-        program.setUniform(cutoffs_loc, cutoffs.data(), num_lights);
+        program.setUniform(cutoffs_loc, cutoffs, num_lights);
     if (exponents_loc != -1)
-        program.setUniform(exponents_loc, exponents.data(), num_lights);
+        program.setUniform(exponents_loc, exponents, num_lights);
 
     program.setUniform(lights_count_loc, static_cast<GLint>(num_lights));
 }
@@ -339,7 +340,8 @@ GLint Shader::loadLocation(const char* name)
 {
     GLint ret = program.getUniformLocation(name);
     if (ret != -1)
-        std::cout << "\tuniform \"" << name << "\" found ..." << std::endl;
+        LOG(format("\tuniform \"@\" found ...", name));
+
     return ret;
 }
 
@@ -347,7 +349,7 @@ void Shader::loadLocations(const std::string& name)
 {
     const size_t count = static_cast<size_t>(LOCATIONS::COUNT);
     activate();
-    std::cout << "Searching uniforms in shader \"" << name << "\"\n";
+    LOG(format("Searching uniforms in shader \"@\"", name));
     for (size_t i = 0; i < count; ++i)
         locations[i] = loadLocation(locations_names[i]);
 }
@@ -452,24 +454,28 @@ void ShaderManager::add(const std::string& name,
     initializers[name] = f;
 }
 
-Shader& ShaderManager::get(const std::string& name) const try {
+Shader& ShaderManager::get(const std::string& name) const
+try {
     return *shaders.at(name);
 }
 catch (std::exception& e) {
-    std::cerr << "failed to get shader \'" << name << "\'\n";
+    LOG_ERROR(format("failed to get shader \"@\"", name));
     throw;
 }
 
-Shader& ShaderManager::get(const std::string& name) try {
+Shader& ShaderManager::get(const std::string& name)
+try {
     if (!contain(name)) {
         auto it = initializers.find(name);
-        if (it != initializers.end())
+        if (it != initializers.end()) {
+            LOG_ERROR(format("lazy initialized shader \"@\"", name));
             add(name, it->second());
+        }
     }
     return *shaders.at(name);
 }
 catch (std::exception& e) {
-    std::cerr << "failed to get shader \'" << name << "\'\n";
+    LOG_ERROR(format("failed to get shader \"@\"", name));
     throw;
 }
 

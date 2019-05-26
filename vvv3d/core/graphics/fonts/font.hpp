@@ -2,24 +2,13 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include <vvv3d/core/graphics/fonts/font_desc.hpp>
+#include <vvv3d/core/graphics/fonts/glyph.hpp>
 #include <vvv3d/core/graphics/lowlevel/lowleveltexture.hpp>
 #include <vvv3d/core/graphics/textures/texture.hpp>
 
 namespace vvv3d {
 
-struct Glyph {
-    uint32_t character = {0};
-    int32_t width = {0};
-    int32_t height = {0};
-    int32_t xoffset = {0};
-    int32_t yoffset = {0};
-    int32_t advance = {0};
-    std::vector<uint8_t> buffer = {};
-    int textureOffsetX = {0};
-    int textureOffsetY = {0};
-};
-
-class MgrFreetype;
 struct FontImpl;
 class Font {
 private:
@@ -28,6 +17,7 @@ private:
     };
 
 public:
+    /// Must not fail. Must provide dummy glyph
     const Glyph& getGlyph(uint32_t c) const;
     void activate(GLuint texUnit = 0);
     const Texture& getTexture() const;
@@ -58,11 +48,12 @@ public:
 
     void addFont(const std::string& name, const std::string& filename,
                  unsigned int fontsize);
+    void addFont(const std::string& name, const FontDesc& desc,
+                 unsigned int fontsize);
     const Font& getFont(const std::string& name) const;
     std::vector<std::string> listNames() const;
 
 private:
     std::map<std::string, std::shared_ptr<Font>> fonts;
-    std::unique_ptr<MgrFreetype> freetypeMgr;
 };
 } // namespace vvv3d

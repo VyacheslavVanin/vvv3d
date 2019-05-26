@@ -71,6 +71,4 @@ private:
     vvv::vector2i size;
 };
 
-void writeToPng(const char* filename, const Texture& t);
-
 } // namespace vvv3d

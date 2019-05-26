@@ -2,6 +2,10 @@
 #include "utils/helper.hpp"
 #include "vvvstlhelper.hpp"
 
+#include <sstream>
+
+#include <vvv3d/std/texture_io.hpp>
+
 using namespace vvv3d;
 
 TextureManager::TextureManager() : texs()
@@ -53,7 +57,7 @@ void TextureManager::add(const std::string& filename, const std::string& name)
         return;
     }
 
-    std::shared_ptr<LowLevelTexture> im(makeLLTexture(filename));
+    std::shared_ptr<LowLevelTexture> im(readTexture(filename));
     auto texture = std::make_shared<Texture>(im);
     texs[name] = texture;
     texs[filename] = texture;
@@ -64,7 +68,8 @@ void TextureManager::add(const std::string& filename)
     add(filename, filename);
 }
 
-void TextureManager::safe_add(const std::string& filename) try {
+void TextureManager::safe_add(const std::string& filename)
+try {
     add(filename);
 }
 catch (const std::exception& e) {
@@ -228,7 +233,6 @@ void loadAtlasesSection(vvv3d::TextureManager& tm, const vvv::CfgNode& cfg)
         const auto& type = images.getType();
 
         if (atlas.hasProperty("texture")) {
-            const auto& texture_property = atlas.getProperty("texture");
             loadAtlasFromPackedTexture(tm, atlas);
             continue;
         }

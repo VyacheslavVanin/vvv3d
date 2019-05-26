@@ -46,7 +46,7 @@ std::unique_ptr<Geometry> makeBoxGeometry(float xs, float ys, float zs,
         15, 16, 17, //
         0,  18, 1,  //
         3,  19, 4,  //
-        6, 20, 7, //
+        6,  20, 7,  //
         9,  21, 10, //
         12, 22, 13, //
         15, 23, 16, //

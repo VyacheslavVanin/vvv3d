@@ -60,6 +60,7 @@ public:
         return poly<N - 1, T>(der);
     }
 
+    // TODO: replace with operator<<
     void print() const
     {
         std::cout << "{ ";

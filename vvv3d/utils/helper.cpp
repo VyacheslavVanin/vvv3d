@@ -5,6 +5,7 @@
 #include <fstream>
 #include <functional>
 #include <vector>
+#include <vvv3d/std/log.hpp>
 
 namespace vvv3d {
 
@@ -99,8 +100,10 @@ bench::~bench()
     const auto now = std::chrono::system_clock::now();
     const auto us =
         std::chrono::duration_cast<std::chrono::microseconds>(now - start);
-    std::cout << std::string(2 * depth, ' ') << msg << ": " << us.count()
-              << " us\n";
+
+    std::stringstream ss;
+    ss << std::string(2 * depth, ' ') << msg << ": " << us.count() << " us";
+    LOG(ss.str());
 }
 
 #if defined ENABLE_3DS

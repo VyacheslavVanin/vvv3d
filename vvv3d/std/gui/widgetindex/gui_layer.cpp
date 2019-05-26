@@ -1,8 +1,9 @@
 #include "gui_layer.hpp"
 
-#include <iostream>
+#include <sstream>
 #include <string>
 #include <unordered_map>
+#include <vvv3d/std/log.hpp>
 #include <vvv3d/vvv3d.hpp>
 #include <vvv3d/vvv3dgui.hpp>
 #include <vvvcfg/vvvcfg.hpp>
@@ -11,8 +12,8 @@
 #include "widget_fabric.hpp"
 
 namespace vvv3d {
+using vvv::helper::format;
 namespace {
-void log(const std::string& msg) { std::cerr << msg << "\n"; }
 
 struct NameType {
     std::string name;
@@ -22,7 +23,8 @@ struct NameType {
 /**
  * @brief Split name by last '_' symbol.
  * @param full_name */
-NameType makeNameTypeFromFullName(const std::string& full_name) {
+NameType makeNameTypeFromFullName(const std::string& full_name)
+{
     static const char sep = '_';
     const auto& separator_pos = full_name.rfind(sep);
     if (separator_pos == std::string::npos) {
@@ -30,11 +32,12 @@ NameType makeNameTypeFromFullName(const std::string& full_name) {
     }
 
     return {full_name.substr(0, separator_pos),
-            full_name.substr(separator_pos+1)};
+            full_name.substr(separator_pos + 1)};
 }
 
 std::string getType(const vvv::CfgNode::properties_type& properties,
-                    const NameType& node_name) {
+                    const NameType& node_name)
+{
     // first search defined type
     const auto& type_it = properties.find("type");
     if (type_it != properties.end())
@@ -46,7 +49,6 @@ std::string getType(const vvv::CfgNode::properties_type& properties,
 
 } // namespace
 
-
 vvv3d::Widget* makeWidget(const vvv::CfgNode& node)
 {
     using namespace std;
@@ -57,12 +59,12 @@ vvv3d::Widget* makeWidget(const vvv::CfgNode& node)
     const auto& properties = node.getProperties();
     const auto& type = getType(properties, name_type);
     if (type.empty()) {
-        log("Type of \"" + node_name + "\" not specified");
+        LOG(format("Type of \"@\" not specified", node_name));
         return nullptr;
     }
     auto ret = WidgetFabric::instance().create(type);
     if (!ret) {
-        log("Unknown widget type \"" + type + "\"");
+        LOG(format("Unknown widget type \"@\"", type));
         return ret;
     }
     for (const auto& prop : properties) {
@@ -72,7 +74,8 @@ vvv3d::Widget* makeWidget(const vvv::CfgNode& node)
     }
 
     if (properties.count("text") == 0) {
-        const auto& text = properties.count("type") ? node_name : name_type.name;
+        const auto& text =
+            properties.count("type") ? node_name : name_type.name;
         PropertyMapper::instance().applyProperty(ret, "text", text);
     }
     if (properties.count("action") == 0 && properties.count("actions") == 0) {
@@ -176,7 +179,7 @@ void GuiLayer::setText(const std::string& widget_name, const std::string& text)
     auto w = get<vvv3d::ITextProperty>(widget_name);
     if (w)
         return w->setText(text);
-    log("Error: \"" + widget_name + "\" does not implement ITextProperty");
+    LOG(format("Error: \"@\" does not implement ITextProperty", widget_name));
 }
 
 std::string GuiLayer::getText(const std::string& widget_name) const
@@ -184,7 +187,7 @@ std::string GuiLayer::getText(const std::string& widget_name) const
     auto w = get<vvv3d::ITextProperty>(widget_name);
     if (w)
         return w->getText();
-    log("Error: \"" + widget_name + "\" does not implement ITextProperty");
+    LOG(format("Error: \"@\" does not implement ITextProperty", widget_name));
     return {};
 }
 
@@ -194,6 +197,6 @@ void GuiLayer::setColor(const std::string& widget_name,
     auto w = get<vvv3d::IColorProperty>(widget_name);
     if (w)
         return w->setColor(color);
-    log("Error: \"" + widget_name + "\" does not implement IColorProperty");
+    LOG(format("Error: \"@\" does not implement IColorProperty", widget_name));
 }
 } // namespace vvv3d

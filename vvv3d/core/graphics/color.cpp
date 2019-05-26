@@ -1,10 +1,11 @@
 #include "color.hpp"
 
-#include <boost/endian/conversion.hpp>
-#include <iostream>
 #include <unordered_map>
 
+#include <vvv3d/std/log.hpp>
+
 namespace vvv3d {
+using vvv::helper::format;
 Color ORANGE = Color(1, 0.5, 0);
 Color WHITE = Color(1);
 Color SILVER = Color(0.75f);
@@ -24,7 +25,6 @@ Color FUCHSIA = Color(1, 0, 1);
 Color PURPLE = Color(0.5, 0, 0.5);
 
 namespace {
-void log(const std::string& text) { std::cerr << text << "\n"; }
 std::unordered_map<std::string, Color> color_name_mapping{
     {"orange", ORANGE},   {"white", WHITE},   {"silver", SILVER},
     {"gray", GRAY},       {"black", BLACK},   {"red", RED},
@@ -47,26 +47,29 @@ Color to_color(const std::string& value)
     const auto prefix_0x = (value.find("0x") == 0);
     const auto& len = value.size() - prefix_0x * 2;
     if (len != 6 && len != 8) {
-        log("String \"" + value + "\" of len " + std::to_string(len) +
-            " can't be cast to Color");
+        LOG(format("String \"@\" of len @ can't be cast to Color", value, len));
         return DEFAULT_COLOR;
     }
 
     size_t pos = 0;
-    const auto int_value = std::stoi(value, &pos, 16);
-    const auto with_alpha = (len == 8) ? int_value : int_value << 8 | 0xff;
-
-    using boost::endian::native_to_big;
-    const auto color = native_to_big(with_alpha);
+    const auto int_value = std::stoul(value, &pos, 16);
     if (pos != value.size()) {
-        log("String \"" + value +
-            "\" contain invalid symbols, so it can't be cast to Color");
+        LOG(format("String \"@\" contain invalid symbols, so it can't be cast "
+                   "to Color",
+                   value));
         return DEFAULT_COLOR;
     }
+    const auto with_alpha =
+        (len == 8ul) ? int_value : int_value << 8ul | 0xfful;
 
-    const uint8_t* bytes = reinterpret_cast<const uint8_t*>(&color);
-    return vvv3d::Color(bytes[0] * unit16, bytes[1] * unit16, bytes[2] * unit16,
-                        bytes[3] * unit16);
+    // rgba
+    const auto alpha = with_alpha & 0xfful;
+    const auto blue = (with_alpha >> 8ul) & 0xfful;
+    const auto green = (with_alpha >> 16ul) & 0xfful;
+    const auto red = with_alpha >> 24ul;
+
+    return vvv3d::Color(red * unit16, green * unit16, blue * unit16,
+                        alpha * unit16);
 }
 
 } // namespace vvv3d

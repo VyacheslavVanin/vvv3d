@@ -33,15 +33,9 @@ LowLevelGeometry::~LowLevelGeometry() { freeResources(); }
 
 void LowLevelGeometry::Draw(GLenum mode, GLsizei count) const
 {
-    static GLuint activeVAO = 0;
-    if (activeVAO == vao)
-        glDrawElements(mode, count, GL_UNSIGNED_INT, 0);
-    else {
-        activeVAO = vao;
-        bindVAO();
-        ib.bind(); // WORKAROUND: needed due to bug in some drivers
-        glDrawElements(mode, count, GL_UNSIGNED_INT, 0);
-    }
+    bindVAO();
+    ib.bind(); // WORKAROUND: needed due to bug in some drivers
+    glDrawElements(mode, count, GL_UNSIGNED_INT, 0);
 }
 
 void LowLevelGeometry::setVertexBufferData(const void* data, GLsizei size)

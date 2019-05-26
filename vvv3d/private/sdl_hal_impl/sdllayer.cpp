@@ -1,7 +1,11 @@
 #include "sdllayer.hpp"
 #include <SDL.h>
+#include <SDL_image.h>
 #include <vvv3d/core/graphics/lowlevel/openglprovider.hpp>
-//#include <SDL2/SDL_opengles2.hpp>
+#include <vvv3d/private/fc_systemfonts_impl/fc_systemfonts_impl.hpp>
+#include <vvv3d/private/freetype_font_impl/freetype_font_impl.hpp>
+
+#include <boost/locale/encoding_utf.hpp>
 
 using namespace vvv3d;
 
@@ -170,6 +174,7 @@ public:
     {
         if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
             throw std::logic_error("SDL initialization failed...");
+        IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 
         int profile = SDL_GL_CONTEXT_PROFILE_CORE;
         GLPROFILE p = this->profile;
@@ -299,3 +304,119 @@ const std::vector<InputEvent>& sdlLayer::getEvents() const
 }
 
 void sdlLayer::setVSync(bool vsync) { SDL_GL_SetSwapInterval(vsync); }
+
+namespace {
+std::vector<uint8_t> flip_vertical(const void* data, uint32_t w, uint32_t h,
+                                   int channels)
+{
+    const auto output_size = w * h * channels;
+    std::vector<uint8_t> ret(output_size);
+
+    const uint8_t* input = (uint8_t*)data;
+    const auto row_size = channels * w;
+    for (size_t y = 0; y < h; ++y) {
+        const auto input_index = y * row_size;
+        const auto output_index = (h - y - 1) * row_size;
+        memcpy(ret.data() + output_index, input + input_index, row_size);
+    }
+
+    return ret;
+}
+
+/// convert to rgba and flip upsidedown
+std::vector<uint8_t> to_rgba(const void* data, uint32_t w, uint32_t h,
+                             int input_channels)
+{
+    // TODO: add special case for h = 1
+    // TODO: precondition input_channels in [3,4]
+    const auto output_channels = 4;
+    const auto output_size = w * h * output_channels;
+    const uint8_t* input = (uint8_t*)data;
+    std::vector<uint8_t> ret(output_size, 255u);
+
+    if (input_channels == 4) {
+        return flip_vertical(data, w, h, input_channels);
+    }
+    else {
+        for (size_t y = 0; y < h; ++y) {
+            for (size_t x = 0; x < w; ++x) {
+                const auto input_index = input_channels * (y * w + x);
+                const auto output_index =
+                    output_channels * ((h - y - 1) * w + x);
+                for (size_t c = 0; c < 3; ++c)
+                    ret[output_index + c] = input[input_index + c];
+            }
+        }
+    }
+
+    return ret;
+}
+
+} // namespace
+
+LowLevelTexture* sdlLayer::readTexture(const std::string& filename) const
+{
+    SDL_Surface* s = IMG_Load(filename.c_str());
+    const auto converted =
+        to_rgba(s->pixels, s->w, s->h, s->format->BytesPerPixel);
+    auto llt = new vvv3d::LowLevelTexture(converted.data(), s->w, s->h, GL_RGBA,
+                                          GL_RGBA8, GL_UNSIGNED_BYTE);
+    SDL_FreeSurface(s);
+    return llt;
+}
+
+void sdlLayer::writeTexture(const std::string& filename,
+                            const LowLevelTexture* llt, uint32_t width,
+                            uint32_t height, uint32_t offsetx,
+                            uint32_t offsety) const
+{
+    static constexpr auto channel_count = 4;
+    const auto buf_size = width * height * channel_count;
+
+    std::vector<uint8_t> buf(buf_size);
+    vvv3d::readImage(llt, buf.data(), GL_RGBA, GL_UNSIGNED_BYTE, width, height,
+                     offsetx, offsety);
+
+    const auto flipped =
+        flip_vertical(buf.data(), width, height, channel_count);
+    auto s = SDL_CreateRGBSurface(0, width, height, channel_count * 8,
+                                  0x000000ff,  //
+                                  0x0000ff00,  //
+                                  0x00ff0000,  //
+                                  0xff000000); //
+    SDL_memcpy(s->pixels, flipped.data(), buf_size);
+    IMG_SavePNG(s, filename.c_str());
+    SDL_FreeSurface(s);
+}
+
+std::unique_ptr<IFont> sdlLayer::GetFont(const std::string& font_name,
+                                         unsigned pixel_size,
+                                         unsigned char_size, unsigned dpi) const
+{
+    return makeFreetypeFont(font_name, pixel_size, char_size, dpi);
+}
+
+std::unique_ptr<IFont> sdlLayer::GetFont(const FontDesc& desc,
+                                         unsigned pixel_size,
+                                         unsigned char_size, unsigned dpi) const
+{
+    return GetFont(desc.getFileName(), pixel_size, char_size, dpi);
+}
+
+const ISystemFonts& sdlLayer::GetSystemFonts() const
+{
+    static const FontConfigSystemFontsImpl fonts;
+    return fonts;
+}
+
+std::string sdlLayer::toUtf8(const std::u32string& u32) const
+{
+    return boost::locale::conv::utf_to_utf<char>(u32.c_str(),
+                                                 u32.c_str() + u32.size());
+}
+
+std::u32string sdlLayer::toUtf32(const std::string& u8) const
+{
+    return boost::locale::conv::utf_to_utf<char32_t>(u8.c_str(),
+                                                     u8.c_str() + u8.size());
+}

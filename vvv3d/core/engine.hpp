@@ -31,6 +31,7 @@ public:
     float getCurrentFps() const;
     const Viewport& getViewport() const;
     void setVSync(bool vsync);
+    void setBlend(bool blend);
     bool isRunning() const;
 
     GuiLayer& gui();
@@ -46,6 +47,7 @@ public:
     const vvv3d::Color& getClearColor() const;
 
     static Engine& getActiveEngine();
+    static HAL& getHAL();
     /**
      * @brief Return time at the beginning of current frame.
      * @return seconds */
@@ -55,7 +57,7 @@ public:
     static int64_t currentTimeMicros();
 
     /**
-     * @brief Return time passed between brginning of last frame and current.
+     * @brief Return time passed between beginning of last frame and current.
      * @return seconds */
     static double getTimeSinceLastFrame();
 
@@ -79,6 +81,7 @@ private:
     vvv3d::GuiLayer gui_layer;
     std::atomic<bool> is_running{false};
     vvv3d::Color clear_color;
+    bool blend_enabled = false;
 };
 
 TextureManager& getTextureManager();

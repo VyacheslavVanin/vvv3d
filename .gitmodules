@@ -1,3 +1,6 @@
 [submodule "vvvcfg"]
 	path = vvvcfg
 	url = http://gitlab.com/vyacheslav.vanin/vvvcfg
+[submodule "stdhelper"]
+	path = stdhelper
+	url = https://gitlab.com/vyacheslav.vanin/stdhelper

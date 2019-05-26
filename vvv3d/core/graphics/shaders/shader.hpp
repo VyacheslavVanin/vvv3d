@@ -6,8 +6,8 @@
 #include <vvv3d/core/graphics/color.hpp>
 #include <vvv3d/core/graphics/lowlevel/lowlevelshaderprogram.hpp>
 #include <vvv3d/core/graphics/textures/texture.hpp>
-#include <vvv3d/vvvmath/linalg.hpp>
 #include <vvv3d/std/lighting/light.hpp>
+#include <vvv3d/vvvmath/linalg.hpp>
 
 namespace vvv3d {
 

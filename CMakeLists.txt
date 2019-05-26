@@ -2,17 +2,31 @@ cmake_minimum_required(VERSION 3.1)
 project(vvv3d)
 set (CMAKE_CXX_STANDARD 14)
 
-# Check packeages
-find_package(Freetype REQUIRED)
-find_package(PNG REQUIRED)
-find_package(JPEG REQUIRED)
-find_package(OpenGL REQUIRED)
-find_package(Boost REQUIRED)
+set(OpenGL_GL_PREFERENCE "GLVND")
 
-INCLUDE(FindPkgConfig)
-PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
-PKG_SEARCH_MODULE(FONTCONFIG REQUIRED fontconfig)
-PKG_SEARCH_MODULE(GLEW REQUIRED glew)
+# Set Source files
+file(GLOB_RECURSE SRCS
+    vvv3d/core/*.cpp
+    vvv3d/std/*.cpp
+    vvv3d/utils/*.cpp
+    vvv3d/vvvmath/*.cpp
+)
+
+if (NOT VVV3D_BACKEND)
+    message("VVV3D_BACKEND variable was set to default value (SDL)")
+    set(VVV3D_BACKEND "SDL")
+endif(NOT VVV3D_BACKEND)
+
+if (VVV3D_BACKEND STREQUAL "SDL")
+    message("Use SDL2 backend")
+    include(cmake/sdl_backend.cmake)
+elseif (VVV3D_BACKEND STREQUAL "Qt")
+    message("Use Qt backend")
+    include(cmake/qt_backend.cmake)
+else (VVV3D_BACKEND STREQUAL "SDL")
+    message("VVV3D_BACKEND has invalid value (supported values are SDL)")
+endif(VVV3D_BACKEND STREQUAL "SDL")
+
 
 option(WITH_DEPENDENCIES "BUILD WITH DEPENDENCIES" ON)
 if(WITH_DEPENDENCIES)
@@ -27,22 +41,25 @@ endif(WITH_GL_DEBUG)
 # Set include path
 include_directories(${FREETYPE_INCLUDE_DIRS}
                     ${SDL2_INCLUDE_DIRS}
-                    vvv3d . vvvcfg)
+                    vvv3d . vvvcfg stdhelper/src)
 
-# Set Source files
-file(GLOB_RECURSE SRCS vvv3d/*.cpp)
 file(GLOB_RECURSE HDRS *.h *.hpp)
 add_library(vvv3d SHARED ${SRCS} ${HDRS})
+
 
 target_link_libraries(vvv3d
                       ${GLEW_LIBRARIES}
                       ${OPENGL_LIBRARIES}
-                      ${PNG_LIBRARIES} ${JPEG_LIBRARIES} ${FREETYPE_LIBRARIES}
+                      ${FREETYPE_LIBRARIES}
                       ${FONTCONFIG_LIBRARIES}
-                      ${SDL2_LIBRARIES})
+                      ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES}
+                      ${QT_LIBRARIES})
 
-enable_testing()
-add_subdirectory(tests)
+option(WITH_TESTS "BUILD WITH TESTS" OFF)
+if(WITH_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif(WITH_TESTS)
 
 # Installation
 set(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "..." FORCE)

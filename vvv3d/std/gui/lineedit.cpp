@@ -1,6 +1,7 @@
 #include "lineedit.hpp"
 #include <vvv3d/vvv3d.hpp>
 #include <vvv3d/vvvmath/functions.hpp>
+#include <vvv3d/core/hal/hal.hpp>
 
 namespace vvv3d {
 
@@ -106,13 +107,17 @@ void LineEdit::chargeBlink()
     cursor->setVisible(true);
 }
 
-void LineEdit::onGetFocus() { chargeBlink(); }
+void LineEdit::onGetFocus() {
+    chargeBlink();
+    vvv3d::Engine::getActiveEngine().getHAL().showVirtualKeyboard(true);
+}
 
 void LineEdit::onLoseFocus()
 {
     using namespace std::chrono;
     toggleCursorVisibilityThresholdTime = system_clock::time_point();
     cursor->setVisible(false);
+    vvv3d::Engine::getActiveEngine().getHAL().showVirtualKeyboard(false);
 }
 
 void LineEdit::onDraw()
@@ -187,6 +192,7 @@ void LineEdit::onKeyDown(uint16_t scancode)
 void LineEdit::onResize(const vvv::vector2i& oldSize,
                         const vvv::vector2i& newSize)
 {
+    std::ignore = oldSize;
     background->setSize(newSize);
     placeWidgets();
 }

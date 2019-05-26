@@ -110,13 +110,14 @@ Camera& Camera::setOrtho(float left, float right, float bottom, float top,
 
 namespace {
 /** @brief Divide integer value without loss */
-template<typename T>
-inline std::pair<T, T> divideBy2(T value) {
+template <typename T>
+inline std::pair<T, T> divideBy2(T value)
+{
     const auto l = value / 2;
     const auto r = value - l;
     return std::make_pair(l, r);
 }
-}
+} // namespace
 
 Camera& Camera::setOrtho(const Viewport& viewport, float zNear, float zFar)
 {

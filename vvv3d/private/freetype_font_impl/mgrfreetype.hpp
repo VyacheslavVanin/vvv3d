@@ -17,7 +17,7 @@ public:
 
     const FT_Face& addFont(const std::string& name,
                            const std::string& fontPath);
-    void addFont(const std::string& fontNameOrPath);
+    const FT_Face& addFont(const std::string& fontNameOrPath);
     const FT_Face& getFont(const std::string& fontNameOrPath) const;
 
 private:

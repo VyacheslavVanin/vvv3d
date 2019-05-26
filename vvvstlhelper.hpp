@@ -79,7 +79,8 @@ inline std::vector<std::string> split(const std::string& str,
     return ret;
 }
 
-inline float to_float(const std::string& str) try {
+inline float to_float(const std::string& str)
+try {
     return std::stof(str);
 }
 catch (...) {

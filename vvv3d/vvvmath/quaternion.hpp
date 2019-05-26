@@ -47,6 +47,8 @@ public:
     inline void toMatrix33(vvv::matrix33<T>& out) const;
     inline void toMatrix44(vvv::matrix44<T>& out) const;
 
+    inline const vector4<T>& getRaw() const;
+
 private:
     vector4<T> q;
 };
@@ -184,6 +186,12 @@ template <typename T>
 T quaternion<T>::getAngle() const
 {
     return 2 * std::acos(q.w);
+}
+
+template <typename T>
+inline const vector4<T>& quaternion<T>::getRaw() const
+{
+    return q;
 }
 } // namespace vvv
 

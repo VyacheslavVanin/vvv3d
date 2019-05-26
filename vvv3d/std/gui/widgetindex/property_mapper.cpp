@@ -1,7 +1,5 @@
 #include "property_mapper.hpp"
 
-#include <iostream>
-
 #include "standard_properties.hpp"
 
 namespace vvv3d {

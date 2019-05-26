@@ -33,6 +33,8 @@ public:
     inline vvv::vector3f getFrontVector() const;
     inline vvv::vector3f getUpVector() const;
 
+    inline const vvv::quaternion<float>& getQuaternion() const;
+
 private:
     vvv::quaternion<float> q;
     vvv::vector3f position;
@@ -180,4 +182,9 @@ inline void Transform::scale(float x, float y, float z)
 inline void Transform::scale(const vvv::vector3f& s) { m_scale *= s; }
 
 inline void Transform::scale(float s) { m_scale *= s; }
+
+inline const vvv::quaternion<float>& Transform::getQuaternion() const
+{
+    return q;
+}
 } // namespace vvv3d

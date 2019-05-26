@@ -9,6 +9,7 @@ public:
     ~bench();
 
     static void setEnable(bool value) { enable = value; }
+
 private:
     std::string msg;
     std::chrono::system_clock::time_point start;

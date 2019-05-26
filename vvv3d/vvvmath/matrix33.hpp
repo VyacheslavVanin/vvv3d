@@ -130,7 +130,6 @@ inline std::ostream& operator<<(std::ostream& stream, const vvv::matrix33<T>& m)
     return stream;
 }
 
-
 typedef matrix33<double> matrix33d;
 typedef matrix33<float> matrix33f;
 } // namespace vvv

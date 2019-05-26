@@ -2,6 +2,8 @@
 #include "texturepacker.hpp"
 #include <string.h>
 #include <utils/helper.hpp>
+#include <vvv3d/std/log.hpp>
+#include <vvv3d/std/texture_io.hpp>
 
 using namespace vvv3d;
 using namespace std;
@@ -38,7 +40,7 @@ TextureAtlas::pack(size_t width, size_t height,
     bench timings("make atlas from files");
     std::vector<LowLevelTexture*> lltexs;
     std::transform(filenames.begin(), filenames.end(), back_inserter(lltexs),
-                   [](auto& name) { return makeLLTexture(name.c_str()); });
+                   [](auto& name) { return readTexture(name.c_str()); });
     return pack(width, height, lltexs, names, border);
 }
 
@@ -142,9 +144,6 @@ std::vector<string> TextureAtlas::listNames() const
         ret.push_back(i.first);
     return ret;
 }
-namespace {
-void log(const std::string& msg) { std::cerr << msg << "\n"; }
-} // namespace
 
 std::unique_ptr<TextureAtlas>
 TextureAtlas::makeAtlas(std::shared_ptr<LowLevelTexture>&& atlas_texuture,
@@ -152,7 +151,7 @@ TextureAtlas::makeAtlas(std::shared_ptr<LowLevelTexture>&& atlas_texuture,
                         const std::vector<std::string>& names)
 {
     if (coords.size() != names.size()) {
-        log("Error: TextureAtlas::makeAtlas coords.size() != names.size()");
+        LOG_ERROR("TextureAtlas::makeAtlas coords.size() != names.size()");
         throw std::invalid_argument("coords.size() != names.size()");
     }
 
@@ -188,6 +187,6 @@ TextureAtlas::makeAtlas(const std::string& texture_file_name,
                         const std::vector<std::string>& names)
 {
     auto atlas_texture =
-        std::shared_ptr<LowLevelTexture>(makeLLTexture(texture_file_name));
+        std::shared_ptr<LowLevelTexture>(readTexture(texture_file_name));
     return makeAtlas(std::move(atlas_texture), coords, names);
 }

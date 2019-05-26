@@ -289,11 +289,11 @@ void Widget::onGetFocus() {}
 
 void Widget::onLoseFocus() {}
 
-void Widget::onKeyDown(uint16_t scancode) {}
+void Widget::onKeyDown(uint16_t scancode) { std::ignore = scancode; }
 
-void Widget::onKeyUp(uint16_t scancode) {}
+void Widget::onKeyUp(uint16_t scancode) { std::ignore = scancode; }
 
-void Widget::onTextEntered(const std::string& text) {}
+void Widget::onTextEntered(const std::string& text) { std::ignore = text; }
 
 void Widget::onContentChanged() {}
 

@@ -1,6 +1,6 @@
 #include "input.hpp"
+#include <core/hal/hal.hpp>
 #include <core/resourcemanager.hpp>
-#include <core/sdllayer.hpp>
 #include <vvv3d/core/engine.hpp>
 
 namespace vvv3d {
@@ -24,11 +24,11 @@ bool Input::Keyboard::hasKeyDownEvent(uint16_t scancode) const
     return false;
 }
 
-bool Input::Keyboard::hasKeyUpEvent(uint16_t scancode) const {
+bool Input::Keyboard::hasKeyUpEvent(uint16_t scancode) const
+{
     const auto& events = getEvents();
     for (const auto& e : events)
-        if (e.scancode == scancode &&
-            e.type == vvv3d::INPUT_EVENT_TYPE::KEY_UP)
+        if (e.scancode == scancode && e.type == vvv3d::INPUT_EVENT_TYPE::KEY_UP)
             return true;
     return false;
 }

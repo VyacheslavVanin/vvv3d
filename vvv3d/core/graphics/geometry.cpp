@@ -1,10 +1,13 @@
 #include "geometry.hpp"
 #include "lowlevel/lowlevelbuffer.hpp"
 #include "lowlevel/vertexattribute.hpp"
+#include <format.hpp>
 #include <memory>
-using namespace std;
+#include <vvv3d/std/log.hpp>
 
+using namespace std;
 using namespace vvv3d;
+using vvv::helper::format;
 
 Geometry::Geometry(const void* vertexData, GLsizei dataSize,
                    const GLuint* indices, GLsizei numIndices,
@@ -64,15 +67,17 @@ void GeometryManager::add(const std::string& name,
     initializers[name] = f;
 }
 
-const Geometry& GeometryManager::get(const string& name) const try {
+const Geometry& GeometryManager::get(const string& name) const
+try {
     return *geometries.at(name);
 }
 catch (const std::exception& e) {
-    std::cerr << "failed to get geometry \'" << name << "\'\n";
+    LOG_ERROR(format("failed to get geometry \"@\"", name));
     throw;
 }
 
-const Geometry& GeometryManager::get(const string& name) try {
+const Geometry& GeometryManager::get(const string& name)
+try {
     if (!contain(name)) {
         auto it = initializers.find(name);
         if (it != initializers.end())
@@ -81,7 +86,7 @@ const Geometry& GeometryManager::get(const string& name) try {
     return *geometries.at(name);
 }
 catch (const std::exception& e) {
-    std::cerr << "failed to get geometry \'" << name << "\'\n";
+    LOG_ERROR(format("failed to get geometry \"@\"", name));
     throw;
 }
 

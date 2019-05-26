@@ -34,11 +34,10 @@ bool FrameBufferObject::beginDrawToDepthTexture(Texture& depthTexture)
 namespace {
 template <typename T>
 void beginDrawToTextures_impl(
-    GLuint framebuffer,
     const std::vector<std::reference_wrapper<T>>& color_textures)
 {
     const GLsizei color_textures_count = color_textures.size();
-    for (size_t i = 0; i < color_textures_count; ++i) {
+    for (GLsizei i = 0; i < color_textures_count; ++i) {
         const auto& texture_ref = color_textures[i];
         const auto& id = texture_ref.get().getID();
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i,
@@ -46,17 +45,22 @@ void beginDrawToTextures_impl(
     }
 
     static const GLenum DrawBuffers[] = {
-        GL_COLOR_ATTACHMENT0,  GL_COLOR_ATTACHMENT1,  GL_COLOR_ATTACHMENT2,
-        GL_COLOR_ATTACHMENT3,  GL_COLOR_ATTACHMENT4,  GL_COLOR_ATTACHMENT5,
-        GL_COLOR_ATTACHMENT6,  GL_COLOR_ATTACHMENT7,  GL_COLOR_ATTACHMENT8,
-        GL_COLOR_ATTACHMENT9,  GL_COLOR_ATTACHMENT10, GL_COLOR_ATTACHMENT11,
-        GL_COLOR_ATTACHMENT12, GL_COLOR_ATTACHMENT13, GL_COLOR_ATTACHMENT14,
-        GL_COLOR_ATTACHMENT15, GL_COLOR_ATTACHMENT16, GL_COLOR_ATTACHMENT17,
-        GL_COLOR_ATTACHMENT18, GL_COLOR_ATTACHMENT19, GL_COLOR_ATTACHMENT20,
-        GL_COLOR_ATTACHMENT21, GL_COLOR_ATTACHMENT22, GL_COLOR_ATTACHMENT23,
-        GL_COLOR_ATTACHMENT24, GL_COLOR_ATTACHMENT25, GL_COLOR_ATTACHMENT26,
-        GL_COLOR_ATTACHMENT27, GL_COLOR_ATTACHMENT28, GL_COLOR_ATTACHMENT29,
-        GL_COLOR_ATTACHMENT30, GL_COLOR_ATTACHMENT31,
+        GL_COLOR_ATTACHMENT0 + 1,  GL_COLOR_ATTACHMENT0 + 2,
+        GL_COLOR_ATTACHMENT0 + 3,  GL_COLOR_ATTACHMENT0 + 4,
+        GL_COLOR_ATTACHMENT0 + 5,  GL_COLOR_ATTACHMENT0 + 6,
+        GL_COLOR_ATTACHMENT0 + 7,  GL_COLOR_ATTACHMENT0 + 8,
+        GL_COLOR_ATTACHMENT0 + 9,  GL_COLOR_ATTACHMENT0 + 10,
+        GL_COLOR_ATTACHMENT0 + 11, GL_COLOR_ATTACHMENT0 + 12,
+        GL_COLOR_ATTACHMENT0 + 13, GL_COLOR_ATTACHMENT0 + 14,
+        GL_COLOR_ATTACHMENT0 + 15, GL_COLOR_ATTACHMENT0 + 16,
+        GL_COLOR_ATTACHMENT0 + 17, GL_COLOR_ATTACHMENT0 + 18,
+        GL_COLOR_ATTACHMENT0 + 19, GL_COLOR_ATTACHMENT0 + 20,
+        GL_COLOR_ATTACHMENT0 + 21, GL_COLOR_ATTACHMENT0 + 22,
+        GL_COLOR_ATTACHMENT0 + 23, GL_COLOR_ATTACHMENT0 + 24,
+        GL_COLOR_ATTACHMENT0 + 25, GL_COLOR_ATTACHMENT0 + 26,
+        GL_COLOR_ATTACHMENT0 + 27, GL_COLOR_ATTACHMENT0 + 28,
+        GL_COLOR_ATTACHMENT0 + 29, GL_COLOR_ATTACHMENT0 + 30,
+        GL_COLOR_ATTACHMENT0 + 31,
     };
     glDrawBuffers(color_textures_count, DrawBuffers);
 }
@@ -75,7 +79,7 @@ void beginDrawToTextures(
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
                            depthTexture.getID(), 0);
 
-    beginDrawToTextures_impl(framebuffer, color_textures);
+    beginDrawToTextures_impl(color_textures);
 
     assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 }
@@ -89,7 +93,7 @@ void beginDrawToTextures(
 
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 
-    beginDrawToTextures_impl(framebuffer, color_textures);
+    beginDrawToTextures_impl(color_textures);
 
     assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 }

@@ -1,14 +1,17 @@
 #include "lowlevelshader.hpp"
+
 #include "utils/myutils.hpp"
 #include <core/graphics/lowlevel/openglprovider.hpp>
+#include <vvv3d/std/log.hpp>
+
 #include <cstdint>
 #include <cstring>
-#include <iostream>
 #include <memory>
 #include <stdexcept>
 #include <string>
 
 using namespace vvv3d;
+using vvv::helper::format;
 
 const std::string& shader_type_to_string(GLenum shader_type)
 {
@@ -30,7 +33,7 @@ static GLint ShaderStatus(GLuint shader, GLenum param)
     if (status != GL_TRUE) {
         GLchar buffer[1024];
         glGetShaderInfoLog(shader, 1024, &length, buffer);
-        std::cout << "Shader: " << buffer << std::endl;
+        LOG(format("Shader: @", buffer));
     }
     return status;
 }
@@ -42,9 +45,8 @@ static GLuint createFromString(const char* source, GLenum shaderType)
     glShaderSource(shader, 1, &source, &sourceSize);
     glCompileShader(shader);
     if (ShaderStatus(shader, GL_COMPILE_STATUS) != GL_TRUE) {
-        throw std::logic_error("Failed to compile " +
-                               shader_type_to_string(shaderType) +
-                               " shader ... ");
+        throw std::logic_error(format("Failed to compile @ shader ... ",
+                                      shader_type_to_string(shaderType)));
     }
     return shader;
 }
@@ -58,13 +60,13 @@ LowLevelShader::LowLevelShader(const char* filename, GLenum shaderType)
         shader = ::createFromString(source.c_str(), shaderType);
     }
     catch (std::ios_base::failure& f) {
-        std::cerr << "Failed to read " << shader_type_to_string(shaderType)
-                  << " shader from file " << filename << "\n";
+        LOG(format("Failed to read @ shader from file @",
+                   shader_type_to_string(shaderType), filename));
         throw;
     }
     catch (std::exception& e) {
-        std::cerr << "Failed to create " << shader_type_to_string(shaderType)
-                  << " shader from source in " << filename << "\n";
+        LOG(format("Failed to create @ shader from source in @",
+                   shader_type_to_string(shaderType), filename));
         throw;
     }
 }

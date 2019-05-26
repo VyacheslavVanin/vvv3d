@@ -1,11 +1,13 @@
 #pragma once
-#include <iostream>
-#include <string>
+#include <sstream>
 #include <vvv3d/core/graphics/lowlevel/openglprovider.hpp>
+#include <vvv3d/std/log.hpp>
 
 #define DebugVar(var)                                                          \
     {                                                                          \
-        std::cout << #var << " = " << var << std::endl;                        \
+        std::stringstream ss;                                                  \
+        ss << #var << " = " << var << std::endl;                               \
+        LOG(ss.str());                                                         \
     }
 #define GLSL(version, src) "#version " #version "\n" #src
 

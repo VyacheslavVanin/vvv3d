@@ -36,13 +36,6 @@ private:
     size_t num_channels;
 };
 
-void readImage(const LowLevelTexture* llt, void* out, GLenum format,
-               GLenum type);
-
-/** @brief Make low level texture from file.
- *  Currently supported file types: png, jpeg */
-LowLevelTexture* makeLLTexture(const std::string& filename);
-
 /**
  * @brief Create texture to store color data
  * same as
@@ -79,10 +72,15 @@ LowLevelTexture* makeLLTextureRGBAf(uint32_t width, uint32_t height);
  * (Texture, TextureManager) */
 LowLevelTexture* makeLLTextureDepthf(uint32_t width, uint32_t height);
 
-void writeToPng(const char* filename, const LowLevelTexture* llt);
-void writeToPng(const char* filename, const LowLevelTexture* llt,
-                uint32_t width, uint32_t height, uint32_t offsetx,
-                uint32_t offsety);
 LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
                                   uint32_t cellSize);
+/**
+ * @brief Copy data from texture llt to out
+ * @param llt pointer to texture to copy from
+ * @param out pointer to destination buffer */
+void readImage(const LowLevelTexture* llt, void* out, GLenum format,
+               GLenum type);
+void readImage(const LowLevelTexture* llt, void* out, GLenum format,
+               GLenum type, uint32_t width, uint32_t height, uint32_t offsetx,
+               uint32_t offsety);
 } // namespace vvv3d
