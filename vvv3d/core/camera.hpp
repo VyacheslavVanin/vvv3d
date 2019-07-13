@@ -60,6 +60,7 @@ public:
 
     float getZNear() const { return zNear; }
     float getZFar() const { return zFar; }
+    float getFOVy() const { return fovy; }
 
 private:
     vvv::vector3f position;
