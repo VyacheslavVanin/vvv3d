@@ -1,7 +1,6 @@
 #include "geometry.hpp"
 #include "lowlevel/lowlevelbuffer.hpp"
 #include "lowlevel/vertexattribute.hpp"
-#include <format.hpp>
 #include <memory>
 #include <vvv3d/std/log.hpp>
 

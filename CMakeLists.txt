@@ -41,7 +41,7 @@ endif(WITH_GL_DEBUG)
 # Set include path
 include_directories(${FREETYPE_INCLUDE_DIRS}
                     ${SDL2_INCLUDE_DIRS}
-                    vvv3d . vvvcfg stdhelper/src)
+                    vvv3d . vvvcfg stdhelper/include)
 
 file(GLOB_RECURSE HDRS *.h *.hpp)
 add_library(vvv3d SHARED ${SRCS} ${HDRS})
@@ -66,3 +66,6 @@ set(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "..." FORCE)
 install(DIRECTORY vvv3d DESTINATION include FILES_MATCHING PATTERN "*.h")
 install(DIRECTORY vvv3d DESTINATION include FILES_MATCHING PATTERN "*.hpp")
 install(TARGETS vvv3d DESTINATION lib)
+install(DIRECTORY stdhelper/include/vvvstdhelper
+        DESTINATION include
+        FILES_MATCHING PATTERN "*.hpp")
