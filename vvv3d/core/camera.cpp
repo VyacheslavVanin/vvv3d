@@ -200,3 +200,15 @@ void Camera::updateViewProjectionMatrix() const
 {
     viewProjection = getProjectionMatrix() * getViewMatrix();
 }
+
+Camera& Camera::updateViewport(const Viewport& viewport)
+{
+    if (getProjectionType() == PROJECTION_TYPE::PERSPECTIVE) {
+        const auto zNear = getZNear();
+        const auto zFar = getZFar();
+        const auto fovy = getFOVy();
+        setPerspective(fovy, viewport.getAspect(), zNear, zFar);
+    }
+
+    return *this;
+}

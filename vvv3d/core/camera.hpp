@@ -6,6 +6,8 @@ namespace vvv3d {
 
 class Camera {
 public:
+    enum class PROJECTION_TYPE { ORTHO, PERSPECTIVE };
+
     Camera();
 
     const vvv::vector3f& getPosition() const;
@@ -56,8 +58,14 @@ public:
                            float zNear = 0, float zFar = 1);
 
     Camera& setPerspective(float fovy, float aspect, float zNear, float zFar);
-    float getAspectRatio() const;
 
+    /**
+     * @brief Update projection matrix to fix aspect ratio to match new viewport
+     * @param viewport new Viewport */
+    Camera& updateViewport(const Viewport& viewport);
+
+    PROJECTION_TYPE getProjectionType() const { return projectionType; }
+    float getAspectRatio() const;
     float getZNear() const { return zNear; }
     float getZFar() const { return zFar; }
     float getFOVy() const { return fovy; }
@@ -66,8 +74,6 @@ private:
     vvv::vector3f position;
     vvv::vector3f forward;
     vvv::vector3f up;
-
-    enum class PROJECTION_TYPE { ORTHO, PERSPECTIVE };
 
     PROJECTION_TYPE projectionType = PROJECTION_TYPE::ORTHO;
     float zNear = 0.1f;
