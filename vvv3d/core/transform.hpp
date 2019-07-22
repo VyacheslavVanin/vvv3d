@@ -13,6 +13,7 @@ public:
     inline void setRotationEuler(float pitch, float yaw, float roll);
     inline void setRotation(float angle, float ax, float ay, float az);
     inline void setRotation(float angle, const vvv::vector3f& axis);
+    inline void setRotation(const vvv::quaternion<float>& quaternion);
     inline void setScale(float x, float y, float z);
     inline void setScale(const vvv::vector3f& s);
     inline void setScale(float scale);
@@ -132,6 +133,12 @@ inline void Transform::setRotation(float angle, float ax, float ay, float az)
 inline void Transform::setRotation(float angle, const vvv::vector3f& axis)
 {
     q.setAngleAxis(angle, axis);
+    rotationChanged = true;
+}
+
+inline void Transform::setRotation(const vvv::quaternion<float>& q)
+{
+    this->q = q;
     rotationChanged = true;
 }
 

@@ -56,16 +56,18 @@ private:
 template <typename T>
 quaternion<T>& quaternion<T>::setEuler(T pitch, T yaw, T roll)
 {
-    const auto tmp4 = sin(pitch * 0.5);
-    const auto tmp1 = cos(pitch * 0.5);
-    const auto tmp5 = sin(yaw * 0.5);
-    const auto tmp2 = cos(yaw * 0.5);
-    const auto tmp6 = sin(roll * 0.5);
-    const auto tmp3 = cos(roll * 0.5);
-    return set(tmp4 * tmp2 * tmp3 + tmp1 * tmp5 * tmp6,
-               tmp1 * tmp5 * tmp3 + tmp4 * tmp2 * tmp6,
-               tmp1 * tmp2 * tmp6 + tmp4 * tmp5 * tmp3,
-               tmp1 * tmp2 * tmp3 + tmp4 * tmp5 * tmp6);
+    // Abbreviations for the various angular functions
+    const double cy = cos(yaw * 0.5);
+    const double sy = sin(yaw * 0.5);
+    const double cp = cos(pitch * 0.5);
+    const double sp = sin(pitch * 0.5);
+    const double cr = cos(roll * 0.5);
+    const double sr = sin(roll * 0.5);
+
+    return set(cy * cp * sr - sy * sp * cr,
+               sy * cp * sr + cy * sp * cr,
+               sy * cp * cr - cy * sp * sr,
+               cy * cp * cr + sy * sp * sr);
 }
 
 template <typename T>
