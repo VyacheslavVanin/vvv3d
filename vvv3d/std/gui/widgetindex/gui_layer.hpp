@@ -4,6 +4,7 @@
 #include <vvvcfg/vvvcfg.hpp>
 
 #include <functional>
+#include <sstream>
 #include <unordered_map>
 
 namespace vvv3d {
@@ -34,7 +35,9 @@ public:
     template <typename T>
     inline void setText(const std::string& widget_name, const T& value)
     {
-        setText(widget_name, std::to_string(value));
+        std::stringstream ss;
+        ss << value;
+        setText(widget_name, ss.str());
     }
 
     void setColor(const std::string& widget_name, const vvv3d::Color& color);
