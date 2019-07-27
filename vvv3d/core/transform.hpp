@@ -22,6 +22,7 @@ public:
     inline void move(float x, float y, float z);
     inline void rotate(float angle, const vvv::vector3f& axis);
     inline void rotate(float angle, float ax, float ay, float az);
+    inline void rotate(const vvv::quaternion<float>& quaternion);
     inline void scale(float x, float y, float z);
     inline void scale(const vvv::vector3f& s);
     inline void scale(float s);
@@ -170,10 +171,14 @@ inline void Transform::move(float x, float y, float z)
     positionChanged = true;
 }
 
+inline void Transform::rotate(const vvv::quaternion<float>& quaternion) {
+    q *= quaternion;
+    rotationChanged = true;
+}
+
 inline void Transform::rotate(float angle, const vvv::vector3f& axis)
 {
-    q *= vvv::quaternion<float>(angle, axis);
-    rotationChanged = true;
+    rotate(vvv::quaternion<float>(angle, axis));
 }
 
 inline void Transform::rotate(float angle, float ax, float ay, float az)
