@@ -12,6 +12,11 @@
 
 namespace vvv3d {
 
+namespace {
+const auto DPI = 96;
+const auto CHAR_SIZE = 16;
+} // namespace
+
 using namespace std;
 const std::u32string characters = U"abcdefghijklmnopqrstuvwxyz"
                                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -152,10 +157,10 @@ FontManager::FontManager() : fonts()
     const auto& defaultBold = *sysfonts.getDefaultBold();
     const auto& defaultItalic = *sysfonts.getDefaultItalic();
     const auto& defaultMono = *sysfonts.getDefaultMono();
-    addFont("default", defaultFont, 20);
-    addFont("bold", defaultBold, 20);
-    addFont("italic", defaultItalic, 20);
-    addFont("mono", defaultMono, 20);
+    addFont("default", defaultFont, 14);
+    addFont("bold", defaultBold, 14);
+    addFont("italic", defaultItalic, 14);
+    addFont("mono", defaultMono, 14);
 }
 
 void FontManager::addFont(const string& name, const string& filename,
@@ -174,7 +179,8 @@ void FontManager::addFont(const string& name, const string& filename,
     }
 
     // TODO: detect or use constant pixel_size and dpi
-    auto ifont = vvv3d::Engine::getHAL().GetFont(filename, fontsize, 16, 96);
+    auto ifont =
+        vvv3d::Engine::getHAL().GetFont(filename, fontsize, CHAR_SIZE, DPI);
 
     auto f = std::make_shared<Font>(Font::_private{});
     f->pImpl = std::make_unique<FontImpl>(std::move(ifont), GLYPH_TEXURE_SIZE);
@@ -190,7 +196,8 @@ void FontManager::addFont(const std::string& name, const FontDesc& desc,
         return addFont(name, filename, fontsize);
 
     // TODO: detect or use constant pixel_size and dpi
-    auto ifont = vvv3d::Engine::getHAL().GetFont(desc, fontsize, 16, 96);
+    auto ifont =
+        vvv3d::Engine::getHAL().GetFont(desc, fontsize, CHAR_SIZE, DPI);
     auto f = std::make_shared<Font>(Font::_private{});
     f->pImpl = std::make_unique<FontImpl>(std::move(ifont), GLYPH_TEXURE_SIZE);
     fonts[name] = f;

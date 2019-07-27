@@ -14,6 +14,8 @@
 #include <QFontDatabase>
 #include <QDebug>
 
+#include <iostream>
+
 namespace vvv3d {
 QtHalLayer::QtHalLayer() {}
 
@@ -151,8 +153,8 @@ std::unique_ptr<vvv3d::IFont> QtHalLayer::GetFont(const std::string& font_name,
 {
     auto id = QFontDatabase::addApplicationFont(font_name.c_str());
     auto family = QFontDatabase::applicationFontFamilies(id)[0];
-    QFont font(family, (int)char_size);
-    return std::make_unique<QtFontImpl>(font, char_size, pixel_size, dpi);
+    QFont font(family, (int)pixel_size);
+    return std::make_unique<QtFontImpl>(font, pixel_size, char_size, dpi);
 }
 
 std::unique_ptr<vvv3d::IFont> QtHalLayer::GetFont(const FontDesc& desc,
@@ -166,7 +168,7 @@ std::unique_ptr<vvv3d::IFont> QtHalLayer::GetFont(const FontDesc& desc,
 
     QFontDatabase font_db;
     const auto& font = font_db.font(desc.getFamily().c_str(),
-                                    desc.getStyle().c_str(), char_size);
+                                    desc.getStyle().c_str(), pixel_size);
     return std::make_unique<QtFontImpl>(font, char_size, pixel_size, dpi);
 }
 

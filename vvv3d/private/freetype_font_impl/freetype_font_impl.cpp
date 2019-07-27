@@ -6,6 +6,8 @@
 #include <vvv3d/core/hal/fonts/interface/font_interface.hpp>
 #include <vvv3d/private/freetype_font_impl/mgrfreetype.hpp>
 
+#include <iostream>
+
 namespace {
 void convert8to32tex(const void* in, size_t width, size_t height, void* out)
 {
@@ -41,6 +43,8 @@ vvv3d::MgrFreetype& getFreetypeInstance()
     return freetype_instance;
 }
 
+const auto FONT_MULTIPLIER = 64;
+
 } // namespace
 
 namespace vvv3d {
@@ -54,15 +58,15 @@ public:
 
     FontMetrics GetMetrics() const override
     {
-        FT_Set_Char_Size(face, charSize * 64, charSize * 64, dpi, dpi);
-        FT_Set_Pixel_Sizes(face, 0, size);
+        FT_Set_Char_Size(face, 0, size * FONT_MULTIPLIER, dpi, dpi);
+        // FT_Set_Pixel_Sizes(face, 0, charSize);
 
         FontMetrics ret;
         ret.pixelSize = size;
         ret.charSize = charSize;
         ret.dpi = dpi;
-        ret.ascender = face->size->metrics.ascender / 64;
-        ret.descender = face->size->metrics.descender / 64;
+        ret.ascender = face->size->metrics.ascender / FONT_MULTIPLIER;
+        ret.descender = face->size->metrics.descender / FONT_MULTIPLIER;
         ret.minLeftGlyphEdge = face->bbox.xMin;
 
         return ret;
@@ -80,9 +84,10 @@ public:
         const auto& bm = face->glyph->bitmap;
         const auto width = bm.width;
         const auto height = bm.rows;
-        const auto xoffset = glyph->metrics.horiBearingX / 64;
-        const auto yoffset = glyph->metrics.horiBearingY / 64 - height;
-        const auto advance = glyph->metrics.horiAdvance / 64;
+        const auto xoffset = glyph->metrics.horiBearingX / FONT_MULTIPLIER;
+        const auto yoffset =
+            glyph->metrics.horiBearingY / FONT_MULTIPLIER - height;
+        const auto advance = glyph->metrics.horiAdvance / FONT_MULTIPLIER;
         Glyph ret{static_cast<uint32_t>(character),
                   static_cast<int32_t>(width),
                   static_cast<int32_t>(height),

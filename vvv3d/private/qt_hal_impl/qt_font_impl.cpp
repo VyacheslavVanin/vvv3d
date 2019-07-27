@@ -22,7 +22,7 @@ vvv3d::FontMetrics QtFontImpl::GetMetrics() const
 
     QFontMetrics fm(font);
     // crutch needed for compatibility with freetype impl
-    static constexpr const int correction = -1;
+    static constexpr const int correction = 0;
     ret.ascender = fm.ascent() + correction;
     ret.descender = -fm.descent();
     ret.minLeftGlyphEdge = fm.minLeftBearing();
