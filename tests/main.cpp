@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <vvv3d/core/hal/hal.hpp>
 #include <vvv3d/vvv3d.hpp>
 #include <vvv3d/vvv3dgui.hpp>
 
@@ -7,6 +8,10 @@
 
 TEST_F(vvv3dFixture, gui)
 {
+    auto& system_fonts = e->getHAL().GetSystemFonts();
+    auto desc = system_fonts.getDesc("DejaVu Sans", "Book");
+    ASSERT_NE(nullptr, desc);
+    system_fonts.setDefaultRegular(desc);
     e->gui().load(R"(
 gui
     panel type=panel pos=[30, 30]

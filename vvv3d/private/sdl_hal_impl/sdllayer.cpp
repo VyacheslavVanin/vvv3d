@@ -403,9 +403,9 @@ std::unique_ptr<IFont> sdlLayer::GetFont(const FontDesc& desc,
     return GetFont(desc.getFileName(), pixel_size, char_size, dpi);
 }
 
-const ISystemFonts& sdlLayer::GetSystemFonts() const
+ISystemFonts& sdlLayer::GetSystemFonts()
 {
-    static const FontConfigSystemFontsImpl fonts;
+    static FontConfigSystemFontsImpl fonts;
     return fonts;
 }
 

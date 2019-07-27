@@ -209,9 +209,9 @@ const std::vector<vvv3d::FontDesc>& QtSystemFontsImpl::getFontDescList() const
 }
 } // namespace
 
-const vvv3d::ISystemFonts& QtHalLayer::GetSystemFonts() const
+vvv3d::ISystemFonts& QtHalLayer::GetSystemFonts()
 {
-    static const QtSystemFontsImpl instance;
+    static QtSystemFontsImpl instance;
     return instance;
 }
 

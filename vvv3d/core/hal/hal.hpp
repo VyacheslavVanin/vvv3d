@@ -73,7 +73,7 @@ public:
                                            unsigned char_size,
                                            unsigned dpi) const = 0;
     // Get object storing fonts list
-    virtual const ISystemFonts& GetSystemFonts() const = 0;
+    virtual ISystemFonts& GetSystemFonts() = 0;
 
     // Show virtual keyboard. May be ignored if not provided by implementation
     virtual void showVirtualKeyboard(bool show);

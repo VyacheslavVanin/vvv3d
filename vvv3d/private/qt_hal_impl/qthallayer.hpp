@@ -50,7 +50,7 @@ public:
                                           unsigned pixel_size,
                                           unsigned char_size,
                                           unsigned dpi) const override;
-    const vvv3d::ISystemFonts& GetSystemFonts() const override;
+    vvv3d::ISystemFonts& GetSystemFonts() override;
     void showVirtualKeyboard(bool show) override;
 
     virtual std::string toUtf8(const std::u32string& input) const override;
