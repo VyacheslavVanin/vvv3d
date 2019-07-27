@@ -1,4 +1,5 @@
 #pragma once
+#include "display_properties.hpp"
 #include <functional>
 #include <memory>
 #include <string>
@@ -77,6 +78,8 @@ public:
 
     // Show virtual keyboard. May be ignored if not provided by implementation
     virtual void showVirtualKeyboard(bool show);
+
+    virtual DisplayProperties GetDisplayProperies() const = 0;
 
     // String conversions
     /// Convert Utf32 (Ucs4) to Utf8

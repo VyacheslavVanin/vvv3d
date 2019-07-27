@@ -305,6 +305,29 @@ const std::vector<InputEvent>& sdlLayer::getEvents() const
 
 void sdlLayer::setVSync(bool vsync) { SDL_GL_SetSwapInterval(vsync); }
 
+DisplayProperties sdlLayer::GetDisplayProperies() const
+{
+    const int display_number = 0;
+    SDL_DisplayMode current;
+
+    if (SDL_GetCurrentDisplayMode(0, &current) != 0) {
+        SDL_Log("Could not get display mode for video display #%d: %s", 0,
+                SDL_GetError());
+    }
+
+    float hdpi = 102, vdpi = 102, ddpi = 102;
+    if (SDL_GetDisplayDPI(0, &ddpi, &hdpi, &vdpi) != 0) {
+        SDL_Log("Could not get dpi for video display #%d: %s", 0,
+                SDL_GetError());
+        hdpi = 102, vdpi = 102, ddpi = 102;
+    }
+
+    DisplayProperties ret;
+    ret.dpi.set(hdpi, vdpi);
+    ret.resolution.set(current.w, current.h);
+    return ret;
+}
+
 namespace {
 std::vector<uint8_t> flip_vertical(const void* data, uint32_t w, uint32_t h,
                                    int channels)

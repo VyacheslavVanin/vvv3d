@@ -62,6 +62,8 @@ public:
     virtual std::string toUtf8(const std::u32string& input) const override;
     virtual std::u32string toUtf32(const std::string& input) const override;
 
+    virtual DisplayProperties GetDisplayProperies() const override;
+
 private:
     class SDLWraper;
     std::unique_ptr<SDLWraper> sdl;

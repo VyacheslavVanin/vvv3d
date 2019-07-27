@@ -56,6 +56,8 @@ public:
     virtual std::string toUtf8(const std::u32string& input) const override;
     virtual std::u32string toUtf32(const std::string& input) const override;
 
+    virtual DisplayProperties GetDisplayProperies() const override;
+
     void log(const char *) override;
 private:
     std::unique_ptr<QApplication> app;

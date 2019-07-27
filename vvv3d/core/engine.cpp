@@ -58,6 +58,12 @@ void PrintGLParams()
     LOG(format("GL_MAX_UNIFORM_LOCATIONS = @", max_uniform_locations));
     LOG(format("GL_MAX_COLOR_ATTACHMENTS = @", max_color_attachments));
     LOG(format("GL_MAX_VERTEX_ATTRIBS = @", max_vertex_attribs));
+
+    auto& e = vvv3d::Engine::getActiveEngine();
+    const auto& display_properties = e.getHAL().GetDisplayProperies();
+    const auto& resolution = display_properties.resolution;
+    LOG(format("Display resolution = @x@", resolution.x, resolution.y));
+    LOG(format("Display dpi = @", display_properties.dpi.x));
 }
 
 void enableBlend(bool blend)

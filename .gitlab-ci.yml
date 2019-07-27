@@ -10,7 +10,7 @@ variables:
 
 rspec:
   script:
-    - Xvfb :1 -screen 0 1920x1080x24+32 -fbdir /var/tmp &
+    - Xvfb :1 -screen 0 1920x1080x24+32 -dpi 102 -fbdir /var/tmp &
     - export DISPLAY=:1
     - mkdir build
     - cd build

@@ -13,7 +13,6 @@
 namespace vvv3d {
 
 namespace {
-const auto DPI = 96;
 const auto CHAR_SIZE = 16;
 } // namespace
 
@@ -178,9 +177,11 @@ void FontManager::addFont(const string& name, const string& filename,
         return;
     }
 
-    // TODO: detect or use constant pixel_size and dpi
-    auto ifont =
-        vvv3d::Engine::getHAL().GetFont(filename, fontsize, CHAR_SIZE, DPI);
+    const auto& hal = vvv3d::Engine::getHAL();
+    const auto& display_props = hal.GetDisplayProperies();
+    const auto& dpi = display_props.dpi.x;
+    // TODO: detect or use constant pixel_size
+    auto ifont = hal.GetFont(filename, fontsize, CHAR_SIZE, dpi);
 
     auto f = std::make_shared<Font>(Font::_private{});
     f->pImpl = std::make_unique<FontImpl>(std::move(ifont), GLYPH_TEXURE_SIZE);
@@ -195,9 +196,12 @@ void FontManager::addFont(const std::string& name, const FontDesc& desc,
     if (filename.size())
         return addFont(name, filename, fontsize);
 
-    // TODO: detect or use constant pixel_size and dpi
+    const auto& hal = vvv3d::Engine::getHAL();
+    const auto& display_props = hal.GetDisplayProperies();
+    const auto& dpi = display_props.dpi.x;
+    // TODO: detect or use constant pixel_size
     auto ifont =
-        vvv3d::Engine::getHAL().GetFont(desc, fontsize, CHAR_SIZE, DPI);
+        vvv3d::Engine::getHAL().GetFont(desc, fontsize, CHAR_SIZE, dpi);
     auto f = std::make_shared<Font>(Font::_private{});
     f->pImpl = std::make_unique<FontImpl>(std::move(ifont), GLYPH_TEXURE_SIZE);
     fonts[name] = f;

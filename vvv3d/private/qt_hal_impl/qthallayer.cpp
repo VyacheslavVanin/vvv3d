@@ -5,6 +5,7 @@
 #include "qt_font_impl.h"
 
 #include <QApplication>
+#include <QDesktopWidget>
 #include <QEventLoop>
 #include <QImage>
 #include <QImageReader>
@@ -238,5 +239,14 @@ std::u32string QtHalLayer::toUtf32(const std::string& u8) const
 void QtHalLayer::log(const char* str)
 {
     qDebug() << str;
+}
+
+DisplayProperties QtHalLayer::GetDisplayProperies() const
+{
+    QDesktopWidget w;
+    DisplayProperties ret;
+    ret.resolution.set(w.geometry().width(), w.geometry().height());
+    ret.dpi.set(w.physicalDpiX(), w.physicalDpiY());
+    return ret;
 }
 } // namespace vvv3d
