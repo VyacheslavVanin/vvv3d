@@ -26,7 +26,7 @@ void enableOpenGLDebug()
         std::ignore = length;
         std::ignore = userParam;
         std::ignore = id;
-        LOG(format("GL CALLBACK: {} type = {}, severity = {}, message = {}",
+        LOG(format("GL CALLBACK: @ type = @, severity = @, message = @",
                    (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""), type,
                    severity, message));
         if (type == GL_DEBUG_TYPE_ERROR)
