@@ -61,6 +61,10 @@ public:
     /**
      * @brief getLowLevelTexture LowLevelTexture refferenced by this Texture */
     LowLevelTexture& getLowLevelTexture() const { return *tex; }
+    std::shared_ptr<LowLevelTexture> getLowLevelTextureShared() const
+    {
+        return tex;
+    }
 
 private:
     friend class TextureAtlas;

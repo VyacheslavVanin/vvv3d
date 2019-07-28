@@ -81,6 +81,6 @@ LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
 void readImage(const LowLevelTexture* llt, void* out, GLenum format,
                GLenum type);
 void readImage(const LowLevelTexture* llt, void* out, GLenum format,
-               GLenum type, uint32_t width, uint32_t height, uint32_t offsetx,
-               uint32_t offsety);
+               GLenum type, uint32_t offsetx, uint32_t offsety, uint32_t width,
+               uint32_t height);
 } // namespace vvv3d

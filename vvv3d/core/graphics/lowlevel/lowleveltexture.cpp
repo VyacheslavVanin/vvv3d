@@ -87,8 +87,8 @@ void readImage(const LowLevelTexture* llt, void* out, GLenum format,
 }
 
 void readImage(const LowLevelTexture* llt, void* out, GLenum format,
-               GLenum type, uint32_t width, uint32_t height, uint32_t offsetx,
-               uint32_t offsety)
+               GLenum type, uint32_t offsetx, uint32_t offsety, uint32_t width,
+               uint32_t height)
 {
     // Do using framebuffer object instead of glGetTexImage cause on GL ES (3.2)
     // no such function

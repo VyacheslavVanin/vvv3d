@@ -138,8 +138,8 @@ void QtHalLayer::writeTexture(const std::string& filename,
     const auto buf_size = width * height * channel_count;
 
     std::vector<uint8_t> buf(buf_size);
-    vvv3d::readImage(llt, buf.data(), GL_RGBA, GL_UNSIGNED_BYTE, width, height,
-                     offsetx, offsety);
+    vvv3d::readImage(llt, buf.data(), GL_RGBA, GL_UNSIGNED_BYTE, offsetx,
+                     offsety, width, height);
 
     QImage im(buf.data(), (int)width, (int)height, QImage::Format_RGBA8888);
 
