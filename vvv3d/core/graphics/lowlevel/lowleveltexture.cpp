@@ -124,11 +124,63 @@ LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
                                GL_UNSIGNED_BYTE);
 }
 
-LowLevelTexture* makeLLTextureRGBA(uint32_t width, uint32_t height)
+LowLevelTexture* makeLLTextureRGB(uint32_t width, uint32_t height)
 {
-    return new vvv3d::LowLevelTexture(0, width, height, GL_RGBA, GL_RGBA,
+    return new vvv3d::LowLevelTexture(0, width, height, GL_RGB, GL_RGB8,
                                       GL_UNSIGNED_BYTE);
 }
+
+LowLevelTexture* makeLLTextureRGB(uint32_t width, uint32_t height,
+                                  uint32_t value)
+{
+    const uint8_t r = (value & 0x00FF0000u) >> 16u;
+    const uint8_t g = (value & 0x00FF00u) >> 8u;
+    const uint8_t b = value & 0xFFu;
+    return makeLLTextureRGB(width, height, r, g, b);
+}
+
+LowLevelTexture* makeLLTextureRGB(uint32_t width, uint32_t height, uint8_t r,
+                                  uint8_t g, uint8_t b)
+{
+    static const constexpr size_t num_channels = 3;
+    const size_t size = width * height * num_channels;
+    std::vector<uint8_t> data(size);
+    for (size_t i = 0; i < size; i += num_channels) {
+        data[i] = r;
+        data[i + 1] = g;
+        data[i + 2] = b;
+    }
+
+    return new LowLevelTexture(data.data(), width, height, GL_RGB, GL_RGB8,
+                               GL_UNSIGNED_BYTE);
+}
+
+LowLevelTexture* makeLLTextureRGBA(uint32_t width, uint32_t height)
+{
+    return new vvv3d::LowLevelTexture(0, width, height, GL_RGBA, GL_RGBA8,
+                                      GL_UNSIGNED_BYTE);
+}
+
+LowLevelTexture* makeLLTextureRGBA(uint32_t width, uint32_t height,
+                                   uint32_t value)
+{
+    const size_t size = width * height;
+    std::vector<uint32_t> data(size, value);
+    return new LowLevelTexture(data.data(), width, height, GL_RGBA, GL_RGBA8,
+                               GL_UNSIGNED_BYTE);
+}
+
+LowLevelTexture* makeLLTextureRGBA(uint32_t width, uint32_t height, uint8_t r,
+                                   uint8_t g, uint8_t b, uint8_t a)
+{
+    uint32_t value = 0;
+    value |= a;
+    value |= b << 8u;
+    value |= g << 16u;
+    value |= r << 24u;
+    return makeLLTextureRGBA(width, height, value);
+}
+
 LowLevelTexture* makeLLTextureDepth(uint32_t width, uint32_t height)
 {
     return new vvv3d::LowLevelTexture(0, width, height, GL_DEPTH_COMPONENT,
@@ -139,6 +191,23 @@ LowLevelTexture* makeLLTextureRGBAf(uint32_t width, uint32_t height)
     return new vvv3d::LowLevelTexture(0, width, height, GL_RGBA, GL_RGBA32F,
                                       GL_FLOAT);
 }
+
+LowLevelTexture* makeLLTextureRGBAf(uint32_t width, uint32_t height, float r,
+                                    float g, float b, float a)
+{
+    static const constexpr size_t num_channels = 4;
+    const size_t size = width * height * num_channels;
+    std::vector<uint32_t> data(size);
+    for (size_t i = 0; i < size; i += 4) {
+        data[i] = r;
+        data[i + 1] = g;
+        data[i + 2] = b;
+        data[i + 3] = a;
+    }
+    return new vvv3d::LowLevelTexture(data.data(), width, height, GL_RGBA,
+                                      GL_RGBA32F, GL_FLOAT);
+}
+
 LowLevelTexture* makeLLTextureDepthf(uint32_t width, uint32_t height)
 {
     return new vvv3d::LowLevelTexture(0, width, height, GL_DEPTH_COMPONENT,

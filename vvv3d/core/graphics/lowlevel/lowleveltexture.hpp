@@ -36,6 +36,9 @@ private:
     size_t num_channels;
 };
 
+LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
+                                  uint32_t cellSize);
+
 /**
  * @brief Create texture to store color data
  * same as
@@ -44,6 +47,27 @@ private:
  * should be freed after use with delete or passed to owner object
  * (Texture, TextureManager) */
 LowLevelTexture* makeLLTextureRGBA(uint32_t width, uint32_t height);
+LowLevelTexture* makeLLTextureRGBA(uint32_t width, uint32_t height,
+                                   uint32_t value);
+LowLevelTexture* makeLLTextureRGBA(uint32_t width, uint32_t height, uint8_t r,
+                                   uint8_t g, uint8_t b, uint8_t a);
+
+LowLevelTexture* makeLLTextureRGB(uint32_t width, uint32_t height);
+LowLevelTexture* makeLLTextureRGB(uint32_t width, uint32_t height,
+                                  uint32_t value);
+LowLevelTexture* makeLLTextureRGB(uint32_t width, uint32_t height, uint8_t r,
+                                  uint8_t g, uint8_t b);
+
+/**
+ * @brief Create texture to store color data
+ * same as
+ * new vvv3d::LowLevelTexture(0, width, height, GL_RGBA,
+ *                            GL_RGBA32F, GL_FLOAT);
+ * should be freed after use with delete or passed to owner object
+ * (Texture, TextureManager) */
+LowLevelTexture* makeLLTextureRGBAf(uint32_t width, uint32_t height);
+LowLevelTexture* makeLLTextureRGBAf(uint32_t width, uint32_t height, float r,
+                                    float g, float b, float a);
 
 /**
  * @brief Create texture to store color data
@@ -57,23 +81,12 @@ LowLevelTexture* makeLLTextureDepth(uint32_t width, uint32_t height);
 /**
  * @brief Create texture to store color data
  * same as
- * new vvv3d::LowLevelTexture(0, width, height, GL_RGBA,
- *                            GL_RGBA32F, GL_FLOAT);
- * should be freed after use with delete or passed to owner object
- * (Texture, TextureManager) */
-LowLevelTexture* makeLLTextureRGBAf(uint32_t width, uint32_t height);
-
-/**
- * @brief Create texture to store color data
- * same as
  * new vvv3d::LowLevelTexture(0, width, height, GL_DEPTH_COMPONENT,
  *                            GL_DEPTH_COMPONENT32F, GL_FLOAT);
  * should be freed after use with delete or passed to owner object
  * (Texture, TextureManager) */
 LowLevelTexture* makeLLTextureDepthf(uint32_t width, uint32_t height);
 
-LowLevelTexture* makeDummyTexture(uint32_t width, uint32_t height,
-                                  uint32_t cellSize);
 /**
  * @brief Copy data from texture llt to out
  * @param llt pointer to texture to copy from
