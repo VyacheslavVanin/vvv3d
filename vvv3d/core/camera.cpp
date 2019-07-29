@@ -94,8 +94,8 @@ Camera& Camera::lookAt(const vector3f& position, const vector3f& target,
     return *this;
 }
 
-Camera& Camera::setOrtho(float left, float right, float bottom, float top,
-                         float zNear, float zFar)
+Camera& Camera::setOrthoImpl(float left, float right, float bottom, float top,
+                             float zNear, float zFar)
 {
     projectionType = PROJECTION_TYPE::ORTHO;
     ortho_left = left;
@@ -104,14 +104,21 @@ Camera& Camera::setOrtho(float left, float right, float bottom, float top,
     ortho_top = top;
     this->zNear = zNear;
     this->zFar = zFar;
+
     projectionChanged = true;
     return *this;
 }
 
+Camera& Camera::setOrtho(float left, float right, float bottom, float top,
+                         float zNear, float zFar)
+{
+    projection_settings.reset();
+    return setOrthoImpl(left, right, bottom, top, zNear, zFar);
+}
+
 namespace {
 /** @brief Divide integer value without loss */
-template <typename T>
-inline std::pair<T, T> divideBy2(T value)
+template <typename T> inline std::pair<T, T> divideBy2(T value)
 {
     const auto l = value / 2;
     const auto r = value - l;
@@ -123,35 +130,57 @@ Camera& Camera::setOrtho(const Viewport& viewport, float zNear, float zFar)
 {
     const auto w = divideBy2(viewport.getWidth());
     const auto h = divideBy2(viewport.getHeight());
-    return setOrtho(-w.first, w.second, -h.first, h.second, zNear, zFar);
+    projection_settings.reset();
+    return setOrthoImpl(-w.first, w.second, -h.first, h.second, zNear, zFar);
 }
 
-Camera& Camera::setOrthoHeight(const Viewport& viewport, float height,
-                               float zNear, float zFar)
+Camera& Camera::setOrthoHeightImpl(const Viewport& viewport, float height,
+                                   float zNear, float zFar)
 {
     const auto& h = height / 2;
     const auto& w = h * viewport.getAspect();
-    return setOrtho(-w, w, -h, h, zNear, zFar);
+    return setOrthoImpl(-w, w, -h, h, zNear, zFar);
 }
 
-Camera& Camera::setOrthoWidth(const Viewport& viewport, float width,
-                              float zNear, float zFar)
+Camera& Camera::setOrthoWidthImpl(const Viewport& viewport, float width,
+                                  float zNear, float zFar)
 {
     const auto& w = width / 2;
     const auto& h = w / viewport.getAspect();
-    return setOrtho(-w, w, -h, h, zNear, zFar);
+    return setOrthoImpl(-w, w, -h, h, zNear, zFar);
 }
 
-Camera& Camera::setOrthoWindow(const Viewport& viewport, float width,
-                               float height, float zNear, float zFar)
+Camera& Camera::setOrthoWindowImpl(const Viewport& viewport, float width,
+                                   float height, float zNear, float zFar)
 {
     const Viewport field(width, height);
     const auto field_aspect = field.getAspect();
     const auto viewport_aspect = viewport.getAspect();
     if (field_aspect < viewport_aspect)
-        return setOrthoHeight(viewport, height, zNear, zFar);
+        return setOrthoHeightImpl(viewport, height, zNear, zFar);
     else
-        return setOrthoWidth(viewport, width, zNear, zFar);
+        return setOrthoWidthImpl(viewport, width, zNear, zFar);
+}
+
+Camera& Camera::setOrthoHeight(const Viewport& viewport, float height,
+                               float zNear, float zFar)
+{
+    projection_settings.setPreserveHeight(height);
+    return setOrthoHeightImpl(viewport, height, zNear, zFar);
+}
+
+Camera& Camera::setOrthoWidth(const Viewport& viewport, float width,
+                              float zNear, float zFar)
+{
+    projection_settings.setPreserveWidth(width);
+    return setOrthoWidthImpl(viewport, width, zNear, zFar);
+}
+
+Camera& Camera::setOrthoWindow(const Viewport& viewport, float width,
+                               float height, float zNear, float zFar)
+{
+    projection_settings.setPreserveBoth(width, height);
+    return setOrthoWindowImpl(viewport, width, height, zNear, zFar);
 }
 
 Camera& Camera::setPerspective(float fovy, float aspect, float zNear,
@@ -203,11 +232,28 @@ void Camera::updateViewProjectionMatrix() const
 
 Camera& Camera::updateViewport(const Viewport& viewport)
 {
+    const auto zNear = getZNear();
+    const auto zFar = getZFar();
+    const auto fovy = getFOVy();
+
     if (getProjectionType() == PROJECTION_TYPE::PERSPECTIVE) {
-        const auto zNear = getZNear();
-        const auto zFar = getZFar();
-        const auto fovy = getFOVy();
         setPerspective(fovy, viewport.getAspect(), zNear, zFar);
+    }
+    if (getProjectionType() == PROJECTION_TYPE::ORTHO) {
+        const auto& settings = projection_settings;
+        switch (settings.type) {
+        case OrthoSettings::Type::None: break;
+        case OrthoSettings::Type::Width:
+            setOrthoWidthImpl(viewport, settings.width, zNear, zFar);
+            break;
+        case OrthoSettings::Type::Height:
+            setOrthoHeightImpl(viewport, settings.height, zNear, zFar);
+            break;
+        case OrthoSettings::Type::Window:
+            setOrthoWindowImpl(viewport, settings.width, settings.height, zNear,
+                               zFar);
+            break;
+        }
     }
 
     return *this;

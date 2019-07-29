@@ -71,6 +71,49 @@ public:
     float getFOVy() const { return fovy; }
 
 private:
+    void updateProjectionMatrix() const;
+    void updateViewMatrix() const;
+    void updateViewProjectionMatrix() const;
+    Camera& setOrthoImpl(float left, float right, float bottom, float top,
+                         float zNear, float zFar);
+    Camera& setOrthoHeightImpl(const Viewport& viewport, float height,
+                               float zNear = 0, float zFar = 1);
+    Camera& setOrthoWidthImpl(const Viewport& viewport, float width,
+                              float zNear = 0, float zFar = 1);
+    Camera& setOrthoWindowImpl(const Viewport& viewport, float width,
+                               float height, float zNear = 0, float zFar = 1);
+
+    struct OrthoSettings {
+        enum class Type { None, Height, Width, Window };
+
+        void reset()
+        {
+            width = 1.0f;
+            height = 1.0f;
+            type = Type::None;
+        }
+        void setPreserveHeight(float height)
+        {
+            type = Type::Height;
+            this->height = height;
+        }
+        void setPreserveWidth(float width)
+        {
+            type = Type::Width;
+            this->width = width;
+        }
+        void setPreserveBoth(float width, float height)
+        {
+            type = Type::Window;
+            this->width = width;
+            this->height = height;
+        }
+
+        float width = 1.0f;
+        float height = 1.0f;
+        Type type = Type::None;
+    };
+
     vvv::vector3f position;
     vvv::vector3f forward;
     vvv::vector3f up;
@@ -85,6 +128,8 @@ private:
     float ortho_bottom = -1.0f;
     float ortho_top = 1.0f;
 
+    OrthoSettings projection_settings;
+
     mutable vvv::matrix44f projectionMatrix;
     mutable bool projectionChanged;
 
@@ -92,9 +137,5 @@ private:
     mutable bool viewChanged;
 
     mutable vvv::matrix44f viewProjection;
-
-    void updateProjectionMatrix() const;
-    void updateViewMatrix() const;
-    void updateViewProjectionMatrix() const;
 };
 } // namespace vvv3d
