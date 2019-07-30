@@ -2,13 +2,12 @@
 #include <map>
 #include <memory>
 #include <vector>
-#include <vvv3d/core/graphics/fonts/font_desc.hpp>
 #include <vvv3d/core/graphics/fonts/glyph.hpp>
-#include <vvv3d/core/graphics/lowlevel/lowleveltexture.hpp>
 #include <vvv3d/core/graphics/textures/texture.hpp>
 
 namespace vvv3d {
 
+struct IFont;
 struct FontImpl;
 class Font {
 private:
@@ -27,33 +26,19 @@ public:
     int getHeight() const;
 
     // part of workaround std::make_shared with private constructor
-    explicit Font(const _private&) : Font() {}
+    explicit Font(const _private&, std::unique_ptr<IFont>&& face,
+                  size_t glyph_texture_size)
+        : Font(std::move(face), glyph_texture_size)
+    {
+    }
 
     ~Font();
 
 private:
     Font();
+    Font(std::unique_ptr<IFont>&& face, size_t glyph_texture_size);
     friend class FontManager;
     std::unique_ptr<FontImpl> pImpl;
 };
 
-class FontManager {
-public:
-    FontManager();
-    FontManager(const FontManager&) = delete;
-    FontManager& operator=(const FontManager&) = delete;
-    FontManager(FontManager&&) = default;
-    FontManager& operator=(FontManager&&) = default;
-    ~FontManager();
-
-    void addFont(const std::string& name, const std::string& filename,
-                 unsigned int fontsize);
-    void addFont(const std::string& name, const FontDesc& desc,
-                 unsigned int fontsize);
-    const Font& getFont(const std::string& name) const;
-    std::vector<std::string> listNames() const;
-
-private:
-    std::map<std::string, std::shared_ptr<Font>> fonts;
-};
 } // namespace vvv3d
