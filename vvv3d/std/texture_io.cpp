@@ -1,6 +1,6 @@
 #include "texture_io.hpp"
 #include <vvv3d/core/engine.hpp>
-#include <vvv3d/core/graphics/textures/texturemanager.hpp>
+#include <vvv3d/core/graphics/managers/texturemanager.hpp>
 #include <vvv3d/core/hal/hal.hpp>
 #include <vvv3d/utils/helper.hpp>
 

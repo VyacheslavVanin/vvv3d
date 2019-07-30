@@ -2,7 +2,7 @@
 #include <vvv3d/core/graphics/fonts/font.hpp>
 #include <vvv3d/core/graphics/geometry.hpp>
 #include <vvv3d/core/graphics/managers/shader_manager.hpp>
-#include <vvv3d/core/graphics/textures/texturemanager.hpp>
+#include <vvv3d/core/graphics/managers/texturemanager.hpp>
 #include <vvv3d/std/sprites/animation.hpp>
 
 namespace vvv3d {

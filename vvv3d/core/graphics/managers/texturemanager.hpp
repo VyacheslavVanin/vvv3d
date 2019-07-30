@@ -1,10 +1,10 @@
 #pragma once
-#include "texture.hpp"
-#include "textureatlas.hpp"
 #include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <vvv3d/core/graphics/textures/texture.hpp>
+#include <vvv3d/core/graphics/textures/textureatlas.hpp>
 
 #include <vvvcfg/vvvcfg.hpp>
 

@@ -3,7 +3,7 @@
 #include <sstream>
 
 #include <vvv3d/core/engine.hpp>
-#include <vvv3d/core/graphics/textures/texturemanager.hpp>
+#include <vvv3d/core/graphics/managers/texturemanager.hpp>
 
 namespace vvv3d {
 
