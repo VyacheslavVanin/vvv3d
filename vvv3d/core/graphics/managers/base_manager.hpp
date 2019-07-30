@@ -20,7 +20,7 @@ public:
     inline void add(const std::string& name, uniq_res res);
     inline void add(const std::string& name, const init_func_t& f);
     inline const T& get(const std::string& name) const;
-    inline const T& get(const std::string& name);
+    inline T& get(const std::string& name);
     inline std::vector<std::string> listNames() const;
     inline void clear();
     inline bool contain(const std::string& name) const;
@@ -83,8 +83,7 @@ catch (const std::exception& e) {
     LOG_ERROR(vvv::helper::format("failed to get resource \"@\"", name));
 }
 
-template <typename T>
-inline const T& BaseManager<T>::get(const std::string& name)
+template <typename T> inline T& BaseManager<T>::get(const std::string& name)
 try {
     if (!contain(name)) {
         auto it = initializers.find(name);
