@@ -22,6 +22,10 @@ public:
     Texture& get(const std::string& name);
     Texture& getDefault() const;
 
+    const TextureShared& getShared(const std::string& name) const;
+    const TextureShared& getShared(const std::string& name);
+    const TextureShared& getDefaultShared() const;
+
     void add(LowLevelTexture* texture, const std::string& name);
     void add(const std::string& filename, const std::string& name);
 
@@ -65,6 +69,6 @@ public:
     void load(std::istream& cfg);
 
 private:
-    std::unordered_map<std::string, std::shared_ptr<Texture>> texs;
+    std::unordered_map<std::string, TextureShared> texs;
 };
 } // namespace vvv3d

@@ -75,4 +75,6 @@ private:
     vvv::vector2i size;
 };
 
+using TextureShared = std::shared_ptr<Texture>;
+
 } // namespace vvv3d

@@ -8,30 +8,44 @@
 
 using namespace vvv3d;
 
+namespace {
+const std::string DEFAULT_TEXTURE_NAME = "default";
+}
+
 TextureManager::TextureManager() : texs()
 {
-    add(vvv3d::makeDummyTexture(256, 256, 32), "default");
+    add(vvv3d::makeDummyTexture(256, 256, 32), DEFAULT_TEXTURE_NAME);
 }
 
 Texture& TextureManager::get(const std::string& name)
 {
-    auto i = texs.find(name);
-    if (i != texs.end())
-        return *i->second;
-
-    safe_add(name);
-
-    const auto* cthis = this;
-    return cthis->get(name);
+    return *getShared(name);
 }
 
 Texture& TextureManager::get(const std::string& name) const
 {
+    return *getShared(name);
+}
+
+const TextureShared& TextureManager::getShared(const std::string& name) const
+{
     auto i = texs.find(name);
     if (i != texs.end())
-        return *i->second;
+        return i->second;
 
-    return getDefault();
+    return getDefaultShared();
+}
+
+const TextureShared& TextureManager::getShared(const std::string& name)
+{
+    auto i = texs.find(name);
+    if (i != texs.end())
+        return i->second;
+
+    safe_add(name);
+
+    const auto* cthis = this;
+    return cthis->getShared(name);
 }
 
 void TextureManager::add(LowLevelTexture* texture, const std::string& name)
@@ -122,7 +136,11 @@ std::vector<std::string> TextureManager::listNames() const
     return ret;
 }
 
-Texture& TextureManager::getDefault() const { return get("default"); }
+const TextureShared& TextureManager::getDefaultShared() const
+{
+    return texs.at(DEFAULT_TEXTURE_NAME);
+}
+Texture& TextureManager::getDefault() const { return *getDefaultShared(); }
 
 namespace {
 void loadAtlassesFromDict(vvv3d::TextureManager& tm, const vvv::Value& images,
