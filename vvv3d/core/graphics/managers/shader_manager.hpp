@@ -17,9 +17,6 @@ public:
     void add(const std::string& name, const std::string& vertexShaderFilename,
              const std::string& fragmentShaderFilename,
              const std::string& geometryShaderFilename);
-    void add(const std::string& name, std::unique_ptr<Shader> shader);
-    void add(const std::string& name,
-             const std::function<std::unique_ptr<Shader>()>& f);
     void addFromSource(const std::string& name,
                        const std::string& vertexShaderSource,
                        const std::string& fragmentShaderSource);
@@ -28,6 +25,9 @@ public:
                        const std::string& fragmentShaderSource,
                        const std::string& geometryShaderSource);
 
+    void add(const std::string& name, std::unique_ptr<Shader> shader);
+    void add(const std::string& name,
+             const std::function<std::unique_ptr<Shader>()>& f);
     Shader& get(const std::string& name) const;
     Shader& get(const std::string& name);
     bool contain(const std::string& name) const;
