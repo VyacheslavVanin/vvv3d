@@ -12,79 +12,57 @@ namespace {
 const std::string DEFAULT_TEXTURE_NAME = "default";
 }
 
-TextureManager::TextureManager() : texs()
+TextureManager::TextureManager() : BaseManagerSafe<Texture>()
 {
-    add(vvv3d::makeDummyTexture(256, 256, 32), DEFAULT_TEXTURE_NAME);
+    addLL(vvv3d::makeDummyTexture(256, 256, 32), DEFAULT_TEXTURE_NAME);
+    addCreateFunction([](const std::string& filename) {
+        auto* texture = readTexture(filename);
+        if (texture == nullptr)
+            throw std::runtime_error("failed to load from file");
+
+        return std::make_shared<Texture>(texture);
+    });
 }
 
-Texture& TextureManager::get(const std::string& name)
-{
-    return *getShared(name);
-}
-
-Texture& TextureManager::get(const std::string& name) const
-{
-    return *getShared(name);
-}
-
-const TextureShared& TextureManager::getShared(const std::string& name) const
-{
-    auto i = texs.find(name);
-    if (i != texs.end())
-        return i->second;
-
-    return getDefaultShared();
-}
-
-const TextureShared& TextureManager::getShared(const std::string& name)
-{
-    auto i = texs.find(name);
-    if (i != texs.end())
-        return i->second;
-
-    safe_add(name);
-
-    const auto* cthis = this;
-    return cthis->getShared(name);
-}
-
-void TextureManager::add(LowLevelTexture* texture, const std::string& name)
+void TextureManager::addLL(LowLevelTexture* texture, const std::string& name)
 {
     if (contain(name))
         return;
-    addForce(texture, name);
+    addLLForce(texture, name);
 }
 
-void TextureManager::addForce(LowLevelTexture* texture, const std::string& name)
+void TextureManager::addLLForce(LowLevelTexture* texture,
+                                const std::string& name)
 {
-    texs[name].reset(new Texture(texture));
+    addForce(name, std::make_unique<Texture>(texture));
 }
 
-void TextureManager::add(const std::string& filename, const std::string& name)
+void TextureManager::addFromFile(const std::string& filename,
+                                 const std::string& name)
 {
     if (contain(name))
         return;
 
-    const auto& it = texs.find(filename);
-    if (it != texs.end()) {
-        texs[name] = it->second;
-        return;
-    }
+    // const auto& it = texs.find(filename);
+    // if (it != texs.end()) {
+    //     texs[name] = it->second;
+    //     return;
+    // }
 
     std::shared_ptr<LowLevelTexture> im(readTexture(filename));
     auto texture = std::make_shared<Texture>(im);
-    texs[name] = texture;
-    texs[filename] = texture;
+    addForce(name, texture);
+    addForce(filename, std::move(texture));
 }
 
-void TextureManager::add(const std::string& filename)
+void TextureManager::addFromFile(const std::string& filename)
 {
-    add(filename, filename);
+    addFromFile(filename, filename);
 }
 
 void TextureManager::safe_add(const std::string& filename)
 try {
-    add(filename);
+    addFromFile(filename);
 }
 catch (const std::exception& e) {
     std::cerr << "TextureManager: Failed to load \"" << filename << "\"\n";
@@ -109,38 +87,10 @@ void TextureManager::addAtlas(
 void TextureManager::addAtlas(TextureAtlas&& atlas)
 {
     for (auto i = atlas.textures.begin(); i != atlas.textures.end();) {
-        texs.insert(std::move(*i));
+        add(i->first, std::move(i->second));
         i = atlas.textures.erase(i);
     }
 }
-
-bool TextureManager::contain(const std::string& name) const
-{
-    return texs.find(name) != texs.end();
-}
-
-void TextureManager::remove(const std::string& name)
-{
-    auto i = texs.find(name);
-    if (i != texs.end())
-        texs.erase(i);
-}
-
-void TextureManager::clear() { texs.clear(); }
-
-std::vector<std::string> TextureManager::listNames() const
-{
-    std::vector<std::string> ret;
-    for (auto& kv : texs)
-        ret.push_back(kv.first);
-    return ret;
-}
-
-const TextureShared& TextureManager::getDefaultShared() const
-{
-    return texs.at(DEFAULT_TEXTURE_NAME);
-}
-Texture& TextureManager::getDefault() const { return *getDefaultShared(); }
 
 namespace {
 void loadAtlassesFromDict(vvv3d::TextureManager& tm, const vvv::Value& images,
@@ -277,7 +227,7 @@ void loadAtlasesSection(vvv3d::TextureManager& tm, const vvv::CfgNode& cfg)
 void loadStringEntry(vvv3d::TextureManager& tm, const std::string& name,
                      const vvv::Value& value)
 {
-    tm.add(value.asString(), name);
+    tm.addFromFile(value.asString(), name);
 }
 
 void loadDictEntry(vvv3d::TextureManager& tm, const vvv::Value& value)
@@ -290,7 +240,7 @@ void loadDictEntry(vvv3d::TextureManager& tm, const vvv::Value& value)
             continue;
         }
         const auto& file_name = val.asString();
-        tm.add(file_name, name);
+        tm.addFromFile(file_name, name);
     }
 }
 
@@ -302,7 +252,7 @@ void loadListEntry(vvv3d::TextureManager& tm, const vvv::Value& value)
             continue;
         }
         const auto& file_name = val.asString();
-        tm.add(file_name);
+        tm.addFromFile(file_name);
     }
 }
 

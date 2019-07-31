@@ -24,7 +24,7 @@ std::unordered_map<const vvv3d::Texture*, std::string> MakeDummyTextures()
     auto& tm = vvv3d::getTextureManager();
     for (size_t i = 0; i < 10; ++i) {
         const auto& name = "texture"s + std::to_string(i);
-        tm.add(vvv3d::makeDummyTexture(128, 128, 8 + i), name);
+        tm.addLL(vvv3d::makeDummyTexture(128, 128, 8 + i), name);
         const auto& t = tm.get(name);
         ret[&t] = name;
     }

@@ -9,7 +9,7 @@ namespace vvv3d {
 
 Animation::Animation() : frames(), m_duration(0) {}
 
-void Animation::addFrame(vvv3d::Texture* tex, double duration)
+void Animation::addFrame(const vvv3d::Texture* tex, double duration)
 {
     frames.push_back({tex, duration, m_duration});
     m_duration += duration;

@@ -380,6 +380,9 @@ std::vector<uint8_t> to_rgba(const void* data, uint32_t w, uint32_t h,
 LowLevelTexture* sdlLayer::readTexture(const std::string& filename) const
 {
     SDL_Surface* s = IMG_Load(filename.c_str());
+    if (s == nullptr)
+        return nullptr;
+
     const auto converted =
         to_rgba(s->pixels, s->w, s->h, s->format->BytesPerPixel);
     auto llt = new vvv3d::LowLevelTexture(converted.data(), s->w, s->h, GL_RGBA,

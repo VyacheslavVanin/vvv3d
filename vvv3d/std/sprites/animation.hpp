@@ -9,7 +9,7 @@ namespace vvv3d {
 class Animation {
 public:
     Animation();
-    void addFrame(vvv3d::Texture* frame, double frameDuraton = 1.0 / 24);
+    void addFrame(const vvv3d::Texture* frame, double frameDuraton = 1.0 / 24);
     void setName(const std::string& name);
     const std::string& getName() const;
 
@@ -20,7 +20,7 @@ public:
 
 private:
     struct AnimationFrame {
-        vvv3d::Texture* frame;
+        const vvv3d::Texture* frame;
         double duration;
         double timestamp;
     };

@@ -120,8 +120,12 @@ QtHalLayer::readTexture(const std::string& filename) const
 {
     QImageReader ir(filename.c_str());
     // TODO: check not flipped
-    const auto image =
-        ir.read().convertToFormat(QImage::Format_RGBA8888).mirrored();
+    QImage image;
+    if (!ir.read(&image))
+        return nullptr;
+
+    image.convertTo(QImage::Format_RGBA8888);
+    image = image.mirrored();
     const auto* data = image.bits();
     const GLuint w = static_cast<GLuint>(image.width());
     const GLuint h = static_cast<GLuint>(image.height());
