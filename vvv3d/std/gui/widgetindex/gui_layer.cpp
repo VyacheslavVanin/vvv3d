@@ -10,6 +10,7 @@
 
 #include "property_mapper.hpp"
 #include "widget_fabric.hpp"
+#include <vvvstdhelper/containerhelper.hpp>
 
 namespace vvv3d {
 using vvv::helper::format;
@@ -67,6 +68,16 @@ vvv3d::Widget* makeWidget(const vvv::CfgNode& node)
         LOG(format("Unknown widget type \"@\"", type));
         return ret;
     }
+
+    if (vvv::helpers::any_of(properties, [](const auto& v) {
+            const static std::vector<std::string> size_properties = {
+                "size", "width", "height"};
+            return vvv::helpers::contain(size_properties, v.first);
+        })) {
+        PropertyMapper::instance().applyProperty(ret, "autoresize",
+                                                 vvv::Value("false"));
+    }
+
     for (const auto& prop : properties) {
         const auto& name = prop.first;
         const auto& value = prop.second;

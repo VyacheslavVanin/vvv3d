@@ -19,7 +19,7 @@ gui
         button type=button text="Button"
         le type=lineedit
         sl type=sliderh
-        im type=image image=default size=[64, 64]
+        im type=image image=default
     panel2 type=panel pos=[430, 30]
         text2 type=label text="Hello World"
         hl type=hlayout padding=16
@@ -27,7 +27,7 @@ gui
             button3 type=button text="Button2"
         le2 type=lineedit
         sl2 type=sliderh
-        im2 type=image image=default size=[64, 64]
+        im2 type=image image=default
     self_descriptive_panel pos=[30, 500]
         named_label
         named_button
