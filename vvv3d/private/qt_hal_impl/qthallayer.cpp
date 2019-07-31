@@ -124,8 +124,7 @@ QtHalLayer::readTexture(const std::string& filename) const
     if (!ir.read(&image))
         return nullptr;
 
-    image.convertTo(QImage::Format_RGBA8888);
-    image = image.mirrored();
+    image = image.convertToFormat(QImage::Format_RGBA8888).mirrored();
     const auto* data = image.bits();
     const GLuint w = static_cast<GLuint>(image.width());
     const GLuint h = static_cast<GLuint>(image.height());
