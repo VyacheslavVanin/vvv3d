@@ -1,13 +1,22 @@
 #include "vertexattribute.hpp"
 #include "vvvstlhelper.hpp"
 
+#include <algorithm>
+#include <functional>
+#include <string>
+#include <unordered_map>
+
+#include <vvv3d/utils/myutils.hpp>
+
 namespace vvv3d {
 
-static const std::map<ATTRIB_LOCATION, std::string> attributesNamesBindings = {
-    {ATTRIB_LOCATION::POSITION, "va_position"},
-    {ATTRIB_LOCATION::TEXCOORD, "va_texCoord"},
-    {ATTRIB_LOCATION::NORMAL, "va_normal"},
-    {ATTRIB_LOCATION::COLOR, "va_color"},
+static const std::unordered_map<ATTRIB_LOCATION, std::string>
+    attributesNamesBindings = {
+        {ATTRIB_LOCATION::POSITION, "va_position"},
+        {ATTRIB_LOCATION::TEXCOORD, "va_texCoord"},
+        {ATTRIB_LOCATION::NORMAL, "va_normal"},
+        {ATTRIB_LOCATION::COLOR, "va_color"},
+        {ATTRIB_LOCATION::TANGENT, "va_tangent"},
 };
 
 const char* getAttribLocationName(ATTRIB_LOCATION attrib)
@@ -27,7 +36,7 @@ void bindAttribLocations(GLuint program)
 
 GLsizei sizeOfComponent(GLenum componentType)
 {
-    static const std::map<GLenum, GLsizei> typeSizeMapping = {
+    static const std::unordered_map<GLenum, GLsizei> typeSizeMapping = {
         {GL_FLOAT, sizeof(GLfloat)},
         {GL_BYTE, sizeof(GLbyte)},
         {GL_SHORT, sizeof(GLshort)},

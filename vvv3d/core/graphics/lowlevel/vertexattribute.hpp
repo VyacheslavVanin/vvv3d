@@ -1,17 +1,17 @@
 #pragma once
 #include "openglprovider.hpp"
-#include <algorithm>
-#include <functional>
 #include <initializer_list>
-#include <map>
-#include <stdexcept>
-#include <string>
 #include <vector>
-#include <vvv3d/utils/myutils.hpp>
 
 namespace vvv3d {
 
-enum class ATTRIB_LOCATION : GLuint { POSITION, NORMAL, COLOR, TEXCOORD };
+enum class ATTRIB_LOCATION : GLuint {
+    POSITION,
+    NORMAL,
+    COLOR,
+    TEXCOORD,
+    TANGENT
+};
 
 const char* getAttribLocationName(ATTRIB_LOCATION attrib);
 
