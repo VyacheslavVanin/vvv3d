@@ -272,7 +272,7 @@ void setImage(vvv3d::Widget* property, const std::string& value)
         return;
 
     auto& tm = getTextureManager();
-    w->setTexture(tm.get(value));
+    w->setTexture(tm.getShared(value));
 }
 
 void setAction(vvv3d::Widget* property, const std::string& action_name)

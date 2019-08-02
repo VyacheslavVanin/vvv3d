@@ -5,8 +5,8 @@ namespace vvv3d {
 
 class IImageProperty {
 public:
-    virtual void setTexture(const Texture& font) = 0;
-    virtual const Texture& getTexture() const = 0;
+    virtual void setTexture(const TextureShared& font) = 0;
+    virtual const TextureShared& getTexture() const = 0;
     virtual ~IImageProperty() = default;
 };
 

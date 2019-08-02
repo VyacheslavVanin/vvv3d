@@ -28,7 +28,7 @@ vvv3d::ImageWidget* makeImage()
 {
     auto& tm = getTextureManager();
     auto ret = new vvv3d::ImageWidget();
-    ret->setTexture(tm.getDefault());
+    ret->setTexture(tm.getDefaultShared());
     return ret;
 }
 } // namespace vvv3d

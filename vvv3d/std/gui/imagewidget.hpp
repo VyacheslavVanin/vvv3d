@@ -12,16 +12,17 @@ class ImageWidget final : public Widget,
                           public IAutoResizeProperty {
 public:
     explicit ImageWidget();
-    explicit ImageWidget(const vvv3d::Texture& texture);
+    explicit ImageWidget(const vvv3d::TextureShared& texture);
     ~ImageWidget();
 
-    void setTexture(const vvv3d::Texture& texture) override;
-    const Texture& getTexture() const override;
+    void setTexture(const vvv3d::TextureShared& texture) override;
+    const TextureShared& getTexture() const override;
 
     void setAutoResize(bool value) override;
     bool isAutoResize() const override;
 
 private:
+    TextureShared texture;
     Sprite sprite;
     bool autosize;
     void autoresize();

@@ -1,6 +1,6 @@
 #include "font.hpp"
 #include "utils/helper.hpp"
-#include <map>
+#include <unordered_map>
 #include <vector>
 #include <vvv3d/core/engine.hpp>
 #include <vvv3d/core/graphics/fonts/font_desc.hpp>
@@ -79,7 +79,7 @@ struct FontImpl {
 
     const Glyph& getGlyph(uint32_t c) const;
 
-    std::map<uint32_t, Glyph> mapCharToGlyph;
+    std::unordered_map<uint32_t, Glyph> mapCharToGlyph;
     std::shared_ptr<Texture> lltex;
 
     std::unique_ptr<IFont> face;

@@ -6,7 +6,7 @@ time ( \
         -DWITH_TESTS=yes \
         -DWITH_GL_DEBUG=no \
         -DVVV3D_BACKEND=Qt \
-        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_EXPORT_COMPILE_COMMANDS=yes; \
     make -j4; \
 )

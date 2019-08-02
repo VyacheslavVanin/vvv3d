@@ -6,20 +6,23 @@ namespace vvv3d {
 
 ImageWidget::ImageWidget() : sprite(), autosize(true) {}
 
-ImageWidget::ImageWidget(const Texture& texture) : ImageWidget()
+ImageWidget::ImageWidget(const TextureShared& texture) : ImageWidget()
 {
     setTexture(texture);
-    setSize(texture.getWidth(), texture.getHeight());
-    autoresize();
+    if (texture) {
+        setSize(texture->getWidth(), texture->getHeight());
+        autoresize();
+    }
 }
 
-void ImageWidget::setTexture(const Texture& texture)
+void ImageWidget::setTexture(const TextureShared& texture)
 {
-    sprite.setTexture(texture);
+    this->texture = texture;
+    sprite.setTexture(*this->texture);
     autoresize();
 }
 
-const Texture& ImageWidget::getTexture() const { return sprite.getTexture(); }
+const TextureShared& ImageWidget::getTexture() const { return texture; }
 
 void ImageWidget::onDraw()
 {

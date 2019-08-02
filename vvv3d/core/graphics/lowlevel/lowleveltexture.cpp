@@ -1,5 +1,7 @@
 #include "lowleveltexture.hpp"
 
+#include <unordered_map>
+
 #include "utils/helper.hpp"
 #include "vvv3d/core/graphics/framebufferobject.hpp"
 
@@ -7,7 +9,7 @@ namespace vvv3d {
 
 size_t getChannelsCount(GLint format)
 {
-    const static std::map<GLenum, size_t> mapping = {
+    const static std::unordered_map<GLenum, size_t> mapping = {
         {GL_RGB, 3},
         {GL_RGBA, 4},
         {GL_DEPTH_COMPONENT, 1},
