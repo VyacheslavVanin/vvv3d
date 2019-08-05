@@ -17,6 +17,7 @@ static const std::unordered_map<ATTRIB_LOCATION, std::string>
         {ATTRIB_LOCATION::NORMAL, "va_normal"},
         {ATTRIB_LOCATION::COLOR, "va_color"},
         {ATTRIB_LOCATION::TANGENT, "va_tangent"},
+        {ATTRIB_LOCATION::BITANGENT, "va_bitangent"},
 };
 
 const char* getAttribLocationName(ATTRIB_LOCATION attrib)

@@ -10,7 +10,8 @@ enum class ATTRIB_LOCATION : GLuint {
     NORMAL,
     COLOR,
     TEXCOORD,
-    TANGENT
+    TANGENT,
+    BITANGENT,
 };
 
 const char* getAttribLocationName(ATTRIB_LOCATION attrib);
