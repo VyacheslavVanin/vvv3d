@@ -95,7 +95,7 @@ Engine::Engine(int argc, char** argv, const char* windowName)
 #elif VVV3D_BACKEND_QT
       hal(new QtHalLayer()),
 #endif
-      resourceManager(), input(), gui_layer(), clear_color(0.05f, 0.1f, 0.2f, 0)
+      resourceManager(), input(), gui_layer(), clear_color(vvv3d::BLACK)
 {
     activeEngine = this;
     bench timings("Engine base initialization");
@@ -226,6 +226,11 @@ ShaderManager& getShaderManager()
 AnimationManager& getAnimationManager()
 {
     return Engine::getActiveEngine().getResourceManager().getAnimationManager();
+}
+
+MaterialManager& getMaterialManager()
+{
+    return Engine::getActiveEngine().getResourceManager().getMaterialManager();
 }
 
 void Engine::load(const vvv::CfgNode& node)

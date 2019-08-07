@@ -15,6 +15,7 @@ class FontManager;
 class GeometryManager;
 class ShaderManager;
 class AnimationManager;
+class MaterialManager;
 class HAL;
 
 class Engine {
@@ -89,5 +90,6 @@ FontManager& getFontManager();
 GeometryManager& getGeometryManager();
 ShaderManager& getShaderManager();
 AnimationManager& getAnimationManager();
+MaterialManager& getMaterialManager();
 
 } // namespace vvv3d

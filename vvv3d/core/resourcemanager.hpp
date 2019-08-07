@@ -1,6 +1,7 @@
 #pragma once
 #include <vvv3d/core/graphics/managers/font_manager.hpp>
 #include <vvv3d/core/graphics/managers/geometry_manager.hpp>
+#include <vvv3d/core/graphics/managers/material_manager.hpp>
 #include <vvv3d/core/graphics/managers/shader_manager.hpp>
 #include <vvv3d/core/graphics/managers/texturemanager.hpp>
 #include <vvv3d/std/sprites/animation.hpp>
@@ -11,7 +12,7 @@ class ResourceManager {
 public:
     ResourceManager()
         : textureManager(), fontManager(), shaderManger(), geometryManager(),
-          animationManager()
+          animationManager(), materialManager(shaderManger)
     {
     }
 
@@ -20,6 +21,7 @@ public:
     ShaderManager& getShaderManager() { return shaderManger; };
     GeometryManager& getGeometryManager() { return geometryManager; };
     AnimationManager& getAnimationManager() { return animationManager; };
+    MaterialManager& getMaterialManager() { return materialManager; };
 
 private:
     TextureManager textureManager;
@@ -27,5 +29,6 @@ private:
     ShaderManager shaderManger;
     GeometryManager geometryManager;
     AnimationManager animationManager;
+    MaterialManager materialManager;
 };
 } // namespace vvv3d
