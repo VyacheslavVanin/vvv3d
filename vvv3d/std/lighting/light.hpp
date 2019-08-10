@@ -27,6 +27,7 @@ public:
     float getIntensity() const { return intensity; }
     float getCutoff() const { return cutoff; }
     float getExponent() const { return exponent; }
+    bool isCastShadow() const { return can_cast_shadow; }
 
     void setPosition(const vvv::vector3f& position) { pos = position; }
     void setDirection(const vvv::vector3f& direction)
@@ -37,6 +38,7 @@ public:
     void setIntensity(float intensity) { this->intensity = intensity; }
     void setCutoff(float cutoff) { this->cutoff = cutoff; }
     void setExponent(float exponent) { this->exponent = exponent; }
+    void setShadow(bool shadow) { this->can_cast_shadow = shadow; }
 
 private:
     vvv::vector3f pos;
@@ -46,5 +48,6 @@ private:
     float intensity;
     float cutoff = 0;
     float exponent = 0;
+    bool can_cast_shadow = true;
 };
 } // namespace vvv3d
