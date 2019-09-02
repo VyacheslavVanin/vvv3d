@@ -45,8 +45,9 @@ static GLuint createFromString(const char* source, GLenum shaderType)
     glShaderSource(shader, 1, &source, &sourceSize);
     glCompileShader(shader);
     if (ShaderStatus(shader, GL_COMPILE_STATUS) != GL_TRUE) {
-        throw std::logic_error(format("Failed to compile @ shader ... ",
-                                      shader_type_to_string(shaderType)));
+        throw std::logic_error(format("Failed to compile @ shader ... :\n@",
+                                      shader_type_to_string(shaderType),
+                                      source));
     }
     return shader;
 }

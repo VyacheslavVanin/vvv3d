@@ -178,9 +178,9 @@ std::string makeName(const Material::ValueSources& sources)
     return ret;
 }
 
-const std::string& makeVertShader()
+std::string makeVertShader(const ValueSourcesMappings& mappings)
 {
-    static const char* vsh = R"(
+    static const char* vsh_template = R"(
     #version 300 es
     uniform mat4 viewProjectionMatrix;
     uniform mat4 modelMatrix;
@@ -189,20 +189,50 @@ const std::string& makeVertShader()
     in vec3 va_position;
     in vec3 va_normal;
     in vec2 va_texCoord;
+    ${va_tangent_decl}
+    ${va_bitangent_decl}
+
     out highp vec4 vsout_normal;
     out highp vec4 vsout_position;
     out highp vec2 vsout_texCoord;
+    ${tbn_output_decl}
 
     void main(void)
     {
         vsout_position = modelMatrix * vec4(va_position, 1.0f);
         vsout_texCoord = va_texCoord;
-        vsout_normal = modelRotation * vec4(va_normal, 1.0f);
+        ${tbn_calculation}
 
+        vsout_normal = modelRotation * vec4(va_normal, 1.0f);
         gl_Position = viewProjectionMatrix * vsout_position;
     }
     )";
-    static const std::string ret(vsh);
+    std::string ret(vsh_template);
+    const bool use_normal_map = mappings.textures_indices[2] != 0xff;
+    if (!use_normal_map) {
+        static const std::string empty = "";
+        substitute(ret, decorateTemplateVar("va_tangent_decl"), empty);
+        substitute(ret, decorateTemplateVar("va_bitangent_decl"), empty);
+        substitute(ret, decorateTemplateVar("tbn_output_decl"), empty);
+        substitute(ret, decorateTemplateVar("tbn_calculation"), empty);
+        return ret;
+    }
+
+    static const std::string va_tangent_decl = R"(in vec3 va_tangent;)";
+    static const std::string va_bitangent_decl = R"(in vec3 va_bitangent;)";
+    static const std::string tbn_output_decl = R"(out highp mat4 vsout_tbn;)";
+    static const std::string tbn_calculation = R"(
+    vec4 T = normalize(modelRotation * vec4(va_tangent, 0.0f));
+    vec4 B = normalize(modelRotation * vec4(va_bitangent, 0.0f));
+    vec4 N = normalize(modelRotation * vec4(va_normal, 0.0f));
+    vsout_tbn = mat4(T, B, N, vec4(0, 0, 0, 1));
+    )";
+    substitute(ret, decorateTemplateVar("va_tangent_decl"), va_tangent_decl);
+    substitute(ret, decorateTemplateVar("va_bitangent_decl"),
+               va_bitangent_decl);
+    substitute(ret, decorateTemplateVar("tbn_output_decl"), tbn_output_decl);
+    substitute(ret, decorateTemplateVar("tbn_calculation"), tbn_calculation);
+
     return ret;
 }
 
@@ -224,6 +254,8 @@ std::string makeFragShader(const ValueSourcesMappings& mappings)
     in vec4 vsout_normal;
     in vec4 vsout_position;
     in vec2 vsout_texCoord;
+    ${tbn_input_decl}
+
     layout(location=0)out vec4 out_diffuse;
     layout(location=1)out vec4 out_position;
     layout(location=2)out vec4 out_normal;
@@ -237,13 +269,11 @@ std::string makeFragShader(const ValueSourcesMappings& mappings)
         out_specular = ${specular};
 
         out_position = vsout_position;  // Use 4th component
-        out_normal = vsout_normal;      // Use 4th component
+
+        out_normal = ${normal};      // Use 4th component
+        ${calculte_normal}
     }
     )";
-
-    static const auto names_wtemplates = vvv::helpers::map(
-        [](const auto& n) { return std::make_pair(n, decorateTemplateVar(n)); },
-        Material::kAllSourcesStrings);
 
     std::string fsh_str(fsh_template);
     substitute(fsh_str, decorateTemplateVar("textures"),
@@ -261,6 +291,26 @@ std::string makeFragShader(const ValueSourcesMappings& mappings)
     substitute(fsh_str, decorateTemplateVar(Material::kSpecularStr),
                makeTemplateValue(3, mappings, "vec4(0.0f, 0.0f, 0.0f, 0.0f)"));
 
+    const bool use_normal_map = mappings.textures_indices[2] != 0xff;
+    if (!use_normal_map) {
+        static const std::string empty = "";
+        substitute(fsh_str, decorateTemplateVar("tbn_input_decl"), empty);
+        substitute(fsh_str, decorateTemplateVar("calculte_normal"), empty);
+
+        return fsh_str;
+    }
+    static const std::string tbn_input_decl = R"(in mat4 vsout_tbn;)";
+    static const std::string calculte_normal = R"(
+        out_normal = vec4(normalize(out_normal.xyz * 2.0 - 1.0), 1.0);   
+        out_normal.y *= -1.0;
+        out_normal = normalize(vsout_tbn * out_normal);
+    )";
+    substitute(fsh_str, decorateTemplateVar("tbn_input_decl"), tbn_input_decl);
+    substitute(fsh_str, decorateTemplateVar("calculte_normal"),
+               calculte_normal);
+
+    std::cout << fsh_str << "\n";
+
     return fsh_str;
 }
 
@@ -271,7 +321,7 @@ Material::Material(const Material::ValueSources& outputs, ShaderManager& shm)
     auto mappings = makeValueSourcesMapping(outputs);
     const auto& name = makeName(outputs);
     if (!shm.contain(name)) {
-        const auto& vsh = makeVertShader();
+        const auto& vsh = makeVertShader(mappings);
         const auto& fsh = makeFragShader(mappings);
         auto shader =
             vvv3d::Shader::fromStrings(name, vsh.c_str(), fsh.c_str());
@@ -332,10 +382,7 @@ const std::vector<TextureShared>& Material::getTextures() const
     return textures;
 }
 
-const std::vector<Color>& Material::getColors() const
-{
-    return colors;
-}
+const std::vector<Color>& Material::getColors() const { return colors; }
 
 Material& Material::setTexture(Material::PROPERTY_INDEX index,
                                TextureShared&& texture)
