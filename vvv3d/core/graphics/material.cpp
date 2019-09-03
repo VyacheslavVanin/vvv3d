@@ -6,18 +6,12 @@
 
 namespace vvv3d {
 
-const std::string Material::kDiffuseStr = "diffuse";
-const std::string Material::kEmissionStr = "emission";
-const std::string Material::kNormalStr = "normal";
-const std::string Material::kSpecularStr = "specular";
-const std::vector<std::string> Material::kAllSourcesStrings = {
-    Material::kDiffuseStr,
-    Material::kEmissionStr,
-    Material::kNormalStr,
-    Material::kSpecularStr,
-};
-
 namespace {
+static const std::string kDiffuseStr = "diffuse";
+static const std::string kEmissionStr = "emission";
+static const std::string kNormalStr = "normal";
+static const std::string kSpecularStr = "specular";
+
 /**
  * @brief Substitute first occurance of \p pattern in \p data with \n new_str
  * @param data
@@ -51,10 +45,12 @@ std::string decorateTemplateVar(const std::string& str)
 }
 
 static const Material::ValueSources defaultSources = {
-    {Material::kDiffuseStr, Material::SOURCE_TYPE::NONE},  // SoftWhite
-    {Material::kEmissionStr, Material::SOURCE_TYPE::NONE}, // Black
-    {Material::kNormalStr, Material::SOURCE_TYPE::NONE},   // va_normal
-    {Material::kSpecularStr, Material::SOURCE_TYPE::NONE}, // Black, power 0.0
+    {Material::PROPERTY::DIFFUSE, Material::SOURCE_TYPE::NONE},  // SoftWhite
+    {Material::PROPERTY::EMISSION, Material::SOURCE_TYPE::NONE}, // Black
+    {Material::PROPERTY::NORMAL,
+     Material::SOURCE_TYPE::NONE}, // va_normal
+                                   // Black, power 0.0
+    {Material::PROPERTY::SPECULAR, Material::SOURCE_TYPE::NONE},
 };
 
 Material::ValueSources
@@ -82,16 +78,17 @@ struct ValueSourcesMappings {
 ValueSourcesMappings
 makeValueSourcesMapping(const Material::ValueSources& sources)
 {
-    static const size_t properties_count = Material::kAllSourcesStrings.size();
+    static const size_t properties_count =
+        static_cast<size_t>(Material::PROPERTY::COUNT);
 
     ValueSourcesMappings ret;
     ret.textures_indices = std::vector<uint8_t>(properties_count, 0xffu);
     ret.color_indices = std::vector<uint8_t>(properties_count, 0xffu);
 
     const auto& all_sources = updatedValueSources(sources);
-    for (size_t i = 0; i < Material::kAllSourcesStrings.size(); ++i) {
-        const auto& name = Material::kAllSourcesStrings[i];
-        const auto& source = all_sources.at(name);
+    for (size_t i = 0; i < properties_count; ++i) {
+        const auto& property = static_cast<Material::PROPERTY>(i);
+        const auto& source = all_sources.at(property);
         switch (source) {
         case Material::SOURCE_TYPE::TEXTURE:
             ret.textures_indices[i] = ret.textures_count++;
@@ -150,6 +147,17 @@ std::string makeTemplateValue(uint8_t value_type,
     return fallback;
 }
 
+const std::string& to_string(Material::PROPERTY p)
+{
+    switch (p) {
+    case Material::PROPERTY::DIFFUSE: return kDiffuseStr;
+    case Material::PROPERTY::EMISSION: return kEmissionStr;
+    case Material::PROPERTY::NORMAL: return kNormalStr;
+    case Material::PROPERTY::SPECULAR: return kSpecularStr;
+    default: throw std::logic_error("Invalid Material::Property");
+    }
+}
+
 const std::string& to_string(Material::SOURCE_TYPE type)
 {
     static const std::string kTexture = "Texture";
@@ -165,11 +173,16 @@ const std::string& to_string(Material::SOURCE_TYPE type)
 
 std::string makeName(const Material::ValueSources& sources)
 {
+    static const size_t properties_count =
+        static_cast<size_t>(Material::PROPERTY::COUNT);
+
     const auto& all_sources = updatedValueSources(sources);
     std::string ret;
     ret += "generated_material_";
-    for (const auto& name : Material::kAllSourcesStrings) {
-        const auto& type = to_string(all_sources.at(name));
+    for (size_t i = 0; i < properties_count; ++i) {
+        const auto prop = static_cast<Material::PROPERTY>(i);
+        const auto& type = to_string(prop);
+        const auto& name = to_string(all_sources.at(prop));
         ret += name;
         ret += '_';
         ret += type;
@@ -282,13 +295,13 @@ std::string makeFragShader(const ValueSourcesMappings& mappings)
     substitute(
         fsh_str, decorateTemplateVar("colors"),
         makeTemplateValue(mappings.colors_count, "    uniform vec4 color"));
-    substitute(fsh_str, decorateTemplateVar(Material::kDiffuseStr),
+    substitute(fsh_str, decorateTemplateVar(kDiffuseStr),
                makeTemplateValue(0, mappings, "vec4(0.9f, 0.9f, 0.9f, 1.0f)"));
-    substitute(fsh_str, decorateTemplateVar(Material::kEmissionStr),
+    substitute(fsh_str, decorateTemplateVar(kEmissionStr),
                makeTemplateValue(1, mappings, "vec4(0.0f, 0.0f, 0.0f, 0.0f)"));
-    substitute(fsh_str, decorateTemplateVar(Material::kNormalStr),
+    substitute(fsh_str, decorateTemplateVar(kNormalStr),
                makeTemplateValue(2, mappings, "vsout_normal"));
-    substitute(fsh_str, decorateTemplateVar(Material::kSpecularStr),
+    substitute(fsh_str, decorateTemplateVar(kSpecularStr),
                makeTemplateValue(3, mappings, "vec4(0.0f, 0.0f, 0.0f, 0.0f)"));
 
     const bool use_normal_map = mappings.textures_indices[2] != 0xff;
@@ -337,42 +350,42 @@ Material::Material(const Material::ValueSources& outputs, ShaderManager& shm)
 
 Material& Material::setDiffuse(TextureShared texture)
 {
-    return setTexture(PROPERTY_INDEX::DIFFUSE, std::move(texture));
+    return setTexture(PROPERTY::DIFFUSE, std::move(texture));
 }
 
 Material& Material::setEmission(TextureShared texture)
 {
-    return setTexture(PROPERTY_INDEX::EMISSION, std::move(texture));
+    return setTexture(PROPERTY::EMISSION, std::move(texture));
 }
 
 Material& Material::setNormal(TextureShared texture)
 {
-    return setTexture(PROPERTY_INDEX::NORMAL, std::move(texture));
+    return setTexture(PROPERTY::NORMAL, std::move(texture));
 }
 
 Material& Material::setSpecular(TextureShared texture)
 {
-    return setTexture(PROPERTY_INDEX::SPECULAR, std::move(texture));
+    return setTexture(PROPERTY::SPECULAR, std::move(texture));
 }
 
 Material& Material::setDiffuse(const Color& color)
 {
-    return setColor(PROPERTY_INDEX::DIFFUSE, color);
+    return setColor(PROPERTY::DIFFUSE, color);
 }
 
 Material& Material::setEmission(const Color& color)
 {
-    return setColor(PROPERTY_INDEX::EMISSION, color);
+    return setColor(PROPERTY::EMISSION, color);
 }
 
 Material& Material::setNormal(const Color& color)
 {
-    return setColor(PROPERTY_INDEX::NORMAL, color);
+    return setColor(PROPERTY::NORMAL, color);
 }
 
 Material& Material::setSpecular(const Color& color)
 {
-    return setColor(PROPERTY_INDEX::SPECULAR, color);
+    return setColor(PROPERTY::SPECULAR, color);
 }
 
 Shader& Material::getShader() { return *shader; }
@@ -384,7 +397,7 @@ const std::vector<TextureShared>& Material::getTextures() const
 
 const std::vector<Color>& Material::getColors() const { return colors; }
 
-Material& Material::setTexture(Material::PROPERTY_INDEX index,
+Material& Material::setTexture(Material::PROPERTY index,
                                TextureShared&& texture)
 {
     const auto i = getIndex(index);
@@ -396,7 +409,7 @@ Material& Material::setTexture(Material::PROPERTY_INDEX index,
     return *this;
 }
 
-Material& Material::setColor(Material::PROPERTY_INDEX index, const Color& color)
+Material& Material::setColor(Material::PROPERTY index, const Color& color)
 {
     const auto i = getIndex(index);
     if (i == std::numeric_limits<uint8_t>::max())
@@ -407,7 +420,7 @@ Material& Material::setColor(Material::PROPERTY_INDEX index, const Color& color)
     return *this;
 }
 
-uint8_t Material::getIndex(Material::PROPERTY_INDEX index) const
+uint8_t Material::getIndex(Material::PROPERTY index) const
 {
     return static_cast<uint8_t>(index);
 }

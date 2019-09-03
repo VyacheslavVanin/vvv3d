@@ -10,19 +10,11 @@
 namespace vvv3d {
 
 class Material {
-private:
-    enum class PROPERTY_INDEX { DIFFUSE = 0, EMISSION, NORMAL, SPECULAR };
-
 public:
     enum class SOURCE_TYPE { TEXTURE, COLOR, NONE };
+    enum class PROPERTY { DIFFUSE = 0, EMISSION, NORMAL, SPECULAR, COUNT };
 
-    using ValueSources = std::unordered_map<std::string, SOURCE_TYPE>;
-
-    static const std::string kDiffuseStr;
-    static const std::string kEmissionStr;
-    static const std::string kNormalStr;
-    static const std::string kSpecularStr;
-    static const std::vector<std::string> kAllSourcesStrings;
+    using ValueSources = std::unordered_map<PROPERTY, SOURCE_TYPE>;
 
     Material(const Material::ValueSources& outputs,
              ShaderManager& shader_manager);
@@ -44,11 +36,11 @@ public:
     const std::vector<vvv3d::Color>& getColors() const;
 
 private:
-    Material& setTexture(PROPERTY_INDEX index, vvv3d::TextureShared&& texture);
+    Material& setTexture(PROPERTY index, vvv3d::TextureShared&& texture);
 
-    Material& setColor(PROPERTY_INDEX index, const vvv3d::Color& color);
+    Material& setColor(PROPERTY index, const vvv3d::Color& color);
 
-    uint8_t getIndex(PROPERTY_INDEX index) const;
+    uint8_t getIndex(PROPERTY index) const;
 
 private:
     std::shared_ptr<vvv3d::Shader> shader;
