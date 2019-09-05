@@ -43,13 +43,10 @@ void TextureManager::addFromFile(const std::string& filename,
     if (contain(name))
         return;
 
-    // const auto& it = texs.find(filename);
-    // if (it != texs.end()) {
-    //     texs[name] = it->second;
-    //     return;
-    // }
-
-    std::shared_ptr<LowLevelTexture> im(readTexture(filename));
+    auto* llt = readTexture(filename);
+    if (llt == nullptr)
+        throw std::runtime_error("failed to load " + filename + " as " + name);
+    std::shared_ptr<LowLevelTexture> im(llt);
     auto texture = std::make_shared<Texture>(im);
     addForce(name, texture);
     addForce(filename, std::move(texture));

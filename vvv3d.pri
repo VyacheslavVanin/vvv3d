@@ -24,10 +24,15 @@ SOURCES+= \
     $$PWD/vvv3d/core/graphics/lowlevel/lowlevelshaderprogram.cpp \
     $$PWD/vvv3d/core/graphics/lowlevel/lowleveltexture.cpp \
     $$PWD/vvv3d/core/graphics/lowlevel/vertexattribute.cpp \
+    $$PWD/vvv3d/core/graphics/managers/font_manager.cpp \
+    $$PWD/vvv3d/core/graphics/managers/geometry_manager.cpp \
+    $$PWD/vvv3d/core/graphics/managers/material_manager.cpp \
+    $$PWD/vvv3d/core/graphics/managers/shader_manager.cpp \
+    $$PWD/vvv3d/core/graphics/managers/texturemanager.cpp \
+    $$PWD/vvv3d/core/graphics/material.cpp \
     $$PWD/vvv3d/core/graphics/shaders/shader.cpp \
     $$PWD/vvv3d/core/graphics/textures/texture.cpp \
     $$PWD/vvv3d/core/graphics/textures/textureatlas.cpp \
-    $$PWD/vvv3d/core/graphics/textures/texturemanager.cpp \
     $$PWD/vvv3d/core/hal/fonts/interface/font_interface.cpp \
     $$PWD/vvv3d/core/hal/fonts/interface/systemfonts.cpp \
     $$PWD/vvv3d/core/hal/hal.cpp \
@@ -79,6 +84,13 @@ SOURCES+= \
     $$PWD/vvvcfg/vvvcfg/generated/dncfg_node_fsm.c \
     $$PWD/vvvcfg/vvvcfg/node_parser.cpp
 HEADERS+= \
+    $$PWD/stdhelper/include/vvvstdhelper/containerhelper.hpp \
+    $$PWD/stdhelper/include/vvvstdhelper/format.hpp \
+    $$PWD/stdhelper/include/vvvstdhelper/graphhelper.hpp \
+    $$PWD/stdhelper/include/vvvstdhelper/random.hpp \
+    $$PWD/stdhelper/include/vvvstdhelper/stringhelper.hpp \
+    $$PWD/stdhelper/include/vvvstdhelper/view.hpp \
+    $$PWD/tests/vvv3dfixture.hpp \
     $$PWD/vvv3d/core/camera.hpp \
     $$PWD/vvv3d/core/engine.hpp \
     $$PWD/vvv3d/core/graphics/color.hpp \
@@ -96,11 +108,19 @@ HEADERS+= \
     $$PWD/vvv3d/core/graphics/lowlevel/lowleveltexture.hpp \
     $$PWD/vvv3d/core/graphics/lowlevel/openglprovider.hpp \
     $$PWD/vvv3d/core/graphics/lowlevel/vertexattribute.hpp \
+    $$PWD/vvv3d/core/graphics/managers/base_manager.hpp \
+    $$PWD/vvv3d/core/graphics/managers/base_manager_safe.hpp \
+    $$PWD/vvv3d/core/graphics/managers/font_manager.hpp \
+    $$PWD/vvv3d/core/graphics/managers/geometry_manager.hpp \
+    $$PWD/vvv3d/core/graphics/managers/material_manager.hpp \
+    $$PWD/vvv3d/core/graphics/managers/shader_manager.hpp \
+    $$PWD/vvv3d/core/graphics/managers/texturemanager.hpp \
+    $$PWD/vvv3d/core/graphics/material.hpp \
     $$PWD/vvv3d/core/graphics/shaders/shader.hpp \
     $$PWD/vvv3d/core/graphics/textures/texture.hpp \
     $$PWD/vvv3d/core/graphics/textures/textureatlas.hpp \
-    $$PWD/vvv3d/core/graphics/textures/texturemanager.hpp \
     $$PWD/vvv3d/core/graphics/textures/texturepacker.hpp \
+    $$PWD/vvv3d/core/hal/display_properties.hpp \
     $$PWD/vvv3d/core/hal/fonts/interface/font_interface.hpp \
     $$PWD/vvv3d/core/hal/fonts/interface/systemfonts.hpp \
     $$PWD/vvv3d/core/hal/hal.hpp \
@@ -189,4 +209,5 @@ HEADERS+= \
     $$PWD/vvvcfg/vvvcfg/cfg_node.hpp \
     $$PWD/vvvcfg/vvvcfg/cfg_node_value.hpp \
     $$PWD/vvvcfg/vvvcfg/generated/dncfg_node_fsm.h \
-    $$PWD/vvvcfg/vvvcfg/vvvcfg.hpp
+    $$PWD/vvvcfg/vvvcfg/vvvcfg.hpp \
+    $$PWD/vvvstlhelper.hpp
