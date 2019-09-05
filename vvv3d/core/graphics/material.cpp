@@ -11,6 +11,8 @@ static const std::string kDiffuseStr = "diffuse";
 static const std::string kEmissionStr = "emission";
 static const std::string kNormalStr = "normal";
 static const std::string kSpecularStr = "specular";
+static const std::string kRoughnessStr = "roughness";
+static const std::string kMetallicStr = "metallic";
 
 /**
  * @brief Substitute first occurance of \p pattern in \p data with \n new_str
@@ -45,12 +47,15 @@ std::string decorateTemplateVar(const std::string& str)
 }
 
 static const Material::ValueSources defaultSources = {
-    {Material::PROPERTY::DIFFUSE, Material::SOURCE_TYPE::NONE},  // SoftWhite
-    {Material::PROPERTY::EMISSION, Material::SOURCE_TYPE::NONE}, // Black
-    {Material::PROPERTY::NORMAL,
-     Material::SOURCE_TYPE::NONE}, // va_normal
-                                   // Black, power 0.0
+    // SoftWhite (3c)
+    {Material::PROPERTY::DIFFUSE, Material::SOURCE_TYPE::NONE},
+    {Material::PROPERTY::EMISSION, Material::SOURCE_TYPE::NONE}, // Black (3c)
+    // va_normal
+    {Material::PROPERTY::NORMAL, Material::SOURCE_TYPE::NONE},
+    // Black, power 0.0
     {Material::PROPERTY::SPECULAR, Material::SOURCE_TYPE::NONE},
+    {Material::PROPERTY::ROUGHNESS, Material::SOURCE_TYPE::NONE}, // White (1c)
+    {Material::PROPERTY::METALLIC, Material::SOURCE_TYPE::NONE},  // Black (1c)
 };
 
 Material::ValueSources
@@ -129,6 +134,8 @@ std::string makeTemplateValue(size_t count, const std::string& prefix)
 // 1 - emission
 // 2 - normal
 // 3 - specular
+// 4 - roughnes
+// 5 - metallic
 std::string makeTemplateValue(uint8_t value_type,
                               const ValueSourcesMappings& mappings,
                               const std::string& fallback)
@@ -154,6 +161,8 @@ const std::string& to_string(Material::PROPERTY p)
     case Material::PROPERTY::EMISSION: return kEmissionStr;
     case Material::PROPERTY::NORMAL: return kNormalStr;
     case Material::PROPERTY::SPECULAR: return kSpecularStr;
+    case Material::PROPERTY::ROUGHNESS: return kRoughnessStr;
+    case Material::PROPERTY::METALLIC: return kMetallicStr;
     default: throw std::logic_error("Invalid Material::Property");
     }
 }
@@ -285,6 +294,11 @@ std::string makeFragShader(const ValueSourcesMappings& mappings)
 
         out_normal = ${normal};      // Use 4th component
         ${calculte_normal}
+
+        // roughness
+        out_normal.w = ${roughness}.x;
+        // metalic
+        out_specular.w = ${metallic}.x;
     }
     )";
 
@@ -303,24 +317,29 @@ std::string makeFragShader(const ValueSourcesMappings& mappings)
                makeTemplateValue(2, mappings, "vsout_normal"));
     substitute(fsh_str, decorateTemplateVar(kSpecularStr),
                makeTemplateValue(3, mappings, "vec4(0.0f, 0.0f, 0.0f, 0.0f)"));
+    substitute(fsh_str, decorateTemplateVar(kRoughnessStr),
+               makeTemplateValue(4, mappings, "vec4(0.96f, 0.0f, 0.0f, 0.0f)"));
+    substitute(fsh_str, decorateTemplateVar(kMetallicStr),
+               makeTemplateValue(5, mappings, "vec4(0.0f, 0.0f, 0.0f, 0.0f)"));
 
     const bool use_normal_map = mappings.textures_indices[2] != 0xff;
     if (!use_normal_map) {
         static const std::string empty = "";
         substitute(fsh_str, decorateTemplateVar("tbn_input_decl"), empty);
         substitute(fsh_str, decorateTemplateVar("calculte_normal"), empty);
-
-        return fsh_str;
     }
-    static const std::string tbn_input_decl = R"(in mat4 vsout_tbn;)";
-    static const std::string calculte_normal = R"(
-        out_normal = vec4(normalize(out_normal.xyz * 2.0 - 1.0), 1.0);   
-        out_normal.y *= -1.0;
-        out_normal = normalize(vsout_tbn * out_normal);
-    )";
-    substitute(fsh_str, decorateTemplateVar("tbn_input_decl"), tbn_input_decl);
-    substitute(fsh_str, decorateTemplateVar("calculte_normal"),
-               calculte_normal);
+    else {
+        static const std::string tbn_input_decl = R"(in mat4 vsout_tbn;)";
+        static const std::string calculte_normal = R"(
+            out_normal = vec4(normalize(out_normal.xyz * 2.0 - 1.0), 1.0);   
+            out_normal.y *= -1.0;
+            out_normal = vec4(normalize((vsout_tbn * out_normal).xyz), 1.0);
+        )";
+        substitute(fsh_str, decorateTemplateVar("tbn_input_decl"),
+                   tbn_input_decl);
+        substitute(fsh_str, decorateTemplateVar("calculte_normal"),
+                   calculte_normal);
+    }
 
     std::cout << fsh_str << "\n";
 
@@ -368,6 +387,16 @@ Material& Material::setSpecular(TextureShared texture)
     return setTexture(PROPERTY::SPECULAR, std::move(texture));
 }
 
+Material& Material::setRoughness(TextureShared texture)
+{
+    return setTexture(PROPERTY::ROUGHNESS, std::move(texture));
+}
+
+Material& Material::setMetallic(TextureShared texture)
+{
+    return setTexture(PROPERTY::METALLIC, std::move(texture));
+}
+
 Material& Material::setDiffuse(const Color& color)
 {
     return setColor(PROPERTY::DIFFUSE, color);
@@ -386,6 +415,16 @@ Material& Material::setNormal(const Color& color)
 Material& Material::setSpecular(const Color& color)
 {
     return setColor(PROPERTY::SPECULAR, color);
+}
+
+Material& Material::setRoughness(const Color& color)
+{
+    return setColor(PROPERTY::ROUGHNESS, color);
+}
+
+Material& Material::setMetallic(const Color& color)
+{
+    return setColor(PROPERTY::METALLIC, color);
 }
 
 Shader& Material::getShader() { return *shader; }

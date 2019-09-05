@@ -12,7 +12,15 @@ namespace vvv3d {
 class Material {
 public:
     enum class SOURCE_TYPE { TEXTURE, COLOR, NONE };
-    enum class PROPERTY { DIFFUSE = 0, EMISSION, NORMAL, SPECULAR, COUNT };
+    enum class PROPERTY {
+        DIFFUSE = 0,
+        EMISSION,
+        NORMAL,
+        SPECULAR,
+        ROUGHNESS,
+        METALLIC,
+        COUNT
+    };
 
     using ValueSources = std::unordered_map<PROPERTY, SOURCE_TYPE>;
 
@@ -24,11 +32,17 @@ public:
     Material& setEmission(vvv3d::TextureShared texture);
     Material& setNormal(vvv3d::TextureShared texture);
     Material& setSpecular(vvv3d::TextureShared texture);
+    Material& setRoughness(vvv3d::TextureShared texture);
+    Material& setMetallic(vvv3d::TextureShared texture);
 
     Material& setDiffuse(const vvv3d::Color& color);
     Material& setEmission(const vvv3d::Color& color);
     Material& setNormal(const vvv3d::Color& color);
     Material& setSpecular(const vvv3d::Color& color);
+    // Use 'r' channel
+    Material& setRoughness(const vvv3d::Color& color);
+    // Use 'r' channel
+    Material& setMetallic(const vvv3d::Color& color);
 
     void activate();
     vvv3d::Shader& getShader();

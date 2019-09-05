@@ -199,7 +199,7 @@ LowLevelTexture* makeLLTextureRGBAf(uint32_t width, uint32_t height, float r,
 {
     static const constexpr size_t num_channels = 4;
     const size_t size = width * height * num_channels;
-    std::vector<uint32_t> data(size);
+    std::vector<float> data(size);
     for (size_t i = 0; i < size; i += 4) {
         data[i] = r;
         data[i + 1] = g;
