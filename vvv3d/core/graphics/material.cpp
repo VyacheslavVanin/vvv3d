@@ -132,10 +132,8 @@ std::string makeTemplateValue(size_t count, const std::string& prefix)
 // Value type
 // 0 - diffuse
 // 1 - emission
-// 2 - normal
-// 3 - specular
-// 4 - roughnes
-// 5 - metallic
+// 2 - normal, roughness 
+// 3 - specular, metallic
 std::string makeTemplateValue(uint8_t value_type,
                               const ValueSourcesMappings& mappings,
                               const std::string& fallback)
