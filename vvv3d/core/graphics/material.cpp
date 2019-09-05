@@ -440,10 +440,10 @@ Material& Material::setTexture(Material::PROPERTY index,
                                TextureShared&& texture)
 {
     const auto i = getIndex(index);
-    if (i == std::numeric_limits<uint8_t>::max())
+    const auto& texture_index = textures_indices.at(i);
+    if (texture_index == std::numeric_limits<uint8_t>::max())
         return *this;
 
-    const auto& texture_index = textures_indices[i];
     textures[texture_index] = std::move(texture);
     return *this;
 }
@@ -451,10 +451,10 @@ Material& Material::setTexture(Material::PROPERTY index,
 Material& Material::setColor(Material::PROPERTY index, const Color& color)
 {
     const auto i = getIndex(index);
-    if (i == std::numeric_limits<uint8_t>::max())
+    const auto& color_index = colors_indices.at(i);
+    if (color_index == std::numeric_limits<uint8_t>::max())
         return *this;
 
-    const auto& color_index = colors_indices[i];
     colors[color_index] = color;
     return *this;
 }

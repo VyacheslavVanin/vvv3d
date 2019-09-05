@@ -34,7 +34,7 @@ public:
     inline T& get(const std::string& name);
 
     inline const shared_res& getShared(const std::string& name) const;
-    inline const shared_res& getShared(const std::string& name);
+    inline shared_res getShared(const std::string& name);
 
     inline std::vector<std::string> listNames() const;
     inline void remove(const std::string& name);
@@ -129,7 +129,7 @@ catch (const std::exception& e) {
 }
 
 template <typename T>
-inline const typename BaseManager<T>::shared_res&
+inline typename BaseManager<T>::shared_res
 BaseManager<T>::getShared(const std::string& name)
 try {
     if (!contain(name)) {

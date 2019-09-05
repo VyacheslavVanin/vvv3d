@@ -23,7 +23,7 @@ public:
     inline T& get(const std::string& name);
 
     inline const shared_res& getShared(const std::string& name) const;
-    inline const shared_res& getShared(const std::string& name);
+    inline shared_res getShared(const std::string& name);
 
 protected:
     inline shared_res tryCreate(const std::string& name);
@@ -65,7 +65,7 @@ BaseManagerSafe<T>::getShared(const std::string& name) const
 }
 
 template <typename T>
-inline const typename BaseManagerSafe<T>::shared_res&
+inline typename BaseManagerSafe<T>::shared_res
 BaseManagerSafe<T>::getShared(const std::string& name)
 {
     const auto& resources = BaseManager<T>::resources;
