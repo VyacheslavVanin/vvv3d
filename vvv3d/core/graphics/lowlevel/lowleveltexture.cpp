@@ -12,6 +12,7 @@ size_t getChannelsCount(GLint format)
     const static std::unordered_map<GLenum, size_t> mapping = {
         {GL_RGB, 3},
         {GL_RGBA, 4},
+        {GL_RED, 1},
         {GL_DEPTH_COMPONENT, 1},
     };
     const auto it = mapping.find(format);

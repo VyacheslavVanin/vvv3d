@@ -73,3 +73,4 @@ extern QOpenGLExtraFunctions* __vvv3d_qt_opengl_funcs;
 #define glVertexAttribIPointer __vvv3d_qt_opengl_funcs->glVertexAttribIPointer
 #define glVertexAttribPointer __vvv3d_qt_opengl_funcs->glVertexAttribPointer
 #define glViewport __vvv3d_qt_opengl_funcs->glViewport
+#define glGenerateMipmap __vvv3d_qt_opengl_funcs->glGenerateMipmap

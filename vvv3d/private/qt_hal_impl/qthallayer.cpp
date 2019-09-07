@@ -115,6 +115,18 @@ const std::vector<vvv3d::InputEvent>& QtHalLayer::getEvents() const
 
 void QtHalLayer::setVSync(bool vsync) { window->setVSync(vsync); }
 
+namespace {
+GLenum bitsPerChannelToFormat(size_t bpp)
+{
+    switch (bpp) {
+    case 8: return GL_UNSIGNED_BYTE;
+    case 16: return GL_UNSIGNED_SHORT;
+    case 32: return GL_UNSIGNED_INT;
+    }
+    throw std::logic_error("invalid bpp " + std::to_string(bpp));
+}
+} // namespace
+
 vvv3d::LowLevelTexture*
 QtHalLayer::readTexture(const std::string& filename) const
 {
@@ -124,12 +136,23 @@ QtHalLayer::readTexture(const std::string& filename) const
     if (!ir.read(&image))
         return nullptr;
 
-    image = image.convertToFormat(QImage::Format_RGBA8888).mirrored();
-    const auto* data = image.bits();
     const GLuint w = static_cast<GLuint>(image.width());
     const GLuint h = static_cast<GLuint>(image.height());
-    return new vvv3d::LowLevelTexture(data, w, h, GL_RGBA, GL_RGBA8,
-                                      GL_UNSIGNED_BYTE);
+    const auto& pixel_format = image.pixelFormat();
+    const auto bpp = pixel_format.bitsPerPixel();
+    const auto channel_count = pixel_format.channelCount();
+    assert(bpp % channel_count == 0);
+    const auto bitsPerChannel = bpp / channel_count;
+    const bool monochrome = channel_count == 1;
+    if (!monochrome) {
+        image = image.convertToFormat(QImage::Format_RGBA8888).mirrored();
+        const auto* data = image.bits();
+        return new vvv3d::LowLevelTexture(data, w, h, GL_RGBA, GL_RGBA8,
+                                          GL_UNSIGNED_BYTE);
+    }
+    const auto format = bitsPerChannelToFormat(bitsPerChannel);
+    const auto* data = image.bits();
+    return new vvv3d::LowLevelTexture(data, w, h, GL_RED, GL_RED, format);
 }
 
 void QtHalLayer::writeTexture(const std::string& filename,

@@ -108,7 +108,6 @@ makeValueSourcesMapping(const Material::ValueSources& sources)
     return ret;
 }
 
-// static const std::string prefix = "    uniform sampler2D texture";
 std::string makeTemplateValue(size_t count, const std::string& prefix)
 {
     static const std::string postfix = ";\n";
