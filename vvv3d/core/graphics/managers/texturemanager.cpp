@@ -37,11 +37,12 @@ void TextureManager::addLLForce(LowLevelTexture* texture,
     addForce(name, std::make_unique<Texture>(texture));
 }
 
-void TextureManager::addFromFile(const std::string& filename,
-                                 const std::string& name)
+TextureManager::shared_res
+TextureManager::addFromFile(const std::string& filename,
+                            const std::string& name)
 {
     if (contain(name))
-        return;
+        return getShared(name);
 
     auto* llt = readTexture(filename);
     if (llt == nullptr)
@@ -49,12 +50,13 @@ void TextureManager::addFromFile(const std::string& filename,
     std::shared_ptr<LowLevelTexture> im(llt);
     auto texture = std::make_shared<Texture>(im);
     addForce(name, texture);
-    addForce(filename, std::move(texture));
+    return addForce(filename, std::move(texture));
 }
 
-void TextureManager::addFromFile(const std::string& filename)
+TextureManager::shared_res
+TextureManager::addFromFile(const std::string& filename)
 {
-    addFromFile(filename, filename);
+    return addFromFile(filename, filename);
 }
 
 void TextureManager::safe_add(const std::string& filename)

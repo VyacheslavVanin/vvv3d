@@ -26,6 +26,7 @@ public:
 
     void bind(GLuint unit) const;
     void bind() const;
+    void setMipmapFilter();
 
     /**
      * @brief Get texture position and size in atlas texture

@@ -12,14 +12,19 @@
 namespace vvv3d {
 
 class TextureManager : public BaseManagerSafe<Texture> {
+private:
+    using Base = BaseManagerSafe<Texture>;
+    using shared_res = Base::shared_res;
+
 public:
     TextureManager();
 
     void addLL(LowLevelTexture* texture, const std::string& name);
-    void addFromFile(const std::string& filename, const std::string& name);
+    shared_res addFromFile(const std::string& filename,
+                           const std::string& name);
     /** @brief Add texture. Throws on fail
      * @param filename */
-    void addFromFile(const std::string& filename);
+    shared_res addFromFile(const std::string& filename);
 
     /** @brief Same as addLL() but overwrite existing texture with new */
     void addLLForce(LowLevelTexture* texture, const std::string& name);

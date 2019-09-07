@@ -26,6 +26,8 @@ Texture::Texture(LowLevelTexture* tex, const vvv::vector4f& texturePosition)
 {
 }
 
+void Texture::setMipmapFilter() { tex->setMipmapFilter(); }
+
 TextureShared makeTextureRGBA(uint32_t width, uint32_t height)
 {
     return std::make_shared<vvv3d::Texture>(makeLLTextureRGBA(width, height));

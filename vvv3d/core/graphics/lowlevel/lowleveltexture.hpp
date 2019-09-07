@@ -26,6 +26,7 @@ public:
     GLuint getID() const { return texture; }
     GLint getFormat() const { return internalFormat; }
     size_t getChannelsCount() const { return num_channels; }
+    void setMipmapFilter();
 
 private:
     GLuint texture;

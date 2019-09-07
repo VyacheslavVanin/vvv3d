@@ -79,6 +79,17 @@ void LowLevelTexture::setParameter(GLenum paramName, GLint param)
     glTexParameteri(target, paramName, param);
 }
 
+void LowLevelTexture::setMipmapFilter()
+{
+    if (internalFormat == GL_RED)
+        return;
+
+    bind();
+    glGenerateMipmap(target);
+    setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+}
+
 void readImage(const LowLevelTexture* llt, void* out, GLenum format,
                GLenum type)
 {
