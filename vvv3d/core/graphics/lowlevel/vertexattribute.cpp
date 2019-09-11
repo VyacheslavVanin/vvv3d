@@ -55,8 +55,7 @@ GLsizei sizeOfComponent(GLenum componentType)
     return (*iter).second;
 }
 
-VertexAttributes::VertexAttributes(
-    const std::initializer_list<VertexAttribDesc>& attribs)
+VertexAttributes::VertexAttributes(const std::vector<VertexAttribDesc>& attribs)
     : attributes(), stride(0)
 {
     // Calculate vertex size
@@ -70,6 +69,11 @@ VertexAttributes::VertexAttributes(
             d.getComponentType(), d.getNormalized(), offset, stride));
         offset += d.size();
     }
+}
+VertexAttributes::VertexAttributes(
+    const std::initializer_list<VertexAttribDesc>& attribs)
+    : VertexAttributes(std::vector<VertexAttribDesc>(attribs))
+{
 }
 
 void VertexAttributes::enable() const

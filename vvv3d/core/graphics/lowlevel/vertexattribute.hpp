@@ -68,6 +68,7 @@ private:
 public:
     explicit VertexAttributes(
         const std::initializer_list<VertexAttribDesc>& attribs);
+    explicit VertexAttributes(const std::vector<VertexAttribDesc>& attribs);
     void enable() const;
     void disable() const;
 
