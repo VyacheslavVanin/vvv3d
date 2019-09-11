@@ -12,6 +12,7 @@ enum class ATTRIB_LOCATION : GLuint {
     TEXCOORD,
     TANGENT,
     BITANGENT,
+    COUNT, ///< count ATTRIB_LOCATION enums, Not for binding locations
 };
 
 const char* getAttribLocationName(ATTRIB_LOCATION attrib);
@@ -72,8 +73,18 @@ public:
     void enable() const;
     void disable() const;
 
+    GLsizei getStride() const { return stride; }
+
+    /// Return offset for specified attrib location
+    /// If location empty return -1
+    GLsizei getOffset(ATTRIB_LOCATION location) const
+    {
+        return offsets.at(static_cast<size_t>(location));
+    }
+
 private:
     std::vector<VertexAttribute> attributes;
+    std::vector<GLsizei> offsets;
     GLsizei stride;
 };
 } // namespace vvv3d
