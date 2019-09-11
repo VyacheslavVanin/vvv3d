@@ -39,8 +39,8 @@ private:
     bool OnInputMethod(QEvent* event);
     bool OnInputMethodQuery(QEvent* event);
 
-    int x = 0, y = 0;
-    int xrel = 0, yrel = 0;
+    float x = 0, y = 0;
+    float xrel = 0, yrel = 0;
     uint32_t mouse_buttons = 0;
     char keys[MAX_SCANCODES];
 

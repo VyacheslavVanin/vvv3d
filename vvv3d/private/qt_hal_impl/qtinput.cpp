@@ -117,11 +117,11 @@ const std::vector<vvv3d::InputEvent> &QtLayerInput::getInputEvents() const
 bool QtLayerInput::OnMouseMove(QEvent *event)
 {
     auto mme = static_cast<QMouseEvent*>(event);
-    const auto& pos = mme->windowPos();
-    xrel = static_cast<int>(pos.x()) - x;
-    yrel = static_cast<int>(pos.y()) - y;
-    x = static_cast<int>(pos.x());
-    y = static_cast<int>(pos.y());
+    const auto& pos = mme->pos();
+    xrel += pos.x() - x;
+    yrel += pos.y() - y;
+    x = pos.x();
+    y = pos.y();
 
     return true;
 }
