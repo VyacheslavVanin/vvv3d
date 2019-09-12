@@ -56,8 +56,8 @@ GLsizei sizeOfComponent(GLenum componentType)
 }
 
 VertexAttributes::VertexAttributes(const std::vector<VertexAttribDesc>& attribs)
-    : attributes(), offsets(static_cast<size_t>(ATTRIB_LOCATION::COUNT)),
-      stride(0)
+    : attributes(), offsets(static_cast<GLsizei>(ATTRIB_LOCATION::COUNT), -1),
+      sizes(static_cast<GLsizei>(ATTRIB_LOCATION::COUNT), -1), stride(0)
 {
     // Calculate vertex size
     for (const auto& d : attribs)
@@ -65,10 +65,12 @@ VertexAttributes::VertexAttributes(const std::vector<VertexAttribDesc>& attribs)
 
     size_t offset = 0;
     for (const auto& d : attribs) {
-        offsets[static_cast<size_t>(d.getLocation())] = offset;
-        attributes.push_back(VertexAttribute(
-            static_cast<GLuint>(d.getLocation()), d.getNumComponents(),
-            d.getComponentType(), d.getNormalized(), offset, stride));
+        const auto loc = static_cast<GLuint>(d.getLocation());
+        offsets[loc] = offset;
+        sizes[loc] = d.size();
+        attributes.push_back(
+            VertexAttribute(loc, d.getNumComponents(), d.getComponentType(),
+                            d.getNormalized(), offset, stride));
         offset += d.size();
     }
 }

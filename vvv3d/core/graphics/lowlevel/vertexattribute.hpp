@@ -81,10 +81,17 @@ public:
     {
         return offsets.at(static_cast<size_t>(location));
     }
+    /// Return size in bytes for specified attrib location
+    /// If location empty return -1
+    GLsizei getAttribSize(ATTRIB_LOCATION location) const
+    {
+        return sizes.at(static_cast<size_t>(location));
+    }
 
 private:
     std::vector<VertexAttribute> attributes;
     std::vector<GLsizei> offsets;
+    std::vector<GLsizei> sizes;
     GLsizei stride;
 };
 } // namespace vvv3d
