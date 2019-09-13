@@ -8,20 +8,18 @@ namespace vvv3d {
 class Geometry {
 public:
     Geometry(const void* vertexData, GLsizei dataSize, const GLuint* indices,
-             GLsizei numIndices, const VertexAttributes& attributes,
-             GLenum mode);
-    Geometry(const VertexAttributes& attributes, GLenum mode);
+             GLsizei numIndices, const VertexAttributes& attributes);
+    Geometry(const VertexAttributes& attributes);
     ~Geometry();
 
     void updateVB(void* data, GLsizei size);
     void updateIB(void* data, GLsizei size);
     void updateBuffers(void* vdata, GLsizei vsize, void* idata, GLsizei isize);
 
-    void draw() const;
+    void draw(GLenum mode = GL_TRIANGLES) const;
 
 private:
     std::unique_ptr<LowLevelGeometry> geometry;
-    GLenum mode;
     GLsizei numIndices;
 };
 

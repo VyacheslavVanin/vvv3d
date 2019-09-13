@@ -16,8 +16,7 @@ static std::unique_ptr<Geometry> makeRectGeometry()
     return std::make_unique<Geometry>(
         spriteVertices, sizeOfVertices, spriteIndices, numIndices,
         VertexAttributes(
-            {VertexAttribDesc(ATTRIB_LOCATION::POSITION, 2, GL_FLOAT)}),
-        GL_TRIANGLES);
+            {VertexAttribDesc(ATTRIB_LOCATION::POSITION, 2, GL_FLOAT)}));
 }
 
 static std::unique_ptr<vvv3d::Shader> loadSolidRectShader()

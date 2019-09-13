@@ -6,21 +6,21 @@ using namespace vvv3d;
 
 Geometry::Geometry(const void* vertexData, GLsizei dataSize,
                    const GLuint* indices, GLsizei numIndices,
-                   const VertexAttributes& attributes, GLenum mode)
+                   const VertexAttributes& attributes)
     : geometry(new LowLevelGeometry(
           LowLevelBuffer(GL_ARRAY_BUFFER, vertexData, dataSize),
           LowLevelBuffer(GL_ELEMENT_ARRAY_BUFFER, indices,
                          numIndices * sizeof(GLuint)),
           attributes)),
-      mode(mode), numIndices(numIndices)
+      numIndices(numIndices)
 {
 }
 
-Geometry::Geometry(const VertexAttributes& attributes, GLenum mode)
+Geometry::Geometry(const VertexAttributes& attributes)
     : geometry(new LowLevelGeometry(
           LowLevelBuffer(GL_ARRAY_BUFFER, 0, 0),
           LowLevelBuffer(GL_ELEMENT_ARRAY_BUFFER, 0, 0), attributes)),
-      mode(mode), numIndices(0)
+      numIndices(0)
 {
 }
 
@@ -44,5 +44,4 @@ void Geometry::updateBuffers(void* vdata, GLsizei vsize, void* idata,
     numIndices = isize / sizeof(GLint);
 }
 
-void Geometry::draw() const { geometry->Draw(mode, numIndices); }
-
+void Geometry::draw(GLenum mode) const { geometry->Draw(mode, numIndices); }

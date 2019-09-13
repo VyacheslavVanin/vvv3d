@@ -127,7 +127,6 @@ std::unique_ptr<Geometry> makeBoxGeometry(float xs, float ys, float zs,
              VertexAttribDesc(ATTRIB_LOCATION::NORMAL, 3, GL_FLOAT),
              VertexAttribDesc(ATTRIB_LOCATION::TANGENT, 3, GL_FLOAT),
              VertexAttribDesc(ATTRIB_LOCATION::BITANGENT, 3, GL_FLOAT),
-             VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT)}),
-        GL_TRIANGLES);
+             VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT)}));
 }
 } // namespace vvv3d

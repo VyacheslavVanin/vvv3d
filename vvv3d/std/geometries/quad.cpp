@@ -24,8 +24,7 @@ std::unique_ptr<Geometry> makeQuadGeometry2d(float scale,
         spriteVertices, sizeOfVertices, spriteIndices, numIndices,
         VertexAttributes(
             {VertexAttribDesc(ATTRIB_LOCATION::POSITION, 2, GL_FLOAT),
-             VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT)}),
-        GL_TRIANGLES);
+             VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT)}));
 }
 
 } // namespace vvv3d

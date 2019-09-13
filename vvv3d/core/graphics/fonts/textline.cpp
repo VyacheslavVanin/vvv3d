@@ -23,11 +23,9 @@ struct GlyphQuad {
 std::shared_ptr<Geometry> createTextGeometry(const Font& font,
                                              const std::u32string& text)
 {
-    auto ret = std::make_shared<Geometry>(
-        VertexAttributes(
-            {VertexAttribDesc(ATTRIB_LOCATION::POSITION, 2, GL_FLOAT),
-             VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT)}),
-        GL_TRIANGLES);
+    auto ret = std::make_shared<Geometry>(VertexAttributes(
+        {VertexAttribDesc(ATTRIB_LOCATION::POSITION, 2, GL_FLOAT),
+         VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT)}));
     updateTextGeometry(ret, font, text);
     return ret;
 }

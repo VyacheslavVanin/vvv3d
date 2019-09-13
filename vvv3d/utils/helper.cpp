@@ -78,8 +78,7 @@ Geometry* loadGeometryFrom_vvv3d(const char* filename)
             VertexAttribDesc(ATTRIB_LOCATION::POSITION, 3, GL_FLOAT),
             VertexAttribDesc(ATTRIB_LOCATION::NORMAL, 3, GL_FLOAT),
             VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT),
-        }),
-        GL_TRIANGLES);
+        }));
     return ret;
 }
 
@@ -161,8 +160,7 @@ SimpleGeometry* loadGeometryFrom3ds(const char* filename)
             VertexAttribDesc(ATTRIB_LOCATION::POSITION, 3, GL_FLOAT),
             VertexAttribDesc(ATTRIB_LOCATION::NORMAL, 3, GL_FLOAT),
             VertexAttribDesc(ATTRIB_LOCATION::TEXCOORD, 2, GL_FLOAT),
-        }),
-        GL_TRIANGLES);
+        }));
     return ret;
 }
 #endif
