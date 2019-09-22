@@ -44,16 +44,15 @@ public:
     // Use 'r' channel
     Material& setMetallic(const vvv3d::Color& color);
 
+    Material& setTexture(PROPERTY index, vvv3d::TextureShared&& texture);
+    Material& setColor(PROPERTY index, const vvv3d::Color& color);
+
     void activate();
     vvv3d::Shader& getShader();
     const std::vector<vvv3d::TextureShared>& getTextures() const;
     const std::vector<vvv3d::Color>& getColors() const;
 
 private:
-    Material& setTexture(PROPERTY index, vvv3d::TextureShared&& texture);
-
-    Material& setColor(PROPERTY index, const vvv3d::Color& color);
-
     uint8_t getIndex(PROPERTY index) const;
 
 private:
@@ -64,4 +63,6 @@ private:
     std::vector<vvv3d::Color> colors;
 };
 
+const std::string& to_string(Material::SOURCE_TYPE type);
+const std::string& to_string(Material::PROPERTY type);
 } // namespace vvv3d

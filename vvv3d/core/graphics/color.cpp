@@ -35,28 +35,40 @@ std::unordered_map<std::string, Color> color_name_mapping{
 };
 } // namespace
 
-Color to_color(const std::string& value)
+Color to_color(const std::string& value, bool& ok)
 {
     static const auto DEFAULT_COLOR = WHITE;
     static const float unit16 = 1.0f / 0xFF;
 
+    ok = true;
     auto it = color_name_mapping.find(value);
     if (it != color_name_mapping.end())
         return it->second;
+
+    size_t pos = 0;
+    try {
+        const float float_value = std::stof(value, &pos);
+        if (pos == value.size()) {
+            return Color(float_value);
+        }
+    }
+    catch (...) {
+    }
 
     const auto prefix_0x = (value.find("0x") == 0);
     const auto& len = value.size() - prefix_0x * 2;
     if (len != 6 && len != 8) {
         LOG(format("String \"@\" of len @ can't be cast to Color", value, len));
+        ok = false;
         return DEFAULT_COLOR;
     }
 
-    size_t pos = 0;
     const auto int_value = std::stoul(value, &pos, 16);
     if (pos != value.size()) {
         LOG(format("String \"@\" contain invalid symbols, so it can't be cast "
                    "to Color",
                    value));
+        ok = false;
         return DEFAULT_COLOR;
     }
     const auto with_alpha =
@@ -70,6 +82,34 @@ Color to_color(const std::string& value)
 
     return vvv3d::Color(red * unit16, green * unit16, blue * unit16,
                         alpha * unit16);
+}
+Color to_color(const std::string& value)
+{
+    bool ok = false;
+    return to_color(value, ok);
+}
+
+vvv3d::Color to_color(const std::vector<std::string>& xs)
+{
+    static const auto DEFAULT_COLOR = vvv3d::WHITE;
+    const auto len = xs.size();
+    if (len != 3 && len != 4 && len != 1)
+        return DEFAULT_COLOR;
+
+    size_t pos = 0;
+    size_t i = 0;
+    vvv::vector4f converted;
+    for (const auto& x : xs) {
+        converted.vector[i++] = std::stof(x, &pos);
+        if (pos != x.size())
+            return DEFAULT_COLOR;
+    }
+    switch (len) {
+    case 4: return converted;
+    case 3: return vvv3d::Color(converted.x, converted.y, converted.z);
+    case 1: return vvv3d::Color(converted.x);
+    default: throw std::logic_error("Shouldn't be here");
+    }
 }
 
 } // namespace vvv3d

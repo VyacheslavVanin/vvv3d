@@ -5,8 +5,6 @@
 #include <vvvstdhelper/containerhelper.hpp>
 
 namespace vvv3d {
-
-namespace {
 static const std::string kDiffuseStr = "diffuse";
 static const std::string kEmissionStr = "emission";
 static const std::string kNormalStr = "normal";
@@ -14,6 +12,33 @@ static const std::string kSpecularStr = "specular";
 static const std::string kRoughnessStr = "roughness";
 static const std::string kMetallicStr = "metallic";
 
+const std::string& to_string(Material::PROPERTY type)
+{
+    switch (type) {
+    case Material::PROPERTY::DIFFUSE: return kDiffuseStr;
+    case Material::PROPERTY::EMISSION: return kEmissionStr;
+    case Material::PROPERTY::NORMAL: return kNormalStr;
+    case Material::PROPERTY::SPECULAR: return kSpecularStr;
+    case Material::PROPERTY::ROUGHNESS: return kRoughnessStr;
+    case Material::PROPERTY::METALLIC: return kMetallicStr;
+
+    default: throw std::logic_error("Invalid propery");
+    }
+}
+const std::string& to_string(Material::SOURCE_TYPE type)
+{
+    static const std::string kTexture = "Texture";
+    static const std::string kColor = "Color";
+    static const std::string kNone = "None";
+    switch (type) {
+    case Material::SOURCE_TYPE::TEXTURE: return kTexture;
+    case Material::SOURCE_TYPE::COLOR: return kColor;
+    case Material::SOURCE_TYPE::NONE: return kNone;
+    }
+    throw std::logic_error("Missing SOURCE_TYPE");
+}
+
+namespace {
 /**
  * @brief Substitute first occurance of \p pattern in \p data with \n new_str
  * @param data
@@ -131,7 +156,7 @@ std::string makeTemplateValue(size_t count, const std::string& prefix)
 // Value type
 // 0 - diffuse
 // 1 - emission
-// 2 - normal, roughness 
+// 2 - normal, roughness
 // 3 - specular, metallic
 std::string makeTemplateValue(uint8_t value_type,
                               const ValueSourcesMappings& mappings,
@@ -164,19 +189,6 @@ const std::string& to_string(Material::PROPERTY p)
     }
 }
 
-const std::string& to_string(Material::SOURCE_TYPE type)
-{
-    static const std::string kTexture = "Texture";
-    static const std::string kColor = "Color";
-    static const std::string kNone = "None";
-    switch (type) {
-    case Material::SOURCE_TYPE::TEXTURE: return kTexture;
-    case Material::SOURCE_TYPE::COLOR: return kColor;
-    case Material::SOURCE_TYPE::NONE: return kNone;
-    }
-    throw std::logic_error("Missing SOURCE_TYPE");
-}
-
 std::string makeName(const Material::ValueSources& sources)
 {
     static const size_t properties_count =
@@ -187,8 +199,8 @@ std::string makeName(const Material::ValueSources& sources)
     ret += "generated_material_";
     for (size_t i = 0; i < properties_count; ++i) {
         const auto prop = static_cast<Material::PROPERTY>(i);
-        const auto& type = to_string(prop);
-        const auto& name = to_string(all_sources.at(prop));
+        const auto& type = vvv3d::to_string(prop);
+        const auto& name = vvv3d::to_string(all_sources.at(prop));
         ret += name;
         ret += '_';
         ret += type;

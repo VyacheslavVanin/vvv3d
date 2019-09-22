@@ -4,10 +4,6 @@
 namespace vvv3d {
 using vvv::helper::format;
 
-namespace {
-auto DEFAULT_COLOR = vvv3d::WHITE;
-}; // namespace
-
 bool str_to_bool(const std::string& value)
 {
     using list = std::initializer_list<std::string>;
@@ -66,30 +62,6 @@ void setColor(vvv3d::Widget* property, const std::string& value)
     if (w)
         w->setColor(to_color(value));
 }
-
-namespace {
-vvv3d::Color to_color(const std::vector<std::string>& xs)
-{
-    const auto len = xs.size();
-    if (len != 3 && len != 4 && len != 1)
-        return DEFAULT_COLOR;
-
-    size_t pos = 0;
-    size_t i = 0;
-    vvv::vector4f converted;
-    for (const auto& x : xs) {
-        converted.vector[i++] = std::stof(x, &pos);
-        if (pos != x.size())
-            return DEFAULT_COLOR;
-    }
-    switch (len) {
-    case 4: return converted;
-    case 3: return vvv3d::Color(converted.x, converted.y, converted.z);
-    case 1: return vvv3d::Color(converted.x);
-    default: throw std::logic_error("Shouldn't be here");
-    }
-}
-} // namespace
 
 void setColorv(vvv3d::Widget* property, const std::vector<std::string>& value)
 {
