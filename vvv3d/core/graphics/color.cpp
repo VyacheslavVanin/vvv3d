@@ -45,17 +45,19 @@ Color to_color(const std::string& value, bool& ok)
     if (it != color_name_mapping.end())
         return it->second;
 
+    const auto prefix_0x = (value.find("0x") == 0);
     size_t pos = 0;
-    try {
-        const float float_value = std::stof(value, &pos);
-        if (pos == value.size()) {
-            return Color(float_value);
+    if (!prefix_0x) {
+        try {
+            const float float_value = std::stof(value, &pos);
+            if (pos == value.size()) {
+                return Color(float_value);
+            }
+        }
+        catch (...) {
         }
     }
-    catch (...) {
-    }
 
-    const auto prefix_0x = (value.find("0x") == 0);
     const auto& len = value.size() - prefix_0x * 2;
     if (len != 6 && len != 8) {
         LOG(format("String \"@\" of len @ can't be cast to Color", value, len));

@@ -75,6 +75,8 @@ public:
 
     inline vector4 operator+() const;
     inline vector4 operator-() const;
+    inline bool operator==(const vector4& b) const;
+    inline bool operator!=(const vector4& b) const;
 
     inline T length() const;
     inline T length2() const;
@@ -230,6 +232,18 @@ template <typename T>
 inline vector4<T> vector4<T>::operator-() const
 {
     return vector4<T>(-x, -y, -z, -w);
+}
+
+template <typename T>
+inline bool vector4<T>::operator==(const vector4<T>& b) const
+{
+    return x == b.x && y == b.y && z == b.z && w == b.w;
+}
+
+template <typename T>
+inline bool vector4<T>::operator!=(const vector4<T>& b) const
+{
+    return !operator==(b);
 }
 
 template <typename T>
