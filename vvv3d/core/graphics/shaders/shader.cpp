@@ -299,8 +299,8 @@ void Shader::setLights(const std::vector<vvv3d::Light>& lights)
         colors[i] = lights[i].getColor();
         types[i] = static_cast<GLint>(lights[i].getType());
         intensities[i] = lights[i].getIntensity();
-        cutoffs[i] = cos(vvv::deg2radians(lights[i].getCutoff() / 2));
-        exponents[i] = lights[i].getExponent();
+        cutoffs[i] = cos(vvv::deg2radians(lights[i].getSpotCutoff() / 2));
+        exponents[i] = lights[i].getSpotExponent();
     }
 
     const auto positions_loc = LOC_(LOCATIONS::LIGHT_POSITIONS);
@@ -308,8 +308,8 @@ void Shader::setLights(const std::vector<vvv3d::Light>& lights)
     const auto colors_loc = LOC_(LOCATIONS::LIGHT_COLORS);
     const auto types_loc = LOC_(LOCATIONS::LIGHT_TYPES);
     const auto intensities_loc = LOC_(LOCATIONS::LIGHT_INTENSITIES);
-    const auto cutoffs_loc = LOC_(LOCATIONS::LIGHT_CUTOFFS);
-    const auto exponents_loc = LOC_(LOCATIONS::LIGHT_EXPONENTS);
+    const auto cutoffs_loc = LOC_(LOCATIONS::LIGHT_SPOT_CUTOFFS);
+    const auto exponents_loc = LOC_(LOCATIONS::LIGHT_SPOT_EXPONENTS);
 
     if (positions_loc != -1)
         program.setUniform(positions_loc, positions, num_lights);

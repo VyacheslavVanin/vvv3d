@@ -53,8 +53,8 @@ private:
         LIGHT_COLORS,
         LIGHT_TYPES,
         LIGHT_INTENSITIES,
-        LIGHT_CUTOFFS,
-        LIGHT_EXPONENTS,
+        LIGHT_SPOT_CUTOFFS,
+        LIGHT_SPOT_EXPONENTS,
         LIGHTS_COUNT,
         COUNT
     };

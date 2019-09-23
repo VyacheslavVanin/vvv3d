@@ -42,8 +42,8 @@ Light Light::makeSpot(const vvv3d::Color& color, const vvv::vector3f& position,
     ret.pos = position;
     ret.dir = direction.normalized();
     ret.intensity = intensity;
-    ret.cutoff = cutoff;
-    ret.exponent = exponent;
+    ret.spot_cutoff = cutoff;
+    ret.spot_exponent = exponent;
 
     return ret;
 }

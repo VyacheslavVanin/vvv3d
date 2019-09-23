@@ -25,8 +25,8 @@ public:
     const vvv3d::Color& getColor() const { return color; }
     Type getType() const { return type; }
     float getIntensity() const { return intensity; }
-    float getCutoff() const { return cutoff; }
-    float getExponent() const { return exponent; }
+    float getSpotCutoff() const { return spot_cutoff; }
+    float getSpotExponent() const { return spot_exponent; }
     bool isCastShadow() const { return can_cast_shadow; }
 
     void setPosition(const vvv::vector3f& position) { pos = position; }
@@ -36,8 +36,8 @@ public:
     }
     void setColor(const vvv3d::Color& color) { this->color = color; }
     void setIntensity(float intensity) { this->intensity = intensity; }
-    void setCutoff(float cutoff) { this->cutoff = cutoff; }
-    void setExponent(float exponent) { this->exponent = exponent; }
+    void setSpotCutoff(float cutoff) { this->spot_cutoff = cutoff; }
+    void setSpotExponent(float exponent) { this->spot_exponent = exponent; }
     void setShadow(bool shadow) { this->can_cast_shadow = shadow; }
 
 private:
@@ -46,8 +46,8 @@ private:
     vvv3d::Color color;
     Type type;
     float intensity;
-    float cutoff = 0;
-    float exponent = 0;
+    float spot_cutoff = 0;
+    float spot_exponent = 0;
     bool can_cast_shadow = true;
 };
 } // namespace vvv3d
