@@ -237,6 +237,7 @@ void Engine::load(const vvv::CfgNode& node)
 {
     getTextureManager().load(node);
     getAnimationManager().load(node);
+    getMaterialManager().load(node);
     gui().load(node);
 }
 
