@@ -16,6 +16,7 @@
 #include <QDebug>
 
 #include <iostream>
+#include <assert.h>
 
 namespace vvv3d {
 QtHalLayer::QtHalLayer() {}
