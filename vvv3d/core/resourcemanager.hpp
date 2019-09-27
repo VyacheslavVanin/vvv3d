@@ -4,7 +4,7 @@
 #include <vvv3d/core/graphics/managers/material_manager.hpp>
 #include <vvv3d/core/graphics/managers/shader_manager.hpp>
 #include <vvv3d/core/graphics/managers/texturemanager.hpp>
-#include <vvv3d/std/sprites/animation.hpp>
+#include <vvv3d/sprites/animation.hpp>
 
 namespace vvv3d {
 

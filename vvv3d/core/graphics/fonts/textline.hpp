@@ -5,7 +5,6 @@
 #include <vvv3d/core/graphics/fonts/font.hpp>
 #include <vvv3d/core/graphics/geometry.hpp>
 #include <vvv3d/core/transform.hpp>
-#include <vvv3d/std/draw.hpp>
 
 namespace vvv3d {
 std::u32string toU32(const std::string& u8);

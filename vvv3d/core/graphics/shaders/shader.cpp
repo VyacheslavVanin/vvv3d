@@ -3,7 +3,7 @@
 #include <core/graphics/lowlevel/lowlevelshader.hpp>
 #include <core/graphics/lowlevel/vertexattribute.hpp>
 #include <memory>
-#include <vvv3d/std/log.hpp>
+#include <vvv3d/utils/log.hpp>
 #include <vvv3d/vvvmath/functions.hpp>
 
 using namespace vvv3d;

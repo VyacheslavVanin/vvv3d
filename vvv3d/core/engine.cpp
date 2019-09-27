@@ -9,7 +9,7 @@
 #elif VVV3D_BACKEND_QT
 #include <vvv3d/private/qt_hal_impl/qthallayer.hpp>
 #endif
-#include <vvv3d/std/log.hpp>
+#include <vvv3d/utils/log.hpp>
 
 namespace vvv3d {
 

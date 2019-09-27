@@ -7,7 +7,10 @@ set(OpenGL_GL_PREFERENCE "GLVND")
 # Set Source files
 file(GLOB_RECURSE SRCS
     vvv3d/core/*.cpp
-    vvv3d/std/*.cpp
+    vvv3d/geometries/*.cpp
+    vvv3d/gui/*.cpp
+    vvv3d/lighting/*.cpp
+    vvv3d/sprites/*.cpp
     vvv3d/utils/*.cpp
     vvv3d/vvvmath/*.cpp
 )

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <functional>
 #include <vector>
-#include <vvv3d/std/log.hpp>
+#include <vvv3d/utils/log.hpp>
 
 namespace vvv3d {
 
@@ -27,8 +27,7 @@ struct myvertex {
     }
 };
 
-template <typename T>
-T getFromStream(std::istream& str)
+template <typename T> T getFromStream(std::istream& str)
 {
     T ret;
     str >> ret;
@@ -42,8 +41,7 @@ std::istream& operator>>(std::istream& str, myvertex& vertex)
     return str;
 }
 
-template <typename F>
-void doNTimes(size_t N, const F& f)
+template <typename F> void doNTimes(size_t N, const F& f)
 {
     for (size_t i = 0; i < N; ++i)
         f();

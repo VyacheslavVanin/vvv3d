@@ -2,8 +2,8 @@
 #include "texturepacker.hpp"
 #include <string.h>
 #include <utils/helper.hpp>
-#include <vvv3d/std/log.hpp>
-#include <vvv3d/std/texture_io.hpp>
+#include <vvv3d/utils/log.hpp>
+#include <vvv3d/utils/texture_io.hpp>
 
 using namespace vvv3d;
 using namespace std;

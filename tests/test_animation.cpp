@@ -1,7 +1,7 @@
 #include "vvv3dfixture.hpp"
 #include <gtest/gtest.h>
-#include <vvv3d/std/sprites/animation.hpp>
-#include <vvv3d/std/sprites/animationplayer.hpp>
+#include <vvv3d/sprites/animation.hpp>
+#include <vvv3d/sprites/animationplayer.hpp>
 #include <vvv3d/vvv3d.hpp>
 #include <vvv3d/vvv3dgui.hpp>
 

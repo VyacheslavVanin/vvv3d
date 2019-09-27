@@ -2,7 +2,7 @@
 #include <core/graphics/lowlevel/openglprovider.hpp>
 #include <functional>
 #include <stdexcept>
-#include <vvv3d/std/log.hpp>
+#include <vvv3d/utils/log.hpp>
 
 using namespace vvv3d;
 

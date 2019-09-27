@@ -4,6 +4,7 @@
 
 // TODO: move used methods to interface functions
 #include <vvv3d/core/hal/hal.hpp>
+#include <vvv3d/utils/draw.hpp>
 
 namespace vvv3d {
 

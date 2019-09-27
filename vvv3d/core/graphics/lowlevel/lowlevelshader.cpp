@@ -2,7 +2,7 @@
 
 #include "utils/myutils.hpp"
 #include <core/graphics/lowlevel/openglprovider.hpp>
-#include <vvv3d/std/log.hpp>
+#include <vvv3d/utils/log.hpp>
 
 #include <cstdint>
 #include <cstring>

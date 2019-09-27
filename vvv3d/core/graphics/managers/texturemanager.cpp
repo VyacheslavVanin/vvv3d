@@ -4,7 +4,7 @@
 
 #include <sstream>
 
-#include <vvv3d/std/texture_io.hpp>
+#include <vvv3d/utils/texture_io.hpp>
 
 using namespace vvv3d;
 
