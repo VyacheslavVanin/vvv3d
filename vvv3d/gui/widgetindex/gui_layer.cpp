@@ -8,8 +8,8 @@
 #include <vvv3d/vvv3dgui.hpp>
 #include <vvvcfg/vvvcfg.hpp>
 
-#include "property_mapper.hpp"
 #include "widget_fabric.hpp"
+#include "widget_property_mapper.hpp"
 #include <vvvstdhelper/containerhelper.hpp>
 
 namespace vvv3d {
@@ -48,6 +48,7 @@ std::string getType(const vvv::CfgNode::properties_type& properties,
     return node_name.type;
 }
 
+using WidgetPropertyMapper = PropertyMapper<vvv3d::Widget>;
 } // namespace
 
 vvv3d::Widget* makeWidget(const vvv::CfgNode& node)
@@ -74,24 +75,24 @@ vvv3d::Widget* makeWidget(const vvv::CfgNode& node)
                 "size", "width", "height"};
             return vvv::helpers::contain(size_properties, v.first);
         })) {
-        PropertyMapper::instance().applyProperty(ret, "autoresize",
-                                                 vvv::Value("false"));
+        WidgetPropertyMapper::instance().applyProperty(ret, "autoresize",
+                                                       vvv::Value("false"));
     }
 
     for (const auto& prop : properties) {
         const auto& name = prop.first;
         const auto& value = prop.second;
-        PropertyMapper::instance().applyProperty(ret, name, value);
+        WidgetPropertyMapper::instance().applyProperty(ret, name, value);
     }
 
     if (properties.count("text") == 0) {
         const auto& text =
             properties.count("type") ? node_name : name_type.name;
-        PropertyMapper::instance().applyProperty(ret, "text", text);
+        WidgetPropertyMapper::instance().applyProperty(ret, "text", text);
     }
     if (properties.count("action") == 0 && properties.count("actions") == 0) {
         const auto& action = std::string("on_") + node_name;
-        PropertyMapper::instance().applyProperty(ret, "action", action);
+        WidgetPropertyMapper::instance().applyProperty(ret, "action", action);
     }
 
     return ret;
@@ -107,7 +108,7 @@ void GuiLayer::register_property(
     const std::string& property_name,
     const std::function<void(vvv3d::Widget*, const std::string&)>& func)
 {
-    PropertyMapper::instance().addProperty(property_name, func);
+    WidgetPropertyMapper::instance().addProperty(property_name, func);
 }
 
 void GuiLayer::load(const std::string& config)
