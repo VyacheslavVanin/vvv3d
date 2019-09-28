@@ -29,6 +29,7 @@ public:
     float getSpotExponent() const { return spot_exponent; }
     bool isCastShadow() const { return can_cast_shadow; }
 
+    void setType(Type type) { this->type = type; }
     void setPosition(const vvv::vector3f& position) { pos = position; }
     void setDirection(const vvv::vector3f& direction)
     {
