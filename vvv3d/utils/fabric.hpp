@@ -29,7 +29,7 @@ public:
     }
 
 private:
-    Fabric() {};
+    Fabric();
     Fabric(const Fabric&) = delete;
     Fabric(Fabric&&) = delete;
     Fabric& operator=(const Fabric&) = delete;
