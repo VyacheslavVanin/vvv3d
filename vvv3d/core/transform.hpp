@@ -35,6 +35,9 @@ public:
     inline vvv::vector3f getFrontVector() const;
     inline vvv::vector3f getUpVector() const;
 
+    inline void setFrontVector(const vvv::vector3f& v);
+    inline void setFrontVector(float x, float y, float z);
+
     inline const vvv::quaternion<float>& getQuaternion() const;
 
 private:
@@ -95,6 +98,20 @@ vvv::vector3f Transform::getFrontVector() const
 {
     static const auto default_front = vvv::vector3f(0, 0, 1);
     return getRotationMatrix() * default_front;
+}
+
+inline void Transform::setFrontVector(const vvv::vector3f& v)
+{
+    const auto& v_norm = v.normalized();
+    const auto& current_front = getFrontVector();
+    const auto& angle = vvv::vector3f::angle(current_front, v_norm);
+    const auto& axis = vvv::vector3f::cross(current_front, v_norm);
+    setRotation(angle, axis);
+}
+
+inline void Transform::setFrontVector(float x, float y, float z)
+{
+    setFrontVector(vvv::vector3f{x, y, z});
 }
 
 vvv::vector3f Transform::getUpVector() const

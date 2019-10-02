@@ -101,11 +101,13 @@ vvv3d::Color to_color(const std::vector<std::string>& xs)
     size_t pos = 0;
     size_t i = 0;
     vvv::vector4f converted;
-    for (const auto& x : xs) {
-        converted.vector[i++] = std::stof(x, &pos);
-        if (pos != x.size())
+    for (const auto& x : xs)
+        try {
+            converted.vector[i++] = std::stof(x, &pos);
+        }
+        catch (...) {
             return DEFAULT_COLOR;
-    }
+        }
     switch (len) {
     case 4: return converted;
     case 3: return vvv3d::Color(converted.x, converted.y, converted.z);
