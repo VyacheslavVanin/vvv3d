@@ -350,8 +350,6 @@ std::string makeFragShader(const ValueSourcesMappings& mappings)
                    calculte_normal);
     }
 
-    std::cout << fsh_str << "\n";
-
     return fsh_str;
 }
 
