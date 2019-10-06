@@ -333,7 +333,6 @@ inline vector4<T> vector4<T>::rotatedZ(T angle) const
     ret.rotateZ(angle);
     return ret;
 }
-} // namespace vvv
 
 template <typename T>
 inline std::ostream& operator<<(std::ostream& stream, const vvv::vector4<T>& v)
@@ -341,5 +340,6 @@ inline std::ostream& operator<<(std::ostream& stream, const vvv::vector4<T>& v)
     stream << "{ " << v.x << ", " << v.y << ", " << v.z << ", " << v.w << " }";
     return stream;
 }
+} // namespace vvv
 
 #endif /* VECTOR4_H */

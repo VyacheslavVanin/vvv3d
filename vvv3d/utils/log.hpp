@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vvvstdhelper/containerhelper.hpp>
 #include <vvvstdhelper/format.hpp>
 
 namespace vvv3d {

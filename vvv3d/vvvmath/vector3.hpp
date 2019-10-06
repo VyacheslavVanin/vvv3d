@@ -324,11 +324,13 @@ inline vvv::vector3<T> operator/(const T& s, const vvv::vector3<T>& a)
     return vvv::vector3<T>(s / a.x, s / a.y, s / a.z);
 }
 
+namespace vvv {
 template <typename T>
 inline std::ostream& operator<<(std::ostream& stream, const vvv::vector3<T>& v)
 {
     stream << "{ " << v.x << ", " << v.y << ", " << v.z << " }";
     return stream;
 }
+} // namespace vvv
 
 #endif /* VECTOR3_H */
