@@ -184,7 +184,6 @@ public:
 
 typedef matrix44<double> matrix44d;
 typedef matrix44<float> matrix44f;
-} // namespace vvv
 
 template <typename T>
 inline std::ostream& operator<<(std::ostream& stream, const vvv::matrix44<T>& m)
@@ -199,5 +198,7 @@ inline std::ostream& operator<<(std::ostream& stream, const vvv::matrix44<T>& m)
            << m.matrix[3][2] << ", " << m.matrix[3][3] << "} }" << std::endl;
     return stream;
 }
+
+} // namespace vvv
 
 #endif /* MATRIX44_H */
