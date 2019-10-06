@@ -55,7 +55,6 @@ material_node_parse_result getMaterialProperties(const vvv::CfgNode& node)
         const auto& property_value_type = property.getType();
         if (property_value_type == vvv::Value::DATA_TYPE::LIST) {
             const auto& color = to_color(property.asStringList());
-            std::cout << "!!! " << property_name << " as color\n";
             ret[property_type] =
                 std::make_pair(SOURCE_TYPE::COLOR, vvv::Any(color));
             continue;
@@ -65,7 +64,6 @@ material_node_parse_result getMaterialProperties(const vvv::CfgNode& node)
             bool ok;
             const auto& color = to_color(property_string, ok);
             if (ok) {
-                std::cout << "!!! " << property_name << " as color\n";
                 ret[property_type] =
                     std::make_pair(SOURCE_TYPE::COLOR, vvv::Any(color));
                 continue;
@@ -108,21 +106,17 @@ void MaterialManager::load(const vvv::CfgNode& cfg)
         const auto& value_sources = toValueSources(material_desc);
         auto material = std::make_shared<Material>(value_sources);
         addForce(name, material);
-        std::cout << "!!!!! Add material: " << name << "\n";
         for (const auto& value_source : material_desc) {
             const auto& prop = value_source.first;
             const auto& source_type = value_source.second.first;
             const auto& value = value_source.second.second;
             if (source_type == SOURCE_TYPE::COLOR) {
-                std::cout << "!!!! set " << to_string(prop) << " as color\n";
                 material->setColor(prop, vvv::any_cast<vvv3d::Color>(value));
                 continue;
             }
             if (source_type == SOURCE_TYPE::TEXTURE) {
                 auto& tm = vvv3d::getTextureManager();
                 const auto& texture_name = vvv::any_cast<std::string>(value);
-                std::cout << "!!!! set " << to_string(prop) << " as texture "
-                          << texture_name << "\n";
                 auto texture = tm.getShared(texture_name);
                 texture->setMipmapFilter();
                 material->setTexture(prop, std::move(texture));

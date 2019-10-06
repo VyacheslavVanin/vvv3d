@@ -41,7 +41,6 @@ void GuiLayerBase::removeWidget(Widget* widget)
 
 void GuiLayerBase::resize(int width, int height)
 {
-    std::cerr << "gui: got resize event (" << width << ", " << height << ")\n";
     camera.setOrtho(0, width, -height, 0, 1, -1);
     size.set(width, height);
 }
