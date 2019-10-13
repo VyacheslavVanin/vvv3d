@@ -6,13 +6,13 @@ namespace vvv3d {
 class Transform {
 public:
     Transform();
-    ~Transform();
+    ~Transform() = default;
 
     inline void setPosition(const vvv::vector3f& value);
     inline void setPosition(float x, float y, float z);
-    inline void setRotationEuler(float pitch, float yaw, float roll);
+    void setRotationEuler(float pitch, float yaw, float roll);
     inline void setRotation(float angle, float ax, float ay, float az);
-    inline void setRotation(float angle, const vvv::vector3f& axis);
+    void setRotation(float angle, const vvv::vector3f& axis);
     inline void setRotation(const vvv::quaternion<float>& quaternion);
     inline void setScale(float x, float y, float z);
     inline void setScale(const vvv::vector3f& s);
@@ -29,14 +29,17 @@ public:
 
     inline const vvv::vector3f& getPosition() const;
     inline const vvv::vector3f& getScale() const;
-    inline const vvv::matrix44f& getModelMatrix() const;
-    inline const vvv::matrix44f& getRotationMatrix() const;
+    const vvv::matrix44f& getModelMatrix() const;
+    const vvv::matrix44f& getRotationMatrix() const;
 
-    inline vvv::vector3f getDirection() const;
-    inline vvv::vector3f getUpVector() const;
+    vvv::vector3f getDirection() const;
+    vvv::vector3f getUpVector() const;
 
-    inline void setDirection(const vvv::vector3f& v);
+    void setDirection(const vvv::vector3f& v);
     inline void setDirection(float x, float y, float z);
+
+    void setUp(const vvv::vector3f& v);
+    inline void setUp(float x, float y, float z);
 
     inline const vvv::quaternion<float>& getQuaternion() const;
 
@@ -44,8 +47,8 @@ private:
     vvv::quaternion<float> q;
     vvv::vector3f position;
     vvv::vector3f m_scale;
-    mutable vvv::vector3f front;
-    mutable vvv::vector3f up;
+    mutable vvv::vector3f front; // delete?
+    mutable vvv::vector3f up;    // delete?
     mutable vvv::matrix44f modelMatrix;
     mutable vvv::matrix44f rotationMatrix;
     mutable bool positionChanged;
@@ -64,67 +67,18 @@ inline Transform::Transform()
     q.setAngleAxis(0, vvv::vector3f(0, 0, 1));
 }
 
-inline Transform::~Transform() {}
-
 inline const vvv::vector3f& Transform::getPosition() const { return position; }
 
 const vvv::vector3f& Transform::getScale() const { return m_scale; }
-
-const vvv::matrix44f& Transform::getModelMatrix() const
-{
-    if (rotationChanged || scaleChanged || positionChanged) {
-        // rotation
-        modelMatrix = getRotationMatrix();
-
-        // scale
-        modelMatrix *= vvv::matrix44f::createScaleMatrix(m_scale);
-        // translate
-        modelMatrix.matrix[3][0] = position.x;
-        modelMatrix.matrix[3][1] = position.y;
-        modelMatrix.matrix[3][2] = position.z;
-        scaleChanged = positionChanged = false;
-    }
-    return modelMatrix;
-}
-
-const vvv::matrix44f& Transform::getRotationMatrix() const
-{
-    if (rotationChanged)
-        updateRotationMatrix();
-    return rotationMatrix;
-}
-
-vvv::vector3f Transform::getDirection() const
-{
-    static const auto default_front = vvv::vector3f(0, 0, 1);
-    return getRotationMatrix() * default_front;
-}
-
-inline void Transform::setDirection(const vvv::vector3f& v)
-{
-    static const auto default_front = vvv::vector3f(0, 0, 1);
-    const auto& v_norm = v.normalized();
-    const auto& current_front = default_front;
-    const auto& angle = vvv::vector3f::angle(current_front, v_norm);
-    const auto& axis = vvv::vector3f::cross(current_front, v_norm);
-    setRotation(angle, axis);
-}
 
 inline void Transform::setDirection(float x, float y, float z)
 {
     setDirection(vvv::vector3f{x, y, z});
 }
 
-vvv::vector3f Transform::getUpVector() const
+inline void Transform::setUp(float x, float y, float z)
 {
-    static const auto default_up = vvv::vector3f(0, 1, 0);
-    return getRotationMatrix() * default_up;
-}
-
-void Transform::updateRotationMatrix() const
-{
-    q.toMatrix44(rotationMatrix);
-    rotationChanged = false;
+    setUp(vvv::vector3f{x, y, z});
 }
 
 inline void Transform::setPosition(const vvv::vector3f& value)
@@ -138,21 +92,9 @@ inline void Transform::setPosition(float x, float y, float z)
     setPosition(vvv::vector3f(x, y, z));
 }
 
-inline void Transform::setRotationEuler(float pitch, float yaw, float roll)
-{
-    q.setEuler(pitch, yaw, roll);
-    rotationChanged = true;
-}
-
 inline void Transform::setRotation(float angle, float ax, float ay, float az)
 {
     setRotation(angle, vvv::vector3f(ax, ay, az));
-}
-
-inline void Transform::setRotation(float angle, const vvv::vector3f& axis)
-{
-    q.setAngleAxis(angle, axis);
-    rotationChanged = true;
 }
 
 inline void Transform::setRotation(const vvv::quaternion<float>& q)

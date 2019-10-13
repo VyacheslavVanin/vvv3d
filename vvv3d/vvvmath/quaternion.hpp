@@ -64,10 +64,8 @@ quaternion<T>& quaternion<T>::setEuler(T pitch, T yaw, T roll)
     const double cr = cos(roll * 0.5);
     const double sr = sin(roll * 0.5);
 
-    return set(cy * cp * sr - sy * sp * cr,
-               sy * cp * sr + cy * sp * cr,
-               sy * cp * cr - cy * sp * sr,
-               cy * cp * cr + sy * sp * sr);
+    return set(cy * cp * sr - sy * sp * cr, sy * cp * sr + cy * sp * cr,
+               sy * cp * cr - cy * sp * sr, cy * cp * cr + sy * sp * sr);
 }
 
 template <typename T>
@@ -95,10 +93,12 @@ quaternion<T>& quaternion<T>::operator-=(const quaternion& b)
 template <typename T>
 quaternion<T>& quaternion<T>::operator*=(const quaternion& p)
 {
-    q.set(q.w * p.q.x + q.x * p.q.w + q.y * p.q.z - q.z * p.q.y,
-          q.w * p.q.y + q.y * p.q.w + q.z * p.q.x - q.x * p.q.z,
-          q.w * p.q.z + q.z * p.q.w + q.x * p.q.y - q.y * p.q.x,
-          q.w * p.q.w - q.x * p.q.x - q.y * p.q.y - q.z * p.q.z);
+    const auto& q0 = p.q;
+    const auto& q1 = q;
+    q.set(q0.w * q1.x + q0.x * q1.w + q0.y * q1.z - q0.z * q1.y,
+          q0.w * q1.y + q0.y * q1.w + q0.z * q1.x - q0.x * q1.z,
+          q0.w * q1.z + q0.z * q1.w + q0.x * q1.y - q0.y * q1.x,
+          q0.w * q1.w - q0.x * q1.x - q0.y * q1.y - q0.z * q1.z);
     return *this;
 }
 
@@ -119,10 +119,8 @@ quaternion<T>& quaternion<T>::operator/=(T s)
 template <typename T>
 quaternion<T> quaternion<T>::operator*(const quaternion& p) const
 {
-    return quaternion<T>(q.w * p.x + q.x * p.w + q.y * p.z - q.z * p.y,
-                         q.w * p.y + q.y * p.w + q.z * p.x - q.x * p.z,
-                         q.w * p.z + q.z * p.w + q.x * p.y - q.y * p.x,
-                         q.w * p.w - q.x * p.x - q.y * p.y - q.z * p.z);
+    quaternion<T> ret(*this);
+    return ret *= p;
 }
 
 template <typename T>
