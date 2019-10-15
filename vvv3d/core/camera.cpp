@@ -63,6 +63,24 @@ Camera& Camera::setUp(float x, float y, float z)
     return setUp(vector3f(x, y, z));
 }
 
+Camera& Camera::setZNear(float zNear) {
+    this->zNear = zNear;
+    projectionChanged = true;
+    return *this;
+}
+
+Camera& Camera::setZFar(float zFar) {
+    this->zFar = zFar;
+    projectionChanged = true;
+    return *this;
+}
+
+Camera& Camera::setFOVy(float fovy) {
+    this->fovy = fovy;
+    projectionChanged = true;
+    return *this;
+}
+
 const matrix44f& Camera::getProjectionMatrix() const
 {
     if (projectionChanged)

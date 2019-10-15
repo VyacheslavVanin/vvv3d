@@ -69,6 +69,9 @@ public:
     float getZNear() const { return zNear; }
     float getZFar() const { return zFar; }
     float getFOVy() const { return fovy; }
+    Camera& setZNear(float zNear);
+    Camera& setZFar(float zFar);
+    Camera& setFOVy(float fovy);
 
 private:
     void updateProjectionMatrix() const;
