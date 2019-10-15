@@ -7,6 +7,7 @@
 
 #ifndef VECTOR3_H
 #define VECTOR3_H
+#include "functions.hpp"
 #include "mathconstants.hpp"
 #include "matrices_types.hpp"
 #include <cmath>
@@ -296,7 +297,7 @@ inline T vector3<T>::lengthYZ() const
 template <typename T>
 inline T vector3<T>::angle(const vvv::vector3<T>& a, const vvv::vector3<T>& b)
 {
-    return acos(a.dot(b) / (a.length() * b.length()));
+    return acos(clamp_fast(-1.0f, 1.0f, a.dot(b) / (a.length() * b.length())));
 }
 } // namespace vvv
 
