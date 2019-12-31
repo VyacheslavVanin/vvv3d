@@ -122,6 +122,7 @@ const Glyph& FontImpl::getGlyph(uint32_t c) const
 void Font::activate(GLuint texUnit) { pImpl->lltex->bind(texUnit); }
 
 const Texture& Font::getTexture() const { return *pImpl->lltex; }
+std::shared_ptr<Texture> Font::getTextureShared() const { return pImpl->lltex; }
 
 int Font::getAscender() const { return pImpl->metrics.ascender; }
 

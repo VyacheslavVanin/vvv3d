@@ -20,6 +20,7 @@ public:
     const Glyph& getGlyph(uint32_t c) const;
     void activate(GLuint texUnit = 0);
     const Texture& getTexture() const;
+    std::shared_ptr<Texture> getTextureShared() const;
     int getAscender() const;
     int getDescender() const;
     int getMinLeftGlyphEdge() const;

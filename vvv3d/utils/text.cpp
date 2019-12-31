@@ -187,7 +187,7 @@ int Text::textLineWidth() const
 int Text::textLineHeight() const
 {
     const auto& f = getFont();
-    return f.getAscender() - f.getDescender();
+    return f.getHeight();
 }
 
 } // namespace vvv3d

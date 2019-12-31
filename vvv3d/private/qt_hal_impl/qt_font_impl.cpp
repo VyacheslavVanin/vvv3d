@@ -68,14 +68,19 @@ vvv3d::Glyph QtFontImpl::GetGlyph(char32_t character) const
         QImage::Format_Grayscale8);
     const auto& advances = raw_font.advancesForGlyphIndexes(glyph_indices);
 
+    const auto bytes_per_line = image.bytesPerLine();
+    const auto bytes_per_pixel = image.format() / 8;
+    const auto lines =
+        (bytes_per_line > 0 && bytes_per_pixel > 0)
+            ? image.sizeInBytes() / bytes_per_pixel / bytes_per_line
+            : 0;
     ret.width = (int)bbox.width();
-    ret.height = (int)bbox.height();
+    ret.height = (int)lines;
     ret.advance = (int)advances[0].x();
     ret.character = character;
     ret.xoffset = (int)bbox.left();
     ret.yoffset = (int)(-bbox.bottom());
 
-    const auto bytes_per_line = image.bytesPerLine();
     ret.buffer =
         convert8to32tex(image.bits(), ret.width, ret.height, bytes_per_line);
 
