@@ -23,6 +23,7 @@ vvv3d::TextWidget* makeLabel() { return new vvv3d::TextWidget("Label"); }
 vvv3d::LineEdit* makeLineEdit() { return new vvv3d::LineEdit(); }
 
 vvv3d::SliderH* makeSliderH() { return new vvv3d::SliderH(); }
+vvv3d::SliderV* makeSliderV() { return new vvv3d::SliderV(); }
 
 vvv3d::ImageWidget* makeImage()
 {

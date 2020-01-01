@@ -7,7 +7,8 @@ Fabric<Widget*>::Fabric() : standard_map{
     {"panel", makePanel},     {"hlayout", makeHLayout},
     {"vlayout", makeVLayout}, {"button", makeTextButton},
     {"label", makeLabel},     {"lineedit", makeLineEdit},
-    {"sliderh", makeSliderH}, {"image", makeImage},
+    {"sliderh", makeSliderH}, {"sliderv", makeSliderV},
+    {"image", makeImage},
 }, custom_map()
 {
 }

@@ -1,4 +1,4 @@
-#include "hslider.hpp"
+#include "sliderh.hpp"
 #include <vvv3d/vvv3dgui.hpp>
 
 namespace vvv3d {

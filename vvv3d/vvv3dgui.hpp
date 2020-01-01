@@ -8,11 +8,12 @@
 #include <vvv3d/gui/widgets/buttontext.hpp>
 #include <vvv3d/gui/widgets/colorrectanglewidget.hpp>
 #include <vvv3d/gui/widgets/horizontallayout.hpp>
-#include <vvv3d/gui/widgets/hslider.hpp>
 #include <vvv3d/gui/widgets/imagewidget.hpp>
 #include <vvv3d/gui/widgets/lineedit.hpp>
 #include <vvv3d/gui/widgets/panel.hpp>
 #include <vvv3d/gui/widgets/sliderbase.hpp>
+#include <vvv3d/gui/widgets/sliderh.hpp>
+#include <vvv3d/gui/widgets/sliderv.hpp>
 #include <vvv3d/gui/widgets/textwidget.hpp>
 #include <vvv3d/gui/widgets/verticallayout.hpp>
 #include <vvv3d/gui/widgets/widget.hpp>
