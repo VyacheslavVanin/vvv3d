@@ -1,8 +1,8 @@
 #pragma once
 #include "layout.hpp"
-#include "widget.hpp"
 #include <vvv3d/gui/align.hpp>
 #include <vvv3d/gui/properties/ivalign.hpp>
+#include <vvv3d/gui/widgets/widget.hpp>
 
 namespace vvv3d {
 

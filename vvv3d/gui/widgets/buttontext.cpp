@@ -2,8 +2,8 @@
 #include "colorrectanglewidget.hpp"
 #include "panel.hpp"
 #include "textwidget.hpp"
-#include "verticallayout.hpp"
 #include <vvv3d/core/graphics/color.hpp>
+#include <vvv3d/gui/widgets/layouts/verticallayout.hpp>
 
 namespace vvv3d {
 

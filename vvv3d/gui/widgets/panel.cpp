@@ -1,5 +1,6 @@
 #include "panel.hpp"
-#include "verticallayout.hpp"
+
+#include <vvv3d/gui/widgets/layouts/verticallayout.hpp>
 
 namespace vvv3d {
 

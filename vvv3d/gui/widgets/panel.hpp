@@ -1,9 +1,9 @@
 #pragma once
-#include "layout.hpp"
 #include "widget.hpp"
 #include <vvv3d/gui/properties/icolor.hpp>
 #include <vvv3d/gui/properties/icontainer.hpp>
 #include <vvv3d/gui/properties/ilayout_props.hpp>
+#include <vvv3d/gui/widgets/layouts/layout.hpp>
 
 namespace vvv3d {
 

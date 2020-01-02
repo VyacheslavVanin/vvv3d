@@ -1,7 +1,7 @@
 #pragma once
-#include "widget.hpp"
 #include <vvv3d/gui/properties/icontainer.hpp>
 #include <vvv3d/gui/properties/ilayout_props.hpp>
+#include <vvv3d/gui/widgets/widget.hpp>
 
 namespace vvv3d {
 

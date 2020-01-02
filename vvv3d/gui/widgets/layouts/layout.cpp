@@ -1,5 +1,4 @@
 #include "layout.hpp"
-#include "panel.hpp"
 #include <algorithm>
 #include <vvv3d/vvvmath/linalg.hpp>
 
