@@ -1,7 +1,7 @@
 #pragma once
-#include "activewidget.hpp"
 #include <vvv3d/gui/actionlist.hpp>
 #include <vvv3d/gui/properties/iaction.hpp>
+#include <vvv3d/gui/widgets/activewidget.hpp>
 
 namespace vvv3d {
 

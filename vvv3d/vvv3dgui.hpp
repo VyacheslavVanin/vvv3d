@@ -5,7 +5,7 @@
 #include <vvv3d/gui/properties/itext.hpp>
 #include <vvv3d/gui/widgetindex/gui_layer.hpp>
 #include <vvv3d/gui/widgets/activewidget.hpp>
-#include <vvv3d/gui/widgets/buttontext.hpp>
+#include <vvv3d/gui/widgets/buttons/buttontext.hpp>
 #include <vvv3d/gui/widgets/colorrectanglewidget.hpp>
 #include <vvv3d/gui/widgets/imagewidget.hpp>
 #include <vvv3d/gui/widgets/layouts/horizontallayout.hpp>
