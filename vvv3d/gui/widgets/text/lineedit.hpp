@@ -1,7 +1,5 @@
 #pragma once
-#include "colorrectanglewidget.hpp"
 #include "textwidget.hpp"
-#include "widget.hpp"
 #include <chrono>
 #include <string>
 #include <vector>
@@ -14,6 +12,8 @@
 #include <vvv3d/gui/properties/ifont.hpp>
 #include <vvv3d/gui/properties/ihalign.hpp>
 #include <vvv3d/gui/properties/itext.hpp>
+#include <vvv3d/gui/widgets/colorrectanglewidget.hpp>
+#include <vvv3d/gui/widgets/widget.hpp>
 
 namespace vvv3d {
 

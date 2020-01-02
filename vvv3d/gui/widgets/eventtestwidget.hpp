@@ -1,5 +1,5 @@
 #pragma once
-#include "textwidget.hpp"
+#include <vvv3d/gui/widgets/text/textwidget.hpp>
 
 namespace vvv3d {
 

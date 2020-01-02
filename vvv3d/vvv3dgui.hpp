@@ -11,11 +11,11 @@
 #include <vvv3d/gui/widgets/layouts/horizontallayout.hpp>
 #include <vvv3d/gui/widgets/layouts/layout.hpp>
 #include <vvv3d/gui/widgets/layouts/verticallayout.hpp>
-#include <vvv3d/gui/widgets/lineedit.hpp>
 #include <vvv3d/gui/widgets/panel.hpp>
 #include <vvv3d/gui/widgets/sliders/sliderbase.hpp>
 #include <vvv3d/gui/widgets/sliders/sliderh.hpp>
 #include <vvv3d/gui/widgets/sliders/sliderv.hpp>
-#include <vvv3d/gui/widgets/textwidget.hpp>
+#include <vvv3d/gui/widgets/text/lineedit.hpp>
+#include <vvv3d/gui/widgets/text/textwidget.hpp>
 #include <vvv3d/gui/widgets/widget.hpp>
 #include <vvv3d/vvv3d.hpp>

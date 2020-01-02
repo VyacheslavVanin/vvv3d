@@ -1,5 +1,5 @@
 #pragma once
-#include "widget.hpp"
+#include <vvv3d/gui/widgets/widget.hpp>
 
 #include <memory>
 #include <string>
