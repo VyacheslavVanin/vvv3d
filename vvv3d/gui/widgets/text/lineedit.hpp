@@ -12,7 +12,7 @@
 #include <vvv3d/gui/properties/ifont.hpp>
 #include <vvv3d/gui/properties/ihalign.hpp>
 #include <vvv3d/gui/properties/itext.hpp>
-#include <vvv3d/gui/widgets/colorrectanglewidget.hpp>
+#include <vvv3d/gui/widgets/images/colorrectanglewidget.hpp>
 #include <vvv3d/gui/widgets/widget.hpp>
 
 namespace vvv3d {

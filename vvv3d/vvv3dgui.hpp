@@ -6,8 +6,8 @@
 #include <vvv3d/gui/widgetindex/gui_layer.hpp>
 #include <vvv3d/gui/widgets/activewidget.hpp>
 #include <vvv3d/gui/widgets/buttons/buttontext.hpp>
-#include <vvv3d/gui/widgets/colorrectanglewidget.hpp>
-#include <vvv3d/gui/widgets/imagewidget.hpp>
+#include <vvv3d/gui/widgets/images/colorrectanglewidget.hpp>
+#include <vvv3d/gui/widgets/images/imagewidget.hpp>
 #include <vvv3d/gui/widgets/layouts/horizontallayout.hpp>
 #include <vvv3d/gui/widgets/layouts/layout.hpp>
 #include <vvv3d/gui/widgets/layouts/verticallayout.hpp>

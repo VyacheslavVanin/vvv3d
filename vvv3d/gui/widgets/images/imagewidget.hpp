@@ -1,8 +1,8 @@
 #pragma once
-#include "widget.hpp"
 #include <memory>
 #include <vvv3d/gui/properties/iautoresize.hpp>
 #include <vvv3d/gui/properties/iimage.hpp>
+#include <vvv3d/gui/widgets/widget.hpp>
 #include <vvv3d/sprites/sprite.hpp>
 
 namespace vvv3d {

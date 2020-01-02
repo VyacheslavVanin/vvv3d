@@ -1,7 +1,7 @@
 #pragma once
-#include "widget.hpp"
 #include <memory>
 #include <vvv3d/gui/properties/icolor.hpp>
+#include <vvv3d/gui/widgets/widget.hpp>
 #include <vvv3d/vvv3d.hpp>
 
 namespace vvv3d {

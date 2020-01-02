@@ -1,6 +1,6 @@
 #include "buttontext.hpp"
 #include <vvv3d/core/graphics/color.hpp>
-#include <vvv3d/gui/widgets/colorrectanglewidget.hpp>
+#include <vvv3d/gui/widgets/images/colorrectanglewidget.hpp>
 #include <vvv3d/gui/widgets/layouts/verticallayout.hpp>
 #include <vvv3d/gui/widgets/panel.hpp>
 #include <vvv3d/gui/widgets/text/textwidget.hpp>
