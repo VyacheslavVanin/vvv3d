@@ -50,20 +50,26 @@ const auto FONT_MULTIPLIER = 64;
 namespace vvv3d {
 class FreetypeFont : public IFont {
 public:
-    FreetypeFont(FT_Face face, unsigned int size, unsigned int charSize,
+    FreetypeFont(FT_Face face, unsigned int font_size, unsigned int charSize,
                  unsigned int dpi)
-        : face(face), size(size), charSize(charSize), dpi(dpi)
+        /// FIXME: use correct dpi. For now for some reason font become
+        // aproximately 3 times bigger than expected
+        : face(face), font_size(font_size), pixel_size(charSize), dpi(96)
     {
     }
 
     FontMetrics GetMetrics() const override
     {
-        FT_Set_Char_Size(face, 0, size * FONT_MULTIPLIER, dpi, dpi);
-        // FT_Set_Pixel_Sizes(face, 0, charSize);
+        // Use this if you want to set font size in pt (like in office apps)
+        if (FT_Set_Char_Size(face, 0, font_size * FONT_MULTIPLIER, dpi, dpi)) {
+            throw std::logic_error("FT_Set_Char_Size failed");
+        }
+        // Use this if you want to set font size in pixels
+        // FT_Set_Pixel_Sizes(face, 0, pixel_size * 1);
 
         FontMetrics ret;
-        ret.pixelSize = size;
-        ret.charSize = charSize;
+        ret.pixelSize = font_size;
+        ret.charSize = pixel_size;
         ret.dpi = dpi;
         ret.ascender = face->size->metrics.ascender / FONT_MULTIPLIER;
         ret.descender = face->size->metrics.descender / FONT_MULTIPLIER;
@@ -102,17 +108,18 @@ public:
 
 private:
     FT_Face face;
-    unsigned int size;
-    unsigned int charSize;
+    unsigned int font_size;
+    unsigned int pixel_size;
     unsigned int dpi;
 };
 
 std::unique_ptr<IFont> makeFreetypeFont(const std::string& font_file_name,
-                                        unsigned int size,
-                                        unsigned int charSize, unsigned int dpi)
+                                        unsigned int font_size,
+                                        unsigned int pixel_size,
+                                        unsigned int dpi)
 {
     auto& freetype_instance = getFreetypeInstance();
     const auto& face = freetype_instance.addFont(font_file_name);
-    return std::make_unique<FreetypeFont>(face, size, charSize, dpi);
+    return std::make_unique<FreetypeFont>(face, font_size, pixel_size, dpi);
 }
 } // namespace vvv3d
