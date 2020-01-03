@@ -36,7 +36,7 @@ gui
     const auto& font = vvv3d::getFontManager().getFont("default");
     const auto& font_ascender = font.getAscender();
     const auto& font_descender = font.getDescender();
-    EXPECT_EQ(font_ascender, 19);
+    EXPECT_EQ(font_ascender, 18);
     EXPECT_EQ(font_descender, -5);
 
     auto& gui = e->gui();
@@ -54,30 +54,30 @@ gui
     ASSERT_TRUE(im != nullptr);
 
     // Check elements has correct sizes
-    EXPECT_EQ(panel->getSize(), vvv::vector2i(286, 442));
+    EXPECT_EQ(panel->getSize(), vvv::vector2i(286, 439));
     EXPECT_EQ(panel->getBorder(), 15);
     EXPECT_EQ(panel->getPadding(), 16);
     EXPECT_EQ(panel->getPosition(), vvv::vector2i(30, 30));
-    EXPECT_EQ(text->getSize(), vvv::vector2i(256, 24));
-    EXPECT_EQ(button->getSize(), vvv::vector2i(256, 24));
-    EXPECT_EQ(le->getSize(), vvv::vector2i(256, 24));
+    EXPECT_EQ(text->getSize(), vvv::vector2i(256, 23));
+    EXPECT_EQ(button->getSize(), vvv::vector2i(256, 23));
+    EXPECT_EQ(le->getSize(), vvv::vector2i(256, 23));
     EXPECT_EQ(sl->getSize(), vvv::vector2i(256, 20));
     EXPECT_EQ(im->getSize(), vvv::vector2i(256, 256));
 
     // Check panel expands to store new widget
     auto l = new vvv3d::ButtonText("Button2");
     panel->addWidget(l);
-    EXPECT_EQ(panel->getSize(), vvv::vector2i(286, 482));
+    EXPECT_EQ(panel->getSize(), vvv::vector2i(286, 478));
 
     // Check panel stretch its content
     panel->setWidth(300);
-    EXPECT_EQ(panel->getSize(), vvv::vector2i(300, 482));
+    EXPECT_EQ(panel->getSize(), vvv::vector2i(300, 478));
     EXPECT_EQ(panel->getBorder(), 15);
     EXPECT_EQ(panel->getPadding(), 16);
     EXPECT_EQ(panel->getPosition(), vvv::vector2i(30, 30));
-    EXPECT_EQ(text->getSize(), vvv::vector2i(270, 24));
-    EXPECT_EQ(button->getSize(), vvv::vector2i(270, 24));
-    EXPECT_EQ(le->getSize(), vvv::vector2i(270, 24));
+    EXPECT_EQ(text->getSize(), vvv::vector2i(270, 23));
+    EXPECT_EQ(button->getSize(), vvv::vector2i(270, 23));
+    EXPECT_EQ(le->getSize(), vvv::vector2i(270, 23));
     EXPECT_EQ(sl->getSize(), vvv::vector2i(270, 20));
     EXPECT_EQ(im->getSize(), vvv::vector2i(256, 256));
 
@@ -86,11 +86,11 @@ gui
     auto button2 = gui.get("button2");
     auto button3 = gui.get("button3");
     EXPECT_EQ(hl->getWidth(), 256);
-    EXPECT_EQ(hl->getHeight(), 26);
+    EXPECT_EQ(hl->getHeight(), 25);
     EXPECT_EQ(button2->getWidth(), 119);
-    EXPECT_EQ(button2->getHeight(), 24);
+    EXPECT_EQ(button2->getHeight(), 23);
     EXPECT_EQ(button3->getWidth(), 119);
-    EXPECT_EQ(button3->getHeight(), 24);
+    EXPECT_EQ(button3->getHeight(), 23);
     EXPECT_TRUE(button2->getPosition().x < button3->getPosition().x);
     EXPECT_TRUE(button2->getPosition().y == button3->getPosition().y);
     EXPECT_EQ(button2->getPosition().x, 1);
@@ -101,9 +101,9 @@ gui
     auto panel2 = gui.get("panel2");
     panel2->setWidth(400);
     EXPECT_EQ(button2->getWidth(), 176);
-    EXPECT_EQ(button2->getHeight(), 24);
+    EXPECT_EQ(button2->getHeight(), 23);
     EXPECT_EQ(button3->getWidth(), 176);
-    EXPECT_EQ(button3->getHeight(), 24);
+    EXPECT_EQ(button3->getHeight(), 23);
     EXPECT_TRUE(button2->getPosition().x < button3->getPosition().x);
     EXPECT_TRUE(button2->getPosition().y == button3->getPosition().y);
     EXPECT_EQ(button2->getPosition().x, 1);
