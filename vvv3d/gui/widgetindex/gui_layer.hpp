@@ -1,5 +1,6 @@
 #pragma once
 #include <vvv3d/core/graphics/color.hpp>
+#include <vvv3d/core/graphics/textures/texture.hpp>
 #include <vvv3d/gui/gui_layer_base.hpp>
 #include <vvvcfg/vvvcfg.hpp>
 
@@ -19,7 +20,8 @@ public:
     void load(const vvv::CfgNode& config);
     void clear();
 
-    template <typename T = widget_type> T* get(const std::string& name) const;
+    template <typename T = widget_type>
+    T* get(const std::string& name) const;
     widget_ptr_type getByShortName(const std::string& name) const;
     widget_ptr_type getByFullName(const std::string& name) const;
 
@@ -38,6 +40,10 @@ public:
     }
 
     void setColor(const std::string& widget_name, const vvv3d::Color& color);
+    void setTexture(const std::string& widget_name,
+                    const vvv3d::TextureShared& texture);
+    void setTexture(const std::string& widget_name,
+                    const std::string& texture_name);
 
     static void register_property(
         const std::string& property_name,
@@ -53,7 +59,8 @@ private:
     widget_ptr_type addWidgetNode(const vvv::CfgNode& node);
 };
 
-template <typename T> T* GuiLayer::get(const std::string& name) const
+template <typename T>
+T* GuiLayer::get(const std::string& name) const
 {
     T* ret = dynamic_cast<T*>(getByShortName(name));
     if (ret != nullptr)

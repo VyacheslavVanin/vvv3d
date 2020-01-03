@@ -191,7 +191,32 @@ void GuiLayer::setText(const std::string& widget_name, const std::string& text)
     auto w = get<vvv3d::ITextProperty>(widget_name);
     if (w)
         return w->setText(text);
+
     LOG(format("Error: \"@\" does not implement ITextProperty", widget_name));
+}
+
+void GuiLayer::setTexture(const std::string& widget_name,
+                          const vvv3d::TextureShared& texture)
+{
+    auto w = get<vvv3d::IImageProperty>(widget_name);
+    if (w)
+        return w->setTexture(texture);
+
+    LOG(format("Error: \"@\" does not implement IImageProperty", widget_name));
+}
+
+void GuiLayer::setTexture(const std::string& widget_name,
+                          const std::string& texture_name)
+{
+    auto w = get<vvv3d::IImageProperty>(widget_name);
+    if (!w) {
+        LOG(format("Error: \"@\" does not implement IImageProperty",
+                   widget_name));
+        return;
+    }
+
+    auto& tm = vvv3d::getTextureManager();
+    return w->setTexture(tm.getShared(texture_name));
 }
 
 std::string GuiLayer::getText(const std::string& widget_name) const
@@ -199,6 +224,7 @@ std::string GuiLayer::getText(const std::string& widget_name) const
     auto w = get<vvv3d::ITextProperty>(widget_name);
     if (w)
         return w->getText();
+
     LOG(format("Error: \"@\" does not implement ITextProperty", widget_name));
     return {};
 }
