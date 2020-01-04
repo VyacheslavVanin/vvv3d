@@ -116,4 +116,6 @@ public:
     explicit Shader(const _private&) : Shader() {}
 };
 
+using ShaderShared = std::shared_ptr<Shader>;
+
 } // namespace vvv3d
