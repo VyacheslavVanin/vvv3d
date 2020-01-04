@@ -23,4 +23,6 @@ private:
     GLsizei numIndices;
 };
 
+using GeometryShared = std::shared_ptr<Geometry>;
+
 } // namespace vvv3d

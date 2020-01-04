@@ -1,5 +1,6 @@
 #pragma once
 #include <vvv3d/core/graphics/color.hpp>
+#include <vvv3d/core/graphics/shaders/shader.hpp>
 #include <vvv3d/core/graphics/textures/texture.hpp>
 #include <vvv3d/gui/gui_layer_base.hpp>
 #include <vvvcfg/vvvcfg.hpp>
@@ -44,6 +45,8 @@ public:
                     const vvv3d::TextureShared& texture);
     void setTexture(const std::string& widget_name,
                     const std::string& texture_name);
+    void setShader(const std::string& widget_name, vvv3d::ShaderShared shader);
+    void setShader(const std::string& widget_name, const std::string& shader);
 
     static void register_property(
         const std::string& property_name,

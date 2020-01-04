@@ -190,6 +190,7 @@ GuiLayer& Engine::gui() { return gui_layer; }
 
 double Engine::frameTime() { return clock.currentFrameTime(); }
 double Engine::currentTime() { return clock.sinceEpoch(); }
+double Engine::timeSinceStart() { return clock.sinceStart(); }
 
 int64_t Engine::currentTimeMillis()
 {

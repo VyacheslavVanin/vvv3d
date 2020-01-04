@@ -15,17 +15,21 @@ public:
     template <typename T = defaultTimeUnit>
     typename T::rep currentFrameTime() const;
 
+    template <typename T = defaultTimeUnit>
+    typename T::rep sinceStart() const;
+
     void updateFrameTime();
 
 private:
     typename clock::duration lastFrameTime;
     typename clock::duration currFrameTime;
+    typename clock::time_point startTime;
 };
 
 template <typename defaultTimeUnit, typename clock>
 Time<defaultTimeUnit, clock>::Time()
     : lastFrameTime(clock::now().time_since_epoch()),
-      currFrameTime(clock::now().time_since_epoch())
+      currFrameTime(clock::now().time_since_epoch()), startTime(clock::now())
 {
 }
 
@@ -36,6 +40,15 @@ typename T::rep Time<defaultTimeUnit, clock>::sinceEpoch() const
     using namespace std::chrono;
     const auto& now = clock::now().time_since_epoch();
     return duration_cast<T>(now).count();
+}
+
+template <typename defaultTimeUnit, typename clock>
+template <typename T>
+typename T::rep Time<defaultTimeUnit, clock>::sinceStart() const
+{
+    using namespace std::chrono;
+    const auto& now = clock::now();
+    return std::chrono::duration_cast<T>(now - startTime).count();
 }
 
 template <typename defaultTimeUnit, typename clock>

@@ -219,6 +219,30 @@ void GuiLayer::setTexture(const std::string& widget_name,
     return w->setTexture(tm.getShared(texture_name));
 }
 
+void GuiLayer::setShader(const std::string& widget_name,
+                         vvv3d::ShaderShared shader)
+{
+    auto w = get<vvv3d::IShaderProperty>(widget_name);
+    if (w)
+        return w->setShader(std::move(shader));
+
+    LOG(format("Error: \"@\" does not implement IShaderProperty", widget_name));
+}
+
+void GuiLayer::setShader(const std::string& widget_name,
+                         const std::string& shader)
+{
+    auto w = get<vvv3d::IShaderProperty>(widget_name);
+    if (!w) {
+        LOG(format("Error: \"@\" does not implement IShaderProperty",
+                   widget_name));
+        return;
+    }
+
+    auto& tm = vvv3d::getShaderManager();
+    return w->setShader(tm.getShared(shader));
+}
+
 std::string GuiLayer::getText(const std::string& widget_name) const
 {
     auto w = get<vvv3d::ITextProperty>(widget_name);

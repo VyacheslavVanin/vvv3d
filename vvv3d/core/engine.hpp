@@ -54,6 +54,8 @@ public:
      * @return seconds */
     static double frameTime();
     static double currentTime();
+    /// return seconds since application start
+    static double timeSinceStart();
     static int64_t currentTimeMillis();
     static int64_t currentTimeMicros();
 

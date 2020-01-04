@@ -11,4 +11,5 @@ vvv3d::LineEdit* makeLineEdit();
 vvv3d::SliderH* makeSliderH();
 vvv3d::SliderV* makeSliderV();
 vvv3d::ImageWidget* makeImage();
+vvv3d::ShaderPreviewWidget* makeShaderPreview();
 } // namespace vvv3d

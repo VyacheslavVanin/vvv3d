@@ -32,4 +32,9 @@ vvv3d::ImageWidget* makeImage()
     ret->setTexture(tm.getDefaultShared());
     return ret;
 }
+
+vvv3d::ShaderPreviewWidget* makeShaderPreview()
+{
+    return new vvv3d::ShaderPreviewWidget();
+}
 } // namespace vvv3d

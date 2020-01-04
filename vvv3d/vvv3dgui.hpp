@@ -8,6 +8,7 @@
 #include <vvv3d/gui/widgets/buttons/buttontext.hpp>
 #include <vvv3d/gui/widgets/images/colorrectanglewidget.hpp>
 #include <vvv3d/gui/widgets/images/imagewidget.hpp>
+#include <vvv3d/gui/widgets/images/shader_preview_widget.hpp>
 #include <vvv3d/gui/widgets/layouts/horizontallayout.hpp>
 #include <vvv3d/gui/widgets/layouts/layout.hpp>
 #include <vvv3d/gui/widgets/layouts/verticallayout.hpp>
