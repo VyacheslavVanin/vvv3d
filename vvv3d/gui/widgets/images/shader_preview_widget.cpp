@@ -12,7 +12,7 @@ const std::string geom_name = "shader_preview_widget";
 ShaderPreviewWidget::ShaderPreviewWidget() : shader(), geometry()
 {
     auto& gm = vvv3d::getGeometryManager();
-    gm.add(geom_name, vvv3d::makeQuadGeometry2d(2));
+    gm.add(geom_name, vvv3d::makeQuadGeometry2d());
     geometry = gm.getShared(geom_name);
 }
 
@@ -50,18 +50,14 @@ void ShaderPreviewWidget::onDraw()
     const auto& size = getSize();
     const auto& pos = getAbsolutePosition() + size / 2;
 
-    Transform transform;
-    transform.setPosition(pos.x, -pos.y, 0);
-    transform.setScale(size.x, size.y, 0);
-    const auto& matrix = transform.getModelMatrix();
-
     shader->activate();
     shader->setTime(e.timeSinceStart());
-    shader->setTexturePosition(texture->getTexturePosition());
-    if (texture)
+    shader->setPosition(vvv::vector4f(pos.x, -pos.y, size.x, size.y));
+    if (texture) {
+        shader->setTexturePosition(texture->getTexturePosition());
         shader->setTexture0(*texture);
+    }
 
-    shader->setModel(matrix);
     shader->setViewProjection(camera.getViewProjection());
     geometry->draw();
 }
